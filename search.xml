@@ -1,8 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hadoop-全分布模式搭建</title>
+    <url>/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><h5 id="1-安装好linux操作系统"><a href="#1-安装好linux操作系统" class="headerlink" title="(1)安装好linux操作系统"></a>(1)安装好linux操作系统</h5><h5 id="2-关闭防火墙"><a href="#2-关闭防火墙" class="headerlink" title="(2)关闭防火墙"></a>(2)关闭防火墙</h5><h5 id="3-在linux上安装JDK"><a href="#3-在linux上安装JDK" class="headerlink" title="(3)在linux上安装JDK"></a>(3)在linux上安装JDK</h5><h5 id="4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆"><a href="#4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆" class="headerlink" title="(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆"></a>(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆</h5><h4 id="2-解压Hadoop压缩包并配置环境变量"><a href="#2-解压Hadoop压缩包并配置环境变量" class="headerlink" title="2.解压Hadoop压缩包并配置环境变量"></a>2.解压Hadoop压缩包并配置环境变量</h4><h5 id="1-将Hadoop安装包拷贝到-opt-software文件目录下"><a href="#1-将Hadoop安装包拷贝到-opt-software文件目录下" class="headerlink" title="(1)将Hadoop安装包拷贝到/opt/software文件目录下"></a>(1)将Hadoop安装包拷贝到/opt/software文件目录下</h5><h5 id="2-将Hadoop安装包解压到-opt-module文件目录下"><a href="#2-将Hadoop安装包解压到-opt-module文件目录下" class="headerlink" title="(2)将Hadoop安装包解压到/opt/module文件目录下"></a>(2)将Hadoop安装包解压到/opt/module文件目录下</h5><p>命令为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module          //将hadoop-2.8.4.tar.gz解压到/opt/module目录下</span><br></pre></td></tr></table></figure>
+<h5 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="(3)配置环境变量"></a>(3)配置环境变量</h5><h6 id="a-修改环境变量配置文件"><a href="#a-修改环境变量配置文件" class="headerlink" title="(a)修改环境变量配置文件"></a>(a)修改环境变量配置文件</h6><p>修改命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
+<p>添加的内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME</span><br><span class="line">PATH=<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
+<h6 id="b-使环境变量生效"><a href="#b-使环境变量生效" class="headerlink" title="(b)使环境变量生效"></a>(b)使环境变量生效</h6><p>输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h4><h5 id="1-修改hadoop-env-sh"><a href="#1-修改hadoop-env-sh" class="headerlink" title="(1)修改hadoop-env.sh"></a>(1)修改hadoop-env.sh</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRmYmMyMDg1MDM4MWJhNzkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
+<h5 id="2-修改hdfs-site-xml"><a href="#2-修改hdfs-site-xml" class="headerlink" title="(2)修改hdfs-site.xml"></a>(2)修改hdfs-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/etc/hadoop              //进入etc/hadoop目录</span><br><span class="line"></span><br><span class="line">vi hdfs-site.xml                          // 修改hdfs-site.xml文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置数据块的冗余度，默认是3--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hadoop3:50090&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 配置HDFS的权限检查，默认是<span class="literal">true</span>--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;  </span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3MTdiMjc4NWY0NjJlYTYucG5n?x-oss-process=image/format,png" alt="hdfs-site.xml"></p>
+<h5 id="3-修改core-site-xml"><a href="#3-修改core-site-xml" class="headerlink" title="(3)修改core-site.xml"></a>(3)修改core-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi core-site.xml</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置HDFS的主节点，namenode地址，9000是RPC通信端口--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop2:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;!--配置HDFS数据块和元数据保存的目录,一定要修改 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/opt/module/hadoop-2.8.4/data/tmp&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM5OGJmYzI2ZmUzZTcxOTkucG5n?x-oss-process=image/format,png" alt="core-site.xml"></p>
+<h5 id="4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来"><a href="#4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来" class="headerlink" title="(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)"></a>(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)</h5><p>命令：    </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml       //从mapred-site.xml.template转化</span><br><span class="line">    </span><br><span class="line">vi mapred-site.xml             //修改mapred-site.xml 文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置MR程序运行的框架，Yarn--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2YmFiZjA5OTJmODAzMzQucG5n?x-oss-process=image/format,png" alt="mapred-site.xml"></p>
+<h5 id="5-修改yarn-site-xml"><a href="#5-修改yarn-site-xml" class="headerlink" title="(5)修改yarn-site.xml"></a>(5)修改yarn-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi yarn-site.xml</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置Yarn的节点--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hadoop2&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!--NodeManager执行MR任务的方式是Shuffle洗牌--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYyNmQzOGY2NDI0NGNlZDgucG5n?x-oss-process=image/format,png" alt="yarn-site.xml"></p>
+<h5 id="6-修改slaves"><a href="#6-修改slaves" class="headerlink" title="(6)修改slaves"></a>(6)修改slaves</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hadoop3            //hadoop3作为从节点</span><br><span class="line">hadoop4            //hadoop4作为从节点</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNhNzBlZWI4MjM1NDhkZmYucG5n?x-oss-process=image/format,png" alt="slaves"></p>
+<h4 id="4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化"><a href="#4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化" class="headerlink" title="4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)"></a>4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)</h4><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/data/tmp         //这里是step3配置的HDFS数据库和元数据存储目录</span><br><span class="line"></span><br><span class="line">hdfs namenode -format                  //格式化</span><br></pre></td></tr></table></figure>
+
+<p>验证是否成功，成功后回显示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Storage: Storage directory /opt/module/hadoop-2.8.4/tmp/dfs/name has been successfully formatted</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcyNzA1NmY3ZmYzMzEwNTEucG5n?x-oss-process=image/format,png" alt="验证格式化成功"></p>
+<p><strong>注意</strong><br>重复格式化，hadoop.tmp.dir 先停止集群，然后在删除tmp文件夹，再重新新建tmp文件夹，重新格式化，然后再启动集群</p>
+<h4 id="5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："><a href="#5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：" class="headerlink" title="5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："></a>5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：</h4><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop3:/opt/moudle/         </span><br><span class="line"></span><br><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop4:/opt/moudle/</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-启动Hadoop集群"><a href="#6-启动Hadoop集群" class="headerlink" title="6.启动Hadoop集群"></a>6.启动Hadoop集群</h4><h5 id="1-启动"><a href="#1-启动" class="headerlink" title="(1)启动"></a>(1)启动</h5><p>输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">start-all.sh             //hadoop2中启动，因为此机器是主节点</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZGFhZTc2MmQ5YmU5NmIucG5n?x-oss-process=image/format,png" alt="启动"></p>
+<h5 id="2-验证是否启动："><a href="#2-验证是否启动：" class="headerlink" title="(2)验证是否启动："></a>(2)验证是否启动：</h5><p>hadoop2:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzZmE0MTk4ODA4NjBjMzQucG5n?x-oss-process=image/format,png" alt="hadoop2"><br>hadoop3:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU2ZWRiY2Y4ZWNmMTc1ODUucG5n?x-oss-process=image/format,png" alt="hadoop3"><br>hadoop4:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2ZTM5Nzg0MzI5MTAxOWIucG5n?x-oss-process=image/format,png" alt="hadoop4"></p>
+<p>与规划的相同，故Hadoop全分布安装成功</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux安装rz,sz</title>
+    <url>/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
+    <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
+<li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
+<li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
+</ul>
+<h6 id="1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"><a href="#1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装" class="headerlink" title="1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"></a>1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装</h6><h6 id="2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"><a href="#2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。" class="headerlink" title="2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"></a>2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。</h6><h6 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h6><p>(1)搜索</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum search lrzsz</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/1.png" alt="搜索"></p>
+<p>(2)安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install lrzsz.x86_64</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/2.png" alt="安装"></p>
+<p>(3)成功！</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hadoop基础介绍</title>
-    <url>/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
+    <url>/blog/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<h3 id="一-Hadoop概述"><a href="#一-Hadoop概述" class="headerlink" title="一.Hadoop概述"></a>一.Hadoop概述</h3><h4 id="1-Hadoop的优势"><a href="#1-Hadoop的优势" class="headerlink" title="1.Hadoop的优势"></a>1.Hadoop的优势</h4><ul>
 <li><p>高可靠性：<br>因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
 </li>
@@ -391,100 +479,12 @@
   </entry>
   <entry>
     <title>Linux 新建用户</title>
-    <url>/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
+    <url>/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
     <content><![CDATA[<h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
 <p>使用root用户操作如下命令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户赋予sudo权限</span><br><span class="line">vim &#x2F;etc&#x2F;sudoers  </span><br><span class="line">&#x2F;&#x2F;添加</span><br><span class="line">demouser    ALL&#x3D;(ALL)       ALL</span><br></pre></td></tr></table></figure>
 <h6 id="2-修改文件夹及其子文件夹属主命令"><a href="#2-修改文件夹及其子文件夹属主命令" class="headerlink" title="2.修改文件夹及其子文件夹属主命令"></a>2.修改文件夹及其子文件夹属主命令</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chown -R demouser .&#x2F;elasticsearch-6.1.1&#x2F;</span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hadoop-全分布模式搭建</title>
-    <url>/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><h5 id="1-安装好linux操作系统"><a href="#1-安装好linux操作系统" class="headerlink" title="(1)安装好linux操作系统"></a>(1)安装好linux操作系统</h5><h5 id="2-关闭防火墙"><a href="#2-关闭防火墙" class="headerlink" title="(2)关闭防火墙"></a>(2)关闭防火墙</h5><h5 id="3-在linux上安装JDK"><a href="#3-在linux上安装JDK" class="headerlink" title="(3)在linux上安装JDK"></a>(3)在linux上安装JDK</h5><h5 id="4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆"><a href="#4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆" class="headerlink" title="(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆"></a>(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆</h5><h4 id="2-解压Hadoop压缩包并配置环境变量"><a href="#2-解压Hadoop压缩包并配置环境变量" class="headerlink" title="2.解压Hadoop压缩包并配置环境变量"></a>2.解压Hadoop压缩包并配置环境变量</h4><h5 id="1-将Hadoop安装包拷贝到-opt-software文件目录下"><a href="#1-将Hadoop安装包拷贝到-opt-software文件目录下" class="headerlink" title="(1)将Hadoop安装包拷贝到/opt/software文件目录下"></a>(1)将Hadoop安装包拷贝到/opt/software文件目录下</h5><h5 id="2-将Hadoop安装包解压到-opt-module文件目录下"><a href="#2-将Hadoop安装包解压到-opt-module文件目录下" class="headerlink" title="(2)将Hadoop安装包解压到/opt/module文件目录下"></a>(2)将Hadoop安装包解压到/opt/module文件目录下</h5><p>命令为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module          //将hadoop-2.8.4.tar.gz解压到/opt/module目录下</span><br></pre></td></tr></table></figure>
-<h5 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="(3)配置环境变量"></a>(3)配置环境变量</h5><h6 id="a-修改环境变量配置文件"><a href="#a-修改环境变量配置文件" class="headerlink" title="(a)修改环境变量配置文件"></a>(a)修改环境变量配置文件</h6><p>修改命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
-<p>添加的内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME</span><br><span class="line">PATH=<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
-<h6 id="b-使环境变量生效"><a href="#b-使环境变量生效" class="headerlink" title="(b)使环境变量生效"></a>(b)使环境变量生效</h6><p>输入命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
-<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h4><h5 id="1-修改hadoop-env-sh"><a href="#1-修改hadoop-env-sh" class="headerlink" title="(1)修改hadoop-env.sh"></a>(1)修改hadoop-env.sh</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRmYmMyMDg1MDM4MWJhNzkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
-<h5 id="2-修改hdfs-site-xml"><a href="#2-修改hdfs-site-xml" class="headerlink" title="(2)修改hdfs-site.xml"></a>(2)修改hdfs-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/etc/hadoop              //进入etc/hadoop目录</span><br><span class="line"></span><br><span class="line">vi hdfs-site.xml                          // 修改hdfs-site.xml文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置数据块的冗余度，默认是3--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hadoop3:50090&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 配置HDFS的权限检查，默认是<span class="literal">true</span>--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;  </span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3MTdiMjc4NWY0NjJlYTYucG5n?x-oss-process=image/format,png" alt="hdfs-site.xml"></p>
-<h5 id="3-修改core-site-xml"><a href="#3-修改core-site-xml" class="headerlink" title="(3)修改core-site.xml"></a>(3)修改core-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi core-site.xml</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置HDFS的主节点，namenode地址，9000是RPC通信端口--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop2:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;!--配置HDFS数据块和元数据保存的目录,一定要修改 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/opt/module/hadoop-2.8.4/data/tmp&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM5OGJmYzI2ZmUzZTcxOTkucG5n?x-oss-process=image/format,png" alt="core-site.xml"></p>
-<h5 id="4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来"><a href="#4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来" class="headerlink" title="(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)"></a>(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)</h5><p>命令：    </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml       //从mapred-site.xml.template转化</span><br><span class="line">    </span><br><span class="line">vi mapred-site.xml             //修改mapred-site.xml 文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置MR程序运行的框架，Yarn--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2YmFiZjA5OTJmODAzMzQucG5n?x-oss-process=image/format,png" alt="mapred-site.xml"></p>
-<h5 id="5-修改yarn-site-xml"><a href="#5-修改yarn-site-xml" class="headerlink" title="(5)修改yarn-site.xml"></a>(5)修改yarn-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi yarn-site.xml</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置Yarn的节点--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hadoop2&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!--NodeManager执行MR任务的方式是Shuffle洗牌--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYyNmQzOGY2NDI0NGNlZDgucG5n?x-oss-process=image/format,png" alt="yarn-site.xml"></p>
-<h5 id="6-修改slaves"><a href="#6-修改slaves" class="headerlink" title="(6)修改slaves"></a>(6)修改slaves</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hadoop3            //hadoop3作为从节点</span><br><span class="line">hadoop4            //hadoop4作为从节点</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNhNzBlZWI4MjM1NDhkZmYucG5n?x-oss-process=image/format,png" alt="slaves"></p>
-<h4 id="4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化"><a href="#4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化" class="headerlink" title="4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)"></a>4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)</h4><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/data/tmp         //这里是step3配置的HDFS数据库和元数据存储目录</span><br><span class="line"></span><br><span class="line">hdfs namenode -format                  //格式化</span><br></pre></td></tr></table></figure>
-
-<p>验证是否成功，成功后回显示：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Storage: Storage directory /opt/module/hadoop-2.8.4/tmp/dfs/name has been successfully formatted</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcyNzA1NmY3ZmYzMzEwNTEucG5n?x-oss-process=image/format,png" alt="验证格式化成功"></p>
-<p><strong>注意</strong><br>重复格式化，hadoop.tmp.dir 先停止集群，然后在删除tmp文件夹，再重新新建tmp文件夹，重新格式化，然后再启动集群</p>
-<h4 id="5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："><a href="#5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：" class="headerlink" title="5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："></a>5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：</h4><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop3:/opt/moudle/         </span><br><span class="line"></span><br><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop4:/opt/moudle/</span><br></pre></td></tr></table></figure>
-
-<h4 id="6-启动Hadoop集群"><a href="#6-启动Hadoop集群" class="headerlink" title="6.启动Hadoop集群"></a>6.启动Hadoop集群</h4><h5 id="1-启动"><a href="#1-启动" class="headerlink" title="(1)启动"></a>(1)启动</h5><p>输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">start-all.sh             //hadoop2中启动，因为此机器是主节点</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZGFhZTc2MmQ5YmU5NmIucG5n?x-oss-process=image/format,png" alt="启动"></p>
-<h5 id="2-验证是否启动："><a href="#2-验证是否启动：" class="headerlink" title="(2)验证是否启动："></a>(2)验证是否启动：</h5><p>hadoop2:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzZmE0MTk4ODA4NjBjMzQucG5n?x-oss-process=image/format,png" alt="hadoop2"><br>hadoop3:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU2ZWRiY2Y4ZWNmMTc1ODUucG5n?x-oss-process=image/format,png" alt="hadoop3"><br>hadoop4:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2ZTM5Nzg0MzI5MTAxOWIucG5n?x-oss-process=image/format,png" alt="hadoop4"></p>
-<p>与规划的相同，故Hadoop全分布安装成功</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux安装rz,sz</title>
-    <url>/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
-    <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
-<li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
-<li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
-</ul>
-<h6 id="1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"><a href="#1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装" class="headerlink" title="1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"></a>1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装</h6><h6 id="2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"><a href="#2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。" class="headerlink" title="2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"></a>2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。</h6><h6 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h6><p>(1)搜索</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum search lrzsz</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1.png" alt="搜索"></p>
-<p>(2)安装</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install lrzsz.x86_64</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2.png" alt="安装"></p>
-<p>(3)成功！</p>
 ]]></content>
       <categories>
         <category>Linux</category>
