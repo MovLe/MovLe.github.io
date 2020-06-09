@@ -3,11 +3,11 @@
   <title>Movle&#39;s Blog</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://gitee.com/movle/blog/"/>
   <updated>2020-06-09T01:53:37.266Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://gitee.com/movle/blog/</id>
   
   <author>
     <name>Movle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Linux 新建用户</title>
-    <link href="http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
-    <id>http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
+    <id>http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
     <published>2020-05-19T01:13:00.000Z</published>
     <updated>2020-06-09T01:53:37.266Z</updated>
     
@@ -36,19 +36,19 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装rz,sz</title>
-    <link href="http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
-    <id>http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
+    <link href="http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
+    <id>http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
     <published>2019-08-09T01:49:00.000Z</published>
-    <updated>2020-06-09T01:53:05.523Z</updated>
+    <updated>2020-06-09T13:28:46.864Z</updated>
     
     <summary type="html">
     
@@ -64,19 +64,434 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop之优化</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/</id>
+    <published>2019-01-02T07:50:00.000Z</published>
+    <updated>2020-06-09T14:15:09.876Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-MapReduce-跑的慢的原因&quot;&gt;&lt;a href=&quot;#一-MapReduce-跑的慢的原因&quot; class=&quot;headerlink&quot; title=&quot;一.MapReduce 跑的慢的原因&quot;&gt;&lt;/a&gt;一.MapReduce
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop之数据压缩</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/</id>
+    <published>2019-01-02T06:50:00.000Z</published>
+    <updated>2020-06-09T14:11:22.453Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-概述&quot;&gt;&lt;a href=&quot;#1-概述&quot; class=&quot;headerlink&quot; title=&quot;1 概述&quot;&gt;&lt;/a&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Yarn-HA配置</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-01-02T05:50:00.000Z</published>
+    <updated>2020-06-09T14:20:25.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-Yarn-HA配置&quot;&gt;&lt;a href=&quot;#一-Yarn-HA配置&quot; class=&quot;headerlink&quot; title=&quot;一.Yarn-HA配置&quot;&gt;&lt;/a&gt;一.Yarn-HA配置&lt;/h3&gt;&lt;h4 id=&quot;1-YARN-HA工作机制&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+      <category term="YARN" scheme="http://gitee.com/movle/blog/tags/YARN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS-HA高可用集群配置</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-01-02T04:50:00.000Z</published>
+    <updated>2020-06-09T14:19:16.710Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-HDFS-HA集群配置&quot;&gt;&lt;a href=&quot;#一-HDFS-HA集群配置&quot; class=&quot;headerlink&quot; title=&quot;一. HDFS-HA集群配置&quot;&gt;&lt;/a&gt;一. HDFS-HA集群配置&lt;/h3&gt;&lt;h4 id=&quot;1-环境准备&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+      <category term="HDFS" scheme="http://gitee.com/movle/blog/tags/HDFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS之HA高可用概述</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/</id>
+    <published>2019-01-02T04:49:00.000Z</published>
+    <updated>2020-06-09T14:19:26.846Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-HA概述&quot;&gt;&lt;a href=&quot;#一-HA概述&quot; class=&quot;headerlink&quot; title=&quot;一.HA概述&quot;&gt;&lt;/a&gt;一.HA概述&lt;/h3&gt;&lt;p&gt;1.所谓HA(2high
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+      <category term="HDFS" scheme="http://gitee.com/movle/blog/tags/HDFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop序列化</title>
+    <link href="http://gitee.com/movle/blog/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    <id>http://gitee.com/movle/blog/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</id>
+    <published>2019-01-02T03:49:00.000Z</published>
+    <updated>2020-06-09T14:01:19.613Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-为什么要序列化？&quot;&gt;&lt;a href=&quot;#1-为什么要序列化？&quot; class=&quot;headerlink&quot; title=&quot;1 为什么要序列化？&quot;&gt;&lt;/a&gt;1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce框架原理</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</id>
+    <published>2019-01-01T10:49:00.000Z</published>
+    <updated>2020-06-09T14:19:40.064Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-MapReduce工作流程&quot;&gt;&lt;a href=&quot;#一-MapReduce工作流程&quot; class=&quot;headerlink&quot; title=&quot;一.MapReduce工作流程&quot;&gt;&lt;/a&gt;一.MapReduce工作流程&lt;/h3&gt;&lt;h4 id=&quot;1-流程示意图：&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://gitee.com/movle/blog/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS的其他功能</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/</id>
+    <published>2019-01-01T09:49:00.000Z</published>
+    <updated>2020-06-09T13:40:32.236Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-集群间数据拷贝&quot;&gt;&lt;a href=&quot;#一-集群间数据拷贝&quot; class=&quot;headerlink&quot; title=&quot;一.集群间数据拷贝&quot;&gt;&lt;/a&gt;一.集群间数据拷贝&lt;/h3&gt;&lt;h4 id=&quot;1-scp实现两个远程主机之间的文件复制&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce的基本概念</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</id>
+    <published>2019-01-01T09:49:00.000Z</published>
+    <updated>2020-06-09T14:19:01.062Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-MapReduce定义&quot;&gt;&lt;a href=&quot;#1-MapReduce定义&quot; class=&quot;headerlink&quot; title=&quot;1. MapReduce定义&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://gitee.com/movle/blog/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS之DateNode工作机制</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</id>
+    <published>2019-01-01T08:49:00.000Z</published>
+    <updated>2020-06-09T13:38:33.676Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-NameNode-amp-DataNode工作机制&quot;&gt;&lt;a href=&quot;#一-NameNode-amp-DataNode工作机制&quot; class=&quot;headerlink&quot; title=&quot;一.NameNode &amp;amp;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS之NameNode工作机制</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</id>
+    <published>2019-01-01T07:49:00.000Z</published>
+    <updated>2020-06-09T13:36:09.603Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-NameNode-amp-Secondary-NameNode工作机制&quot;&gt;&lt;a href=&quot;#一-NameNode-amp-Secondary-NameNode工作机制&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS的读写数据流程</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</id>
+    <published>2019-01-01T06:49:00.000Z</published>
+    <updated>2020-06-09T13:32:01.361Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-HDFS写数据流程&quot;&gt;&lt;a href=&quot;#一-HDFS写数据流程&quot; class=&quot;headerlink&quot; title=&quot;一.HDFS写数据流程&quot;&gt;&lt;/a&gt;一.HDFS写数据流程&lt;/h3&gt;&lt;h4 id=&quot;1-剖析文件写入&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop之通过API操作HDFS</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</id>
+    <published>2019-01-01T05:49:00.000Z</published>
+    <updated>2020-06-09T13:28:40.343Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;HDFS客户端操作&quot;&gt;&lt;a href=&quot;#HDFS客户端操作&quot; class=&quot;headerlink&quot; title=&quot;HDFS客户端操作&quot;&gt;&lt;/a&gt;HDFS客户端操作&lt;/h3&gt;&lt;h3 id=&quot;一-IDEA环境准备&quot;&gt;&lt;a href=&quot;#一-IDEA环境准备&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HDFS基础概念以及HDFS命令行操作</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</id>
+    <published>2019-01-01T04:49:00.000Z</published>
+    <updated>2020-06-09T13:28:42.343Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-HDFS基础概念&quot;&gt;&lt;a href=&quot;#一-HDFS基础概念&quot; class=&quot;headerlink&quot; title=&quot;一.HDFS基础概念&quot;&gt;&lt;/a&gt;一.HDFS基础概念&lt;/h3&gt;&lt;h4 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop环境搭建-本地模式搭建</title>
+    <link href="http://gitee.com/movle/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</id>
+    <published>2019-01-01T03:49:00.000Z</published>
+    <updated>2020-06-09T13:28:45.296Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-Hadoop安装准备工作：&quot;&gt;&lt;a href=&quot;#1-Hadoop安装准备工作：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop-全分布模式搭建</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</id>
+    <link href="http://gitee.com/movle/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</id>
     <published>2019-01-01T02:49:00.000Z</published>
-    <updated>2020-06-09T05:48:38.568Z</updated>
+    <updated>2020-06-09T13:28:43.968Z</updated>
     
     <summary type="html">
     
@@ -91,19 +506,19 @@
     </summary>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop基础介绍</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</id>
+    <link href="http://gitee.com/movle/blog/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://gitee.com/movle/blog/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</id>
     <published>2019-01-01T01:49:00.000Z</published>
-    <updated>2020-06-09T06:01:44.798Z</updated>
+    <updated>2020-06-09T14:19:56.633Z</updated>
     
     <summary type="html">
     
@@ -118,10 +533,10 @@
     </summary>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/categories/Hadoop/"/>
     
     
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+      <category term="Hadoop" scheme="http://gitee.com/movle/blog/tags/Hadoop/"/>
     
   </entry>
   
