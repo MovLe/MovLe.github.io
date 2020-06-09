@@ -273,37 +273,37 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">io.compression.codecs  (在core-site.xml中配置)</td>
+<td align="center">io.compression.codecs<br>(在core-site.xml中配置)</td>
 <td align="center">org.apache.hadoop.io.compress.DefaultCodec, org.apache.hadoop.io.compress.GzipCodec, org.apache.hadoop.io.compress.BZip2Codec</td>
 <td align="center">输入压缩</td>
 <td align="center">Hadoop使用文件扩展名判断是否支持某种编解码器</td>
 </tr>
 <tr>
-<td align="center">mapreduce.map.output.compress（在mapred-site.xml中配置）</td>
+<td align="center">mapreduce.map.output.compress<br>(在mapred-site.xml中配置)</td>
 <td align="center">false</td>
 <td align="center">mapper输出</td>
 <td align="center">这个参数设为true启用压缩</td>
 </tr>
 <tr>
-<td align="center">mapreduce.map.output.compress.codec（在mapred-site.xml中配置）</td>
+<td align="center">mapreduce.map.output.compress.codec<br>(在mapred-site.xml中配置)</td>
 <td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
 <td align="center">mapper输出</td>
 <td align="center">使用LZO或snappy编解码器在此阶段压缩数据</td>
 </tr>
 <tr>
-<td align="center">mapreduce.output.fileoutputformat.compress（在mapred-site.xml中配置)</td>
+<td align="center">mapreduce.output.fileoutputformat.compress<br>(在mapred-site.xml中配置)</td>
 <td align="center">false</td>
 <td align="center">reducer输出</td>
 <td align="center">这个参数设为true启用压缩</td>
 </tr>
 <tr>
-<td align="center">mapreduce.output.fileoutputformat.compress.codec（在mapred-site.xml中配置）</td>
+<td align="center">mapreduce.output.fileoutputformat.compress.codec<br>(在mapred-site.xml中配置)</td>
 <td align="center">org.apache.hadoop.io.compress. DefaultCodec</td>
 <td align="center">reducer输出</td>
 <td align="center">使用标准工具或者编解码器，如gzip和bzip2</td>
 </tr>
 <tr>
-<td align="center">mapreduce.output.fileoutputformat.compress.type（在mapred-site.xml中配置）</td>
+<td align="center">mapreduce.output.fileoutputformat.compress.type<br>(在mapred-site.xml中配置)</td>
 <td align="center">RECORD</td>
 <td align="center">reducer输出</td>
 <td align="center">SequenceFile输出使用的压缩类型：NONE和BLOCK</td>

@@ -168,8 +168,8 @@
 <p><strong>格式化做了哪些事情？</strong></p>
 <p>在NameNode节点上，有两个最重要的路径，分别被用来存储元数据信息和操作日志，而这两个路径来自于配置文件，它们对应的属性分别是dfs.name.dir和dfs.name.edits.dir，同时，它们默认的路径均是/tmp/hadoop/dfs/name。格式化时，NameNode会清空两个目录下的所有文件，之后，格式化会在目录dfs.name.dir下创建文件</p>
 <p><strong>hadoop.tmp.dir</strong> 这个配置，会让dfs.name.dir和dfs.name.edits.dir会让两个目录的文件生成在一个目录里</p>
-<p>(3)<strong>思考2**</strong>：**非NN上如果生成了name1和name2，那么他和NN上生成得有没有差别？</p>
-<p><strong>答：</strong>有区别、NN节点上会产生新得edits_XXX，非NN不会fsimage会更新，而非NN不会，只会产生一个仅初始化得到得fsimage，不会生成edits,更不会发生日志滚动。</p>
+<p>(3)<strong>思考2</strong>：非NN上如果生成了name1和name2，那么他和NN上生成得有没有差别？</p>
+<p>答：有区别、NN节点上会产生新得edits_XXX，非NN不会fsimage会更新，而非NN不会，只会产生一个仅初始化得到得fsimage，不会生成edits,更不会发生日志滚动。</p>
  
       <!-- reward -->
       
