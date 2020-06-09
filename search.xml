@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Linux 新建用户</title>
-    <url>/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
+    <url>/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
     <content><![CDATA[<h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
 <p>使用root用户操作如下命令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户赋予sudo权限</span><br><span class="line">vim &#x2F;etc&#x2F;sudoers  </span><br><span class="line">&#x2F;&#x2F;添加</span><br><span class="line">demouser    ALL&#x3D;(ALL)       ALL</span><br></pre></td></tr></table></figure>
@@ -18,7 +18,7 @@
   </entry>
   <entry>
     <title>Linux安装rz,sz</title>
-    <url>/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
+    <url>/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
     <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
 <li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
 <li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
