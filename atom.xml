@@ -213,11 +213,215 @@
   </entry>
   
   <entry>
+    <title>MapReduce开发总结</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/</id>
+    <published>2019-01-01T09:59:00.000Z</published>
+    <updated>2020-06-09T16:14:13.532Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在编写mapreduce程序时，需要考虑的几个方面：&lt;/p&gt;
+&lt;h4 id=&quot;1-输入数据接口：InputFormat&quot;&gt;&lt;a href=&quot;#1-输入数据接口：InputFormat&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapRedude之Join，数据清洗，计数器应用</title>
+    <link href="http://yoursite.com/2019/01/01/MapRedude%E4%B9%8BJoin%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%EF%BC%8C%E8%AE%A1%E6%95%B0%E5%99%A8%E5%BA%94%E7%94%A8/"/>
+    <id>http://yoursite.com/2019/01/01/MapRedude%E4%B9%8BJoin%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%EF%BC%8C%E8%AE%A1%E6%95%B0%E5%99%A8%E5%BA%94%E7%94%A8/</id>
+    <published>2019-01-01T09:57:00.000Z</published>
+    <updated>2020-06-09T16:13:18.922Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-Join多种应用&quot;&gt;&lt;a href=&quot;#一-Join多种应用&quot; class=&quot;headerlink&quot; title=&quot;一. Join多种应用&quot;&gt;&lt;/a&gt;一. Join多种应用&lt;/h3&gt;&lt;h4 id=&quot;1-Reduce-join&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce之OutputFormat数据输出</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BOutputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BOutputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA/</id>
+    <published>2019-01-01T09:56:00.000Z</published>
+    <updated>2020-06-09T16:12:15.072Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-OutputFormat接口实现类&quot;&gt;&lt;a href=&quot;#1-OutputFormat接口实现类&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce之ReduceTask工作机制</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BReduceTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BReduceTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</id>
+    <published>2019-01-01T09:55:00.000Z</published>
+    <updated>2020-06-09T16:11:13.870Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-设置ReduceTask并行度（个数）&quot;&gt;&lt;a href=&quot;#1-设置ReduceTask并行度（个数）&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce之Shuffle机制</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/</id>
+    <published>2019-01-01T09:54:00.000Z</published>
+    <updated>2020-06-09T16:10:08.509Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-Shuffle机制&quot;&gt;&lt;a href=&quot;#1-Shuffle机制&quot; class=&quot;headerlink&quot; title=&quot;1. Shuffle机制&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce之MapTask工作机制</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</id>
+    <published>2019-01-01T09:53:00.000Z</published>
+    <updated>2020-06-09T16:08:55.162Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-并行度决定机制&quot;&gt;&lt;a href=&quot;#1-并行度决定机制&quot; class=&quot;headerlink&quot; title=&quot;1.并行度决定机制&quot;&gt;&lt;/a&gt;1.并行度决定机制&lt;/h4&gt;&lt;h5 id=&quot;1-问题引出&quot;&gt;&lt;a href=&quot;#1-问题引出&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MapReduce之InputFormat数据输入</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BInputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BInputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5/</id>
+    <published>2019-01-01T09:51:00.000Z</published>
+    <updated>2020-06-09T16:07:33.544Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-Job提交流程和切片源码详解&quot;&gt;&lt;a href=&quot;#1-Job提交流程和切片源码详解&quot; class=&quot;headerlink&quot; title=&quot;1.Job提交流程和切片源码详解&quot;&gt;&lt;/a&gt;1.Job提交流程和切片源码详解&lt;/h4&gt;&lt;h5
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hadoop序列化</title>
-    <link href="http://yoursite.com/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    <id>http://yoursite.com/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</id>
-    <published>2019-01-02T03:49:00.000Z</published>
-    <updated>2020-06-09T14:39:02.067Z</updated>
+    <link href="http://yoursite.com/2019/01/01/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    <id>http://yoursite.com/2019/01/01/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</id>
+    <published>2019-01-01T09:50:00.000Z</published>
+    <updated>2020-06-09T16:05:30.602Z</updated>
     
     <summary type="html">
     
@@ -237,14 +441,16 @@
     
       <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
     
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
   </entry>
   
   <entry>
-    <title>MapReduce框架原理</title>
-    <link href="http://yoursite.com/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</id>
-    <published>2019-01-01T10:49:00.000Z</published>
-    <updated>2020-06-09T14:49:30.734Z</updated>
+    <title>MapReduce工作流程</title>
+    <link href="http://yoursite.com/2019/01/01/MapReduce%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/01/01/MapReduce%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</id>
+    <published>2019-01-01T09:50:00.000Z</published>
+    <updated>2020-06-09T16:06:14.469Z</updated>
     
     <summary type="html">
     
@@ -252,7 +458,7 @@
       
         
         
-          &lt;h3 id=&quot;一-MapReduce工作流程&quot;&gt;&lt;a href=&quot;#一-MapReduce工作流程&quot; class=&quot;headerlink&quot; title=&quot;一.MapReduce工作流程&quot;&gt;&lt;/a&gt;一.MapReduce工作流程&lt;/h3&gt;&lt;h4 id=&quot;1-流程示意图：&quot;&gt;&lt;a
+          &lt;h4 id=&quot;1-流程示意图：&quot;&gt;&lt;a href=&quot;#1-流程示意图：&quot; class=&quot;headerlink&quot; title=&quot;1.流程示意图：&quot;&gt;&lt;/a&gt;1.流程示意图：&lt;/h4&gt;&lt;p&gt;&lt;img
         
       
     
@@ -365,168 +571,6 @@
         
         
           &lt;h3 id=&quot;一-NameNode-amp-Secondary-NameNode工作机制&quot;&gt;&lt;a href=&quot;#一-NameNode-amp-Secondary-NameNode工作机制&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HDFS的读写数据流程</title>
-    <link href="http://yoursite.com/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/"/>
-    <id>http://yoursite.com/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</id>
-    <published>2019-01-01T06:49:00.000Z</published>
-    <updated>2020-06-09T13:32:01.361Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-HDFS写数据流程&quot;&gt;&lt;a href=&quot;#一-HDFS写数据流程&quot; class=&quot;headerlink&quot; title=&quot;一.HDFS写数据流程&quot;&gt;&lt;/a&gt;一.HDFS写数据流程&lt;/h3&gt;&lt;h4 id=&quot;1-剖析文件写入&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop之通过API操作HDFS</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</id>
-    <published>2019-01-01T05:49:00.000Z</published>
-    <updated>2020-06-09T15:09:52.639Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;HDFS客户端操作&quot;&gt;&lt;a href=&quot;#HDFS客户端操作&quot; class=&quot;headerlink&quot; title=&quot;HDFS客户端操作&quot;&gt;&lt;/a&gt;HDFS客户端操作&lt;/h3&gt;&lt;h3 id=&quot;一-IDEA环境准备&quot;&gt;&lt;a href=&quot;#一-IDEA环境准备&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HDFS基础概念以及HDFS命令行操作</title>
-    <link href="http://yoursite.com/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</id>
-    <published>2019-01-01T04:49:00.000Z</published>
-    <updated>2020-06-09T13:28:42.343Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-HDFS基础概念&quot;&gt;&lt;a href=&quot;#一-HDFS基础概念&quot; class=&quot;headerlink&quot; title=&quot;一.HDFS基础概念&quot;&gt;&lt;/a&gt;一.HDFS基础概念&lt;/h3&gt;&lt;h4 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop环境搭建-本地模式搭建</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</id>
-    <published>2019-01-01T03:49:00.000Z</published>
-    <updated>2020-06-09T13:28:45.296Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-Hadoop安装准备工作：&quot;&gt;&lt;a href=&quot;#1-Hadoop安装准备工作：&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop-全分布模式搭建</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</id>
-    <published>2019-01-01T02:49:00.000Z</published>
-    <updated>2020-06-09T13:28:43.968Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-Hadoop安装准备工作：&quot;&gt;&lt;a href=&quot;#1-Hadoop安装准备工作：&quot; class=&quot;headerlink&quot; title=&quot;1.Hadoop安装准备工作：&quot;&gt;&lt;/a&gt;1.Hadoop安装准备工作：&lt;/h4&gt;&lt;h5
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
-    
-    
-      <category term="Hadoop" scheme="http://yoursite.com/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop基础介绍</title>
-    <link href="http://yoursite.com/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://yoursite.com/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</id>
-    <published>2019-01-01T01:49:00.000Z</published>
-    <updated>2020-06-09T14:19:56.633Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-Hadoop概述&quot;&gt;&lt;a href=&quot;#一-Hadoop概述&quot; class=&quot;headerlink&quot; title=&quot;一.Hadoop概述&quot;&gt;&lt;/a&gt;一.Hadoop概述&lt;/h3&gt;&lt;h4 id=&quot;1-Hadoop的优势&quot;&gt;&lt;a
         
       
     

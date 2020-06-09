@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Hadoop序列化 |  Movle&#39;s Blog
+    MapReduce之ReduceTask工作机制 |  Movle&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Hadoop序列化"
+  id="post-MapReduce之ReduceTask工作机制"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,15 +60,15 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Hadoop序列化
+  MapReduce之ReduceTask工作机制
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/" class="article-date">
-  <time datetime="2019-01-02T03:49:00.000Z" itemprop="datePublished">2019-01-02</time>
+      <a href="/2019/01/01/MapReduce%E4%B9%8BReduceTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time datetime="2019-01-01T09:55:00.000Z" itemprop="datePublished">2019-01-01</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">894</span>
+            <span class="post-count">570</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
@@ -103,73 +103,66 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="1-为什么要序列化？"><a href="#1-为什么要序列化？" class="headerlink" title="1 为什么要序列化？"></a>1 为什么要序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来说，“活的”对象只生存在内存里，关机断电就没有了。而且“活的”对象只能由本地的进程使用，不能被发送到网络上的另外一台计算机。 然而序列化可以存储“活的”对象，可以将“活的”对象发送到远程计算机。</p>
-<h4 id="2-什么是序列化？"><a href="#2-什么是序列化？" class="headerlink" title="2 什么是序列化？"></a>2 什么是序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;序列化就是把内存中的对象，转换成字节序列（或其他数据传输协议）以便于存储（持久化）和网络传输。<br>反序列化就是将收到字节序列（或其他数据传输协议）或者是硬盘的持久化数据，转换成内存中的对象。</p>
-<h4 id="3-为什么不用Java的序列化？"><a href="#3-为什么不用Java的序列化？" class="headerlink" title="3 为什么不用Java的序列化？"></a>3 为什么不用Java的序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Java的序列化是一个重量级序列化框架（Serializable），一个对象被序列化后，会附带很多额外的信息（各种校验信息，header，继承体系等），不便于在网络中高效传输。所以，hadoop自己开发了一套序列化机制（Writable），精简、高效。</p>
-<h4 id="4-为什么序列化对Hadoop很重要？"><a href="#4-为什么序列化对Hadoop很重要？" class="headerlink" title="4 为什么序列化对Hadoop很重要？"></a>4 为什么序列化对Hadoop很重要？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;因为Hadoop在集群之间进行通讯或者RPC调用的时候，需要序列化，而且要求序列化要快，且体积要小，占用带宽要小。所以必须理解Hadoop的序列化机制。<br>&nbsp;&nbsp;&nbsp;&nbsp;序列化和反序列化在分布式数据处理领域经常出现：进程通信和永久存储。然而Hadoop中各个节点的通信是通过远程调用（RPC）实现的，那么RPC序列化要求具有以下特点：</p>
-<ul>
-<li>紧凑：紧凑的格式能让我们充分利用网络带宽，而带宽是数据中心最稀缺的资</li>
-<li>快速：进程通信形成了分布式系统的骨架，所以需要尽量减少序列化和反序列化的性能开销，这是基本的；</li>
-<li>可扩展：协议为了满足新的需求变化，所以控制客户端和服务器过程中，需要直接引进相应的协议，这些是新协议，原序列化方式能支持新的协议报文；</li>
-<li>互操作：能支持不同语言写的客户端和服务端进行交互；</li>
-</ul>
-<h4 id="5-常用数据序列化类型"><a href="#5-常用数据序列化类型" class="headerlink" title="5.常用数据序列化类型"></a>5.常用数据序列化类型</h4><p>常用的数据类型对应的hadoop数据序列化类型</p>
+  <h4 id="1-设置ReduceTask并行度（个数）"><a href="#1-设置ReduceTask并行度（个数）" class="headerlink" title="1.设置ReduceTask并行度（个数）"></a>1.设置ReduceTask并行度（个数）</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;reducetask的并行度同样影响整个job的执行并发度和执行效率，但与maptask的并发数由切片数决定不同，Reducetask数量的决定是可以直接手动设置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认值是1，手动设置为4</span></span><br><span class="line">job.setNumReduceTasks(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-注意"><a href="#2-注意" class="headerlink" title="2.注意"></a>2.注意</h4><p>(1)reducetask=0 ，表示没有reduce阶段，输出文件个数和map个数一致。</p>
+<p>(2)reducetask默认值就是1，所以输出文件个数为一个。</p>
+<p>(3)如果数据分布不均匀，就有可能在reduce阶段产生数据倾斜</p>
+<p>(4)reducetask数量并不是任意设置，还要考虑业务逻辑需求，有些情况下，需要计算全局汇总结果，就只能有1个reducetask。</p>
+<p>(5)具体多少个reducetask，需要根据集群性能而定。</p>
+<p>(6)如果分区数不是1，但是reducetask为1，是否执行分区过程。答案是：不执行分区过程。因为在maptask的源码中，执行分区的前提是先判断reduceNum个数是否大于1。不大于1肯定不执行。</p>
+<h4 id="3-实验：测试reducetask多少合适。"><a href="#3-实验：测试reducetask多少合适。" class="headerlink" title="3.实验：测试reducetask多少合适。"></a>3.实验：测试reducetask多少合适。</h4><p>(1)实验环境：1个master节点，16个slave节点：CPU:8GHZ，内存: 2G</p>
+<p>(2)实验结论：</p>
+<p>表1 改变reduce task （数据量为1GB）</p>
 <table>
 <thead>
 <tr>
-<th align="center">Java类型</th>
-<th align="center">Hadoop Writable类型</th>
+<th align="center">maptask=16</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">boolean</td>
-<td align="center">BooleanWritable</td>
+<td align="center">Reduce task</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">10</td>
+<td align="center">15</td>
+<td align="center">16</td>
+<td align="center">20</td>
+<td align="center">25</td>
+<td align="center">30</td>
+<td align="center">45</td>
+<td align="center">60</td>
 </tr>
 <tr>
-<td align="center">byte</td>
-<td align="center">ByteWritable</td>
-</tr>
-<tr>
-<td align="center">int</td>
-<td align="center">IntWritable</td>
-</tr>
-<tr>
-<td align="center">float</td>
-<td align="center">FloatWritable</td>
-</tr>
-<tr>
-<td align="center">long</td>
-<td align="center">LongWritable</td>
-</tr>
-<tr>
-<td align="center">double</td>
-<td align="center">DoubleWritable</td>
-</tr>
-<tr>
-<td align="center">string</td>
-<td align="center">Text</td>
-</tr>
-<tr>
-<td align="center">map</td>
-<td align="center">MapWritable</td>
-</tr>
-<tr>
-<td align="center">array</td>
-<td align="center">ArrayWritable</td>
+<td align="center">总时间</td>
+<td align="center">892</td>
+<td align="center">146</td>
+<td align="center">110</td>
+<td align="center">92</td>
+<td align="center">88</td>
+<td align="center">100</td>
+<td align="center">128</td>
+<td align="center">101</td>
+<td align="center">145</td>
+<td align="center">104</td>
 </tr>
 </tbody></table>
-<h4 id="6-自定义bean对象实现序列化接口（Writable）"><a href="#6-自定义bean对象实现序列化接口（Writable）" class="headerlink" title="6 自定义bean对象实现序列化接口（Writable）"></a>6 自定义bean对象实现序列化接口（Writable）</h4><h5 id="1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"><a href="#1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项" class="headerlink" title="(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"></a>(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项</h5><p>(a)必须实现Writable接口</p>
-<p>(b)反序列化时，需要反射调用空参构造函数，所以必须有空参构造</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>(c )重写序列化方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    out.writeLong(upFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(downFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(sumFlow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(d)重写反序列化方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    upFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    downFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    sumFlow = in.readLong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(e)注意反序列化的顺序和序列化的顺序完全一致</p>
-<p>(f)要想把结果显示在文件中，需要重写toString()，可用”\t”分开，方便后续用。</p>
-<p>(g)如果需要将自定义的bean放在key中传输，则还需要实现comparable接口，因为mapreduce框中的shuffle过程一定会对key进行排序。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(FlowBean o)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 倒序排列，从大到小</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sumFlow &gt; o.getSumFlow() ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<h4 id="4-ReduceTask工作机制"><a href="#4-ReduceTask工作机制" class="headerlink" title="4.ReduceTask工作机制"></a>4.ReduceTask工作机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTliYzNmZjE5MmJmYjczYTEucG5n?x-oss-process=image/format,png" alt="ReduceTask工作机制"></p>
+<p>(1)Copy阶段：ReduceTask从各个MapTask上远程拷贝一片数据，并针对某一片数据，如果其大小超过一定阈值，则写到磁盘上，否则直接放到内存中。</p>
+<p>(2)Merge阶段：在远程拷贝数据的同时，ReduceTask启动了两个后台线程对内存和磁盘上的文件进行合并，以防止内存使用过多或磁盘上文件过多。</p>
+<p>(3)Sort阶段：按照MapReduce语义，用户编写reduce()函数输入数据是按key进行聚集的一组数据。为了将key相同的数据聚在一起，Hadoop采用了基于排序的策略。由于各个MapTask已经实现对自己的处理结果进行了局部排序，因此，ReduceTask只需对所有数据进行一次归并排序即可。</p>
+<p>(4)Reduce阶段：reduce()函数将计算结果写到HDFS上。</p>
+ 
       <!-- reward -->
       
       <div id="reward-btn">
@@ -235,12 +228,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BReduceTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/" rel="tag">MapReduce</a></li></ul>
 
     </footer>
   </div>
@@ -248,19 +241,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+      <a href="/2019/01/01/MapReduce%E4%B9%8BOutputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            HDFS之HA高可用概述
+            MapReduce之OutputFormat数据输出
           
         </div>
       </a>
     
     
-      <a href="/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/" class="article-nav-link">
+      <a href="/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">MapReduce框架原理</div>
+        <div class="article-nav-title">MapReduce之Shuffle机制</div>
       </a>
     
   </nav>

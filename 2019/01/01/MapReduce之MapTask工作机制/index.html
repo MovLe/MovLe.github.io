@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    归档: 2019 |  Movle&#39;s Blog
+    MapReduce之MapTask工作机制 |  Movle&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -48,244 +48,180 @@
       
     <main class="content on">
       <section class="outer">
-  <article class="articles">
+  <article
+  id="post-MapReduce之MapTask工作机制"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">2019</h1>
-    
-    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  MapReduce之MapTask工作机制
+</h1>
+ 
+
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time datetime="2019-01-01T09:53:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
   
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2019" class="archive-year">2019</a>
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">829</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">3 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  <time datetime="2019-01-01T09:54:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/"
-    >MapReduce之Shuffle机制</a> 
-</h2>
- 
+    <div class="tocbot"></div>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  <time datetime="2019-01-01T09:53:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"
-    >MapReduce之MapTask工作机制</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/MapReduce%E4%B9%8BInputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5/" class="archive-article-date">
-  <time datetime="2019-01-01T09:51:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/MapReduce%E4%B9%8BInputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5/"
-    >MapReduce之InputFormat数据输入</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/" class="archive-article-date">
-  <time datetime="2019-01-01T09:50:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/"
-    >Hadoop序列化</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
   
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/MapReduce%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="archive-article-date">
-  <time datetime="2019-01-01T09:50:00.000Z" itemprop="datePublished">01/01</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/MapReduce%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"
-    >MapReduce工作流程</a> 
-</h2>
+  <h4 id="1-并行度决定机制"><a href="#1-并行度决定机制" class="headerlink" title="1.并行度决定机制"></a>1.并行度决定机制</h4><h5 id="1-问题引出"><a href="#1-问题引出" class="headerlink" title="(1).问题引出"></a>(1).问题引出</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;maptask的并行度决定map阶段的任务处理并发度，进而影响到整个job的处理速度。那么，mapTask并行任务是否越多越好呢？</p>
+<h5 id="2-MapTask并行度决定机制"><a href="#2-MapTask并行度决定机制" class="headerlink" title="(2).MapTask并行度决定机制"></a>(2).MapTask并行度决定机制</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;一个job的map阶段MapTask并行度（个数），由客户端提交job时的切片个数决定。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkyOTQ2ODVmZjkyMTc5MGYucG5n?x-oss-process=image/format,png" alt="数据切片及Maptask并行度决定机制"></p>
+<h4 id="2-MapTask工作机制"><a href="#2-MapTask工作机制" class="headerlink" title="2.MapTask工作机制"></a>2.MapTask工作机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzNjIxZjZhOWZiMjc0ZjAucG5n?x-oss-process=image/format,png" alt="MapTask工作机制"></p>
+<p>(1)Read阶段：Map Task通过用户编写的RecordReader，从输入InputSplit中解析出一个个key/value。</p>
+<p>(2)Map阶段：该节点主要是将解析出的key/value交给用户编写map()函数处理，并产生一系列新的key/value。</p>
+<p>(3)Collect收集阶段：在用户编写map()函数中，当数据处理完成后，一般会调用OutputCollector.collect()输出结果。在该函数内部，它会将生成的key/value分区（调用Partitioner），并写入一个环形内存缓冲区中。</p>
+<p>(4)Spill阶段：即“溢写”，当环形缓冲区满后，MapReduce会将数据写到本地磁盘上，生成一个临时文件。需要注意的是，将数据写入本地磁盘之前，先要对数据进行一次本地排序，并在必要时对数据进行合并、压缩等操作。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;溢写阶段详情：</p>
+<ul>
+<li><p>步骤1：利用快速排序算法对缓存区内的数据进行排序，排序方式是，先按照分区编号partition进行排序，然后按照key进行排序。这样，经过排序后，数据以分区为单位聚集在一起，且同一分区内所有数据按照key有序。</p>
+</li>
+<li><p>步骤2：按照分区编号由小到大依次将每个分区中的数据写入任务工作目录下的临时文件output/spillN.out（N表示当前溢写次数）中。如果用户设置了Combiner，则写入文件之前，对每个分区中的数据进行一次聚集操作。</p>
+</li>
+<li><p>步骤3：将分区数据的元信息写到内存索引数据结构SpillRecord中，其中每个分区的元信息包括在临时文件中的偏移量、压缩前数据大小和压缩后数据大小。如果当前内存索引大小超过1MB，则将内存索引写到文件output/spillN.out.index中。</p>
+</li>
+</ul>
+<p>(5)Combine阶段：当所有数据处理完成后，MapTask对所有临时文件进行一次合并，以确保最终只会生成一个数据文件。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当所有数据处理完后，MapTask会将所有临时文件合并成一个大文件，并保存到文件output/file.out中，同时生成相应的索引文件output/file.out.index。<br>&nbsp;&nbsp;&nbsp;&nbsp;在进行文件合并过程中，MapTask以分区为单位进行合并。对于某个分区，它将采用多轮递归合并的方式。每轮合并io.sort.factor（默认100）个文件，并将产生的文件重新加入待合并列表中，对文件排序后，重复以上过程，直到最终得到一个大文件。<br>&nbsp;&nbsp;&nbsp;&nbsp;让每个MapTask最终只生成一个数据文件，可避免同时打开大量文件和同时读取大量小文件产生的随机读取带来的开销。</p>
  
-
-    </header>
-    
-    
-  </div>
-</article>
+      <!-- reward -->
       
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/" class="archive-article-date">
-  <time datetime="2019-01-01T09:49:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/"
-    >HDFS的其他功能</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="archive-article-date">
-  <time datetime="2019-01-01T09:49:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"
-    >MapReduce的基本概念</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  <time datetime="2019-01-01T08:49:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"
-    >HDFS之DateNode工作机制</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  <time datetime="2019-01-01T07:49:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/"
-    >HDFS之NameNode工作机制</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/" class="archive-article-date">
-  <time datetime="2019-01-01T06:49:00.000Z" itemprop="datePublished">01/01</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/"
-    >HDFS的读写数据流程</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
+      <div id="reward-btn">
+        打赏
+      </div>
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/2019/">上一页</a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2019/page/3/">3</a><a class="extend next" rel="next" href="/archives/2019/page/3/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/01/01/MapReduce%E4%B9%8BMapTask%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/" rel="tag">MapReduce</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/01/01/MapReduce%E4%B9%8BShuffle%E6%9C%BA%E5%88%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            MapReduce之Shuffle机制
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/01/MapReduce%E4%B9%8BInputFormat%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">MapReduce之InputFormat数据输入</div>
+      </a>
+    
   </nav>
+
   
+     
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -449,6 +385,23 @@
 </script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
