@@ -108,8 +108,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(1)maptask收集我们的map()方法输出的kv对，放到内存缓冲区中</span><br><span class="line"></span><br><span class="line">(2)从内存缓冲区不断溢出本地磁盘文件，可能会溢出多个文件</span><br><span class="line"></span><br><span class="line">(3)多个溢出文件会被合并成大的溢出文件</span><br><span class="line"></span><br><span class="line">(4)在溢出过程中，及合并的过程中，都要调用partitioner进行分区和针对key进行排序</span><br><span class="line"></span><br><span class="line">(5)reducetask根据自己的分区号，去各个maptask机器上取相应的结果分区数据</span><br><span class="line"></span><br><span class="line">(6)reducetask会取到同一个分区的来自不同maptask的结果文件，reducetask会将这些文件再进行合并（归并排序）</span><br><span class="line"></span><br><span class="line">(7)合并成大文件后，shuffle的过程也就结束了，后面进入reducetask的逻辑运算过程（从文件中取出一个一个的键值对group，调用用户自定义的reduce()方法）</span><br></pre></td></tr></table></figure>
 <h4 id="3-注意"><a href="#3-注意" class="headerlink" title="3.注意"></a>3.注意</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Shuffle中的缓冲区大小会影响到mapreduce程序的执行效率，原则上说，缓冲区越大，磁盘io的次数越少，执行速度就越快。<br>&nbsp;&nbsp;&nbsp;&nbsp;缓冲区的大小可以通过参数调整，参数：io.sort.mb  默认100M。</p>
 <h3 id="二-InputFormat数据输入"><a href="#二-InputFormat数据输入" class="headerlink" title="二. InputFormat数据输入"></a>二. InputFormat数据输入</h3><h4 id="1-Job提交流程和切片源码详解"><a href="#1-Job提交流程和切片源码详解" class="headerlink" title="1.Job提交流程和切片源码详解"></a>1.Job提交流程和切片源码详解</h4><h5 id="1-job提交流程源码详解"><a href="#1-job提交流程源码详解" class="headerlink" title="(1).job提交流程源码详解"></a>(1).job提交流程源码详解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">waitForCompletion()</span><br><span class="line">     </span><br><span class="line">    submit();        </span><br><span class="line">	connect();	<span class="comment">// 1建立连接</span></span><br><span class="line">		</span><br><span class="line">	<span class="keyword">new</span> Cluster(getConfiguration());  <span class="comment">// 1）创建提交job的代理</span></span><br><span class="line">			</span><br><span class="line">	initialize(jobTrackAddr, conf); <span class="comment">// （1）判断是本地yarn还是远程</span></span><br><span class="line">	</span><br><span class="line">    submitter.submitJobInternal(Job.<span class="keyword">this</span>, cluster)       <span class="comment">// 2 提交job</span></span><br><span class="line">	</span><br><span class="line">	Path jobStagingArea = JobSubmissionFiles.getStagingDir(cluster, conf);  <span class="comment">// 1）创建给集群提交数据的Stag路径</span></span><br><span class="line">	</span><br><span class="line">	JobID jobId = submitClient.getNewJobID();    <span class="comment">// 2）获取jobid ，并创建job路径</span></span><br><span class="line"></span><br><span class="line">    copyAndConfigureFiles(job, submitJobDir);	<span class="comment">// 3）拷贝jar包到集群</span></span><br><span class="line">	rUploader.uploadFiles(job, jobSubmitDir);</span><br><span class="line"></span><br><span class="line">    writeSplits(job, submitJobDir);<span class="comment">// 4）计算切片，生成切片规划文件</span></span><br><span class="line">	maps = writeNewSplits(job, jobSubmitDir);</span><br><span class="line">	input.getSplits(job);</span><br><span class="line">                          <span class="comment">// 5）向Stag路径写xml配置文件</span></span><br><span class="line">    writeConf(conf, submitJobFile);</span><br><span class="line">	conf.writeXml(out);</span><br><span class="line">                        <span class="comment">// 6）提交job,返回提交状态</span></span><br><span class="line">    status = submitClient.submitJob(jobId, submitJobDir.toString(), job.getCredentials());</span><br></pre></td></tr></table></figure>
-<h5 id="2-FileInputFormat源码解析-input-getSplits-job-这里留一个坑"><a href="#2-FileInputFormat源码解析-input-getSplits-job-这里留一个坑" class="headerlink" title="(2).FileInputFormat源码解析(input.getSplits(job))(这里留一个坑)"></a>(2).FileInputFormat源码解析(input.getSplits(job))(<strong>这里留一个坑</strong>)</h5><h6 id="a-找到你数据存储的目录。"><a href="#a-找到你数据存储的目录。" class="headerlink" title="(a)找到你数据存储的目录。"></a>(a)找到你数据存储的目录。</h6><h6 id="2-开始遍历处理（规划切片）目录下的每一个文件"><a href="#2-开始遍历处理（规划切片）目录下的每一个文件" class="headerlink" title="(2)开始遍历处理（规划切片）目录下的每一个文件"></a>(2)开始遍历处理（规划切片）目录下的每一个文件</h6><h6 id="3-遍历第一个文件ss-txt"><a href="#3-遍历第一个文件ss-txt" class="headerlink" title="(3)遍历第一个文件ss.txt"></a>(3)遍历第一个文件ss.txt</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(a)获取文件大小fs.sizeOf(ss.txt);</span><br><span class="line">(b)计算切片大小computeSliteSize(Math.max(minSize,Math.min(maxSize,blocksize)))&#x3D;blocksize&#x3D;128M</span><br><span class="line">(c)默认情况下，切片大小&#x3D;blocksize</span><br><span class="line">(d)开始切，形成第1个切片：ss.txt—0:128M 第2个切片ss.txt—128:256M 第3个切片ss.txt—256M:300M（每次切片时，都要判断切完剩下的部分是否大于块的1.1倍，不大于1.1倍就划分一块切片）</span><br><span class="line">(e)将切片信息写到一个切片规划文件中</span><br><span class="line">(f)整个切片的核心过程在getSplit()方法中完成。</span><br><span class="line">(g)数据切片只是在逻辑上对输入数据进行分片，并不会再磁盘上将其切分成分片进行存储。InputSplit只记录了分片的元数据信息，比如起始位置、长度以及所在的节点列表等。</span><br><span class="line">(h)注意：block是HDFS物理上存储的数据，切片是对数据逻辑上的划分。</span><br></pre></td></tr></table></figure>
-<h6 id="4-提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。"><a href="#4-提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。" class="headerlink" title="(4)提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。"></a>(4)提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。</h6><h4 id="2-FileInputFormat切片机制"><a href="#2-FileInputFormat切片机制" class="headerlink" title="2.FileInputFormat切片机制"></a>2.FileInputFormat切片机制</h4><h5 id="1-FileInputFormat中默认的切片机制："><a href="#1-FileInputFormat中默认的切片机制：" class="headerlink" title="(1).FileInputFormat中默认的切片机制："></a>(1).FileInputFormat中默认的切片机制：</h5><p>(a)简单地按照文件的内容长度进行切片</p>
+<h5 id="2-FileInputFormat源码解析-input-getSplits-job-这里留一个坑"><a href="#2-FileInputFormat源码解析-input-getSplits-job-这里留一个坑" class="headerlink" title="(2).FileInputFormat源码解析(input.getSplits(job))(这里留一个坑)"></a>(2).FileInputFormat源码解析(input.getSplits(job))(<strong>这里留一个坑</strong>)</h5><h6 id="a-找到你数据存储的目录。"><a href="#a-找到你数据存储的目录。" class="headerlink" title="(a)找到你数据存储的目录。"></a>(a)找到你数据存储的目录。</h6><h6 id="b-开始遍历处理（规划切片）目录下的每一个文件"><a href="#b-开始遍历处理（规划切片）目录下的每一个文件" class="headerlink" title="(b)开始遍历处理（规划切片）目录下的每一个文件"></a>(b)开始遍历处理（规划切片）目录下的每一个文件</h6><h6 id="c-遍历第一个文件ss-txt"><a href="#c-遍历第一个文件ss-txt" class="headerlink" title="(c)遍历第一个文件ss.txt"></a>(c)遍历第一个文件ss.txt</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(a)获取文件大小fs.sizeOf(ss.txt);</span><br><span class="line">(b)计算切片大小computeSliteSize(Math.max(minSize,Math.min(maxSize,blocksize)))&#x3D;blocksize&#x3D;128M</span><br><span class="line">(c)默认情况下，切片大小&#x3D;blocksize</span><br><span class="line">(d)开始切，形成第1个切片：ss.txt—0:128M 第2个切片ss.txt—128:256M 第3个切片ss.txt—256M:300M（每次切片时，都要判断切完剩下的部分是否大于块的1.1倍，不大于1.1倍就划分一块切片）</span><br><span class="line">(e)将切片信息写到一个切片规划文件中</span><br><span class="line">(f)整个切片的核心过程在getSplit()方法中完成。</span><br><span class="line">(g)数据切片只是在逻辑上对输入数据进行分片，并不会再磁盘上将其切分成分片进行存储。InputSplit只记录了分片的元数据信息，比如起始位置、长度以及所在的节点列表等。</span><br><span class="line">(h)注意：block是HDFS物理上存储的数据，切片是对数据逻辑上的划分。</span><br></pre></td></tr></table></figure>
+<h6 id="d-提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。"><a href="#d-提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。" class="headerlink" title="(d)提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。"></a>(d)提交切片规划文件到yarn上，yarn上的MrAppMaster就可以根据切片规划文件计算开启maptask个数。</h6><h4 id="2-FileInputFormat切片机制"><a href="#2-FileInputFormat切片机制" class="headerlink" title="2.FileInputFormat切片机制"></a>2.FileInputFormat切片机制</h4><h5 id="1-FileInputFormat中默认的切片机制："><a href="#1-FileInputFormat中默认的切片机制：" class="headerlink" title="(1).FileInputFormat中默认的切片机制："></a>(1).FileInputFormat中默认的切片机制：</h5><p>(a)简单地按照文件的内容长度进行切片</p>
 <p>(b)切片大小，默认等于block大小</p>
 <p>(c )切片时不考虑数据集整体，而是逐个针对每一个文件单独切片</p>
 <p>比如待处理数据有两个文件：</p>
@@ -141,11 +141,11 @@
 <li><p>(2)补救措施：如果已经是大量小文件在HDFS中了，可以使用另一种InputFormat来做切片（CombineTextInputFormat），它的切片逻辑跟TextFileInputFormat不同：它可以将多个小文件从逻辑上规划到一个切片中，这样，多个小文件就可以交给一个maptask。</p>
 </li>
 <li><p>(3)优先满足最小切片大小，不超过最大切片大小</p>
+</li>
+</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CombineTextInputFormat.setMaxInputSplitSize(job, <span class="number">4194304</span>);<span class="comment">// 4m</span></span><br><span class="line">CombineTextInputFormat.setMinInputSplitSize(job, <span class="number">2097152</span>);<span class="comment">// 2m</span></span><br><span class="line">举例：<span class="number">0.5</span>m+<span class="number">1</span>m+<span class="number">0.3</span>m+<span class="number">5</span>m=<span class="number">2</span>m + <span class="number">4.8</span>m=<span class="number">2</span>m + <span class="number">4</span>m + <span class="number">0.8</span>m</span><br></pre></td></tr></table></figure>
 <h5 id="3-具体实现步骤"><a href="#3-具体实现步骤" class="headerlink" title="(3).具体实现步骤"></a>(3).具体实现步骤</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  如果不设置InputFormat,它默认用的是TextInputFormat.class</span></span><br><span class="line">job.setInputFormatClass(CombineTextInputFormat<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">CombineTextInputFormat</span>.<span class="title">setMaxInputSplitSize</span>(<span class="title">job</span>, 4194304)</span>;<span class="comment">// 4m</span></span><br><span class="line">CombineTextInputFormat.setMinInputSplitSize(job, <span class="number">2097152</span>);<span class="comment">// 2m</span></span><br></pre></td></tr></table></figure>
-<h5 id="4-案例实操"><a href="#4-案例实操" class="headerlink" title="(4).案例实操"></a>(4).案例实操</h5></li>
-</ul>
-<h4 id="4-InputFormat接口实现类"><a href="#4-InputFormat接口实现类" class="headerlink" title="4 InputFormat接口实现类"></a>4 InputFormat接口实现类</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce任务的输入文件一般是存储在HDFS里面。输入的文件格式包括：基于行的日志文件、二进制格式文件等。这些文件一般会很大，达到数十GB，甚至更大。</p>
+<h5 id="4-案例实操"><a href="#4-案例实操" class="headerlink" title="(4).案例实操"></a>(4).案例实操</h5><h4 id="4-InputFormat接口实现类"><a href="#4-InputFormat接口实现类" class="headerlink" title="4 InputFormat接口实现类"></a>4 InputFormat接口实现类</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce任务的输入文件一般是存储在HDFS里面。输入的文件格式包括：基于行的日志文件、二进制格式文件等。这些文件一般会很大，达到数十GB，甚至更大。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;InputFormat常见的接口实现类包括：TextInputFormat、KeyValueTextInputFormat、NLineInputFormat、CombineTextInputFormat和自定义InputFormat等。</p>
 <h5 id="1-TextInputFormat"><a href="#1-TextInputFormat" class="headerlink" title="(1).TextInputFormat"></a>(1).TextInputFormat</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;TextInputFormat是默认的InputFormat。每条记录是一行输入。键是LongWritable类型，存储该行在整个文件中的字节偏移量。值是这行的内容，不包括任何行终止符（换行符和回车符）<br>&nbsp;&nbsp;&nbsp;&nbsp;以下是一个示例，比如，一个分片包含了如下4条文本记录。</p>
 <blockquote>
@@ -243,15 +243,21 @@
 <p>(b)优化策略</p>
 <ul>
 <li>最好的方法：在数据处理的最前端（预处理、采集），就将小文件合并成大文件，在上传到HDFS做后续的分析</li>
-<li>补救措施：如果已经是大量的小文件在HDFS中了，可以使用另一种inputformat来做切片（CombineFileInputformat），它的切片逻辑跟<strong>TextInputformat</strong>不同,它可以将多个小文件从逻辑上规划到一个切片中，这样，多个小文件就可以交给一个maptask了<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果不设置InputFormat，它默认的用的是TextInputFormat.class</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*CombineTextInputFormat为系统自带的组件类</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * setMinInputSplitSize 中的2048是表示n个小文件之和不能大于2048</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * setMaxInputSplitSize 中的4096是     当满足setMinInputSplitSize中的2048情况下  在满足n+1个小文件之和不能大于4096</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">job.setInputFormatClass(CombineTextInputFormat<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.setMinInputSplitSize(job, <span class="number">2048</span>);</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.setMaxInputSplitSize(job, <span class="number">4096</span>);</span><br></pre></td></tr></table></figure>
-<h5 id="2-示例"><a href="#2-示例" class="headerlink" title="(2).示例"></a>(2).示例</h5>(a)输入数据：准备5个小文件<br>(b)实现过程</li>
-<li>不做任何处理，运行需求1中的wordcount程序，观察切片个数为5</li>
-<li>在WordcountDriver中增加如下代码，运行程序，并观察运行的切片个数为1<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果不设置InputFormat，它默认用的是TextInputFormat.class</span></span><br><span class="line"></span><br><span class="line">job.setInputFormatClass(CombineTextInputFormat.**<span class="class"><span class="keyword">class</span>**)</span>;</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.*setMaxInputSplitSize*(job, <span class="number">4</span>*<span class="number">1024</span>*<span class="number">1024</span>);<span class="comment">// 4m</span></span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.*setMinInputSplitSize*(job, <span class="number">2</span>*<span class="number">1024</span>*<span class="number">1024</span>);<span class="comment">// 2m</span></span><br></pre></td></tr></table></figure>
-注：在看number of splits时，和最大值(MaxSplitSize)有关、总体规律就是和低于最大值是一片、高于最大值1.5倍+，则为两片；高于最大值2倍以上则向下取整，比如文件大小65MB，切片最大值为4MB,那么切片为16个.总体来说，切片差值不超过1个，不影响整体性能</li>
+<li>补救措施：如果已经是大量的小文件在HDFS中了，可以使用另一种inputformat来做切片（CombineFileInputformat），它的切片逻辑跟<strong>TextInputformat</strong>不同,它可以将多个小文件从逻辑上规划到一个切片中，这样，多个小文件就可以交给一个maptask了</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果不设置InputFormat，它默认的用的是TextInputFormat.class</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*CombineTextInputFormat为系统自带的组件类</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * setMinInputSplitSize 中的2048是表示n个小文件之和不能大于2048</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * setMaxInputSplitSize 中的4096是     当满足setMinInputSplitSize中的2048情况下  在满足n+1个小文件之和不能大于4096</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">job.setInputFormatClass(CombineTextInputFormat<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.setMinInputSplitSize(job, <span class="number">2048</span>);</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.setMaxInputSplitSize(job, <span class="number">4096</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例"><a href="#2-示例" class="headerlink" title="(2).示例"></a>(2).示例</h5><p>(a)输入数据：准备5个小文件<br>(b)实现过程</p>
+<ul>
+<li>不做任何处理，运行需求1中的wordcount程序，观察切片个数为5</li>
+<li>在WordcountDriver中增加如下代码，运行程序，并观察运行的切片个数为1</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果不设置InputFormat，它默认用的是TextInputFormat.class</span></span><br><span class="line"></span><br><span class="line">job.setInputFormatClass(CombineTextInputFormat.**<span class="class"><span class="keyword">class</span>**)</span>;</span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.*setMaxInputSplitSize*(job, <span class="number">4</span>*<span class="number">1024</span>*<span class="number">1024</span>);<span class="comment">// 4m</span></span><br><span class="line"></span><br><span class="line">CombineTextInputFormat.*setMinInputSplitSize*(job, <span class="number">2</span>*<span class="number">1024</span>*<span class="number">1024</span>);<span class="comment">// 2m</span></span><br></pre></td></tr></table></figure>
+
+<p>注：在看number of splits时，和最大值(MaxSplitSize)有关、总体规律就是和低于最大值是一片、高于最大值1.5倍+，则为两片；高于最大值2倍以上则向下取整，比如文件大小65MB，切片最大值为4MB,那么切片为16个.总体来说，切片差值不超过1个，不影响整体性能</p>
 <h6 id="3-自定义Combiner实现步骤："><a href="#3-自定义Combiner实现步骤：" class="headerlink" title="(3).自定义Combiner实现步骤："></a>(3).自定义Combiner实现步骤：</h6><p>(a)自定义一个combiner继承Reducer，重写reduce方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordcountCombiner</span> <span class="keyword">extends</span> <span class="title">Reducer</span>&lt;<span class="title">Text</span>, <span class="title">IntWritable</span>, <span class="title">Text</span>, <span class="title">IntWritable</span>&gt;</span>&#123;</span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;IntWritable&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                     Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1 汇总操作</span></span><br><span class="line">              <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">              <span class="keyword">for</span>(IntWritable v :values)&#123;</span><br><span class="line">                     count = v.get();</span><br><span class="line">              &#125;</span><br><span class="line">        <span class="comment">// 2 写出</span></span><br><span class="line">              context.write(key, <span class="keyword">new</span> IntWritable(count));</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(b)在job驱动类中设置：  </p>
+
+<p>(b)在job驱动类中设置</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">job.setCombinerClass(WordcountCombiner<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
 
 <h3 id="五-ReduceTask工作机制"><a href="#五-ReduceTask工作机制" class="headerlink" title="五. ReduceTask工作机制"></a>五. ReduceTask工作机制</h3><h4 id="1-设置ReduceTask并行度（个数）"><a href="#1-设置ReduceTask并行度（个数）" class="headerlink" title="1.设置ReduceTask并行度（个数）"></a>1.设置ReduceTask并行度（个数）</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;reducetask的并行度同样影响整个job的执行并发度和执行效率，但与maptask的并发数由切片数决定不同，Reducetask数量的决定是可以直接手动设置：</p>
@@ -269,44 +275,44 @@
 <table>
 <thead>
 <tr>
-<th>maptask=16</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
+<th align="center">maptask=16</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Reduce task</td>
-<td>1</td>
-<td>5</td>
-<td>10</td>
-<td>15</td>
-<td>16</td>
-<td>20</td>
-<td>25</td>
-<td>30</td>
-<td>45</td>
-<td>60</td>
+<td align="center">Reduce task</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">10</td>
+<td align="center">15</td>
+<td align="center">16</td>
+<td align="center">20</td>
+<td align="center">25</td>
+<td align="center">30</td>
+<td align="center">45</td>
+<td align="center">60</td>
 </tr>
 <tr>
-<td>总时间</td>
-<td>892</td>
-<td>146</td>
-<td>110</td>
-<td>92</td>
-<td>88</td>
-<td>100</td>
-<td>128</td>
-<td>101</td>
-<td>145</td>
-<td>104</td>
+<td align="center">总时间</td>
+<td align="center">892</td>
+<td align="center">146</td>
+<td align="center">110</td>
+<td align="center">92</td>
+<td align="center">88</td>
+<td align="center">100</td>
+<td align="center">128</td>
+<td align="center">101</td>
+<td align="center">145</td>
+<td align="center">104</td>
 </tr>
 </tbody></table>
 <h4 id="4-ReduceTask工作机制"><a href="#4-ReduceTask工作机制" class="headerlink" title="4.ReduceTask工作机制"></a>4.ReduceTask工作机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTliYzNmZjE5MmJmYjczYTEucG5n?x-oss-process=image/format,png" alt="ReduceTask工作机制"></p>
@@ -329,6 +335,7 @@
 <h4 id="2-实操案例"><a href="#2-实操案例" class="headerlink" title="2.实操案例"></a>2.实操案例</h4><h3 id="九-计数器应用"><a href="#九-计数器应用" class="headerlink" title="九.计数器应用"></a>九.计数器应用</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Hadoop为每个作业维护若干内置计数器，以描述多项指标。例如，某些计数器记录已处理的字节数和记录数，使用户可监控已处理的输入数据量和已产生的输出数据量。</p>
 <h4 id="1-API"><a href="#1-API" class="headerlink" title="1.API"></a>1.API</h4><p>(1)采用枚举的方式统计计数</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> MyCounter&#123;MALFORORMED,NORMAL&#125;</span><br><span class="line"><span class="comment">//对枚举定义的自定义计数器加1</span></span><br><span class="line">context.getCounter(MyCounter.MALFORORMED).increment(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
 <p>(2)采用计数器组、计数器名称的方式统计</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">context.getCounter(<span class="string">"counterGroup"</span>, <span class="string">"countera"</span>).increment(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//组名和计数器名称随便起，但最好有意义。</span></span><br></pre></td></tr></table></figure>
 <p>(3)计数结果在程序运行后的控制台上查看。</p>

@@ -103,7 +103,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;压缩技术能够有效减少底层存储系统(HDFS)读写字节数。压缩提高了网络带宽和磁盘空间的效率。在Hadoop下，尤其是数据规模很大和工作负载密集的情况下，使用数据压缩显得非常重要。在这种情况下，I/O操作和网络数据传输要花大量的时间。还有，Shuffle与Merge过程同样也面临着巨大的I/O压力。</p>
+  <h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;压缩技术能够有效减少底层存储系统(HDFS)读写字节数。压缩提高了网络带宽和磁盘空间的效率。在Hadoop下，尤其是数据规模很大和工作负载密集的情况下，使用数据压缩显得非常重要。在这种情况下，I/O操作和网络数据传输要花大量的时间。还有，Shuffle与Merge过程同样也面临着巨大的I/O压力。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;鉴于磁盘I/O和网络带宽是Hadoop的宝贵资源，数据压缩对于节省资源、最小化磁盘I/O和网络传输非常有帮助。不过，尽管压缩与解压操作的CPU开销不高，其性能的提升和资源的节省并非没有代价。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;如果磁盘I/O和网络带宽影响了MapReduce作业性能，在任意MapReduce阶段启用压缩都可以改善端到端处理时间并减少I/O和网络流量。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;压缩Mapreduce的一种优化策略：通过压缩编码对Mapper或者Reducer的输出进行压缩，以减少磁盘IO，提高MR程序运行速度（但相应增加了cpu运算负担）</p>
@@ -112,60 +112,127 @@
 <li>(a)运算密集型的job，少用压缩</li>
 <li>(b)IO密集型的job，多用压缩</li>
 </ul>
-<h4 id="2-MR支持的压缩编码"><a href="#2-MR支持的压缩编码" class="headerlink" title="2 MR支持的压缩编码"></a>2 MR支持的压缩编码</h4><table>
+<h4 id="2-MR支持的压缩编码"><a href="#2-MR支持的压缩编码" class="headerlink" title="2.MR支持的压缩编码"></a>2.MR支持的压缩编码</h4><table>
 <thead>
 <tr>
-<th>压缩格式</th>
-<th>hadoop自带？</th>
-<th>算法</th>
-<th>文件扩展名</th>
-<th>是否可切分</th>
-<th>换成压缩格式后，原来的程序是否需要修改</th>
+<th align="center">压缩格式</th>
+<th align="center">hadoop自带?</th>
+<th align="center">算法</th>
+<th align="center">文件扩展名</th>
+<th align="center">是否可切分</th>
+<th align="center">换成压缩格式后，原来的程序是否需要修改</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>DEFAULT</td>
-<td>是，直接使用</td>
-<td>DEFAULT</td>
-<td>.deflate</td>
-<td>否</td>
-<td>和文本处理一样，不需要修改</td>
+<td align="center">DEFAULT</td>
+<td align="center">是，直接使用</td>
+<td align="center">DEFAULT</td>
+<td align="center">.deflate</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
 </tr>
 <tr>
-<td>Gzip</td>
-<td>是，直接使用</td>
-<td>DEFAULT</td>
-<td>.gz</td>
-<td>否</td>
-<td>和文本处理一样，不需要修改</td>
+<td align="center">Gzip</td>
+<td align="center">是，直接使用</td>
+<td align="center">DEFAULT</td>
+<td align="center">.gz</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
 </tr>
 <tr>
-<td>bzip2</td>
-<td>是，直接使用</td>
-<td>bzip2</td>
-<td>.bz2</td>
-<td>是</td>
-<td>和文本处理一样，不需要修改</td>
+<td align="center">bzip2</td>
+<td align="center">是，直接使用</td>
+<td align="center">bzip2</td>
+<td align="center">.bz2</td>
+<td align="center">是</td>
+<td align="center">和文本处理一样，不需要修改</td>
 </tr>
 <tr>
-<td>LZO</td>
-<td>否，需要安装</td>
-<td>LZO</td>
-<td>.lzo</td>
-<td>是</td>
-<td>需要建索引，还需要指定输入格式</td>
+<td align="center">LZO</td>
+<td align="center">否，需要安装</td>
+<td align="center">LZO</td>
+<td align="center">.lzo</td>
+<td align="center">是</td>
+<td align="center">需要建索引，还需要指定输入格式</td>
 </tr>
 <tr>
-<td>Snappy</td>
-<td>否，需要安装</td>
-<td>Snappy</td>
-<td>.snappy</td>
-<td>否</td>
-<td>和文本处理一样，不需要修改</td>
+<td align="center">Snappy</td>
+<td align="center">否，需要安装</td>
+<td align="center">Snappy</td>
+<td align="center">.snappy</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
 </tr>
 </tbody></table>
-<p>为了支持多种压缩/解压缩算法，Hadoop引入了编码/解码器，如下表所示<br>|压缩格式|对应的编码/解码器|<br>|-|-|<br>|DEFLATE|org.apache.hadoop.io.compress.DefaultCodec|<br>|gzip|org.apache.hadoop.io.compress.GzipCodec|<br>|bzip2|org.apache.hadoop.io.compress.BZip2Codec|<br>|LZO|com.hadoop.compression.lzo.LzopCodec|<br>|Snappy|org.apache.hadoop.io.compress.SnappyCodec|</p>
-<p>压缩性能的比较<br>|压缩算法|原始文件大小|压缩文件大小|压缩速度|解压速度|<br>|-|-|-|-|-|<br>|gzip|8.3GB|1.8GB|17.5MB/s|58MB/s|<br>|bzip2|8.3GB|1.1GB|2.4MB/s|9.5MB/s|<br>|LZO|8.3GB|2.9GB|49.3MB/s|74.6MB/s|<br><a href="http://google.github.io/snappy/" target="_blank" rel="noopener">http://google.github.io/snappy/</a></p>
+<p>为了支持多种压缩/解压缩算法，Hadoop引入了编码/解码器，如下表所示</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩格式</th>
+<th align="center">对应的编码/解码器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFLATE</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+</tr>
+<tr>
+<td align="center">gzip</td>
+<td align="center">org.apache.hadoop.io.compress.GzipCodec</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">org.apache.hadoop.io.compress.BZip2Codec</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">com.hadoop.compression.lzo.LzopCodec</td>
+</tr>
+<tr>
+<td align="center">Snappy</td>
+<td align="center">org.apache.hadoop.io.compress.SnappyCodec</td>
+</tr>
+</tbody></table>
+<p>压缩性能的比较</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩算法</th>
+<th align="center">原始文件大小</th>
+<th align="center">压缩文件大小</th>
+<th align="center">压缩速度</th>
+<th align="center">解压速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">gzip</td>
+<td align="center">8.3GB</td>
+<td align="center">1.8GB</td>
+<td align="center">17.5MB/s</td>
+<td align="center">58MB/s</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">8.3GB</td>
+<td align="center">1.1GB</td>
+<td align="center">2.4MB/s</td>
+<td align="center">9.5MB/s</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">8.3GB</td>
+<td align="center">2.9GB</td>
+<td align="center">49.3MB/s</td>
+<td align="center">74.6MB/s</td>
+</tr>
+<tr>
+<td align="center"><a href="http://google.github.io/snappy/" target="_blank" rel="noopener">http://google.github.io/snappy/</a></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h4 id="3-压缩方式选择"><a href="#3-压缩方式选择" class="headerlink" title="3 压缩方式选择"></a>3 压缩方式选择</h4><h5 id="1-Gzip压缩"><a href="#1-Gzip压缩" class="headerlink" title="(1) Gzip压缩"></a>(1) Gzip压缩</h5><ul>
 <li><p>优点：压缩率比较高，而且压缩/解压速度也比较快；hadoop本身支持，在应用中处理gzip格式的文件就和直接处理文本一样；大部分linux系统都自带gzip命令，使用方便。</p>
 </li>
@@ -199,47 +266,47 @@
 <table>
 <thead>
 <tr>
-<th>参数</th>
-<th>默认值</th>
-<th>阶段</th>
-<th>建议</th>
+<th align="center">参数</th>
+<th align="center">默认值</th>
+<th align="center">阶段</th>
+<th align="center">建议</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>io.compression.codecs  (在core-site.xml中配置)</td>
-<td>org.apache.hadoop.io.compress.DefaultCodec, org.apache.hadoop.io.compress.GzipCodec, org.apache.hadoop.io.compress.BZip2Codec</td>
-<td>输入压缩</td>
-<td>Hadoop使用文件扩展名判断是否支持某种编解码器</td>
+<td align="center">io.compression.codecs  (在core-site.xml中配置)</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec, org.apache.hadoop.io.compress.GzipCodec, org.apache.hadoop.io.compress.BZip2Codec</td>
+<td align="center">输入压缩</td>
+<td align="center">Hadoop使用文件扩展名判断是否支持某种编解码器</td>
 </tr>
 <tr>
-<td>mapreduce.map.output.compress（在mapred-site.xml中配置）</td>
-<td>false</td>
-<td>mapper输出</td>
-<td>这个参数设为true启用压缩</td>
+<td align="center">mapreduce.map.output.compress（在mapred-site.xml中配置）</td>
+<td align="center">false</td>
+<td align="center">mapper输出</td>
+<td align="center">这个参数设为true启用压缩</td>
 </tr>
 <tr>
-<td>mapreduce.map.output.compress.codec（在mapred-site.xml中配置）</td>
-<td>org.apache.hadoop.io.compress.DefaultCodec</td>
-<td>mapper输出</td>
-<td>使用LZO或snappy编解码器在此阶段压缩数据</td>
+<td align="center">mapreduce.map.output.compress.codec（在mapred-site.xml中配置）</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+<td align="center">mapper输出</td>
+<td align="center">使用LZO或snappy编解码器在此阶段压缩数据</td>
 </tr>
 <tr>
-<td>mapreduce.output.fileoutputformat.compress（在mapred-site.xml中配置)</td>
-<td>false</td>
-<td>reducer输出</td>
-<td>这个参数设为true启用压缩</td>
+<td align="center">mapreduce.output.fileoutputformat.compress（在mapred-site.xml中配置)</td>
+<td align="center">false</td>
+<td align="center">reducer输出</td>
+<td align="center">这个参数设为true启用压缩</td>
 </tr>
 <tr>
-<td>mapreduce.output.fileoutputformat.compress.codec（在mapred-site.xml中配置）</td>
-<td>org.apache.hadoop.io.compress. DefaultCodec</td>
-<td>reducer输出</td>
-<td>使用标准工具或者编解码器，如gzip和bzip2</td>
+<td align="center">mapreduce.output.fileoutputformat.compress.codec（在mapred-site.xml中配置）</td>
+<td align="center">org.apache.hadoop.io.compress. DefaultCodec</td>
+<td align="center">reducer输出</td>
+<td align="center">使用标准工具或者编解码器，如gzip和bzip2</td>
 </tr>
 <tr>
-<td>mapreduce.output.fileoutputformat.compress.type（在mapred-site.xml中配置）</td>
-<td>RECORD</td>
-<td>reducer输出</td>
-<td>SequenceFile输出使用的压缩类型：NONE和BLOCK</td>
+<td align="center">mapreduce.output.fileoutputformat.compress.type（在mapred-site.xml中配置）</td>
+<td align="center">RECORD</td>
+<td align="center">reducer输出</td>
+<td align="center">SequenceFile输出使用的压缩类型：NONE和BLOCK</td>
 </tr>
 </tbody></table>
 <h4 id="6-压缩实战"><a href="#6-压缩实战" class="headerlink" title="6 压缩实战"></a>6 压缩实战</h4> 

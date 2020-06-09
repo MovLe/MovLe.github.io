@@ -137,105 +137,105 @@
 <h4 id="6-常用的调优参数"><a href="#6-常用的调优参数" class="headerlink" title="6 常用的调优参数"></a>6 常用的调优参数</h4><h5 id="1-资源相关参数"><a href="#1-资源相关参数" class="headerlink" title="(1)资源相关参数"></a>(1)资源相关参数</h5><h6 id="a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）"><a href="#a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）" class="headerlink" title="(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）"></a>(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）</h6><table>
 <thead>
 <tr>
-<th>配置参数</th>
-<th>参数说明</th>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>mapreduce.map.memory.mb</td>
-<td>一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
+<td align="center">mapreduce.map.memory.mb</td>
+<td align="center">一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.memory.mb</td>
-<td>一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
+<td align="center">mapreduce.reduce.memory.mb</td>
+<td align="center">一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
 </tr>
 <tr>
-<td>mapreduce.map.cpu.vcores</td>
-<td>每个Map task可使用的最多cpu core数目，默认值: 1</td>
+<td align="center">mapreduce.map.cpu.vcores</td>
+<td align="center">每个Map task可使用的最多cpu core数目，默认值: 1</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.cpu.vcores</td>
-<td>每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
+<td align="center">mapreduce.reduce.cpu.vcores</td>
+<td align="center">每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.shuffle.parallelcopies</td>
-<td>每个reduce去map中拿数据的并行数。默认值是5</td>
+<td align="center">mapreduce.reduce.shuffle.parallelcopies</td>
+<td align="center">每个reduce去map中拿数据的并行数。默认值是5</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.shuffle.merge.percent</td>
-<td>buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
+<td align="center">mapreduce.reduce.shuffle.merge.percent</td>
+<td align="center">buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.shuffle.input.buffer.percent</td>
-<td>buffer大小占reduce可用内存的比例。默认值0.7</td>
+<td align="center">mapreduce.reduce.shuffle.input.buffer.percent</td>
+<td align="center">buffer大小占reduce可用内存的比例。默认值0.7</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.input.buffer.percent</td>
-<td>指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
+<td align="center">mapreduce.reduce.input.buffer.percent</td>
+<td align="center">指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
 </tr>
 </tbody></table>
 <h6 id="b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）"><a href="#b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）" class="headerlink" title="(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）"></a>(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）</h6><table>
 <thead>
 <tr>
-<th>配置参数</th>
-<th>参数说明</th>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>yarn.scheduler.minimum-allocation-mb      1024</td>
-<td>给应用程序container分配的最小内存</td>
+<td align="center">yarn.scheduler.minimum-allocation-mb      1024</td>
+<td align="center">给应用程序container分配的最小内存</td>
 </tr>
 <tr>
-<td>yarn.scheduler.maximum-allocation-mb      8192</td>
-<td>给应用程序container分配的最大内存</td>
+<td align="center">yarn.scheduler.maximum-allocation-mb      8192</td>
+<td align="center">给应用程序container分配的最大内存</td>
 </tr>
 <tr>
-<td>yarn.scheduler.minimum-allocation-vcores    1</td>
-<td>每个container申请的最小CPU核数</td>
+<td align="center">yarn.scheduler.minimum-allocation-vcores    1</td>
+<td align="center">每个container申请的最小CPU核数</td>
 </tr>
 <tr>
-<td>yarn.scheduler.maximum-allocation-vcores    32</td>
-<td>每个container申请的最大CPU核数</td>
+<td align="center">yarn.scheduler.maximum-allocation-vcores    32</td>
+<td align="center">每个container申请的最大CPU核数</td>
 </tr>
 <tr>
-<td>yarn.nodemanager.resource.memory-mb   8192</td>
-<td>给containers分配的最大物理内存</td>
+<td align="center">yarn.nodemanager.resource.memory-mb   8192</td>
+<td align="center">给containers分配的最大物理内存</td>
 </tr>
 </tbody></table>
 <h6 id="c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）"><a href="#c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）" class="headerlink" title="(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）"></a>(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）</h6><table>
 <thead>
 <tr>
-<th>配置参数</th>
-<th>参数说明</th>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>mapreduce.task.io.sort.mb   100</td>
-<td>shuffle的环形缓冲区大小，默认100m</td>
+<td align="center">mapreduce.task.io.sort.mb   100</td>
+<td align="center">shuffle的环形缓冲区大小，默认100m</td>
 </tr>
 <tr>
-<td>mapreduce.map.sort.spill.percent   0.8</td>
-<td>环形缓冲区溢出的阈值，默认80%</td>
+<td align="center">mapreduce.map.sort.spill.percent   0.8</td>
+<td align="center">环形缓冲区溢出的阈值，默认80%</td>
 </tr>
 </tbody></table>
 <h5 id="2-容错相关参数-mapreduce性能优化"><a href="#2-容错相关参数-mapreduce性能优化" class="headerlink" title="(2)容错相关参数(mapreduce性能优化)"></a>(2)容错相关参数(mapreduce性能优化)</h5><table>
 <thead>
 <tr>
-<th>配置参数</th>
-<th>参数说明</th>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>mapreduce.map.maxattempts</td>
-<td>每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+<td align="center">mapreduce.map.maxattempts</td>
+<td align="center">每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
 </tr>
 <tr>
-<td>mapreduce.reduce.maxattempts</td>
-<td>每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+<td align="center">mapreduce.reduce.maxattempts</td>
+<td align="center">每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
 </tr>
 <tr>
-<td>mapreduce.task.timeout</td>
-<td>Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
+<td align="center">mapreduce.task.timeout</td>
+<td align="center">Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
 </tr>
 </tbody></table>
 <h3 id="三-HDFS小文件优化方法"><a href="#三-HDFS小文件优化方法" class="headerlink" title="三. HDFS小文件优化方法"></a>三. HDFS小文件优化方法</h3><h4 id="1-HDFS小文件弊端"><a href="#1-HDFS小文件弊端" class="headerlink" title="1 HDFS小文件弊端"></a>1 HDFS小文件弊端</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS上每个文件都要在namenode上建立一个索引，这个索引的大小约为150byte，这样当小文件比较多的时候，就会产生很多的索引文件，一方面会大量占用namenode的内存空间，另一方面就是索引文件过大是的索引速度变慢。</p>

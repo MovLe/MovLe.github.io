@@ -113,19 +113,63 @@
 <li>可扩展：协议为了满足新的需求变化，所以控制客户端和服务器过程中，需要直接引进相应的协议，这些是新协议，原序列化方式能支持新的协议报文；</li>
 <li>互操作：能支持不同语言写的客户端和服务端进行交互；</li>
 </ul>
-<h4 id="5-常用数据序列化类型"><a href="#5-常用数据序列化类型" class="headerlink" title="5.常用数据序列化类型"></a>5.常用数据序列化类型</h4><p>常用的数据类型对应的hadoop数据序列化类型<br>|Java类型|Hadoop Writable类型|<br>|-|-|<br>|boolean|BooleanWritable|<br>|byte|ByteWritable|<br>|int|IntWritable|<br>|float|FloatWritable|<br>|long|LongWritable|<br>|double|DoubleWritable|<br>|string|Text|<br>|map|MapWritable|<br>|array|ArrayWritable|</p>
+<h4 id="5-常用数据序列化类型"><a href="#5-常用数据序列化类型" class="headerlink" title="5.常用数据序列化类型"></a>5.常用数据序列化类型</h4><p>常用的数据类型对应的hadoop数据序列化类型</p>
+<table>
+<thead>
+<tr>
+<th align="center">Java类型</th>
+<th align="center">Hadoop Writable类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">boolean</td>
+<td align="center">BooleanWritable</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">ByteWritable</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">IntWritable</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">FloatWritable</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">LongWritable</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">DoubleWritable</td>
+</tr>
+<tr>
+<td align="center">string</td>
+<td align="center">Text</td>
+</tr>
+<tr>
+<td align="center">map</td>
+<td align="center">MapWritable</td>
+</tr>
+<tr>
+<td align="center">array</td>
+<td align="center">ArrayWritable</td>
+</tr>
+</tbody></table>
 <h4 id="6-自定义bean对象实现序列化接口（Writable）"><a href="#6-自定义bean对象实现序列化接口（Writable）" class="headerlink" title="6 自定义bean对象实现序列化接口（Writable）"></a>6 自定义bean对象实现序列化接口（Writable）</h4><h5 id="1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"><a href="#1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项" class="headerlink" title="(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"></a>(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项</h5><p>(a)必须实现Writable接口</p>
 <p>(b)反序列化时，需要反射调用空参构造函数，所以必须有空参构造</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>(c )重写序列化方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">       out.writeLong(upFlow);</span><br><span class="line"></span><br><span class="line">       out.writeLong(downFlow);</span><br><span class="line"></span><br><span class="line">       out.writeLong(sumFlow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    out.writeLong(upFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(downFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(sumFlow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>(d)重写反序列化方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">       upFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">       downFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">       sumFlow = in.readLong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    upFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    downFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    sumFlow = in.readLong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>(e)注意反序列化的顺序和序列化的顺序完全一致</p>
 <p>(f)要想把结果显示在文件中，需要重写toString()，可用”\t”分开，方便后续用。</p>
 <p>(g)如果需要将自定义的bean放在key中传输，则还需要实现comparable接口，因为mapreduce框中的shuffle过程一定会对key进行排序。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(FlowBean o)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 倒序排列，从大到小</span></span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.sumFlow &gt; o.getSumFlow() ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(FlowBean o)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 倒序排列，从大到小</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sumFlow &gt; o.getSumFlow() ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reward-btn">
