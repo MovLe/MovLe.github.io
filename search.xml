@@ -1,155 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HDFS之DateNode工作机制</title>
-    <url>/blog/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="一-NameNode-amp-DataNode工作机制"><a href="#一-NameNode-amp-DataNode工作机制" class="headerlink" title="一.NameNode &amp; DataNode工作机制"></a>一.NameNode &amp; DataNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5YjZhZTllYzExZWFlNzEucG5n?x-oss-process=image/format,png" alt="Datanode工作机制"></p>
-<p>1.一个数据块在datanode上以文件形式存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳。</p>
-<p>2.DataNode启动后向namenode注册，通过后，周期性（1小时）的向namenode上报所有的块信息。</p>
-<p>3.心跳是每3秒一次，心跳返回结果带有namenode给该datanode的命令如复制块数据到另一台机器，或删除某个数据块。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用。</p>
-<p>4.集群运行中可以安全加入和退出一些机器</p>
-<h3 id="二-数据完整性"><a href="#二-数据完整性" class="headerlink" title="二.数据完整性"></a>二.数据完整性</h3><p>1.当DataNode读取block的时候，它会计算checksum校验和</p>
-<p>2.如果计算后的checksum，与block创建时值不一样，说明block已经损坏。</p>
-<p>3.client读取其他DataNode上的block.</p>
-<p>4.datanode在其文件创建后周期验证checksum校验和</p>
-<h3 id="三-掉线时限参数设置"><a href="#三-掉线时限参数设置" class="headerlink" title="三. 掉线时限参数设置"></a>三. 掉线时限参数设置</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;datanode进程死亡或者网络故障造成datanode无法与namenode通信，namenode不会立即把该节点判定为死亡，要经过一段时间，这段时间暂称作超时时长。HDFS默认的超时时长为10分钟+30秒。如果定义超时时间为timeout，则超时时长的计算公式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">timeout  &#x3D; 2 * dfs.namenode.heartbeat.recheck-interval + 10 * dfs.heartbeat.interval。</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;而默认的dfs.namenode.heartbeat.recheck-interval 大小为5分钟，dfs.heartbeat.interval默认为3秒。<br>&nbsp;&nbsp;&nbsp;&nbsp;需要注意的是hdfs-site.xml 配置文件中的heartbeat.recheck.interval的单位为毫秒，dfs.heartbeat.interval的单位为秒。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.heartbeat.recheck-interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>300000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span> dfs.heartbeat.interval <span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="四-DataNode的目录结构"><a href="#四-DataNode的目录结构" class="headerlink" title="四.DataNode的目录结构"></a>四.DataNode的目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;和namenode不同的是，datanode的存储目录是初始阶段自动创建的，不需要额外格式化。</p>
-<h4 id="1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号"><a href="#1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号" class="headerlink" title="1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号"></a>1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line">storageID=DS-1b998a1d-71a3-43d5-82dc-c0ff3294921b</span><br><span class="line">clusterID=CID-1f2bf8d1-5ad2-4202-af1c-6713ab381175</span><br><span class="line">cTime=0</span><br><span class="line">datanodeUuid=970b2daf-63b8-4e17-a514-d81741392165</span><br><span class="line">storageType=DATA_NODE</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
-<h4 id="2-具体解释"><a href="#2-具体解释" class="headerlink" title="2.具体解释"></a>2.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">storageID：存储id号</span><br><span class="line">clusterID集群id，全局唯一</span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line">datanodeUuid：datanode的唯一识别码</span><br><span class="line">storageType：存储类型</span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
-<h4 id="3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号"><a href="#3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号" class="headerlink" title="3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号"></a>3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">Mon May 08 16:30:19 CST 2017</span></span><br><span class="line">namespaceID=1933630176</span><br><span class="line">cTime=0</span><br><span class="line">blockpoolID=BP-97847618-192.168.10.102-1493726072779</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
-<h4 id="4-具体解释"><a href="#4-具体解释" class="headerlink" title="4.具体解释"></a>4.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID：是datanode首次访问namenode的时候从namenode处获取的storageID对每个datanode来说是唯一的（但对于单个datanode中所有存储目录来说则是相同的），namenode可用这个属性来区分不同datanode。</span><br><span class="line"></span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
-
-<h3 id="五-Datanode多目录配置"><a href="#五-Datanode多目录配置" class="headerlink" title="五.Datanode多目录配置"></a>五.Datanode多目录配置</h3><h4 id="1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"><a href="#1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。" class="headerlink" title="1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"></a>1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/data1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/data2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HDFS之HA高可用概述</title>
-    <url>/blog/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h3 id="一-HA概述"><a href="#一-HA概述" class="headerlink" title="一.HA概述"></a>一.HA概述</h3><p>1.所谓HA(2high available)，即高可用(7*24小时不中断服务)</p>
-<p>2.实现高可用最关键的策略是消除单点故障。HA严格来说应该分成各个组件的HA机制：HDFS的HA和YARN的HA。</p>
-<p>3.Hadoop2.0之前，在HDFS集群中NameNode存在单点故障(SPOF)</p>
-<p>4.NameNode主要在以下两个方面影响HDFS集群<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器发生意外，如宕机，集群将无法使用，直到管理员重启<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器需要升级，包括软件、硬件升级，此时集群也将无法使用<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS HA功能通过配置Active/Standby两个nameNodes实现在集群中对NameNode的热备来解决上述问题。如果出现故障，如机器崩溃或机器需要升级维护，这时可通过此种方式将NameNode很快的切换到另外一台机器。</p>
-<h3 id="二-HDFS-HA工作机制"><a href="#二-HDFS-HA工作机制" class="headerlink" title="二. HDFS-HA工作机制"></a>二. HDFS-HA工作机制</h3><p><strong>通过双namenode消除单点故障</strong></p>
-<h4 id="1-HDFS-HA工作要点"><a href="#1-HDFS-HA工作要点" class="headerlink" title="1.HDFS-HA工作要点"></a>1.HDFS-HA工作要点</h4><h5 id="1-元数据管理方式需要改变："><a href="#1-元数据管理方式需要改变：" class="headerlink" title="(1).元数据管理方式需要改变："></a>(1).元数据管理方式需要改变：</h5><ul>
-<li>内存中各自保存一份元数据；</li>
-<li>Edits日志只有Active状态的namenode节点可以做写操作；</li>
-<li>两个namenode都可以读取edits；</li>
-<li>共享的edits放在一个共享存储中管理(qjournal和NFS两个主流实现)</li>
-</ul>
-<h5 id="2-需要一个状态管理功能模块"><a href="#2-需要一个状态管理功能模块" class="headerlink" title="(2).需要一个状态管理功能模块"></a>(2).需要一个状态管理功能模块</h5><p>实现了一个zkfailover，常驻在每一个namenode所在的节点，每一个zkfailover负责监控自己所在namenode节点，利用zk进行状态标识，当需要进行状态切换时，由zkfailover来负责切换，切换时需要防止brain split现象的发生。</p>
-<h5 id="3-必须保证两个NameNode之间能够ssh无密码登录。"><a href="#3-必须保证两个NameNode之间能够ssh无密码登录。" class="headerlink" title="(3).必须保证两个NameNode之间能够ssh无密码登录。"></a>(3).必须保证两个NameNode之间能够ssh无密码登录。</h5><h5 id="4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务"><a href="#4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务" class="headerlink" title="(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务"></a>(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务</h5><h4 id="2-HDFS-HA自动故障转移工作机制"><a href="#2-HDFS-HA自动故障转移工作机制" class="headerlink" title="2.HDFS-HA自动故障转移工作机制"></a>2.HDFS-HA自动故障转移工作机制</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;可以使用命令hdfs haadmin -failover手动进行故障转移，在该模式下，即使现役NameNode已经失效，系统也不会自动从现役NameNode转移到待机NameNode。自动故障转移为HDFS部署增加了两个新组件：ZooKeeper和ZKFailoverController（ZKFC）进程。</p>
-<p>(1)ZooKeeper是维护少量协调数据，通知客户端这些数据的改变和监视客户端故障的高可用服务。HA的自动故障转移依赖于ZooKeeper的以下功能：</p>
-<ul>
-<li>(a)故障检测：集群中的每个NameNode在ZooKeeper中维护了一个持久会话，如果机器崩溃，ZooKeeper中的会话将终止，ZooKeeper通知另一个NameNode需要触发故障转移。</li>
-<li>(b)现役NameNode选择：ZooKeeper提供了一个简单的机制用于唯一的选择一个节点为active状态。如果目前现役NameNode崩溃，另一个节点可能从ZooKeeper获得特殊的排外锁以表明它应该成为现役NameNode。</li>
-</ul>
-<p>(2)ZKFC是自动故障转移中的另一个新组件，是ZooKeeper的客户端，也监视和管理NameNode的状态。每个运行NameNode的主机也运行了一个ZKFC进程，ZKFC负责：</p>
-<ul>
-<li>(a)健康监测：ZKFC使用一个健康检查命令定期地ping与之在相同主机的NameNode，只要该NameNode及时地回复健康状态，ZKFC认为该节点是健康的。如果该节点崩溃，冻结或进入不健康状态，健康监测器标识该节点为非健康的。</li>
-<li>(b)ZooKeeper会话管理：当本地NameNode是健康的，ZKFC保持一个在ZooKeeper中打开的会话。如果本地NameNode处于active状态，ZKFC也保持一个特殊的znode锁，该锁使用了ZooKeeper对短暂节点的支持，如果会话终止，锁节点将自动删除。</li>
-<li>(c )基于ZooKeeper的选择：如果本地NameNode是健康的，且ZKFC发现没有其它的节点当前持有znode锁，它将为自己获取该锁。如果成功，则它已经赢得了选择，并负责运行故障转移进程以使它的本地NameNode为active。故障转移进程与前面描述的手动故障转移相似，首先如果必要保护之前的现役NameNode，然后本地NameNode转换为active状态。</li>
-</ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0NjJiZWZiZTcwOGY2M2MucG5n?x-oss-process=image/format,png" alt="HDFS-HA故障转移机制"></p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-        <tag>HDFS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HDFS之NameNode工作机制</title>
-    <url>/blog/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="一-NameNode-amp-Secondary-NameNode工作机制"><a href="#一-NameNode-amp-Secondary-NameNode工作机制" class="headerlink" title="一.NameNode&amp;Secondary NameNode工作机制"></a>一.NameNode&amp;Secondary NameNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdlNmM2NTBjNDZjYTIyMjIucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="1-第一阶段：namenode启动"><a href="#1-第一阶段：namenode启动" class="headerlink" title="1.第一阶段：namenode启动"></a>1.第一阶段：namenode启动</h4><p>(a)第一次启动namenode格式化后，创建fsimage和edits文件。如果不是第一次启动，直接加载编辑日志(edits)和镜像文件(fsimage)到内存</p>
-<p>(b)客户端对元数据进行增删改的请求</p>
-<p>(c)namenode记录操作日志，更新滚动日志</p>
-<p>(d)namenode在内存中对数据进行增删改查</p>
-<h4 id="2-第二阶段：Secondary-NameNode工作"><a href="#2-第二阶段：Secondary-NameNode工作" class="headerlink" title="2.第二阶段：Secondary NameNode工作"></a>2.第二阶段：Secondary NameNode工作</h4><p>(a)Secondary NameNode询问namenode是否需要checkpoint。直接带回namenode是否检查结果。</p>
-<p>(b)Secondary NameNode请求执行checkpoint。</p>
-<p>(c)namenode滚动正在写的edits日志</p>
-<p>(d)将滚动前的编辑日志和镜像文件拷贝到Secondary NameNode</p>
-<p>(e)Secondary NameNode加载编辑日志和镜像文件到内存，并合并。</p>
-<p>(f)生成新的镜像文件fsimage.chkpoint</p>
-<p>(g)拷贝fsimage.chkpoint到namenode</p>
-<p>(h)namenode将fsimage.chkpoint重新命名成fsimage</p>
-<h4 id="3-chkpoint检查时间参数设置"><a href="#3-chkpoint检查时间参数设置" class="headerlink" title="3.chkpoint检查时间参数设置"></a>3.chkpoint检查时间参数设置</h4><p>(1)通常情况下，SecondaryNameNode每隔一小时执行一次。</p>
-<p>[hdfs-default.xml]</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.period<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>(2)一分钟检查一次操作次数，当操作次数达到1百万时，SecondaryNameNode执行一次。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.txns<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>操作动作次数<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.check.period<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>60<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span> 1分钟检查一次操作次数<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="二-镜像文件和编辑日志文件"><a href="#二-镜像文件和编辑日志文件" class="headerlink" title="二.镜像文件和编辑日志文件"></a>二.镜像文件和编辑日志文件</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;namenode被格式化之后，将在/opt/module/hadoop-2.8.4/data/dfs/name/current目录中产生如下文件,注只能在NameNode所在的节点才能找到此文件<br>&nbsp;&nbsp;&nbsp;&nbsp;可以执行find . -name edits* 来查找文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">edits_0000000000000000000</span><br><span class="line">fsimage_0000000000000000000.md5</span><br><span class="line">seen_txid</span><br><span class="line">VERSION</span><br></pre></td></tr></table></figure>
-<p>(1)Fsimage文件：HDFS文件系统元数据的一个永久性的检查点，其中包含HDFS文件系统的所有目录和文件idnode的序列化信息。 </p>
-<p>(2)Edits文件：存放HDFS文件系统的所有更新操作的路径，文件系统客户端执行的所有写操作首先会被记录到edits文件中。 </p>
-<p>(3)seen_txid文件保存的是一个数字，就是最后一个edits_的数字</p>
-<p>(4)每次Namenode启动的时候都会将fsimage文件读入内存，并从00001开始到seen_txid中记录的数字依次执行每个edits里面的更新操作，保证内存中的元数据信息是最新的、同步的，可以看成Namenode启动的时候就将fsimage和edits文件进行了合并。</p>
-<h4 id="2-oiv查看fsimage文件"><a href="#2-oiv查看fsimage文件" class="headerlink" title="2.oiv查看fsimage文件"></a>2.oiv查看fsimage文件</h4><p>(1)查看oiv和oev命令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlmM2IxN2VjMTJlYzA2MDMucG5n?x-oss-process=image/format,png" alt="hdfs"></p>
-<p>(2)基本语法</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs oiv -p 文件类型 -i镜像文件 -o 转换后文件输出路径</span><br></pre></td></tr></table></figure>
-<p>(3)案例实操</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd</span><br><span class="line">/opt/module/hadoop-2.8.4/data/dfs/name/current</span><br><span class="line"></span><br><span class="line">hdfs oiv -p XML -i fsimage_0000000000000000316 -o /opt/fsimage.xml</span><br><span class="line"></span><br><span class="line">cat /opt/module/hadoop-2.8.4/fsimage.xml</span><br></pre></td></tr></table></figure>
-<p>将显示的xml文件内容拷贝到IDEA中创建的xml文件中，并格式化。</p>
-<h4 id="3-oev查看edits文件"><a href="#3-oev查看edits文件" class="headerlink" title="3.oev查看edits文件"></a>3.oev查看edits文件</h4><p>(1)基本语法</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs oev -p 文件类型 -i编辑日志 -o 转换后文件输出路径</span><br><span class="line"></span><br><span class="line">-p	–processor &lt;arg&gt;   指定转换类型: binary (二进制格式), xml (默认，XML格式),stats</span><br><span class="line">-i	–inputFile &lt;arg&gt;     输入edits文件，如果是xml后缀，表示XML格式，其他表示二进制</span><br><span class="line">-o 	–outputFile &lt;arg&gt; 输出文件，如果存在，则会覆盖</span><br></pre></td></tr></table></figure>
-
-<h3 id="三-滚动编辑日志"><a href="#三-滚动编辑日志" class="headerlink" title="三.滚动编辑日志"></a>三.滚动编辑日志</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;正常情况HDFS文件系统有更新操作时，就会滚动编辑日志。也可以用命令强制滚动编辑日志。<br>(1)滚动编辑日志（前提必须启动集群）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs dfsadmin -rollEdits</span><br></pre></td></tr></table></figure>
-<p>举例：原文件名edits_inprogress_0000000000000000010<br>执行以下命令后<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU3ZGM0OTZhNzgxMzRkMzIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<p>(2)镜像文件什么时候产生<br>Namenode启动时加载镜像文件和编辑日志</p>
-<h3 id="四-namenode版本号"><a href="#四-namenode版本号" class="headerlink" title="四.namenode版本号"></a>四.namenode版本号</h3><h4 id="1-查看namenode版本号"><a href="#1-查看namenode版本号" class="headerlink" title="1.查看namenode版本号"></a>1.查看namenode版本号</h4><p>在/opt/module/hadoop-2.8.4/data/dfs/name/current这个目录下查看VERSION</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID=1778616660</span><br><span class="line">clusterID=CID-bc165781-d10a-46b2-9b6f-3beb1d988fe0</span><br><span class="line">cTime=1552918200296</span><br><span class="line">storageType=NAME_NODE</span><br><span class="line">blockpoolID=BP-274621862-192.168.1.111-1552918200296</span><br><span class="line">layoutVersion=-63</span><br></pre></td></tr></table></figure>
-<h4 id="2-namenode版本号具体解释"><a href="#2-namenode版本号具体解释" class="headerlink" title="2.namenode版本号具体解释"></a>2.namenode版本号具体解释</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY5OTNjYTEyNGI5Yjg0MjgucG5n?x-oss-process=image/format,png" alt=""></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(1)namespaceID在HDFS上，会有多个Namenode，所以不同Namenode的namespaceID是不同的，分别管理一组blockpoolID。</span><br><span class="line"></span><br><span class="line">(2)clusterID集群id，全局唯一</span><br><span class="line"></span><br><span class="line">(3)cTime属性标记了namenode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">(4)storageType属性说明该存储目录包含的是namenode的数据结构。</span><br><span class="line"></span><br><span class="line">(5)blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">(6)layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br><span class="line"></span><br><span class="line">(7)storageID (存储ID)：是DataNode的ID,不唯一</span><br></pre></td></tr></table></figure>
-
-<h3 id="五-SecondaryNameNode目录结构"><a href="#五-SecondaryNameNode目录结构" class="headerlink" title="五.SecondaryNameNode目录结构"></a>五.SecondaryNameNode目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Secondary NameNode用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。<br>&nbsp;&nbsp;&nbsp;&nbsp;在/opt/module/hadoop-2.8.4/data/dfs/namesecondary/current这个目录中查看SecondaryNameNode目录结构</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">edits_0000000000000000001-0000000000000000002</span><br><span class="line">fsimage_0000000000000000002</span><br><span class="line">fsimage_0000000000000000002.md5</span><br><span class="line">VERSION</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;SecondaryNameNode的namesecondary/current目录和主namenode的current目录的布局相同。<br>&nbsp;&nbsp;&nbsp;&nbsp;好处：在主namenode发生故障时（假设没有及时备份数据），可以从SecondaryNameNode恢复数据。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">方法一：将SecondaryNameNode中数据拷贝到namenode存储数据的目录；</span><br><span class="line">方法二：使用-importCheckpoint选项启动namenode守护进程，从而将SecondaryNameNode中数据拷贝到namenode目录中。</span><br></pre></td></tr></table></figure>
-
-<h3 id="六-集群安全模式操作"><a href="#六-集群安全模式操作" class="headerlink" title="六.集群安全模式操作"></a>六.集群安全模式操作</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Namenode启动时，首先将映像文件（fsimage）载入内存，并执行编辑日志（edits）中的各项操作。一旦在内存中成功建立文件系统元数据的映像，则创建一个新的fsimage文件和一个空的编辑日志。此时，namenode开始监听datanode请求。但是此刻，namenode运行在安全模式，即namenode的文件系统对于客户端来说是只读的。<br>&nbsp;&nbsp;&nbsp;&nbsp;系统中的数据块的位置并不是由namenode维护的，而是以块列表的形式存储在datanode中。在系统的正常操作期间，namenode会在内存中保留所有块位置的映射信息。在安全模式下，各个datanode会向namenode发送最新的块列表信息，namenode了解到足够多的块位置信息之后，即可高效运行文件系统。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果满足“最小副本条件”，namenode会在30秒钟之后就退出安全模式。所谓的最小副本条件指的是在整个文件系统中99.9%的块满足最小副本级别（默认值：dfs.replication.min=1）。在启动一个刚刚格式化的HDFS集群时，因为系统中还没有任何块，所以namenode不会进入安全模式。</p>
-<h4 id="2-基本语法"><a href="#2-基本语法" class="headerlink" title="2.基本语法"></a>2.基本语法</h4><p>集群处于安全模式，不能执行重要操作（写操作）。集群启动完成后，自动退出安全模式。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hdfs dfsadmin -safemode get		（功能描述：查看安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode enter  	（功能描述：进入安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode leave	（功能描述：离开安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode wait	（功能描述：等待安全模式状态）</span><br></pre></td></tr></table></figure>
-
-<h3 id="七-Namenode多目录配置"><a href="#七-Namenode多目录配置" class="headerlink" title="七.Namenode多目录配置"></a>七.Namenode多目录配置</h3><h4 id="1-namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。"><a href="#1-namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。" class="headerlink" title="1.namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。"></a>1.namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/name1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/name2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>(1)步骤：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">a.停止集群 删除data 和 logs  rm -rf data/* logs/*</span><br><span class="line"></span><br><span class="line">b.hdfs namenode -format</span><br><span class="line"></span><br><span class="line">c.start-dfs.sh</span><br><span class="line"></span><br><span class="line">d.去展示</span><br></pre></td></tr></table></figure>
-
-
-
-<p>(2)<strong>具体解释：</strong></p>
-<p><strong>格式化做了哪些事情？</strong></p>
-<p>在NameNode节点上，有两个最重要的路径，分别被用来存储元数据信息和操作日志，而这两个路径来自于配置文件，它们对应的属性分别是dfs.name.dir和dfs.name.edits.dir，同时，它们默认的路径均是/tmp/hadoop/dfs/name。格式化时，NameNode会清空两个目录下的所有文件，之后，格式化会在目录dfs.name.dir下创建文件</p>
-<p><strong>hadoop.tmp.dir</strong> 这个配置，会让dfs.name.dir和dfs.name.edits.dir会让两个目录的文件生成在一个目录里</p>
-<p>(3)<strong>思考2</strong>：非NN上如果生成了name1和name2，那么他和NN上生成得有没有差别？</p>
-<p>答：有区别、NN节点上会产生新得edits_XXX，非NN不会fsimage会更新，而非NN不会，只会产生一个仅初始化得到得fsimage，不会生成edits,更不会发生日志滚动。</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS-HA高可用集群配置</title>
-    <url>/blog/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</url>
+    <url>/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="一-HDFS-HA集群配置"><a href="#一-HDFS-HA集群配置" class="headerlink" title="一. HDFS-HA集群配置"></a>一. HDFS-HA集群配置</h3><h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1 环境准备"></a>1 环境准备</h4><p>(1)修改IP<br>(2)修改主机名及主机名和IP地址的映射<br>(3)关闭防火墙<br>(4)ssh免密登录<br>(5)安装JDK，配置环境变量等<br>(6)hadoop1,hadoop2,hadoop3集群已经配置好zookeeper集群</p>
 <h4 id="2-规划集群"><a href="#2-规划集群" class="headerlink" title="2 规划集群"></a>2 规划集群</h4><table>
 <thead>
@@ -253,8 +106,123 @@
       </tags>
   </entry>
   <entry>
+    <title>HDFS之HA高可用概述</title>
+    <url>/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h3 id="一-HA概述"><a href="#一-HA概述" class="headerlink" title="一.HA概述"></a>一.HA概述</h3><p>1.所谓HA(2high available)，即高可用(7*24小时不中断服务)</p>
+<p>2.实现高可用最关键的策略是消除单点故障。HA严格来说应该分成各个组件的HA机制：HDFS的HA和YARN的HA。</p>
+<p>3.Hadoop2.0之前，在HDFS集群中NameNode存在单点故障(SPOF)</p>
+<p>4.NameNode主要在以下两个方面影响HDFS集群<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器发生意外，如宕机，集群将无法使用，直到管理员重启<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器需要升级，包括软件、硬件升级，此时集群也将无法使用<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS HA功能通过配置Active/Standby两个nameNodes实现在集群中对NameNode的热备来解决上述问题。如果出现故障，如机器崩溃或机器需要升级维护，这时可通过此种方式将NameNode很快的切换到另外一台机器。</p>
+<h3 id="二-HDFS-HA工作机制"><a href="#二-HDFS-HA工作机制" class="headerlink" title="二. HDFS-HA工作机制"></a>二. HDFS-HA工作机制</h3><p><strong>通过双namenode消除单点故障</strong></p>
+<h4 id="1-HDFS-HA工作要点"><a href="#1-HDFS-HA工作要点" class="headerlink" title="1.HDFS-HA工作要点"></a>1.HDFS-HA工作要点</h4><h5 id="1-元数据管理方式需要改变："><a href="#1-元数据管理方式需要改变：" class="headerlink" title="(1).元数据管理方式需要改变："></a>(1).元数据管理方式需要改变：</h5><ul>
+<li>内存中各自保存一份元数据；</li>
+<li>Edits日志只有Active状态的namenode节点可以做写操作；</li>
+<li>两个namenode都可以读取edits；</li>
+<li>共享的edits放在一个共享存储中管理(qjournal和NFS两个主流实现)</li>
+</ul>
+<h5 id="2-需要一个状态管理功能模块"><a href="#2-需要一个状态管理功能模块" class="headerlink" title="(2).需要一个状态管理功能模块"></a>(2).需要一个状态管理功能模块</h5><p>实现了一个zkfailover，常驻在每一个namenode所在的节点，每一个zkfailover负责监控自己所在namenode节点，利用zk进行状态标识，当需要进行状态切换时，由zkfailover来负责切换，切换时需要防止brain split现象的发生。</p>
+<h5 id="3-必须保证两个NameNode之间能够ssh无密码登录。"><a href="#3-必须保证两个NameNode之间能够ssh无密码登录。" class="headerlink" title="(3).必须保证两个NameNode之间能够ssh无密码登录。"></a>(3).必须保证两个NameNode之间能够ssh无密码登录。</h5><h5 id="4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务"><a href="#4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务" class="headerlink" title="(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务"></a>(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务</h5><h4 id="2-HDFS-HA自动故障转移工作机制"><a href="#2-HDFS-HA自动故障转移工作机制" class="headerlink" title="2.HDFS-HA自动故障转移工作机制"></a>2.HDFS-HA自动故障转移工作机制</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;可以使用命令hdfs haadmin -failover手动进行故障转移，在该模式下，即使现役NameNode已经失效，系统也不会自动从现役NameNode转移到待机NameNode。自动故障转移为HDFS部署增加了两个新组件：ZooKeeper和ZKFailoverController（ZKFC）进程。</p>
+<p>(1)ZooKeeper是维护少量协调数据，通知客户端这些数据的改变和监视客户端故障的高可用服务。HA的自动故障转移依赖于ZooKeeper的以下功能：</p>
+<ul>
+<li>(a)故障检测：集群中的每个NameNode在ZooKeeper中维护了一个持久会话，如果机器崩溃，ZooKeeper中的会话将终止，ZooKeeper通知另一个NameNode需要触发故障转移。</li>
+<li>(b)现役NameNode选择：ZooKeeper提供了一个简单的机制用于唯一的选择一个节点为active状态。如果目前现役NameNode崩溃，另一个节点可能从ZooKeeper获得特殊的排外锁以表明它应该成为现役NameNode。</li>
+</ul>
+<p>(2)ZKFC是自动故障转移中的另一个新组件，是ZooKeeper的客户端，也监视和管理NameNode的状态。每个运行NameNode的主机也运行了一个ZKFC进程，ZKFC负责：</p>
+<ul>
+<li>(a)健康监测：ZKFC使用一个健康检查命令定期地ping与之在相同主机的NameNode，只要该NameNode及时地回复健康状态，ZKFC认为该节点是健康的。如果该节点崩溃，冻结或进入不健康状态，健康监测器标识该节点为非健康的。</li>
+<li>(b)ZooKeeper会话管理：当本地NameNode是健康的，ZKFC保持一个在ZooKeeper中打开的会话。如果本地NameNode处于active状态，ZKFC也保持一个特殊的znode锁，该锁使用了ZooKeeper对短暂节点的支持，如果会话终止，锁节点将自动删除。</li>
+<li>(c )基于ZooKeeper的选择：如果本地NameNode是健康的，且ZKFC发现没有其它的节点当前持有znode锁，它将为自己获取该锁。如果成功，则它已经赢得了选择，并负责运行故障转移进程以使它的本地NameNode为active。故障转移进程与前面描述的手动故障转移相似，首先如果必要保护之前的现役NameNode，然后本地NameNode转换为active状态。</li>
+</ul>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0NjJiZWZiZTcwOGY2M2MucG5n?x-oss-process=image/format,png" alt="HDFS-HA故障转移机制"></p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+        <tag>HDFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HDFS之NameNode工作机制</title>
+    <url>/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="一-NameNode-amp-Secondary-NameNode工作机制"><a href="#一-NameNode-amp-Secondary-NameNode工作机制" class="headerlink" title="一.NameNode&amp;Secondary NameNode工作机制"></a>一.NameNode&amp;Secondary NameNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdlNmM2NTBjNDZjYTIyMjIucG5n?x-oss-process=image/format,png" alt=""></p>
+<h4 id="1-第一阶段：namenode启动"><a href="#1-第一阶段：namenode启动" class="headerlink" title="1.第一阶段：namenode启动"></a>1.第一阶段：namenode启动</h4><p>(a)第一次启动namenode格式化后，创建fsimage和edits文件。如果不是第一次启动，直接加载编辑日志(edits)和镜像文件(fsimage)到内存</p>
+<p>(b)客户端对元数据进行增删改的请求</p>
+<p>(c)namenode记录操作日志，更新滚动日志</p>
+<p>(d)namenode在内存中对数据进行增删改查</p>
+<h4 id="2-第二阶段：Secondary-NameNode工作"><a href="#2-第二阶段：Secondary-NameNode工作" class="headerlink" title="2.第二阶段：Secondary NameNode工作"></a>2.第二阶段：Secondary NameNode工作</h4><p>(a)Secondary NameNode询问namenode是否需要checkpoint。直接带回namenode是否检查结果。</p>
+<p>(b)Secondary NameNode请求执行checkpoint。</p>
+<p>(c)namenode滚动正在写的edits日志</p>
+<p>(d)将滚动前的编辑日志和镜像文件拷贝到Secondary NameNode</p>
+<p>(e)Secondary NameNode加载编辑日志和镜像文件到内存，并合并。</p>
+<p>(f)生成新的镜像文件fsimage.chkpoint</p>
+<p>(g)拷贝fsimage.chkpoint到namenode</p>
+<p>(h)namenode将fsimage.chkpoint重新命名成fsimage</p>
+<h4 id="3-chkpoint检查时间参数设置"><a href="#3-chkpoint检查时间参数设置" class="headerlink" title="3.chkpoint检查时间参数设置"></a>3.chkpoint检查时间参数设置</h4><p>(1)通常情况下，SecondaryNameNode每隔一小时执行一次。</p>
+<p>[hdfs-default.xml]</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.period<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>3600<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>(2)一分钟检查一次操作次数，当操作次数达到1百万时，SecondaryNameNode执行一次。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.txns<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>操作动作次数<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.check.period<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>60<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span> 1分钟检查一次操作次数<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="二-镜像文件和编辑日志文件"><a href="#二-镜像文件和编辑日志文件" class="headerlink" title="二.镜像文件和编辑日志文件"></a>二.镜像文件和编辑日志文件</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;namenode被格式化之后，将在/opt/module/hadoop-2.8.4/data/dfs/name/current目录中产生如下文件,注只能在NameNode所在的节点才能找到此文件<br>&nbsp;&nbsp;&nbsp;&nbsp;可以执行find . -name edits* 来查找文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">edits_0000000000000000000</span><br><span class="line">fsimage_0000000000000000000.md5</span><br><span class="line">seen_txid</span><br><span class="line">VERSION</span><br></pre></td></tr></table></figure>
+<p>(1)Fsimage文件：HDFS文件系统元数据的一个永久性的检查点，其中包含HDFS文件系统的所有目录和文件idnode的序列化信息。 </p>
+<p>(2)Edits文件：存放HDFS文件系统的所有更新操作的路径，文件系统客户端执行的所有写操作首先会被记录到edits文件中。 </p>
+<p>(3)seen_txid文件保存的是一个数字，就是最后一个edits_的数字</p>
+<p>(4)每次Namenode启动的时候都会将fsimage文件读入内存，并从00001开始到seen_txid中记录的数字依次执行每个edits里面的更新操作，保证内存中的元数据信息是最新的、同步的，可以看成Namenode启动的时候就将fsimage和edits文件进行了合并。</p>
+<h4 id="2-oiv查看fsimage文件"><a href="#2-oiv查看fsimage文件" class="headerlink" title="2.oiv查看fsimage文件"></a>2.oiv查看fsimage文件</h4><p>(1)查看oiv和oev命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlmM2IxN2VjMTJlYzA2MDMucG5n?x-oss-process=image/format,png" alt="hdfs"></p>
+<p>(2)基本语法</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs oiv -p 文件类型 -i镜像文件 -o 转换后文件输出路径</span><br></pre></td></tr></table></figure>
+<p>(3)案例实操</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd</span><br><span class="line">/opt/module/hadoop-2.8.4/data/dfs/name/current</span><br><span class="line"></span><br><span class="line">hdfs oiv -p XML -i fsimage_0000000000000000316 -o /opt/fsimage.xml</span><br><span class="line"></span><br><span class="line">cat /opt/module/hadoop-2.8.4/fsimage.xml</span><br></pre></td></tr></table></figure>
+<p>将显示的xml文件内容拷贝到IDEA中创建的xml文件中，并格式化。</p>
+<h4 id="3-oev查看edits文件"><a href="#3-oev查看edits文件" class="headerlink" title="3.oev查看edits文件"></a>3.oev查看edits文件</h4><p>(1)基本语法</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs oev -p 文件类型 -i编辑日志 -o 转换后文件输出路径</span><br><span class="line"></span><br><span class="line">-p	–processor &lt;arg&gt;   指定转换类型: binary (二进制格式), xml (默认，XML格式),stats</span><br><span class="line">-i	–inputFile &lt;arg&gt;     输入edits文件，如果是xml后缀，表示XML格式，其他表示二进制</span><br><span class="line">-o 	–outputFile &lt;arg&gt; 输出文件，如果存在，则会覆盖</span><br></pre></td></tr></table></figure>
+
+<h3 id="三-滚动编辑日志"><a href="#三-滚动编辑日志" class="headerlink" title="三.滚动编辑日志"></a>三.滚动编辑日志</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;正常情况HDFS文件系统有更新操作时，就会滚动编辑日志。也可以用命令强制滚动编辑日志。<br>(1)滚动编辑日志（前提必须启动集群）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs dfsadmin -rollEdits</span><br></pre></td></tr></table></figure>
+<p>举例：原文件名edits_inprogress_0000000000000000010<br>执行以下命令后<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU3ZGM0OTZhNzgxMzRkMzIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>(2)镜像文件什么时候产生<br>Namenode启动时加载镜像文件和编辑日志</p>
+<h3 id="四-namenode版本号"><a href="#四-namenode版本号" class="headerlink" title="四.namenode版本号"></a>四.namenode版本号</h3><h4 id="1-查看namenode版本号"><a href="#1-查看namenode版本号" class="headerlink" title="1.查看namenode版本号"></a>1.查看namenode版本号</h4><p>在/opt/module/hadoop-2.8.4/data/dfs/name/current这个目录下查看VERSION</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID=1778616660</span><br><span class="line">clusterID=CID-bc165781-d10a-46b2-9b6f-3beb1d988fe0</span><br><span class="line">cTime=1552918200296</span><br><span class="line">storageType=NAME_NODE</span><br><span class="line">blockpoolID=BP-274621862-192.168.1.111-1552918200296</span><br><span class="line">layoutVersion=-63</span><br></pre></td></tr></table></figure>
+<h4 id="2-namenode版本号具体解释"><a href="#2-namenode版本号具体解释" class="headerlink" title="2.namenode版本号具体解释"></a>2.namenode版本号具体解释</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY5OTNjYTEyNGI5Yjg0MjgucG5n?x-oss-process=image/format,png" alt=""></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">(1)namespaceID在HDFS上，会有多个Namenode，所以不同Namenode的namespaceID是不同的，分别管理一组blockpoolID。</span><br><span class="line"></span><br><span class="line">(2)clusterID集群id，全局唯一</span><br><span class="line"></span><br><span class="line">(3)cTime属性标记了namenode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">(4)storageType属性说明该存储目录包含的是namenode的数据结构。</span><br><span class="line"></span><br><span class="line">(5)blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">(6)layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br><span class="line"></span><br><span class="line">(7)storageID (存储ID)：是DataNode的ID,不唯一</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-SecondaryNameNode目录结构"><a href="#五-SecondaryNameNode目录结构" class="headerlink" title="五.SecondaryNameNode目录结构"></a>五.SecondaryNameNode目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Secondary NameNode用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。<br>&nbsp;&nbsp;&nbsp;&nbsp;在/opt/module/hadoop-2.8.4/data/dfs/namesecondary/current这个目录中查看SecondaryNameNode目录结构</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">edits_0000000000000000001-0000000000000000002</span><br><span class="line">fsimage_0000000000000000002</span><br><span class="line">fsimage_0000000000000000002.md5</span><br><span class="line">VERSION</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;SecondaryNameNode的namesecondary/current目录和主namenode的current目录的布局相同。<br>&nbsp;&nbsp;&nbsp;&nbsp;好处：在主namenode发生故障时（假设没有及时备份数据），可以从SecondaryNameNode恢复数据。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">方法一：将SecondaryNameNode中数据拷贝到namenode存储数据的目录；</span><br><span class="line">方法二：使用-importCheckpoint选项启动namenode守护进程，从而将SecondaryNameNode中数据拷贝到namenode目录中。</span><br></pre></td></tr></table></figure>
+
+<h3 id="六-集群安全模式操作"><a href="#六-集群安全模式操作" class="headerlink" title="六.集群安全模式操作"></a>六.集群安全模式操作</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Namenode启动时，首先将映像文件（fsimage）载入内存，并执行编辑日志（edits）中的各项操作。一旦在内存中成功建立文件系统元数据的映像，则创建一个新的fsimage文件和一个空的编辑日志。此时，namenode开始监听datanode请求。但是此刻，namenode运行在安全模式，即namenode的文件系统对于客户端来说是只读的。<br>&nbsp;&nbsp;&nbsp;&nbsp;系统中的数据块的位置并不是由namenode维护的，而是以块列表的形式存储在datanode中。在系统的正常操作期间，namenode会在内存中保留所有块位置的映射信息。在安全模式下，各个datanode会向namenode发送最新的块列表信息，namenode了解到足够多的块位置信息之后，即可高效运行文件系统。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果满足“最小副本条件”，namenode会在30秒钟之后就退出安全模式。所谓的最小副本条件指的是在整个文件系统中99.9%的块满足最小副本级别（默认值：dfs.replication.min=1）。在启动一个刚刚格式化的HDFS集群时，因为系统中还没有任何块，所以namenode不会进入安全模式。</p>
+<h4 id="2-基本语法"><a href="#2-基本语法" class="headerlink" title="2.基本语法"></a>2.基本语法</h4><p>集群处于安全模式，不能执行重要操作（写操作）。集群启动完成后，自动退出安全模式。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hdfs dfsadmin -safemode get		（功能描述：查看安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode enter  	（功能描述：进入安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode leave	（功能描述：离开安全模式状态）</span><br><span class="line">bin/hdfs dfsadmin -safemode wait	（功能描述：等待安全模式状态）</span><br></pre></td></tr></table></figure>
+
+<h3 id="七-Namenode多目录配置"><a href="#七-Namenode多目录配置" class="headerlink" title="七.Namenode多目录配置"></a>七.Namenode多目录配置</h3><h4 id="1-namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。"><a href="#1-namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。" class="headerlink" title="1.namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。"></a>1.namenode的本地目录可以配置成多个，且每个目录存放内容相同，增加了可靠性。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/name1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/name2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>(1)步骤：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">a.停止集群 删除data 和 logs  rm -rf data/* logs/*</span><br><span class="line"></span><br><span class="line">b.hdfs namenode -format</span><br><span class="line"></span><br><span class="line">c.start-dfs.sh</span><br><span class="line"></span><br><span class="line">d.去展示</span><br></pre></td></tr></table></figure>
+
+
+
+<p>(2)<strong>具体解释：</strong></p>
+<p><strong>格式化做了哪些事情？</strong></p>
+<p>在NameNode节点上，有两个最重要的路径，分别被用来存储元数据信息和操作日志，而这两个路径来自于配置文件，它们对应的属性分别是dfs.name.dir和dfs.name.edits.dir，同时，它们默认的路径均是/tmp/hadoop/dfs/name。格式化时，NameNode会清空两个目录下的所有文件，之后，格式化会在目录dfs.name.dir下创建文件</p>
+<p><strong>hadoop.tmp.dir</strong> 这个配置，会让dfs.name.dir和dfs.name.edits.dir会让两个目录的文件生成在一个目录里</p>
+<p>(3)<strong>思考2</strong>：非NN上如果生成了name1和name2，那么他和NN上生成得有没有差别？</p>
+<p>答：有区别、NN节点上会产生新得edits_XXX，非NN不会fsimage会更新，而非NN不会，只会产生一个仅初始化得到得fsimage，不会生成edits,更不会发生日志滚动。</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS基础概念以及HDFS命令行操作</title>
-    <url>/blog/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</url>
+    <url>/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h3 id="一-HDFS基础概念"><a href="#一-HDFS基础概念" class="headerlink" title="一.HDFS基础概念"></a>一.HDFS基础概念</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>HDFS，它是一个文件系统，全称：Hadoop Distributed File System，用于存储文件通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。</p>
 <h4 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h4><p>(1)HDFS集群包括，NameNode和DataNode以及Secondary Namenode。</p>
 <p>(2)NameNode负责管理整个文件系统的元数据，以及每一个路径（文件）所对应的数据块信息。</p>
@@ -310,7 +278,7 @@
   </entry>
   <entry>
     <title>HDFS的其他功能</title>
-    <url>/blog/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/</url>
+    <url>/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<h3 id="一-集群间数据拷贝"><a href="#一-集群间数据拷贝" class="headerlink" title="一.集群间数据拷贝"></a>一.集群间数据拷贝</h3><h4 id="1-scp实现两个远程主机之间的文件复制"><a href="#1-scp实现两个远程主机之间的文件复制" class="headerlink" title="1.scp实现两个远程主机之间的文件复制"></a>1.scp实现两个远程主机之间的文件复制</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp -r hello.txt [root@bigdata111:/user/itstar/hello.txt](mailto:root@bigdata111:/user/itstar/hello.txt)          // 推 push</span><br><span class="line">scp -r [root@bigdata112:/user/itstar/hello.txt  hello.txt](mailto:root@hadoop103:/user/atguigu/hello.txt%20%20hello.txt)        // 拉 pull</span><br><span class="line">scp -r root@bigdata112:/opt/module/hadoop-2.8.4/LICENSE.txt root@bigdata113:/opt/module/hadoop-2.8.4/LICENSE.txt   //是通过本地主机中转实现两个远程主机的文件复制；如果在两个远程主机之间ssh没有配置的情况下可以使用该方式。</span><br></pre></td></tr></table></figure>
 <h4 id="2-采用discp命令实现两个hadoop集群之间的递归数据复制-注-不用设置其他，直接写IP"><a href="#2-采用discp命令实现两个hadoop集群之间的递归数据复制-注-不用设置其他，直接写IP" class="headerlink" title="2.采用discp命令实现两个hadoop集群之间的递归数据复制(注:不用设置其他，直接写IP)"></a>2.采用discp命令实现两个hadoop集群之间的递归数据复制(注:不用设置其他，直接写IP)</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop distcp hdfs://192.168.1.51:9000/LICENSE.txt hdfs://192.168.1.111:9000/HAHA</span><br></pre></td></tr></table></figure>
 <h3 id="二-Hadoop存档"><a href="#二-Hadoop存档" class="headerlink" title="二.Hadoop存档"></a>二.Hadoop存档</h3><h4 id="1-理论概述"><a href="#1-理论概述" class="headerlink" title="1.理论概述"></a>1.理论概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每个文件均按块存储，每个块的元数据存储在namenode的内存中，因此hadoop存储小文件会非常低效。因为大量的小文件会耗尽namenode中的大部分内存。但注意，存储小文件所需要的磁盘容量和存储这些文件原始内容所需要的磁盘空间相比也不会增多。例如，一个1MB的文件以大小为128MB的块存储，使用的是1MB的磁盘空间，而不是128MB。<br>&nbsp;&nbsp;&nbsp;&nbsp;Hadoop存档文件或HAR文件，是一个更高效的文件存档工具，它将文件存入HDFS块，在减少namenode内存使用的同时，允许对文件进行透明的访问。具体说来，Hadoop存档文件可以用作MapReduce的输入。</p>
@@ -338,8 +306,40 @@
       </tags>
   </entry>
   <entry>
+    <title>HDFS之DateNode工作机制</title>
+    <url>/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="一-NameNode-amp-DataNode工作机制"><a href="#一-NameNode-amp-DataNode工作机制" class="headerlink" title="一.NameNode &amp; DataNode工作机制"></a>一.NameNode &amp; DataNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5YjZhZTllYzExZWFlNzEucG5n?x-oss-process=image/format,png" alt="Datanode工作机制"></p>
+<p>1.一个数据块在datanode上以文件形式存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳。</p>
+<p>2.DataNode启动后向namenode注册，通过后，周期性（1小时）的向namenode上报所有的块信息。</p>
+<p>3.心跳是每3秒一次，心跳返回结果带有namenode给该datanode的命令如复制块数据到另一台机器，或删除某个数据块。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用。</p>
+<p>4.集群运行中可以安全加入和退出一些机器</p>
+<h3 id="二-数据完整性"><a href="#二-数据完整性" class="headerlink" title="二.数据完整性"></a>二.数据完整性</h3><p>1.当DataNode读取block的时候，它会计算checksum校验和</p>
+<p>2.如果计算后的checksum，与block创建时值不一样，说明block已经损坏。</p>
+<p>3.client读取其他DataNode上的block.</p>
+<p>4.datanode在其文件创建后周期验证checksum校验和</p>
+<h3 id="三-掉线时限参数设置"><a href="#三-掉线时限参数设置" class="headerlink" title="三. 掉线时限参数设置"></a>三. 掉线时限参数设置</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;datanode进程死亡或者网络故障造成datanode无法与namenode通信，namenode不会立即把该节点判定为死亡，要经过一段时间，这段时间暂称作超时时长。HDFS默认的超时时长为10分钟+30秒。如果定义超时时间为timeout，则超时时长的计算公式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">timeout  &#x3D; 2 * dfs.namenode.heartbeat.recheck-interval + 10 * dfs.heartbeat.interval。</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;而默认的dfs.namenode.heartbeat.recheck-interval 大小为5分钟，dfs.heartbeat.interval默认为3秒。<br>&nbsp;&nbsp;&nbsp;&nbsp;需要注意的是hdfs-site.xml 配置文件中的heartbeat.recheck.interval的单位为毫秒，dfs.heartbeat.interval的单位为秒。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.heartbeat.recheck-interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>300000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span> dfs.heartbeat.interval <span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四-DataNode的目录结构"><a href="#四-DataNode的目录结构" class="headerlink" title="四.DataNode的目录结构"></a>四.DataNode的目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;和namenode不同的是，datanode的存储目录是初始阶段自动创建的，不需要额外格式化。</p>
+<h4 id="1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号"><a href="#1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号" class="headerlink" title="1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号"></a>1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line">storageID=DS-1b998a1d-71a3-43d5-82dc-c0ff3294921b</span><br><span class="line">clusterID=CID-1f2bf8d1-5ad2-4202-af1c-6713ab381175</span><br><span class="line">cTime=0</span><br><span class="line">datanodeUuid=970b2daf-63b8-4e17-a514-d81741392165</span><br><span class="line">storageType=DATA_NODE</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
+<h4 id="2-具体解释"><a href="#2-具体解释" class="headerlink" title="2.具体解释"></a>2.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">storageID：存储id号</span><br><span class="line">clusterID集群id，全局唯一</span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line">datanodeUuid：datanode的唯一识别码</span><br><span class="line">storageType：存储类型</span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
+<h4 id="3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号"><a href="#3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号" class="headerlink" title="3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号"></a>3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">Mon May 08 16:30:19 CST 2017</span></span><br><span class="line">namespaceID=1933630176</span><br><span class="line">cTime=0</span><br><span class="line">blockpoolID=BP-97847618-192.168.10.102-1493726072779</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
+<h4 id="4-具体解释"><a href="#4-具体解释" class="headerlink" title="4.具体解释"></a>4.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID：是datanode首次访问namenode的时候从namenode处获取的storageID对每个datanode来说是唯一的（但对于单个datanode中所有存储目录来说则是相同的），namenode可用这个属性来区分不同datanode。</span><br><span class="line"></span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-Datanode多目录配置"><a href="#五-Datanode多目录配置" class="headerlink" title="五.Datanode多目录配置"></a>五.Datanode多目录配置</h3><h4 id="1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"><a href="#1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。" class="headerlink" title="1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"></a>1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/data1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/data2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS的读写数据流程</title>
-    <url>/blog/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</url>
+    <url>/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="一-HDFS写数据流程"><a href="#一-HDFS写数据流程" class="headerlink" title="一.HDFS写数据流程"></a>一.HDFS写数据流程</h3><h4 id="1-剖析文件写入"><a href="#1-剖析文件写入" class="headerlink" title="1.剖析文件写入"></a>1.剖析文件写入</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQxNTJlNGQ2MzQ5MjY0MDIucG5n?x-oss-process=image/format,png" alt="HDFS的写数据流程"></p>
 <p>(1)客户端向namenode请求上传文件，namenode检查目标文件是否已存在，父目录是否存在。</p>
 <p>(2)namenode返回是否可以上传。</p>
@@ -374,7 +374,7 @@
   </entry>
   <entry>
     <title>Hadoop之优化</title>
-    <url>/blog/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/</url>
+    <url>/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h3 id="一-MapReduce-跑的慢的原因"><a href="#一-MapReduce-跑的慢的原因" class="headerlink" title="一.MapReduce 跑的慢的原因"></a>一.MapReduce 跑的慢的原因</h3><p>Mapreduce 程序效率的瓶颈在于两点：</p>
 <h4 id="1-计算机性能"><a href="#1-计算机性能" class="headerlink" title="1.计算机性能"></a>1.计算机性能</h4><p>CPU、内存、磁盘健康、网络</p>
 <h4 id="2-I-O-操作优化"><a href="#2-I-O-操作优化" class="headerlink" title="2.I/O 操作优化"></a>2.I/O 操作优化</h4><p>(1)数据倾斜<br>(2)map和reduce数设置不合理<br>(3)map运行时间太长，导致reduce等待过久<br>(4)小文件过多<br>(5)大量的不可分块的超大文件<br>(6)spill次数过多<br>(7)merge次数过多等。</p>
@@ -525,7 +525,7 @@
   </entry>
   <entry>
     <title>Hadoop之数据压缩</title>
-    <url>/blog/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/</url>
+    <url>/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/</url>
     <content><![CDATA[<h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;压缩技术能够有效减少底层存储系统(HDFS)读写字节数。压缩提高了网络带宽和磁盘空间的效率。在Hadoop下，尤其是数据规模很大和工作负载密集的情况下，使用数据压缩显得非常重要。在这种情况下，I/O操作和网络数据传输要花大量的时间。还有，Shuffle与Merge过程同样也面临着巨大的I/O压力。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;鉴于磁盘I/O和网络带宽是Hadoop的宝贵资源，数据压缩对于节省资源、最小化磁盘I/O和网络传输非常有帮助。不过，尽管压缩与解压操作的CPU开销不高，其性能的提升和资源的节省并非没有代价。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;如果磁盘I/O和网络带宽影响了MapReduce作业性能，在任意MapReduce阶段启用压缩都可以改善端到端处理时间并减少I/O和网络流量。</p>
@@ -742,7 +742,7 @@
   </entry>
   <entry>
     <title>Hadoop之通过API操作HDFS</title>
-    <url>/blog/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</url>
+    <url>/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</url>
     <content><![CDATA[<h3 id="HDFS客户端操作"><a href="#HDFS客户端操作" class="headerlink" title="HDFS客户端操作"></a>HDFS客户端操作</h3><h3 id="一-IDEA环境准备"><a href="#一-IDEA环境准备" class="headerlink" title="一.IDEA环境准备"></a>一.IDEA环境准备</h3><h4 id="1-修改-MAVEN-HOME-conf-settings-xml"><a href="#1-修改-MAVEN-HOME-conf-settings-xml" class="headerlink" title="1.修改$MAVEN_HOME/conf/settings.xml"></a>1.修改$MAVEN_HOME/conf/settings.xml</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">  <span class="comment">&lt;!--本地仓库所在位置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>F:\m2\repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--使用阿里云镜像去下载Jar包，速度更快--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--本地配置JDK8版本--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">profile</span>&gt;</span>  </span><br><span class="line">		  <span class="tag">&lt;<span class="name">id</span>&gt;</span>jdk-1.8<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </span><br><span class="line">		   <span class="tag">&lt;<span class="name">activation</span>&gt;</span>  </span><br><span class="line">		     <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span>  </span><br><span class="line">		     <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span>  </span><br><span class="line">		   <span class="tag">&lt;/<span class="name">activation</span>&gt;</span>  </span><br><span class="line">			<span class="tag">&lt;<span class="name">properties</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.compilerVersion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="2-Maven准备-在在项目文件pom-xml文件中添加"><a href="#2-Maven准备-在在项目文件pom-xml文件中添加" class="headerlink" title="2.Maven准备,在在项目文件pom.xml文件中添加"></a>2.Maven准备,在在项目文件pom.xml文件中添加</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-hdfs<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.16.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/junit/junit --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -788,7 +788,7 @@
   </entry>
   <entry>
     <title>Hadoop基础介绍</title>
-    <url>/blog/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
+    <url>/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<h3 id="一-Hadoop概述"><a href="#一-Hadoop概述" class="headerlink" title="一.Hadoop概述"></a>一.Hadoop概述</h3><h4 id="1-Hadoop的优势"><a href="#1-Hadoop的优势" class="headerlink" title="1.Hadoop的优势"></a>1.Hadoop的优势</h4><ul>
 <li><p>高可靠性：<br>因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
 </li>
@@ -1176,8 +1176,72 @@
       </tags>
   </entry>
   <entry>
+    <title>Hadoop-全分布模式搭建</title>
+    <url>/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><h5 id="1-安装好linux操作系统"><a href="#1-安装好linux操作系统" class="headerlink" title="(1)安装好linux操作系统"></a>(1)安装好linux操作系统</h5><h5 id="2-关闭防火墙"><a href="#2-关闭防火墙" class="headerlink" title="(2)关闭防火墙"></a>(2)关闭防火墙</h5><h5 id="3-在linux上安装JDK"><a href="#3-在linux上安装JDK" class="headerlink" title="(3)在linux上安装JDK"></a>(3)在linux上安装JDK</h5><h5 id="4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆"><a href="#4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆" class="headerlink" title="(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆"></a>(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆</h5><h4 id="2-解压Hadoop压缩包并配置环境变量"><a href="#2-解压Hadoop压缩包并配置环境变量" class="headerlink" title="2.解压Hadoop压缩包并配置环境变量"></a>2.解压Hadoop压缩包并配置环境变量</h4><h5 id="1-将Hadoop安装包拷贝到-opt-software文件目录下"><a href="#1-将Hadoop安装包拷贝到-opt-software文件目录下" class="headerlink" title="(1)将Hadoop安装包拷贝到/opt/software文件目录下"></a>(1)将Hadoop安装包拷贝到/opt/software文件目录下</h5><h5 id="2-将Hadoop安装包解压到-opt-module文件目录下"><a href="#2-将Hadoop安装包解压到-opt-module文件目录下" class="headerlink" title="(2)将Hadoop安装包解压到/opt/module文件目录下"></a>(2)将Hadoop安装包解压到/opt/module文件目录下</h5><p>命令为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module          //将hadoop-2.8.4.tar.gz解压到/opt/module目录下</span><br></pre></td></tr></table></figure>
+<h5 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="(3)配置环境变量"></a>(3)配置环境变量</h5><h6 id="a-修改环境变量配置文件"><a href="#a-修改环境变量配置文件" class="headerlink" title="(a)修改环境变量配置文件"></a>(a)修改环境变量配置文件</h6><p>修改命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
+<p>添加的内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME</span><br><span class="line">PATH=<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
+<h6 id="b-使环境变量生效"><a href="#b-使环境变量生效" class="headerlink" title="(b)使环境变量生效"></a>(b)使环境变量生效</h6><p>输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h4><h5 id="1-修改hadoop-env-sh"><a href="#1-修改hadoop-env-sh" class="headerlink" title="(1)修改hadoop-env.sh"></a>(1)修改hadoop-env.sh</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRmYmMyMDg1MDM4MWJhNzkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
+<h5 id="2-修改hdfs-site-xml"><a href="#2-修改hdfs-site-xml" class="headerlink" title="(2)修改hdfs-site.xml"></a>(2)修改hdfs-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/etc/hadoop              //进入etc/hadoop目录</span><br><span class="line"></span><br><span class="line">vi hdfs-site.xml                          // 修改hdfs-site.xml文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置数据块的冗余度，默认是3--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hadoop3:50090&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 配置HDFS的权限检查，默认是<span class="literal">true</span>--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;  </span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3MTdiMjc4NWY0NjJlYTYucG5n?x-oss-process=image/format,png" alt="hdfs-site.xml"></p>
+<h5 id="3-修改core-site-xml"><a href="#3-修改core-site-xml" class="headerlink" title="(3)修改core-site.xml"></a>(3)修改core-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi core-site.xml</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置HDFS的主节点，namenode地址，9000是RPC通信端口--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop2:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;!--配置HDFS数据块和元数据保存的目录,一定要修改 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/opt/module/hadoop-2.8.4/data/tmp&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM5OGJmYzI2ZmUzZTcxOTkucG5n?x-oss-process=image/format,png" alt="core-site.xml"></p>
+<h5 id="4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来"><a href="#4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来" class="headerlink" title="(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)"></a>(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)</h5><p>命令：    </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml       //从mapred-site.xml.template转化</span><br><span class="line">    </span><br><span class="line">vi mapred-site.xml             //修改mapred-site.xml 文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置MR程序运行的框架，Yarn--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2YmFiZjA5OTJmODAzMzQucG5n?x-oss-process=image/format,png" alt="mapred-site.xml"></p>
+<h5 id="5-修改yarn-site-xml"><a href="#5-修改yarn-site-xml" class="headerlink" title="(5)修改yarn-site.xml"></a>(5)修改yarn-site.xml</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi yarn-site.xml</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置Yarn的节点--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hadoop2&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!--NodeManager执行MR任务的方式是Shuffle洗牌--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYyNmQzOGY2NDI0NGNlZDgucG5n?x-oss-process=image/format,png" alt="yarn-site.xml"></p>
+<h5 id="6-修改slaves"><a href="#6-修改slaves" class="headerlink" title="(6)修改slaves"></a>(6)修改slaves</h5><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hadoop3            //hadoop3作为从节点</span><br><span class="line">hadoop4            //hadoop4作为从节点</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNhNzBlZWI4MjM1NDhkZmYucG5n?x-oss-process=image/format,png" alt="slaves"></p>
+<h4 id="4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化"><a href="#4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化" class="headerlink" title="4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)"></a>4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)</h4><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/data/tmp         //这里是step3配置的HDFS数据库和元数据存储目录</span><br><span class="line"></span><br><span class="line">hdfs namenode -format                  //格式化</span><br></pre></td></tr></table></figure>
+
+<p>验证是否成功，成功后回显示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Storage: Storage directory /opt/module/hadoop-2.8.4/tmp/dfs/name has been successfully formatted</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcyNzA1NmY3ZmYzMzEwNTEucG5n?x-oss-process=image/format,png" alt="验证格式化成功"></p>
+<p><strong>注意</strong><br>重复格式化，hadoop.tmp.dir 先停止集群，然后在删除tmp文件夹，再重新新建tmp文件夹，重新格式化，然后再启动集群</p>
+<h4 id="5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："><a href="#5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：" class="headerlink" title="5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："></a>5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：</h4><p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop3:/opt/moudle/         </span><br><span class="line"></span><br><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop4:/opt/moudle/</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-启动Hadoop集群"><a href="#6-启动Hadoop集群" class="headerlink" title="6.启动Hadoop集群"></a>6.启动Hadoop集群</h4><h5 id="1-启动"><a href="#1-启动" class="headerlink" title="(1)启动"></a>(1)启动</h5><p>输入命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">start-all.sh             //hadoop2中启动，因为此机器是主节点</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZGFhZTc2MmQ5YmU5NmIucG5n?x-oss-process=image/format,png" alt="启动"></p>
+<h5 id="2-验证是否启动："><a href="#2-验证是否启动：" class="headerlink" title="(2)验证是否启动："></a>(2)验证是否启动：</h5><p>hadoop2:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzZmE0MTk4ODA4NjBjMzQucG5n?x-oss-process=image/format,png" alt="hadoop2"><br>hadoop3:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU2ZWRiY2Y4ZWNmMTc1ODUucG5n?x-oss-process=image/format,png" alt="hadoop3"><br>hadoop4:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2ZTM5Nzg0MzI5MTAxOWIucG5n?x-oss-process=image/format,png" alt="hadoop4"></p>
+<p>与规划的相同，故Hadoop全分布安装成功</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hadoop序列化</title>
-    <url>/blog/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <url>/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</url>
     <content><![CDATA[<h4 id="1-为什么要序列化？"><a href="#1-为什么要序列化？" class="headerlink" title="1 为什么要序列化？"></a>1 为什么要序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来说，“活的”对象只生存在内存里，关机断电就没有了。而且“活的”对象只能由本地的进程使用，不能被发送到网络上的另外一台计算机。 然而序列化可以存储“活的”对象，可以将“活的”对象发送到远程计算机。</p>
 <h4 id="2-什么是序列化？"><a href="#2-什么是序列化？" class="headerlink" title="2 什么是序列化？"></a>2 什么是序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;序列化就是把内存中的对象，转换成字节序列（或其他数据传输协议）以便于存储（持久化）和网络传输。<br>反序列化就是将收到字节序列（或其他数据传输协议）或者是硬盘的持久化数据，转换成内存中的对象。</p>
 <h4 id="3-为什么不用Java的序列化？"><a href="#3-为什么不用Java的序列化？" class="headerlink" title="3 为什么不用Java的序列化？"></a>3 为什么不用Java的序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Java的序列化是一个重量级序列化框架（Serializable），一个对象被序列化后，会附带很多额外的信息（各种校验信息，header，继承体系等），不便于在网络中高效传输。所以，hadoop自己开发了一套序列化机制（Writable），精简、高效。</p>
@@ -1253,72 +1317,32 @@
       </tags>
   </entry>
   <entry>
-    <title>Hadoop-全分布模式搭建</title>
-    <url>/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><h5 id="1-安装好linux操作系统"><a href="#1-安装好linux操作系统" class="headerlink" title="(1)安装好linux操作系统"></a>(1)安装好linux操作系统</h5><h5 id="2-关闭防火墙"><a href="#2-关闭防火墙" class="headerlink" title="(2)关闭防火墙"></a>(2)关闭防火墙</h5><h5 id="3-在linux上安装JDK"><a href="#3-在linux上安装JDK" class="headerlink" title="(3)在linux上安装JDK"></a>(3)在linux上安装JDK</h5><h5 id="4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆"><a href="#4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆" class="headerlink" title="(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆"></a>(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆</h5><h4 id="2-解压Hadoop压缩包并配置环境变量"><a href="#2-解压Hadoop压缩包并配置环境变量" class="headerlink" title="2.解压Hadoop压缩包并配置环境变量"></a>2.解压Hadoop压缩包并配置环境变量</h4><h5 id="1-将Hadoop安装包拷贝到-opt-software文件目录下"><a href="#1-将Hadoop安装包拷贝到-opt-software文件目录下" class="headerlink" title="(1)将Hadoop安装包拷贝到/opt/software文件目录下"></a>(1)将Hadoop安装包拷贝到/opt/software文件目录下</h5><h5 id="2-将Hadoop安装包解压到-opt-module文件目录下"><a href="#2-将Hadoop安装包解压到-opt-module文件目录下" class="headerlink" title="(2)将Hadoop安装包解压到/opt/module文件目录下"></a>(2)将Hadoop安装包解压到/opt/module文件目录下</h5><p>命令为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module          //将hadoop-2.8.4.tar.gz解压到/opt/module目录下</span><br></pre></td></tr></table></figure>
-<h5 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="(3)配置环境变量"></a>(3)配置环境变量</h5><h6 id="a-修改环境变量配置文件"><a href="#a-修改环境变量配置文件" class="headerlink" title="(a)修改环境变量配置文件"></a>(a)修改环境变量配置文件</h6><p>修改命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
-<p>添加的内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME</span><br><span class="line">PATH=<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH</span><br></pre></td></tr></table></figure>
-<h6 id="b-使环境变量生效"><a href="#b-使环境变量生效" class="headerlink" title="(b)使环境变量生效"></a>(b)使环境变量生效</h6><p>输入命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
-<h4 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h4><h5 id="1-修改hadoop-env-sh"><a href="#1-修改hadoop-env-sh" class="headerlink" title="(1)修改hadoop-env.sh"></a>(1)修改hadoop-env.sh</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRmYmMyMDg1MDM4MWJhNzkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
-<h5 id="2-修改hdfs-site-xml"><a href="#2-修改hdfs-site-xml" class="headerlink" title="(2)修改hdfs-site.xml"></a>(2)修改hdfs-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/etc/hadoop              //进入etc/hadoop目录</span><br><span class="line"></span><br><span class="line">vi hdfs-site.xml                          // 修改hdfs-site.xml文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置数据块的冗余度，默认是3--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;2&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hadoop3:50090&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!-- 配置HDFS的权限检查，默认是<span class="literal">true</span>--&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;  </span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3MTdiMjc4NWY0NjJlYTYucG5n?x-oss-process=image/format,png" alt="hdfs-site.xml"></p>
-<h5 id="3-修改core-site-xml"><a href="#3-修改core-site-xml" class="headerlink" title="(3)修改core-site.xml"></a>(3)修改core-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi core-site.xml</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置HDFS的主节点，namenode地址，9000是RPC通信端口--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hdfs://hadoop2:9000&lt;/value&gt;</span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;!--配置HDFS数据块和元数据保存的目录,一定要修改 --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;/opt/module/hadoop-2.8.4/data/tmp&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM5OGJmYzI2ZmUzZTcxOTkucG5n?x-oss-process=image/format,png" alt="core-site.xml"></p>
-<h5 id="4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来"><a href="#4-修改mapred-site-xml-默认是没有的，需要从mapred-site-xml-template复制转化而来" class="headerlink" title="(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)"></a>(4)修改mapred-site.xml(默认是没有的，需要从mapred-site.xml.template复制转化而来)</h5><p>命令：    </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml       //从mapred-site.xml.template转化</span><br><span class="line">    </span><br><span class="line">vi mapred-site.xml             //修改mapred-site.xml 文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置MR程序运行的框架，Yarn--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2YmFiZjA5OTJmODAzMzQucG5n?x-oss-process=image/format,png" alt="mapred-site.xml"></p>
-<h5 id="5-修改yarn-site-xml"><a href="#5-修改yarn-site-xml" class="headerlink" title="(5)修改yarn-site.xml"></a>(5)修改yarn-site.xml</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi yarn-site.xml</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--配置Yarn的节点--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;hadoop2&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;!--NodeManager执行MR任务的方式是Shuffle洗牌--&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;      </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYyNmQzOGY2NDI0NGNlZDgucG5n?x-oss-process=image/format,png" alt="yarn-site.xml"></p>
-<h5 id="6-修改slaves"><a href="#6-修改slaves" class="headerlink" title="(6)修改slaves"></a>(6)修改slaves</h5><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hadoop3            //hadoop3作为从节点</span><br><span class="line">hadoop4            //hadoop4作为从节点</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNhNzBlZWI4MjM1NDhkZmYucG5n?x-oss-process=image/format,png" alt="slaves"></p>
-<h4 id="4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化"><a href="#4-通过HDFS-namenode格式化-注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化" class="headerlink" title="4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)"></a>4.通过HDFS namenode格式化(注意，要再namenode结点所在服务器格式化，本次即是在hadoop2中进行格式化)</h4><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/module/hadoop-2.8.4/data/tmp         //这里是step3配置的HDFS数据库和元数据存储目录</span><br><span class="line"></span><br><span class="line">hdfs namenode -format                  //格式化</span><br></pre></td></tr></table></figure>
+    <title>Linux安装rz,sz</title>
+    <url>/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
+    <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
+<li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
+<li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
+</ul>
+<h6 id="1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"><a href="#1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装" class="headerlink" title="1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"></a>1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装</h6><h6 id="2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"><a href="#2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。" class="headerlink" title="2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"></a>2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。</h6><h6 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h6><p>(1)搜索</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum search lrzsz</span><br></pre></td></tr></table></figure>
 
-<p>验证是否成功，成功后回显示：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Storage: Storage directory /opt/module/hadoop-2.8.4/tmp/dfs/name has been successfully formatted</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcyNzA1NmY3ZmYzMzEwNTEucG5n?x-oss-process=image/format,png" alt="验证格式化成功"></p>
-<p><strong>注意</strong><br>重复格式化，hadoop.tmp.dir 先停止集群，然后在删除tmp文件夹，再重新新建tmp文件夹，重新格式化，然后再启动集群</p>
-<h4 id="5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："><a href="#5-通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：" class="headerlink" title="5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上："></a>5.通过scp拷贝，将hadoop2配置好的hadoop发送到另外两台机器上：</h4><p>命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop3:/opt/moudle/         </span><br><span class="line"></span><br><span class="line">//拷贝到hadoop4</span><br><span class="line">scp -r /opt/moudle/hadoop-2.8.4/ root@hadoop4:/opt/moudle/</span><br></pre></td></tr></table></figure>
+<p><img src="/images/1.png" alt="搜索"></p>
+<p>(2)安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install lrzsz.x86_64</span><br></pre></td></tr></table></figure>
 
-<h4 id="6-启动Hadoop集群"><a href="#6-启动Hadoop集群" class="headerlink" title="6.启动Hadoop集群"></a>6.启动Hadoop集群</h4><h5 id="1-启动"><a href="#1-启动" class="headerlink" title="(1)启动"></a>(1)启动</h5><p>输入命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">start-all.sh             //hadoop2中启动，因为此机器是主节点</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZGFhZTc2MmQ5YmU5NmIucG5n?x-oss-process=image/format,png" alt="启动"></p>
-<h5 id="2-验证是否启动："><a href="#2-验证是否启动：" class="headerlink" title="(2)验证是否启动："></a>(2)验证是否启动：</h5><p>hadoop2:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzZmE0MTk4ODA4NjBjMzQucG5n?x-oss-process=image/format,png" alt="hadoop2"><br>hadoop3:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU2ZWRiY2Y4ZWNmMTc1ODUucG5n?x-oss-process=image/format,png" alt="hadoop3"><br>hadoop4:<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2ZTM5Nzg0MzI5MTAxOWIucG5n?x-oss-process=image/format,png" alt="hadoop4"></p>
-<p>与规划的相同，故Hadoop全分布安装成功</p>
+<p><img src="/images/2.png" alt="安装"></p>
+<p>(3)成功！</p>
 ]]></content>
       <categories>
-        <category>Hadoop</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Hadoop</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
     <title>Hadoop环境搭建-本地模式搭建</title>
-    <url>/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</url>
+    <url>/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><p>(1)安装好linux操作系统<br>(2)关闭防火墙<br>(3)在linux上安装JDK</p>
 <h4 id="2-本地模式具体步骤："><a href="#2-本地模式具体步骤：" class="headerlink" title="2.本地模式具体步骤："></a>2.本地模式具体步骤：</h4><h5 id="1-解压hadoop安装包："><a href="#1-解压hadoop安装包：" class="headerlink" title="(1)解压hadoop安装包："></a>(1)解压hadoop安装包：</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module</span><br></pre></td></tr></table></figure>
 <h5 id="2-配置环境变量："><a href="#2-配置环境变量：" class="headerlink" title="(2)配置环境变量："></a>(2)配置环境变量：</h5><h6 id="a-修改命令："><a href="#a-修改命令：" class="headerlink" title="(a).修改命令："></a>(a).修改命令：</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
@@ -1347,8 +1371,54 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux 新建用户</title>
+    <url>/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
+    <content><![CDATA[<h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
+<p>使用root用户操作如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户赋予sudo权限</span><br><span class="line">vim &#x2F;etc&#x2F;sudoers  </span><br><span class="line">&#x2F;&#x2F;添加</span><br><span class="line">demouser    ALL&#x3D;(ALL)       ALL</span><br></pre></td></tr></table></figure>
+<h6 id="2-修改文件夹及其子文件夹属主命令"><a href="#2-修改文件夹及其子文件夹属主命令" class="headerlink" title="2.修改文件夹及其子文件夹属主命令"></a>2.修改文件夹及其子文件夹属主命令</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chown -R demouser .&#x2F;elasticsearch-6.1.1&#x2F;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MapReduce的基本概念</title>
+    <url>/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h4 id="1-MapReduce定义"><a href="#1-MapReduce定义" class="headerlink" title="1. MapReduce定义"></a>1. MapReduce定义</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。<br>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce核心功能是将用户编写的业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
+<h4 id="2-MapReduce优缺点"><a href="#2-MapReduce优缺点" class="headerlink" title="2. MapReduce优缺点"></a>2. MapReduce优缺点</h4><h5 id="1-优点"><a href="#1-优点" class="headerlink" title="(1) 优点:"></a>(1) 优点:</h5><h6 id="a-MapReduce-易于编程。"><a href="#a-MapReduce-易于编程。" class="headerlink" title="(a)MapReduce 易于编程。"></a>(a)MapReduce 易于编程。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</p>
+<h6 id="b-良好的扩展性。"><a href="#b-良好的扩展性。" class="headerlink" title="(b)良好的扩展性。"></a>(b)良好的扩展性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</p>
+<h6 id="c-高容错性。"><a href="#c-高容错性。" class="headerlink" title="(c )高容错性。"></a>(c )高容错性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由 Hadoop内部完成的。</p>
+<h6 id="d-适合PB级以上海量数据的离线处理。"><a href="#d-适合PB级以上海量数据的离线处理。" class="headerlink" title="(d)适合PB级以上海量数据的离线处理。"></a>(d)适合PB级以上海量数据的离线处理。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，MapReduce很难做到。</p>
+<h5 id="2-缺点"><a href="#2-缺点" class="headerlink" title="(2) 缺点:"></a>(2) 缺点:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
+<h6 id="a-实时计算。"><a href="#a-实时计算。" class="headerlink" title="(a)实时计算。"></a>(a)实时计算。</h6><p>MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</p>
+<h6 id="b-流式计算。"><a href="#b-流式计算。" class="headerlink" title="(b)流式计算。"></a>(b)流式计算。</h6><p>流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定了数据源必须是静态的。</p>
+<h6 id="c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"><a href="#c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。" class="headerlink" title="(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"></a>(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</h6><h4 id="3-MapReduce核心思想"><a href="#3-MapReduce核心思想" class="headerlink" title="3.MapReduce核心思想"></a>3.MapReduce核心思想</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzMDc3ZjIwYzUyNmM4MzEucG5n?x-oss-process=image/format,png" alt="MapReduce核心思想"></p>
+<p>(1)分布式的运算程序往往需要分成至少2个阶段。</p>
+<p>(2)第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
+<p>(3)第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
+<p>(4)MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行</p>
+<h4 id="4-MapReduce进程"><a href="#4-MapReduce进程" class="headerlink" title="4 MapReduce进程"></a>4 MapReduce进程</h4><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：<br>(1)MrAppMaster：负责整个程序的过程调度及状态协调。<br>(2)MapTask：负责map阶段的整个数据处理流程。<br>(3)ReduceTask：负责reduce阶段的整个数据处理流程。</p>
+<h4 id="5-MapReduce编程规范"><a href="#5-MapReduce编程规范" class="headerlink" title="5 MapReduce编程规范"></a>5 MapReduce编程规范</h4><p>用户编写的程序分成三个部分：Mapper，Reducer，Driver(提交运行mr程序的客户端)</p>
+<h5 id="1-Mapper阶段"><a href="#1-Mapper阶段" class="headerlink" title="(1)Mapper阶段"></a>(1)Mapper阶段</h5><p>(a)用户自定义的Mapper要继承自己的父类<br>(b)Mapper的输入数据是KV对的形式（KV的类型可自定义）<br>(c)Mapper中的业务逻辑写在map()方法中<br>(d)Mapper的输出数据是KV对的形式（KV的类型可自定义）<br>(e)map()方法（maptask进程）对每一个&lt;K,V&gt;调用一次</p>
+<h5 id="2-Reducer阶段"><a href="#2-Reducer阶段" class="headerlink" title="(2)Reducer阶段"></a>(2)Reducer阶段</h5><p>(a)用户自定义的Reducer要继承自己的父类<br>(b)Reducer的输入数据类型对应Mapper的输出数据类型，也是KV<br>(c )Reducer的业务逻辑写在reduce()方法中<br>(d)Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</p>
+<h5 id="3-Driver阶段"><a href="#3-Driver阶段" class="headerlink" title="(3)Driver阶段"></a>(3)Driver阶段</h5><p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+        <tag>MapReduce</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MapReduce框架原理</title>
-    <url>/blog/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</url>
+    <url>/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h3 id="一-MapReduce工作流程"><a href="#一-MapReduce工作流程" class="headerlink" title="一.MapReduce工作流程"></a>一.MapReduce工作流程</h3><h4 id="1-流程示意图："><a href="#1-流程示意图：" class="headerlink" title="1.流程示意图："></a>1.流程示意图：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY5MWMxZjRiM2E0YWIyMjUucG5n?x-oss-process=image/format,png" alt="MapReduce工作流程一"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJmYTZhNzY5OTBjZmUyODIucG5n?x-oss-process=image/format,png" alt="Mapreduce工作流程二"></p>
 <h4 id="2-流程详解"><a href="#2-流程详解" class="headerlink" title="2.流程详解"></a>2.流程详解</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;上面的流程是整个mapreduce最全工作流程，但是shuffle过程只是从第7步开始到第16步结束，具体shuffle过程详解，如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(1)maptask收集我们的map()方法输出的kv对，放到内存缓冲区中</span><br><span class="line"></span><br><span class="line">(2)从内存缓冲区不断溢出本地磁盘文件，可能会溢出多个文件</span><br><span class="line"></span><br><span class="line">(3)多个溢出文件会被合并成大的溢出文件</span><br><span class="line"></span><br><span class="line">(4)在溢出过程中，及合并的过程中，都要调用partitioner进行分区和针对key进行排序</span><br><span class="line"></span><br><span class="line">(5)reducetask根据自己的分区号，去各个maptask机器上取相应的结果分区数据</span><br><span class="line"></span><br><span class="line">(6)reducetask会取到同一个分区的来自不同maptask的结果文件，reducetask会将这些文件再进行合并（归并排序）</span><br><span class="line"></span><br><span class="line">(7)合并成大文件后，shuffle的过程也就结束了，后面进入reducetask的逻辑运算过程（从文件中取出一个一个的键值对group，调用用户自定义的reduce()方法）</span><br></pre></td></tr></table></figure>
@@ -1609,38 +1679,8 @@
       </tags>
   </entry>
   <entry>
-    <title>MapReduce的基本概念</title>
-    <url>/blog/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h4 id="1-MapReduce定义"><a href="#1-MapReduce定义" class="headerlink" title="1. MapReduce定义"></a>1. MapReduce定义</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。<br>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce核心功能是将用户编写的业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
-<h4 id="2-MapReduce优缺点"><a href="#2-MapReduce优缺点" class="headerlink" title="2. MapReduce优缺点"></a>2. MapReduce优缺点</h4><h5 id="1-优点"><a href="#1-优点" class="headerlink" title="(1) 优点:"></a>(1) 优点:</h5><h6 id="a-MapReduce-易于编程。"><a href="#a-MapReduce-易于编程。" class="headerlink" title="(a)MapReduce 易于编程。"></a>(a)MapReduce 易于编程。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</p>
-<h6 id="b-良好的扩展性。"><a href="#b-良好的扩展性。" class="headerlink" title="(b)良好的扩展性。"></a>(b)良好的扩展性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</p>
-<h6 id="c-高容错性。"><a href="#c-高容错性。" class="headerlink" title="(c )高容错性。"></a>(c )高容错性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由 Hadoop内部完成的。</p>
-<h6 id="d-适合PB级以上海量数据的离线处理。"><a href="#d-适合PB级以上海量数据的离线处理。" class="headerlink" title="(d)适合PB级以上海量数据的离线处理。"></a>(d)适合PB级以上海量数据的离线处理。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，MapReduce很难做到。</p>
-<h5 id="2-缺点"><a href="#2-缺点" class="headerlink" title="(2) 缺点:"></a>(2) 缺点:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
-<h6 id="a-实时计算。"><a href="#a-实时计算。" class="headerlink" title="(a)实时计算。"></a>(a)实时计算。</h6><p>MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</p>
-<h6 id="b-流式计算。"><a href="#b-流式计算。" class="headerlink" title="(b)流式计算。"></a>(b)流式计算。</h6><p>流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定了数据源必须是静态的。</p>
-<h6 id="c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"><a href="#c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。" class="headerlink" title="(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"></a>(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</h6><h4 id="3-MapReduce核心思想"><a href="#3-MapReduce核心思想" class="headerlink" title="3.MapReduce核心思想"></a>3.MapReduce核心思想</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzMDc3ZjIwYzUyNmM4MzEucG5n?x-oss-process=image/format,png" alt="MapReduce核心思想"></p>
-<p>(1)分布式的运算程序往往需要分成至少2个阶段。</p>
-<p>(2)第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
-<p>(3)第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
-<p>(4)MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行</p>
-<h4 id="4-MapReduce进程"><a href="#4-MapReduce进程" class="headerlink" title="4 MapReduce进程"></a>4 MapReduce进程</h4><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：<br>(1)MrAppMaster：负责整个程序的过程调度及状态协调。<br>(2)MapTask：负责map阶段的整个数据处理流程。<br>(3)ReduceTask：负责reduce阶段的整个数据处理流程。</p>
-<h4 id="5-MapReduce编程规范"><a href="#5-MapReduce编程规范" class="headerlink" title="5 MapReduce编程规范"></a>5 MapReduce编程规范</h4><p>用户编写的程序分成三个部分：Mapper，Reducer，Driver(提交运行mr程序的客户端)</p>
-<h5 id="1-Mapper阶段"><a href="#1-Mapper阶段" class="headerlink" title="(1)Mapper阶段"></a>(1)Mapper阶段</h5><p>(a)用户自定义的Mapper要继承自己的父类<br>(b)Mapper的输入数据是KV对的形式（KV的类型可自定义）<br>(c)Mapper中的业务逻辑写在map()方法中<br>(d)Mapper的输出数据是KV对的形式（KV的类型可自定义）<br>(e)map()方法（maptask进程）对每一个&lt;K,V&gt;调用一次</p>
-<h5 id="2-Reducer阶段"><a href="#2-Reducer阶段" class="headerlink" title="(2)Reducer阶段"></a>(2)Reducer阶段</h5><p>(a)用户自定义的Reducer要继承自己的父类<br>(b)Reducer的输入数据类型对应Mapper的输出数据类型，也是KV<br>(c )Reducer的业务逻辑写在reduce()方法中<br>(d)Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</p>
-<h5 id="3-Driver阶段"><a href="#3-Driver阶段" class="headerlink" title="(3)Driver阶段"></a>(3)Driver阶段</h5><p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-        <tag>MapReduce</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Yarn-HA配置</title>
-    <url>/blog/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/</url>
+    <url>/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="一-Yarn-HA配置"><a href="#一-Yarn-HA配置" class="headerlink" title="一.Yarn-HA配置"></a>一.Yarn-HA配置</h3><h4 id="1-YARN-HA工作机制"><a href="#1-YARN-HA工作机制" class="headerlink" title="1.YARN-HA工作机制"></a>1.YARN-HA工作机制</h4><h5 id="1-官方文档："><a href="#1-官方文档：" class="headerlink" title="(1).官方文档："></a>(1).官方文档：</h5><p><a href="http://hadoop.apache.org/docs/r2.7.2/hadoop-yarn/hadoop-yarn-site/ResourceManagerHA.html" target="_blank" rel="noopener">官方文档</a></p>
 <h5 id="2-YARN-HA工作机制"><a href="#2-YARN-HA工作机制" class="headerlink" title="(2).YARN-HA工作机制"></a>(2).YARN-HA工作机制</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRkMWVjZjhkOWRiOTkyMTAucG5n?x-oss-process=image/format,png" alt="image.png"></p>
 <h4 id="2-配置YARN-HA集群"><a href="#2-配置YARN-HA集群" class="headerlink" title="2.配置YARN-HA集群"></a>2.配置YARN-HA集群</h4><h5 id="0-环境准备"><a href="#0-环境准备" class="headerlink" title="(0).环境准备"></a>(0).环境准备</h5><p>(a)修改IP<br>(b)修改主机名及主机名和IP地址的映射<br>(c )关闭防火墙<br>(d)ssh免密登录<br>(e)安装JDK，配置环境变量等<br>(f)配置Zookeeper集群<br>(g)配置过mapred-site.xml(和以前配置一样)</p>
@@ -1741,46 +1781,6 @@
       <tags>
         <tag>Hadoop</tag>
         <tag>YARN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux 新建用户</title>
-    <url>/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
-    <content><![CDATA[<h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
-<p>使用root用户操作如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户赋予sudo权限</span><br><span class="line">vim &#x2F;etc&#x2F;sudoers  </span><br><span class="line">&#x2F;&#x2F;添加</span><br><span class="line">demouser    ALL&#x3D;(ALL)       ALL</span><br></pre></td></tr></table></figure>
-<h6 id="2-修改文件夹及其子文件夹属主命令"><a href="#2-修改文件夹及其子文件夹属主命令" class="headerlink" title="2.修改文件夹及其子文件夹属主命令"></a>2.修改文件夹及其子文件夹属主命令</h6><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chown -R demouser .&#x2F;elasticsearch-6.1.1&#x2F;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux安装rz,sz</title>
-    <url>/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
-    <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
-<li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
-<li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
-</ul>
-<h6 id="1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"><a href="#1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装" class="headerlink" title="1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"></a>1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装</h6><h6 id="2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"><a href="#2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。" class="headerlink" title="2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"></a>2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。</h6><h6 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h6><p>(1)搜索</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum search lrzsz</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/1.png" alt="搜索"></p>
-<p>(2)安装</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install lrzsz.x86_64</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2.png" alt="安装"></p>
-<p>(3)成功！</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
