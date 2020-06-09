@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>HDFS之DateNode工作机制</title>
+    <url>/blog/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h3 id="一-NameNode-amp-DataNode工作机制"><a href="#一-NameNode-amp-DataNode工作机制" class="headerlink" title="一.NameNode &amp; DataNode工作机制"></a>一.NameNode &amp; DataNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5YjZhZTllYzExZWFlNzEucG5n?x-oss-process=image/format,png" alt="Datanode工作机制"></p>
+<p>1.一个数据块在datanode上以文件形式存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳。</p>
+<p>2.DataNode启动后向namenode注册，通过后，周期性（1小时）的向namenode上报所有的块信息。</p>
+<p>3.心跳是每3秒一次，心跳返回结果带有namenode给该datanode的命令如复制块数据到另一台机器，或删除某个数据块。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用。</p>
+<p>4.集群运行中可以安全加入和退出一些机器</p>
+<h3 id="二-数据完整性"><a href="#二-数据完整性" class="headerlink" title="二.数据完整性"></a>二.数据完整性</h3><p>1.当DataNode读取block的时候，它会计算checksum校验和</p>
+<p>2.如果计算后的checksum，与block创建时值不一样，说明block已经损坏。</p>
+<p>3.client读取其他DataNode上的block.</p>
+<p>4.datanode在其文件创建后周期验证checksum校验和</p>
+<h3 id="三-掉线时限参数设置"><a href="#三-掉线时限参数设置" class="headerlink" title="三. 掉线时限参数设置"></a>三. 掉线时限参数设置</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;datanode进程死亡或者网络故障造成datanode无法与namenode通信，namenode不会立即把该节点判定为死亡，要经过一段时间，这段时间暂称作超时时长。HDFS默认的超时时长为10分钟+30秒。如果定义超时时间为timeout，则超时时长的计算公式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">timeout  &#x3D; 2 * dfs.namenode.heartbeat.recheck-interval + 10 * dfs.heartbeat.interval。</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;而默认的dfs.namenode.heartbeat.recheck-interval 大小为5分钟，dfs.heartbeat.interval默认为3秒。<br>&nbsp;&nbsp;&nbsp;&nbsp;需要注意的是hdfs-site.xml 配置文件中的heartbeat.recheck.interval的单位为毫秒，dfs.heartbeat.interval的单位为秒。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.heartbeat.recheck-interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>300000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span> dfs.heartbeat.interval <span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="四-DataNode的目录结构"><a href="#四-DataNode的目录结构" class="headerlink" title="四.DataNode的目录结构"></a>四.DataNode的目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;和namenode不同的是，datanode的存储目录是初始阶段自动创建的，不需要额外格式化。</p>
+<h4 id="1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号"><a href="#1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号" class="headerlink" title="1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号"></a>1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line">storageID=DS-1b998a1d-71a3-43d5-82dc-c0ff3294921b</span><br><span class="line">clusterID=CID-1f2bf8d1-5ad2-4202-af1c-6713ab381175</span><br><span class="line">cTime=0</span><br><span class="line">datanodeUuid=970b2daf-63b8-4e17-a514-d81741392165</span><br><span class="line">storageType=DATA_NODE</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
+<h4 id="2-具体解释"><a href="#2-具体解释" class="headerlink" title="2.具体解释"></a>2.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">storageID：存储id号</span><br><span class="line">clusterID集群id，全局唯一</span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line">datanodeUuid：datanode的唯一识别码</span><br><span class="line">storageType：存储类型</span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
+<h4 id="3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号"><a href="#3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号" class="headerlink" title="3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号"></a>3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">Mon May 08 16:30:19 CST 2017</span></span><br><span class="line">namespaceID=1933630176</span><br><span class="line">cTime=0</span><br><span class="line">blockpoolID=BP-97847618-192.168.10.102-1493726072779</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
+<h4 id="4-具体解释"><a href="#4-具体解释" class="headerlink" title="4.具体解释"></a>4.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID：是datanode首次访问namenode的时候从namenode处获取的storageID对每个datanode来说是唯一的（但对于单个datanode中所有存储目录来说则是相同的），namenode可用这个属性来区分不同datanode。</span><br><span class="line"></span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-Datanode多目录配置"><a href="#五-Datanode多目录配置" class="headerlink" title="五.Datanode多目录配置"></a>五.Datanode多目录配置</h3><h4 id="1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"><a href="#1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。" class="headerlink" title="1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"></a>1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/data1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/data2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS-HA高可用集群配置</title>
-    <url>/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</url>
+    <url>/blog/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="一-HDFS-HA集群配置"><a href="#一-HDFS-HA集群配置" class="headerlink" title="一. HDFS-HA集群配置"></a>一. HDFS-HA集群配置</h3><h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1 环境准备"></a>1 环境准备</h4><p>(1)修改IP<br>(2)修改主机名及主机名和IP地址的映射<br>(3)关闭防火墙<br>(4)ssh免密登录<br>(5)安装JDK，配置环境变量等<br>(6)hadoop1,hadoop2,hadoop3集群已经配置好zookeeper集群</p>
 <h4 id="2-规划集群"><a href="#2-规划集群" class="headerlink" title="2 规划集群"></a>2 规划集群</h4><table>
 <thead>
@@ -151,7 +183,7 @@
   </entry>
   <entry>
     <title>HDFS之HA高可用概述</title>
-    <url>/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/</url>
+    <url>/blog/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<h3 id="一-HA概述"><a href="#一-HA概述" class="headerlink" title="一.HA概述"></a>一.HA概述</h3><p>1.所谓HA(2high available)，即高可用(7*24小时不中断服务)</p>
 <p>2.实现高可用最关键的策略是消除单点故障。HA严格来说应该分成各个组件的HA机制：HDFS的HA和YARN的HA。</p>
 <p>3.Hadoop2.0之前，在HDFS集群中NameNode存在单点故障(SPOF)</p>
@@ -187,96 +219,8 @@
       </tags>
   </entry>
   <entry>
-    <title>HDFS基础概念以及HDFS命令行操作</title>
-    <url>/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h3 id="一-HDFS基础概念"><a href="#一-HDFS基础概念" class="headerlink" title="一.HDFS基础概念"></a>一.HDFS基础概念</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>HDFS，它是一个文件系统，全称：Hadoop Distributed File System，用于存储文件通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。</p>
-<h4 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h4><p>(1)HDFS集群包括，NameNode和DataNode以及Secondary Namenode。</p>
-<p>(2)NameNode负责管理整个文件系统的元数据，以及每一个路径（文件）所对应的数据块信息。</p>
-<p>(3)DataNode 负责管理用户的文件数据块，每一个数据块都可以在多个datanode上存储多个副本。</p>
-<p>(4)Secondary NameNode用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</p>
-<h4 id="3-HDFS-文件块大小"><a href="#3-HDFS-文件块大小" class="headerlink" title="3 HDFS 文件块大小"></a>3 HDFS 文件块大小</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS中的文件在物理上是分块存储（block），块的大小可以通过配置参数(dfs.blocksize)来规定，默认大小在hadoop2.x版本中是128M，老版本中是64M<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS的块比磁盘的块大，其目的是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果寻址时间约为10ms，而传输速率为100MB/s，为了使寻址时间仅占传输时间的1%，我们要将块大小设置约为100MB。默认的块大小128MB。<br>&nbsp;&nbsp;&nbsp;&nbsp;块的大小：10ms<em>100</em>100M/s = 100M<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA0MTRlZDgwYjRhNTU1NDYucG5n?x-oss-process=image/format,png" alt="HDFS文件快的大小"></p>
-<h3 id="二-HDFS命令行操作："><a href="#二-HDFS命令行操作：" class="headerlink" title="二.HDFS命令行操作："></a>二.HDFS命令行操作：</h3><h4 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1.基本语法"></a>1.基本语法</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop fs 具体命令</span><br></pre></td></tr></table></figure>
-<h4 id="2-参数大全"><a href="#2-参数大全" class="headerlink" title="2.参数大全"></a>2.参数大全</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop fs</span><br><span class="line">        [-appendToFile &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-cat [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-checksum &lt;src&gt; ...]</span><br><span class="line">        [-chgrp [-R] GROUP PATH...]</span><br><span class="line">        [-chmod [-R] &lt;MODE[,MODE]... | OCTALMODE&gt; PATH...]</span><br><span class="line">        [-chown [-R] [OWNER][:[GROUP]] PATH...]</span><br><span class="line">        [-copyFromLocal [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-copyToLocal [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-count [-q] &lt;path&gt; ...]</span><br><span class="line">        [-cp [-f] [-p] &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-createSnapshot &lt;snapshotDir&gt; [&lt;snapshotName&gt;]]</span><br><span class="line">        [-deleteSnapshot &lt;snapshotDir&gt; &lt;snapshotName&gt;]</span><br><span class="line">        [-df [-h] [&lt;path&gt; ...]]</span><br><span class="line">        [-du [-s] [-h] &lt;path&gt; ...]</span><br><span class="line">        [-expunge]</span><br><span class="line">        [-get [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-getfacl [-R] &lt;path&gt;]</span><br><span class="line">        [-getmerge [-nl] &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-help [cmd ...]]</span><br><span class="line">        [-ls [-d] [-h] [-R] [&lt;path&gt; ...]]</span><br><span class="line">        [-mkdir [-p] &lt;path&gt; ...]</span><br><span class="line">        [-moveFromLocal &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-moveToLocal &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-mv &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-put [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-renameSnapshot &lt;snapshotDir&gt; &lt;oldName&gt; &lt;newName&gt;]</span><br><span class="line">        [-rm [-f] [-r|-R] [-skipTrash] &lt;src&gt; ...]</span><br><span class="line">        [-rmdir [--ignore-fail-on-non-empty] &lt;dir&gt; ...]</span><br><span class="line">        [-setfacl [-R] [&#123;-b|-k&#125; &#123;-m|-x &lt;acl_spec&gt;&#125; &lt;path&gt;]|[--set &lt;acl_spec&gt; &lt;path&gt;]]</span><br><span class="line">        [-setrep [-R] [-w] &lt;rep&gt; &lt;path&gt; ...]</span><br><span class="line">        [-stat [format] &lt;path&gt; ...]</span><br><span class="line">        [-tail [-f] &lt;file&gt;]</span><br><span class="line">        [-test -[defsz] &lt;path&gt;]</span><br><span class="line">        [-text [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-touchz &lt;path&gt; ...]</span><br><span class="line">        [-usage [cmd ...]]</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-常用命令"><a href="#3-常用命令" class="headerlink" title="3.常用命令"></a>3.常用命令</h4><p>(1)-help：输出这个命令参数</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hdfs dfs -help rm</span><br><span class="line">```	</span><br><span class="line">(2)-ls: 显示目录信息</span><br><span class="line">```shell</span><br><span class="line">hadoop fs -ls /</span><br></pre></td></tr></table></figure>
-<p>(3)-mkdir：在hdfs上创建目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs  -mkdir  -p  /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(4)-moveFromLocal从本地剪切粘贴到hdfs</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -moveFromLocal  本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(5)–appendToFile  ：追加一个文件到已经存在的文件末尾</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -appendToFile  本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(6)-cat ：显示文件内容</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -cat /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(7)-tail -f：监控文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -tail -f /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(8)-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -chmod  777  /hdfs路径</span><br><span class="line">hadoop  fs  -chown  someuser:somegrp   /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(9)-cp ：从hdfs的一个路径拷贝到hdfs的另一个路径</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -cp  /hdfs路径1  / hdfs路径2</span><br></pre></td></tr></table></figure>
-<p>(10)-mv：在hdfs目录中移动/重命名 文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -mv  /hdfs路径  / hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(11)-get：等同于copyToLocal，就是从hdfs下载文件到本地</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -get / hdfs路径 ./本地路径</span><br></pre></td></tr></table></figure>
-<p>(12)-getmerge  ：合并下载多个文到linux本地，比如hdfs的目录 /aaa/下有多个文件:log.1, log.2,log.3,…（注：是合成到Linux本地）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -getmerge /aaa/log.* ./log.sum</span><br><span class="line">hadoop fs -getmerge /hdfs1路径 /hdfs2路径 /                    //合成到不同的目录：</span><br></pre></td></tr></table></figure>
-<p>(13)-put：等同于copyFromLocal</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -put  /本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(14)-rm：删除文件或文件夹</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -rm -r /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(15)-df ：统计文件系统的可用空间信息</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -df  -h  /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(16)-du统计文件夹的大小信息</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -du -s -h /hdfs路径</span><br></pre></td></tr></table></figure>
-
-<p>(17)-count：统计一个指定目录下的文件节点数量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -count /aaa/</span><br><span class="line">hadoop fs -count /hdfs路径</span><br></pre></td></tr></table></figure>
-<p>(18)-setrep：设置hdfs中文件的副本数量：3是副本数，可改</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -setrep 3 / hdfs路径</span><br></pre></td></tr></table></figure>
-<p>这里设置的副本数只是记录在namenode的元数据中，是否真的会有这么多副本，还得看datanode的数量。因为目前只有3台设备，最多也就3个副本，只有节点数的增加到10台时，副本数才能达到10。</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HDFS之DateNode工作机制</title>
-    <url>/2019/01/01/HDFS%E4%B9%8BDataNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h3 id="一-NameNode-amp-DataNode工作机制"><a href="#一-NameNode-amp-DataNode工作机制" class="headerlink" title="一.NameNode &amp; DataNode工作机制"></a>一.NameNode &amp; DataNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5YjZhZTllYzExZWFlNzEucG5n?x-oss-process=image/format,png" alt="Datanode工作机制"></p>
-<p>1.一个数据块在datanode上以文件形式存储在磁盘上，包括两个文件，一个是数据本身，一个是元数据包括数据块的长度，块数据的校验和，以及时间戳。</p>
-<p>2.DataNode启动后向namenode注册，通过后，周期性（1小时）的向namenode上报所有的块信息。</p>
-<p>3.心跳是每3秒一次，心跳返回结果带有namenode给该datanode的命令如复制块数据到另一台机器，或删除某个数据块。如果超过10分钟没有收到某个datanode的心跳，则认为该节点不可用。</p>
-<p>4.集群运行中可以安全加入和退出一些机器</p>
-<h3 id="二-数据完整性"><a href="#二-数据完整性" class="headerlink" title="二.数据完整性"></a>二.数据完整性</h3><p>1.当DataNode读取block的时候，它会计算checksum校验和</p>
-<p>2.如果计算后的checksum，与block创建时值不一样，说明block已经损坏。</p>
-<p>3.client读取其他DataNode上的block.</p>
-<p>4.datanode在其文件创建后周期验证checksum校验和</p>
-<h3 id="三-掉线时限参数设置"><a href="#三-掉线时限参数设置" class="headerlink" title="三. 掉线时限参数设置"></a>三. 掉线时限参数设置</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;datanode进程死亡或者网络故障造成datanode无法与namenode通信，namenode不会立即把该节点判定为死亡，要经过一段时间，这段时间暂称作超时时长。HDFS默认的超时时长为10分钟+30秒。如果定义超时时间为timeout，则超时时长的计算公式为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">timeout  &#x3D; 2 * dfs.namenode.heartbeat.recheck-interval + 10 * dfs.heartbeat.interval。</span><br></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;而默认的dfs.namenode.heartbeat.recheck-interval 大小为5分钟，dfs.heartbeat.interval默认为3秒。<br>&nbsp;&nbsp;&nbsp;&nbsp;需要注意的是hdfs-site.xml 配置文件中的heartbeat.recheck.interval的单位为毫秒，dfs.heartbeat.interval的单位为秒。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.heartbeat.recheck-interval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>300000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span> dfs.heartbeat.interval <span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="四-DataNode的目录结构"><a href="#四-DataNode的目录结构" class="headerlink" title="四.DataNode的目录结构"></a>四.DataNode的目录结构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;和namenode不同的是，datanode的存储目录是初始阶段自动创建的，不需要额外格式化。</p>
-<h4 id="1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号"><a href="#1-在-opt-module-hadoop-2-8-4-data-dfs-data-current这个目录下查看版本号" class="headerlink" title="1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号"></a>1.在/opt/module/hadoop-2.8.4/data/dfs/data/current这个目录下查看版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line">storageID=DS-1b998a1d-71a3-43d5-82dc-c0ff3294921b</span><br><span class="line">clusterID=CID-1f2bf8d1-5ad2-4202-af1c-6713ab381175</span><br><span class="line">cTime=0</span><br><span class="line">datanodeUuid=970b2daf-63b8-4e17-a514-d81741392165</span><br><span class="line">storageType=DATA_NODE</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
-<h4 id="2-具体解释"><a href="#2-具体解释" class="headerlink" title="2.具体解释"></a>2.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">storageID：存储id号</span><br><span class="line">clusterID集群id，全局唯一</span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line">datanodeUuid：datanode的唯一识别码</span><br><span class="line">storageType：存储类型</span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
-<h4 id="3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号"><a href="#3-在-opt-module-hadoop-2-8-4-data-dfs-data-current-BP-97847618-192-168-10-102-1493726072779-current这个目录下查看该数据块的版本号" class="headerlink" title="3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号"></a>3.在/opt/module/hadoop-2.8.4/data/dfs/data/current/BP-97847618-192.168.10.102-1493726072779/current这个目录下查看该数据块的版本号</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat VERSION </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">Mon May 08 16:30:19 CST 2017</span></span><br><span class="line">namespaceID=1933630176</span><br><span class="line">cTime=0</span><br><span class="line">blockpoolID=BP-97847618-192.168.10.102-1493726072779</span><br><span class="line">layoutVersion=-56</span><br></pre></td></tr></table></figure>
-<h4 id="4-具体解释"><a href="#4-具体解释" class="headerlink" title="4.具体解释"></a>4.具体解释</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">namespaceID：是datanode首次访问namenode的时候从namenode处获取的storageID对每个datanode来说是唯一的（但对于单个datanode中所有存储目录来说则是相同的），namenode可用这个属性来区分不同datanode。</span><br><span class="line"></span><br><span class="line">cTime属性标记了datanode存储系统的创建时间，对于刚刚格式化的存储系统，这个属性为0；但是在文件系统升级之后，该值会更新到新的时间戳。</span><br><span class="line"></span><br><span class="line">blockpoolID：一个block pool id标识一个block pool，并且是跨集群的全局唯一。当一个新的Namespace被创建的时候(format过程的一部分)会创建并持久化一个唯一ID。在创建过程构建全局唯一的BlockPoolID比人为的配置更可靠一些。NN将BlockPoolID持久化到磁盘中，在后续的启动过程中，会再次load并使用。</span><br><span class="line"></span><br><span class="line">layoutVersion是一个负整数。通常只有HDFS增加新特性时才会更新这个版本号。</span><br></pre></td></tr></table></figure>
-
-<h3 id="五-Datanode多目录配置"><a href="#五-Datanode多目录配置" class="headerlink" title="五.Datanode多目录配置"></a>五.Datanode多目录配置</h3><h4 id="1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"><a href="#1-datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。" class="headerlink" title="1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。"></a>1.datanode也可以配置成多个目录，每个目录存储的数据不一样。即：数据不是副本。</h4><h4 id="2-具体配置如下："><a href="#2-具体配置如下：" class="headerlink" title="2.具体配置如下："></a>2.具体配置如下：</h4><p>hdfs-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///$&#123;hadoop.tmp.dir&#125;/dfs/data1,file:///$&#123;hadoop.tmp.dir&#125;/dfs/data2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS之NameNode工作机制</title>
-    <url>/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
+    <url>/blog/2019/01/01/HDFS%E4%B9%8BNameNode%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h3 id="一-NameNode-amp-Secondary-NameNode工作机制"><a href="#一-NameNode-amp-Secondary-NameNode工作机制" class="headerlink" title="一.NameNode&amp;Secondary NameNode工作机制"></a>一.NameNode&amp;Secondary NameNode工作机制</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdlNmM2NTBjNDZjYTIyMjIucG5n?x-oss-process=image/format,png" alt=""></p>
 <h4 id="1-第一阶段：namenode启动"><a href="#1-第一阶段：namenode启动" class="headerlink" title="1.第一阶段：namenode启动"></a>1.第一阶段：namenode启动</h4><p>(a)第一次启动namenode格式化后，创建fsimage和edits文件。如果不是第一次启动，直接加载编辑日志(edits)和镜像文件(fsimage)到内存</p>
 <p>(b)客户端对元数据进行增删改的请求</p>
@@ -353,8 +297,64 @@
       </tags>
   </entry>
   <entry>
+    <title>HDFS基础概念以及HDFS命令行操作</title>
+    <url>/blog/2019/01/01/HDFS%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E4%BB%A5%E5%8F%8AHDFS%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h3 id="一-HDFS基础概念"><a href="#一-HDFS基础概念" class="headerlink" title="一.HDFS基础概念"></a>一.HDFS基础概念</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h4><p>HDFS，它是一个文件系统，全称：Hadoop Distributed File System，用于存储文件通过目录树来定位文件；其次，它是分布式的，由很多服务器联合起来实现其功能，集群中的服务器有各自的角色。</p>
+<h4 id="2-组成"><a href="#2-组成" class="headerlink" title="2.组成"></a>2.组成</h4><p>(1)HDFS集群包括，NameNode和DataNode以及Secondary Namenode。</p>
+<p>(2)NameNode负责管理整个文件系统的元数据，以及每一个路径（文件）所对应的数据块信息。</p>
+<p>(3)DataNode 负责管理用户的文件数据块，每一个数据块都可以在多个datanode上存储多个副本。</p>
+<p>(4)Secondary NameNode用来监控HDFS状态的辅助后台程序，每隔一段时间获取HDFS元数据的快照。</p>
+<h4 id="3-HDFS-文件块大小"><a href="#3-HDFS-文件块大小" class="headerlink" title="3 HDFS 文件块大小"></a>3 HDFS 文件块大小</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS中的文件在物理上是分块存储（block），块的大小可以通过配置参数(dfs.blocksize)来规定，默认大小在hadoop2.x版本中是128M，老版本中是64M<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS的块比磁盘的块大，其目的是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果寻址时间约为10ms，而传输速率为100MB/s，为了使寻址时间仅占传输时间的1%，我们要将块大小设置约为100MB。默认的块大小128MB。<br>&nbsp;&nbsp;&nbsp;&nbsp;块的大小：10ms<em>100</em>100M/s = 100M<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA0MTRlZDgwYjRhNTU1NDYucG5n?x-oss-process=image/format,png" alt="HDFS文件快的大小"></p>
+<h3 id="二-HDFS命令行操作："><a href="#二-HDFS命令行操作：" class="headerlink" title="二.HDFS命令行操作："></a>二.HDFS命令行操作：</h3><h4 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1.基本语法"></a>1.基本语法</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop fs 具体命令</span><br></pre></td></tr></table></figure>
+<h4 id="2-参数大全"><a href="#2-参数大全" class="headerlink" title="2.参数大全"></a>2.参数大全</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop fs</span><br><span class="line">        [-appendToFile &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-cat [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-checksum &lt;src&gt; ...]</span><br><span class="line">        [-chgrp [-R] GROUP PATH...]</span><br><span class="line">        [-chmod [-R] &lt;MODE[,MODE]... | OCTALMODE&gt; PATH...]</span><br><span class="line">        [-chown [-R] [OWNER][:[GROUP]] PATH...]</span><br><span class="line">        [-copyFromLocal [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-copyToLocal [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-count [-q] &lt;path&gt; ...]</span><br><span class="line">        [-cp [-f] [-p] &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-createSnapshot &lt;snapshotDir&gt; [&lt;snapshotName&gt;]]</span><br><span class="line">        [-deleteSnapshot &lt;snapshotDir&gt; &lt;snapshotName&gt;]</span><br><span class="line">        [-df [-h] [&lt;path&gt; ...]]</span><br><span class="line">        [-du [-s] [-h] &lt;path&gt; ...]</span><br><span class="line">        [-expunge]</span><br><span class="line">        [-get [-p] [-ignoreCrc] [-crc] &lt;src&gt; ... &lt;localdst&gt;]</span><br><span class="line">        [-getfacl [-R] &lt;path&gt;]</span><br><span class="line">        [-getmerge [-nl] &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-help [cmd ...]]</span><br><span class="line">        [-ls [-d] [-h] [-R] [&lt;path&gt; ...]]</span><br><span class="line">        [-mkdir [-p] &lt;path&gt; ...]</span><br><span class="line">        [-moveFromLocal &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-moveToLocal &lt;src&gt; &lt;localdst&gt;]</span><br><span class="line">        [-mv &lt;src&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-put [-f] [-p] &lt;localsrc&gt; ... &lt;dst&gt;]</span><br><span class="line">        [-renameSnapshot &lt;snapshotDir&gt; &lt;oldName&gt; &lt;newName&gt;]</span><br><span class="line">        [-rm [-f] [-r|-R] [-skipTrash] &lt;src&gt; ...]</span><br><span class="line">        [-rmdir [--ignore-fail-on-non-empty] &lt;dir&gt; ...]</span><br><span class="line">        [-setfacl [-R] [&#123;-b|-k&#125; &#123;-m|-x &lt;acl_spec&gt;&#125; &lt;path&gt;]|[--set &lt;acl_spec&gt; &lt;path&gt;]]</span><br><span class="line">        [-setrep [-R] [-w] &lt;rep&gt; &lt;path&gt; ...]</span><br><span class="line">        [-stat [format] &lt;path&gt; ...]</span><br><span class="line">        [-tail [-f] &lt;file&gt;]</span><br><span class="line">        [-test -[defsz] &lt;path&gt;]</span><br><span class="line">        [-text [-ignoreCrc] &lt;src&gt; ...]</span><br><span class="line">        [-touchz &lt;path&gt; ...]</span><br><span class="line">        [-usage [cmd ...]]</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-常用命令"><a href="#3-常用命令" class="headerlink" title="3.常用命令"></a>3.常用命令</h4><p>(1)-help：输出这个命令参数</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hdfs dfs -help rm</span><br><span class="line">```	</span><br><span class="line">(2)-ls: 显示目录信息</span><br><span class="line">```shell</span><br><span class="line">hadoop fs -ls /</span><br></pre></td></tr></table></figure>
+<p>(3)-mkdir：在hdfs上创建目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs  -mkdir  -p  /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(4)-moveFromLocal从本地剪切粘贴到hdfs</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -moveFromLocal  本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(5)–appendToFile  ：追加一个文件到已经存在的文件末尾</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -appendToFile  本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(6)-cat ：显示文件内容</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -cat /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(7)-tail -f：监控文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -tail -f /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(8)-chmod、-chown：linux文件系统中的用法一样，修改文件所属权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -chmod  777  /hdfs路径</span><br><span class="line">hadoop  fs  -chown  someuser:somegrp   /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(9)-cp ：从hdfs的一个路径拷贝到hdfs的另一个路径</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -cp  /hdfs路径1  / hdfs路径2</span><br></pre></td></tr></table></figure>
+<p>(10)-mv：在hdfs目录中移动/重命名 文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -mv  /hdfs路径  / hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(11)-get：等同于copyToLocal，就是从hdfs下载文件到本地</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -get / hdfs路径 ./本地路径</span><br></pre></td></tr></table></figure>
+<p>(12)-getmerge  ：合并下载多个文到linux本地，比如hdfs的目录 /aaa/下有多个文件:log.1, log.2,log.3,…（注：是合成到Linux本地）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -getmerge /aaa/log.* ./log.sum</span><br><span class="line">hadoop fs -getmerge /hdfs1路径 /hdfs2路径 /                    //合成到不同的目录：</span><br></pre></td></tr></table></figure>
+<p>(13)-put：等同于copyFromLocal</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -put  /本地路径  /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(14)-rm：删除文件或文件夹</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -rm -r /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(15)-df ：统计文件系统的可用空间信息</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop  fs  -df  -h  /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(16)-du统计文件夹的大小信息</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -du -s -h /hdfs路径</span><br></pre></td></tr></table></figure>
+
+<p>(17)-count：统计一个指定目录下的文件节点数量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -count /aaa/</span><br><span class="line">hadoop fs -count /hdfs路径</span><br></pre></td></tr></table></figure>
+<p>(18)-setrep：设置hdfs中文件的副本数量：3是副本数，可改</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -setrep 3 / hdfs路径</span><br></pre></td></tr></table></figure>
+<p>这里设置的副本数只是记录在namenode的元数据中，是否真的会有这么多副本，还得看datanode的数量。因为目前只有3台设备，最多也就3个副本，只有节点数的增加到10台时，副本数才能达到10。</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS的其他功能</title>
-    <url>/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/</url>
+    <url>/blog/2019/01/01/HDFS%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<h3 id="一-集群间数据拷贝"><a href="#一-集群间数据拷贝" class="headerlink" title="一.集群间数据拷贝"></a>一.集群间数据拷贝</h3><h4 id="1-scp实现两个远程主机之间的文件复制"><a href="#1-scp实现两个远程主机之间的文件复制" class="headerlink" title="1.scp实现两个远程主机之间的文件复制"></a>1.scp实现两个远程主机之间的文件复制</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp -r hello.txt [root@bigdata111:/user/itstar/hello.txt](mailto:root@bigdata111:/user/itstar/hello.txt)          // 推 push</span><br><span class="line">scp -r [root@bigdata112:/user/itstar/hello.txt  hello.txt](mailto:root@hadoop103:/user/atguigu/hello.txt%20%20hello.txt)        // 拉 pull</span><br><span class="line">scp -r root@bigdata112:/opt/module/hadoop-2.8.4/LICENSE.txt root@bigdata113:/opt/module/hadoop-2.8.4/LICENSE.txt   //是通过本地主机中转实现两个远程主机的文件复制；如果在两个远程主机之间ssh没有配置的情况下可以使用该方式。</span><br></pre></td></tr></table></figure>
 <h4 id="2-采用discp命令实现两个hadoop集群之间的递归数据复制-注-不用设置其他，直接写IP"><a href="#2-采用discp命令实现两个hadoop集群之间的递归数据复制-注-不用设置其他，直接写IP" class="headerlink" title="2.采用discp命令实现两个hadoop集群之间的递归数据复制(注:不用设置其他，直接写IP)"></a>2.采用discp命令实现两个hadoop集群之间的递归数据复制(注:不用设置其他，直接写IP)</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/hadoop distcp hdfs://192.168.1.51:9000/LICENSE.txt hdfs://192.168.1.111:9000/HAHA</span><br></pre></td></tr></table></figure>
 <h3 id="二-Hadoop存档"><a href="#二-Hadoop存档" class="headerlink" title="二.Hadoop存档"></a>二.Hadoop存档</h3><h4 id="1-理论概述"><a href="#1-理论概述" class="headerlink" title="1.理论概述"></a>1.理论概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每个文件均按块存储，每个块的元数据存储在namenode的内存中，因此hadoop存储小文件会非常低效。因为大量的小文件会耗尽namenode中的大部分内存。但注意，存储小文件所需要的磁盘容量和存储这些文件原始内容所需要的磁盘空间相比也不会增多。例如，一个1MB的文件以大小为128MB的块存储，使用的是1MB的磁盘空间，而不是128MB。<br>&nbsp;&nbsp;&nbsp;&nbsp;Hadoop存档文件或HAR文件，是一个更高效的文件存档工具，它将文件存入HDFS块，在减少namenode内存使用的同时，允许对文件进行透明的访问。具体说来，Hadoop存档文件可以用作MapReduce的输入。</p>
@@ -383,7 +383,7 @@
   </entry>
   <entry>
     <title>HDFS的读写数据流程</title>
-    <url>/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</url>
+    <url>/blog/2019/01/01/HDFS%E7%9A%84%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="一-HDFS写数据流程"><a href="#一-HDFS写数据流程" class="headerlink" title="一.HDFS写数据流程"></a>一.HDFS写数据流程</h3><h4 id="1-剖析文件写入"><a href="#1-剖析文件写入" class="headerlink" title="1.剖析文件写入"></a>1.剖析文件写入</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQxNTJlNGQ2MzQ5MjY0MDIucG5n?x-oss-process=image/format,png" alt="HDFS的写数据流程"></p>
 <p>(1)客户端向namenode请求上传文件，namenode检查目标文件是否已存在，父目录是否存在。</p>
 <p>(2)namenode返回是否可以上传。</p>
@@ -417,8 +417,159 @@
       </tags>
   </entry>
   <entry>
+    <title>Hadoop之优化</title>
+    <url>/blog/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h3 id="一-MapReduce-跑的慢的原因"><a href="#一-MapReduce-跑的慢的原因" class="headerlink" title="一.MapReduce 跑的慢的原因"></a>一.MapReduce 跑的慢的原因</h3><p>Mapreduce 程序效率的瓶颈在于两点：</p>
+<h4 id="1-计算机性能"><a href="#1-计算机性能" class="headerlink" title="1.计算机性能"></a>1.计算机性能</h4><p>CPU、内存、磁盘健康、网络</p>
+<h4 id="2-I-O-操作优化"><a href="#2-I-O-操作优化" class="headerlink" title="2.I/O 操作优化"></a>2.I/O 操作优化</h4><p>(1)数据倾斜<br>(2)map和reduce数设置不合理<br>(3)map运行时间太长，导致reduce等待过久<br>(4)小文件过多<br>(5)大量的不可分块的超大文件<br>(6)spill次数过多<br>(7)merge次数过多等。</p>
+<h3 id="二-MapReduce优化方法"><a href="#二-MapReduce优化方法" class="headerlink" title="二. MapReduce优化方法"></a>二. MapReduce优化方法</h3><p>MapReduce优化方法主要从六个方面考虑：数据输入、Map阶段、Reduce阶段、IO传输、数据倾斜问题和常用的调优参数。</p>
+<h4 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h4><p>(1)合并小文件：在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢。</p>
+<p>(2)采用CombineTextInputFormat来作为输入，解决输入端大量小文件场景。</p>
+<h4 id="2-Map阶段"><a href="#2-Map阶段" class="headerlink" title="2 Map阶段"></a>2 Map阶段</h4><h5 id="1-减少溢写（spill）次数："><a href="#1-减少溢写（spill）次数：" class="headerlink" title="(1)减少溢写（spill）次数："></a>(1)减少溢写（spill）次数：</h5><p>通过调整io.sort.mb及sort.spill.percent参数值，增大触发spill的内存上限，减少spill次数，从而减少磁盘IO。</p>
+<h5 id="2-减少合并（merge）次数："><a href="#2-减少合并（merge）次数：" class="headerlink" title="(2)减少合并（merge）次数："></a>(2)减少合并（merge）次数：</h5><p>通过调整io.sort.factor参数，增大merge的文件数目，减少merge的次数，从而缩短mr处理时间。</p>
+<h5 id="3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。"><a href="#3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。" class="headerlink" title="(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。"></a>(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。</h5><h4 id="3-Reduce阶段"><a href="#3-Reduce阶段" class="headerlink" title="3 Reduce阶段"></a>3 Reduce阶段</h4><h5 id="1-合理设置map和reduce数："><a href="#1-合理设置map和reduce数：" class="headerlink" title="(1)合理设置map和reduce数："></a>(1)合理设置map和reduce数：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致 map、reduce任务间竞争资源，造成处理超时等错误。</p>
+<h5 id="2-设置map、reduce共存："><a href="#2-设置map、reduce共存：" class="headerlink" title="(2)设置map、reduce共存："></a>(2)设置map、reduce共存：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;调整slowstart.completedmaps参数，使map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。</p>
+<h5 id="3-规避使用reduce："><a href="#3-规避使用reduce：" class="headerlink" title="(3)规避使用reduce："></a>(3)规避使用reduce：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;因为reduce在用于连接数据集的时候将会产生大量的网络消耗。</p>
+<h5 id="4-合理设置reduce端的buffer："><a href="#4-合理设置reduce端的buffer：" class="headerlink" title="(4)合理设置reduce端的buffer："></a>(4)合理设置reduce端的buffer：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;默认情况下，数据达到一个阈值的时候，buffer中的数据就会写入磁盘，然后reduce会从磁盘中获得所有的数据。也就是说，buffer和reduce是没有直接关联的，中间多个一个写磁盘-&gt;读磁盘的过程，既然有这个弊端，那么就可以通过参数来配置，使得buffer中的一部分数据可以直接输送到reduce，从而减少IO开销：mapred.job.reduce.input.buffer.percent，默认为0.0。当值大于0的时候，会保留指定比例的内存读buffer中的数据直接拿给reduce使用。这样一来，设置buffer需要内存，读取数据需要内存，reduce计算也要内存，所以要根据作业的运行情况进行调整。</p>
+<h4 id="4-IO传输"><a href="#4-IO传输" class="headerlink" title="4 IO传输"></a>4 IO传输</h4><p>(1)采用数据压缩的方式，减少网络IO的的时间。安装Snappy和LZO压缩编码器。</p>
+<p>(2)使用SequenceFile二进制文件。</p>
+<h4 id="5-数据倾斜问题"><a href="#5-数据倾斜问题" class="headerlink" title="5 数据倾斜问题"></a>5 数据倾斜问题</h4><h5 id="1-数据倾斜现象"><a href="#1-数据倾斜现象" class="headerlink" title="(1)数据倾斜现象"></a>(1)数据倾斜现象</h5><ul>
+<li>数据频率倾斜——某一个区域的数据量要远远大于其他区域。</li>
+<li>数据大小倾斜——部分记录的大小远远大于平均值。</li>
+</ul>
+<h5 id="2-如何收集倾斜数据"><a href="#2-如何收集倾斜数据" class="headerlink" title="(2)如何收集倾斜数据"></a>(2)如何收集倾斜数据</h5><p>在reduce方法中加入记录map输出键的详细情况的功能。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MAX_VALUES = <span class="string">"skew.maxvalues"</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> maxValueThreshold; </span><br><span class="line"> </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(JobConf job)</span> </span>&#123; </span><br><span class="line">     maxValueThreshold = job.getInt(MAX_VALUES, <span class="number">100</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterator&lt;Text&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                     OutputCollector&lt;Text, Text&gt; output, </span></span></span><br><span class="line"><span class="function"><span class="params">                     Reporter reporter)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">while</span> (values.hasNext()) &#123;</span><br><span class="line">         values.next();</span><br><span class="line">         i++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (++i &gt; maxValueThreshold) &#123;</span><br><span class="line">         log.info(<span class="string">"Received "</span> + i + <span class="string">" values for key "</span> + key);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-减少数据倾斜的方法"><a href="#3-减少数据倾斜的方法" class="headerlink" title="(3)减少数据倾斜的方法"></a>(3)减少数据倾斜的方法</h5><ul>
+<li><p>方法1：抽样和范围分区<br>可以通过对原始数据进行抽样得到的结果集来预设分区边界值。</p>
+</li>
+<li><p>方法2：自定义分区<br>基于输出键的背景知识进行自定义分区。例如，如果map输出键的单词来源于一本书。且其中某几个专业词汇较多。那么就可以自定义分区将这这些专业词汇发送给固定的一部分reduce实例。而将其他的都发送给剩余的reduce实例。</p>
+</li>
+<li><p>方法3：Combine<br>使用Combine可以大量地减小数据倾斜。在可能的情况下，combine的目的就是聚合并精简数据。</p>
+</li>
+<li><p>方法4：采用Map Join，尽量避免Reduce Join。</p>
+</li>
+</ul>
+<h4 id="6-常用的调优参数"><a href="#6-常用的调优参数" class="headerlink" title="6 常用的调优参数"></a>6 常用的调优参数</h4><h5 id="1-资源相关参数"><a href="#1-资源相关参数" class="headerlink" title="(1)资源相关参数"></a>(1)资源相关参数</h5><h6 id="a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）"><a href="#a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）" class="headerlink" title="(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）"></a>(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.memory.mb</td>
+<td align="center">一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.memory.mb</td>
+<td align="center">一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.cpu.vcores</td>
+<td align="center">每个Map task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.cpu.vcores</td>
+<td align="center">每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.parallelcopies</td>
+<td align="center">每个reduce去map中拿数据的并行数。默认值是5</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.merge.percent</td>
+<td align="center">buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.input.buffer.percent</td>
+<td align="center">buffer大小占reduce可用内存的比例。默认值0.7</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.input.buffer.percent</td>
+<td align="center">指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
+</tr>
+</tbody></table>
+<h6 id="b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）"><a href="#b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）" class="headerlink" title="(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）"></a>(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">yarn.scheduler.minimum-allocation-mb      1024</td>
+<td align="center">给应用程序container分配的最小内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-mb      8192</td>
+<td align="center">给应用程序container分配的最大内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.minimum-allocation-vcores    1</td>
+<td align="center">每个container申请的最小CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-vcores    32</td>
+<td align="center">每个container申请的最大CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.nodemanager.resource.memory-mb   8192</td>
+<td align="center">给containers分配的最大物理内存</td>
+</tr>
+</tbody></table>
+<h6 id="c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）"><a href="#c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）" class="headerlink" title="(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）"></a>(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.task.io.sort.mb   100</td>
+<td align="center">shuffle的环形缓冲区大小，默认100m</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.sort.spill.percent   0.8</td>
+<td align="center">环形缓冲区溢出的阈值，默认80%</td>
+</tr>
+</tbody></table>
+<h5 id="2-容错相关参数-mapreduce性能优化"><a href="#2-容错相关参数-mapreduce性能优化" class="headerlink" title="(2)容错相关参数(mapreduce性能优化)"></a>(2)容错相关参数(mapreduce性能优化)</h5><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.maxattempts</td>
+<td align="center">每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.maxattempts</td>
+<td align="center">每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.task.timeout</td>
+<td align="center">Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
+</tr>
+</tbody></table>
+<h3 id="三-HDFS小文件优化方法"><a href="#三-HDFS小文件优化方法" class="headerlink" title="三. HDFS小文件优化方法"></a>三. HDFS小文件优化方法</h3><h4 id="1-HDFS小文件弊端"><a href="#1-HDFS小文件弊端" class="headerlink" title="1 HDFS小文件弊端"></a>1 HDFS小文件弊端</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS上每个文件都要在namenode上建立一个索引，这个索引的大小约为150byte，这样当小文件比较多的时候，就会产生很多的索引文件，一方面会大量占用namenode的内存空间，另一方面就是索引文件过大是的索引速度变慢。</p>
+<h4 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2 解决方案"></a>2 解决方案</h4><h5 id="1-Hadoop-Archive"><a href="#1-Hadoop-Archive" class="headerlink" title="(1)Hadoop Archive:"></a>(1)Hadoop Archive:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;是一个高效地将小文件放入HDFS块中的文件存档工具，它能够将多个小文件打包成一个HAR文件，这样就减少了namenode的内存使用。</p>
+<h5 id="2-Sequence-file："><a href="#2-Sequence-file：" class="headerlink" title="(2)Sequence file："></a>(2)Sequence file：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;sequence file由一系列的二进制key/value组成，如果key为文件名，value为文件内容，则可以将大批小文件合并成一个大文件。</p>
+<h5 id="3-CombineFileInputFormat："><a href="#3-CombineFileInputFormat：" class="headerlink" title="(3)CombineFileInputFormat："></a>(3)CombineFileInputFormat：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;CombineFileInputFormat是一种新的inputformat，用于将多个文件合并成一个单独的split，另外，它会考虑数据的存储位置。</p>
+<h5 id="4-开启JVM重用"><a href="#4-开启JVM重用" class="headerlink" title="(4)开启JVM重用"></a>(4)开启JVM重用</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;对于大量小文件Job，可以开启JVM重用会减少45%运行时间。<br>&nbsp;&nbsp;&nbsp;&nbsp;JVM重用理解：一个map运行一个jvm，重用的话，在一个map在jvm上运行完毕后，jvm继续运行其他map。<br>&nbsp;&nbsp;&nbsp;&nbsp;具体设置：mapreduce.job.jvm.numtasks值在10-20之间。</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hadoop之数据压缩</title>
-    <url>/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/</url>
+    <url>/blog/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/</url>
     <content><![CDATA[<h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;压缩技术能够有效减少底层存储系统(HDFS)读写字节数。压缩提高了网络带宽和磁盘空间的效率。在Hadoop下，尤其是数据规模很大和工作负载密集的情况下，使用数据压缩显得非常重要。在这种情况下，I/O操作和网络数据传输要花大量的时间。还有，Shuffle与Merge过程同样也面临着巨大的I/O压力。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;鉴于磁盘I/O和网络带宽是Hadoop的宝贵资源，数据压缩对于节省资源、最小化磁盘I/O和网络传输非常有帮助。不过，尽管压缩与解压操作的CPU开销不高，其性能的提升和资源的节省并非没有代价。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;如果磁盘I/O和网络带宽影响了MapReduce作业性能，在任意MapReduce阶段启用压缩都可以改善端到端处理时间并减少I/O和网络流量。</p>
@@ -635,7 +786,7 @@
   </entry>
   <entry>
     <title>Hadoop之通过API操作HDFS</title>
-    <url>/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</url>
+    <url>/blog/2019/01/01/Hadoop%E4%B9%8B%E9%80%9A%E8%BF%87API%E6%93%8D%E4%BD%9CHDFS/</url>
     <content><![CDATA[<h3 id="HDFS客户端操作"><a href="#HDFS客户端操作" class="headerlink" title="HDFS客户端操作"></a>HDFS客户端操作</h3><h3 id="一-IDEA环境准备"><a href="#一-IDEA环境准备" class="headerlink" title="一.IDEA环境准备"></a>一.IDEA环境准备</h3><h4 id="1-修改-MAVEN-HOME-conf-settings-xml"><a href="#1-修改-MAVEN-HOME-conf-settings-xml" class="headerlink" title="1.修改$MAVEN_HOME/conf/settings.xml"></a>1.修改$MAVEN_HOME/conf/settings.xml</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">  <span class="comment">&lt;!--本地仓库所在位置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>F:\m2\repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--使用阿里云镜像去下载Jar包，速度更快--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--本地配置JDK8版本--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">profile</span>&gt;</span>  </span><br><span class="line">		  <span class="tag">&lt;<span class="name">id</span>&gt;</span>jdk-1.8<span class="tag">&lt;/<span class="name">id</span>&gt;</span>  </span><br><span class="line">		   <span class="tag">&lt;<span class="name">activation</span>&gt;</span>  </span><br><span class="line">		     <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span>  </span><br><span class="line">		     <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span>  </span><br><span class="line">		   <span class="tag">&lt;/<span class="name">activation</span>&gt;</span>  </span><br><span class="line">			<span class="tag">&lt;<span class="name">properties</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span>  </span><br><span class="line">				<span class="tag">&lt;<span class="name">maven.compiler.compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.compilerVersion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="2-Maven准备-在在项目文件pom-xml文件中添加"><a href="#2-Maven准备-在在项目文件pom-xml文件中添加" class="headerlink" title="2.Maven准备,在在项目文件pom.xml文件中添加"></a>2.Maven准备,在在项目文件pom.xml文件中添加</h4><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-hdfs<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.16.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/junit/junit --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -680,189 +831,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Hadoop之优化</title>
-    <url>/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h3 id="一-MapReduce-跑的慢的原因"><a href="#一-MapReduce-跑的慢的原因" class="headerlink" title="一.MapReduce 跑的慢的原因"></a>一.MapReduce 跑的慢的原因</h3><p>Mapreduce 程序效率的瓶颈在于两点：</p>
-<h4 id="1-计算机性能"><a href="#1-计算机性能" class="headerlink" title="1.计算机性能"></a>1.计算机性能</h4><p>CPU、内存、磁盘健康、网络</p>
-<h4 id="2-I-O-操作优化"><a href="#2-I-O-操作优化" class="headerlink" title="2.I/O 操作优化"></a>2.I/O 操作优化</h4><p>(1)数据倾斜<br>(2)map和reduce数设置不合理<br>(3)map运行时间太长，导致reduce等待过久<br>(4)小文件过多<br>(5)大量的不可分块的超大文件<br>(6)spill次数过多<br>(7)merge次数过多等。</p>
-<h3 id="二-MapReduce优化方法"><a href="#二-MapReduce优化方法" class="headerlink" title="二. MapReduce优化方法"></a>二. MapReduce优化方法</h3><p>MapReduce优化方法主要从六个方面考虑：数据输入、Map阶段、Reduce阶段、IO传输、数据倾斜问题和常用的调优参数。</p>
-<h4 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h4><p>(1)合并小文件：在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢。</p>
-<p>(2)采用CombineTextInputFormat来作为输入，解决输入端大量小文件场景。</p>
-<h4 id="2-Map阶段"><a href="#2-Map阶段" class="headerlink" title="2 Map阶段"></a>2 Map阶段</h4><h5 id="1-减少溢写（spill）次数："><a href="#1-减少溢写（spill）次数：" class="headerlink" title="(1)减少溢写（spill）次数："></a>(1)减少溢写（spill）次数：</h5><p>通过调整io.sort.mb及sort.spill.percent参数值，增大触发spill的内存上限，减少spill次数，从而减少磁盘IO。</p>
-<h5 id="2-减少合并（merge）次数："><a href="#2-减少合并（merge）次数：" class="headerlink" title="(2)减少合并（merge）次数："></a>(2)减少合并（merge）次数：</h5><p>通过调整io.sort.factor参数，增大merge的文件数目，减少merge的次数，从而缩短mr处理时间。</p>
-<h5 id="3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。"><a href="#3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。" class="headerlink" title="(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。"></a>(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。</h5><h4 id="3-Reduce阶段"><a href="#3-Reduce阶段" class="headerlink" title="3 Reduce阶段"></a>3 Reduce阶段</h4><h5 id="1-合理设置map和reduce数："><a href="#1-合理设置map和reduce数：" class="headerlink" title="(1)合理设置map和reduce数："></a>(1)合理设置map和reduce数：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致 map、reduce任务间竞争资源，造成处理超时等错误。</p>
-<h5 id="2-设置map、reduce共存："><a href="#2-设置map、reduce共存：" class="headerlink" title="(2)设置map、reduce共存："></a>(2)设置map、reduce共存：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;调整slowstart.completedmaps参数，使map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。</p>
-<h5 id="3-规避使用reduce："><a href="#3-规避使用reduce：" class="headerlink" title="(3)规避使用reduce："></a>(3)规避使用reduce：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;因为reduce在用于连接数据集的时候将会产生大量的网络消耗。</p>
-<h5 id="4-合理设置reduce端的buffer："><a href="#4-合理设置reduce端的buffer：" class="headerlink" title="(4)合理设置reduce端的buffer："></a>(4)合理设置reduce端的buffer：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;默认情况下，数据达到一个阈值的时候，buffer中的数据就会写入磁盘，然后reduce会从磁盘中获得所有的数据。也就是说，buffer和reduce是没有直接关联的，中间多个一个写磁盘-&gt;读磁盘的过程，既然有这个弊端，那么就可以通过参数来配置，使得buffer中的一部分数据可以直接输送到reduce，从而减少IO开销：mapred.job.reduce.input.buffer.percent，默认为0.0。当值大于0的时候，会保留指定比例的内存读buffer中的数据直接拿给reduce使用。这样一来，设置buffer需要内存，读取数据需要内存，reduce计算也要内存，所以要根据作业的运行情况进行调整。</p>
-<h4 id="4-IO传输"><a href="#4-IO传输" class="headerlink" title="4 IO传输"></a>4 IO传输</h4><p>(1)采用数据压缩的方式，减少网络IO的的时间。安装Snappy和LZO压缩编码器。</p>
-<p>(2)使用SequenceFile二进制文件。</p>
-<h4 id="5-数据倾斜问题"><a href="#5-数据倾斜问题" class="headerlink" title="5 数据倾斜问题"></a>5 数据倾斜问题</h4><h5 id="1-数据倾斜现象"><a href="#1-数据倾斜现象" class="headerlink" title="(1)数据倾斜现象"></a>(1)数据倾斜现象</h5><ul>
-<li>数据频率倾斜——某一个区域的数据量要远远大于其他区域。</li>
-<li>数据大小倾斜——部分记录的大小远远大于平均值。</li>
-</ul>
-<h5 id="2-如何收集倾斜数据"><a href="#2-如何收集倾斜数据" class="headerlink" title="(2)如何收集倾斜数据"></a>(2)如何收集倾斜数据</h5><p>在reduce方法中加入记录map输出键的详细情况的功能。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MAX_VALUES = <span class="string">"skew.maxvalues"</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> maxValueThreshold; </span><br><span class="line"> </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(JobConf job)</span> </span>&#123; </span><br><span class="line">     maxValueThreshold = job.getInt(MAX_VALUES, <span class="number">100</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterator&lt;Text&gt; values,</span></span></span><br><span class="line"><span class="function"><span class="params">                     OutputCollector&lt;Text, Text&gt; output, </span></span></span><br><span class="line"><span class="function"><span class="params">                     Reporter reporter)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">while</span> (values.hasNext()) &#123;</span><br><span class="line">         values.next();</span><br><span class="line">         i++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (++i &gt; maxValueThreshold) &#123;</span><br><span class="line">         log.info(<span class="string">"Received "</span> + i + <span class="string">" values for key "</span> + key);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-减少数据倾斜的方法"><a href="#3-减少数据倾斜的方法" class="headerlink" title="(3)减少数据倾斜的方法"></a>(3)减少数据倾斜的方法</h5><ul>
-<li><p>方法1：抽样和范围分区<br>可以通过对原始数据进行抽样得到的结果集来预设分区边界值。</p>
-</li>
-<li><p>方法2：自定义分区<br>基于输出键的背景知识进行自定义分区。例如，如果map输出键的单词来源于一本书。且其中某几个专业词汇较多。那么就可以自定义分区将这这些专业词汇发送给固定的一部分reduce实例。而将其他的都发送给剩余的reduce实例。</p>
-</li>
-<li><p>方法3：Combine<br>使用Combine可以大量地减小数据倾斜。在可能的情况下，combine的目的就是聚合并精简数据。</p>
-</li>
-<li><p>方法4：采用Map Join，尽量避免Reduce Join。</p>
-</li>
-</ul>
-<h4 id="6-常用的调优参数"><a href="#6-常用的调优参数" class="headerlink" title="6 常用的调优参数"></a>6 常用的调优参数</h4><h5 id="1-资源相关参数"><a href="#1-资源相关参数" class="headerlink" title="(1)资源相关参数"></a>(1)资源相关参数</h5><h6 id="a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）"><a href="#a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）" class="headerlink" title="(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）"></a>(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）</h6><table>
-<thead>
-<tr>
-<th align="center">配置参数</th>
-<th align="center">参数说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">mapreduce.map.memory.mb</td>
-<td align="center">一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.memory.mb</td>
-<td align="center">一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
-</tr>
-<tr>
-<td align="center">mapreduce.map.cpu.vcores</td>
-<td align="center">每个Map task可使用的最多cpu core数目，默认值: 1</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.cpu.vcores</td>
-<td align="center">每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.shuffle.parallelcopies</td>
-<td align="center">每个reduce去map中拿数据的并行数。默认值是5</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.shuffle.merge.percent</td>
-<td align="center">buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.shuffle.input.buffer.percent</td>
-<td align="center">buffer大小占reduce可用内存的比例。默认值0.7</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.input.buffer.percent</td>
-<td align="center">指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
-</tr>
-</tbody></table>
-<h6 id="b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）"><a href="#b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）" class="headerlink" title="(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）"></a>(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）</h6><table>
-<thead>
-<tr>
-<th align="center">配置参数</th>
-<th align="center">参数说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">yarn.scheduler.minimum-allocation-mb      1024</td>
-<td align="center">给应用程序container分配的最小内存</td>
-</tr>
-<tr>
-<td align="center">yarn.scheduler.maximum-allocation-mb      8192</td>
-<td align="center">给应用程序container分配的最大内存</td>
-</tr>
-<tr>
-<td align="center">yarn.scheduler.minimum-allocation-vcores    1</td>
-<td align="center">每个container申请的最小CPU核数</td>
-</tr>
-<tr>
-<td align="center">yarn.scheduler.maximum-allocation-vcores    32</td>
-<td align="center">每个container申请的最大CPU核数</td>
-</tr>
-<tr>
-<td align="center">yarn.nodemanager.resource.memory-mb   8192</td>
-<td align="center">给containers分配的最大物理内存</td>
-</tr>
-</tbody></table>
-<h6 id="c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）"><a href="#c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）" class="headerlink" title="(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）"></a>(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）</h6><table>
-<thead>
-<tr>
-<th align="center">配置参数</th>
-<th align="center">参数说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">mapreduce.task.io.sort.mb   100</td>
-<td align="center">shuffle的环形缓冲区大小，默认100m</td>
-</tr>
-<tr>
-<td align="center">mapreduce.map.sort.spill.percent   0.8</td>
-<td align="center">环形缓冲区溢出的阈值，默认80%</td>
-</tr>
-</tbody></table>
-<h5 id="2-容错相关参数-mapreduce性能优化"><a href="#2-容错相关参数-mapreduce性能优化" class="headerlink" title="(2)容错相关参数(mapreduce性能优化)"></a>(2)容错相关参数(mapreduce性能优化)</h5><table>
-<thead>
-<tr>
-<th align="center">配置参数</th>
-<th align="center">参数说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">mapreduce.map.maxattempts</td>
-<td align="center">每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
-</tr>
-<tr>
-<td align="center">mapreduce.reduce.maxattempts</td>
-<td align="center">每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
-</tr>
-<tr>
-<td align="center">mapreduce.task.timeout</td>
-<td align="center">Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
-</tr>
-</tbody></table>
-<h3 id="三-HDFS小文件优化方法"><a href="#三-HDFS小文件优化方法" class="headerlink" title="三. HDFS小文件优化方法"></a>三. HDFS小文件优化方法</h3><h4 id="1-HDFS小文件弊端"><a href="#1-HDFS小文件弊端" class="headerlink" title="1 HDFS小文件弊端"></a>1 HDFS小文件弊端</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS上每个文件都要在namenode上建立一个索引，这个索引的大小约为150byte，这样当小文件比较多的时候，就会产生很多的索引文件，一方面会大量占用namenode的内存空间，另一方面就是索引文件过大是的索引速度变慢。</p>
-<h4 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2 解决方案"></a>2 解决方案</h4><h5 id="1-Hadoop-Archive"><a href="#1-Hadoop-Archive" class="headerlink" title="(1)Hadoop Archive:"></a>(1)Hadoop Archive:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;是一个高效地将小文件放入HDFS块中的文件存档工具，它能够将多个小文件打包成一个HAR文件，这样就减少了namenode的内存使用。</p>
-<h5 id="2-Sequence-file："><a href="#2-Sequence-file：" class="headerlink" title="(2)Sequence file："></a>(2)Sequence file：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;sequence file由一系列的二进制key/value组成，如果key为文件名，value为文件内容，则可以将大批小文件合并成一个大文件。</p>
-<h5 id="3-CombineFileInputFormat："><a href="#3-CombineFileInputFormat：" class="headerlink" title="(3)CombineFileInputFormat："></a>(3)CombineFileInputFormat：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;CombineFileInputFormat是一种新的inputformat，用于将多个文件合并成一个单独的split，另外，它会考虑数据的存储位置。</p>
-<h5 id="4-开启JVM重用"><a href="#4-开启JVM重用" class="headerlink" title="(4)开启JVM重用"></a>(4)开启JVM重用</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;对于大量小文件Job，可以开启JVM重用会减少45%运行时间。<br>&nbsp;&nbsp;&nbsp;&nbsp;JVM重用理解：一个map运行一个jvm，重用的话，在一个map在jvm上运行完毕后，jvm继续运行其他map。<br>&nbsp;&nbsp;&nbsp;&nbsp;具体设置：mapreduce.job.jvm.numtasks值在10-20之间。</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hadoop环境搭建-本地模式搭建</title>
-    <url>/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><p>(1)安装好linux操作系统<br>(2)关闭防火墙<br>(3)在linux上安装JDK</p>
-<h4 id="2-本地模式具体步骤："><a href="#2-本地模式具体步骤：" class="headerlink" title="2.本地模式具体步骤："></a>2.本地模式具体步骤：</h4><h5 id="1-解压hadoop安装包："><a href="#1-解压hadoop安装包：" class="headerlink" title="(1)解压hadoop安装包："></a>(1)解压hadoop安装包：</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module</span><br></pre></td></tr></table></figure>
-<h5 id="2-配置环境变量："><a href="#2-配置环境变量：" class="headerlink" title="(2)配置环境变量："></a>(2)配置环境变量：</h5><h6 id="a-修改命令："><a href="#a-修改命令：" class="headerlink" title="(a).修改命令："></a>(a).修改命令：</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
-<h6 id="b-添加的内容为："><a href="#b-添加的内容为：" class="headerlink" title="(b).添加的内容为："></a>(b).添加的内容为：</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line">export HADOOP_HOME</span><br><span class="line">PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH</span><br><span class="line">export PATH</span><br></pre></td></tr></table></figure>
-<h6 id="c-使环境变量生效"><a href="#c-使环境变量生效" class="headerlink" title="(c ).使环境变量生效"></a>(c ).使环境变量生效</h6><p>输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-修改配置文件hadoop-env-sh"><a href="#3-修改配置文件hadoop-env-sh" class="headerlink" title="(3)修改配置文件hadoop-env.sh"></a>(3)修改配置文件hadoop-env.sh</h5><h6 id="a-进入hadoop-2-8-4-etc-hadoop文件夹"><a href="#a-进入hadoop-2-8-4-etc-hadoop文件夹" class="headerlink" title="(a).进入hadoop-2.8.4/etc/hadoop文件夹"></a>(a).进入hadoop-2.8.4/etc/hadoop文件夹</h6><p>输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.8.4/etc/hadoop              //进入hadoop-2.8.4/etc/hadoop文件夹</span><br></pre></td></tr></table></figure>
-<h6 id="b-修改配置文件hadoop-env-sh："><a href="#b-修改配置文件hadoop-env-sh：" class="headerlink" title="(b).修改配置文件hadoop-env.sh："></a>(b).修改配置文件hadoop-env.sh：</h6><p>输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
-<p>修改内容为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZlZWZiZWIzYjcxYWFlNjkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
-<h6 id="c-验证（运行一个MR程序）"><a href="#c-验证（运行一个MR程序）" class="headerlink" title="(c ).验证（运行一个MR程序）"></a>(c ).验证（运行一个MR程序）</h6><p>(1)在/root/temp目录下创建一个a.txt文件<br>(2)修改a.txt文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch a.txt                                 //新建a.txt文件</span><br><span class="line">vi a.txt                                    //修改a.txt</span><br><span class="line"></span><br><span class="line">i am a tiger you are also a tiger           //添加内容</span><br></pre></td></tr></table></figure>
-<p>(3)进入/opt/module/hadoop-2.8.4/share/hadoop/mapreduce文件夹下<br>(4)运行wordcount程序 hadoop jar hadoop-mapreduce-examples-2.8.4.jar wordcount ~/temp/a.txt  ~/temp/output/wc0717</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.8.4/share/hadoop/mapreduce   //进入文件夹</span><br><span class="line"></span><br><span class="line">//hadoop jar 程序包 函数名 输入文件地址（这里是本地linux路径，因为本地模式没有hdfs） 输出文件地址</span><br><span class="line">hadoop jar hadoop-mapreduce-examples-2.8.4.jar wordcount ~/temp/a.txt  ~/temp/output/wc0717     //执行MR程序</span><br></pre></td></tr></table></figure>
-<p>运行成功后，会在/root/temp/output/文件夹下，生产wc0717文件下，此文件夹下有两个文件part-r-000000和_SUCCESS<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFkNTUwN2U5NmY0MGZkNGEucG5n?x-oss-process=image/format,png" alt="wordcount程序运行结果"></p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hadoop基础介绍</title>
-    <url>/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
+    <url>/blog/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</url>
     <content><![CDATA[<h3 id="一-Hadoop概述"><a href="#一-Hadoop概述" class="headerlink" title="一.Hadoop概述"></a>一.Hadoop概述</h3><h4 id="1-Hadoop的优势"><a href="#1-Hadoop的优势" class="headerlink" title="1.Hadoop的优势"></a>1.Hadoop的优势</h4><ul>
 <li><p>高可靠性：<br>因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
 </li>
@@ -1250,8 +1220,85 @@
       </tags>
   </entry>
   <entry>
+    <title>Hadoop序列化</title>
+    <url>/blog/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[<h4 id="1-为什么要序列化？"><a href="#1-为什么要序列化？" class="headerlink" title="1 为什么要序列化？"></a>1 为什么要序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来说，“活的”对象只生存在内存里，关机断电就没有了。而且“活的”对象只能由本地的进程使用，不能被发送到网络上的另外一台计算机。 然而序列化可以存储“活的”对象，可以将“活的”对象发送到远程计算机。</p>
+<h4 id="2-什么是序列化？"><a href="#2-什么是序列化？" class="headerlink" title="2 什么是序列化？"></a>2 什么是序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;序列化就是把内存中的对象，转换成字节序列（或其他数据传输协议）以便于存储（持久化）和网络传输。<br>反序列化就是将收到字节序列（或其他数据传输协议）或者是硬盘的持久化数据，转换成内存中的对象。</p>
+<h4 id="3-为什么不用Java的序列化？"><a href="#3-为什么不用Java的序列化？" class="headerlink" title="3 为什么不用Java的序列化？"></a>3 为什么不用Java的序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Java的序列化是一个重量级序列化框架（Serializable），一个对象被序列化后，会附带很多额外的信息（各种校验信息，header，继承体系等），不便于在网络中高效传输。所以，hadoop自己开发了一套序列化机制（Writable），精简、高效。</p>
+<h4 id="4-为什么序列化对Hadoop很重要？"><a href="#4-为什么序列化对Hadoop很重要？" class="headerlink" title="4 为什么序列化对Hadoop很重要？"></a>4 为什么序列化对Hadoop很重要？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;因为Hadoop在集群之间进行通讯或者RPC调用的时候，需要序列化，而且要求序列化要快，且体积要小，占用带宽要小。所以必须理解Hadoop的序列化机制。<br>&nbsp;&nbsp;&nbsp;&nbsp;序列化和反序列化在分布式数据处理领域经常出现：进程通信和永久存储。然而Hadoop中各个节点的通信是通过远程调用（RPC）实现的，那么RPC序列化要求具有以下特点：</p>
+<ul>
+<li>紧凑：紧凑的格式能让我们充分利用网络带宽，而带宽是数据中心最稀缺的资</li>
+<li>快速：进程通信形成了分布式系统的骨架，所以需要尽量减少序列化和反序列化的性能开销，这是基本的；</li>
+<li>可扩展：协议为了满足新的需求变化，所以控制客户端和服务器过程中，需要直接引进相应的协议，这些是新协议，原序列化方式能支持新的协议报文；</li>
+<li>互操作：能支持不同语言写的客户端和服务端进行交互；</li>
+</ul>
+<h4 id="5-常用数据序列化类型"><a href="#5-常用数据序列化类型" class="headerlink" title="5.常用数据序列化类型"></a>5.常用数据序列化类型</h4><p>常用的数据类型对应的hadoop数据序列化类型</p>
+<table>
+<thead>
+<tr>
+<th align="center">Java类型</th>
+<th align="center">Hadoop Writable类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">boolean</td>
+<td align="center">BooleanWritable</td>
+</tr>
+<tr>
+<td align="center">byte</td>
+<td align="center">ByteWritable</td>
+</tr>
+<tr>
+<td align="center">int</td>
+<td align="center">IntWritable</td>
+</tr>
+<tr>
+<td align="center">float</td>
+<td align="center">FloatWritable</td>
+</tr>
+<tr>
+<td align="center">long</td>
+<td align="center">LongWritable</td>
+</tr>
+<tr>
+<td align="center">double</td>
+<td align="center">DoubleWritable</td>
+</tr>
+<tr>
+<td align="center">string</td>
+<td align="center">Text</td>
+</tr>
+<tr>
+<td align="center">map</td>
+<td align="center">MapWritable</td>
+</tr>
+<tr>
+<td align="center">array</td>
+<td align="center">ArrayWritable</td>
+</tr>
+</tbody></table>
+<h4 id="6-自定义bean对象实现序列化接口（Writable）"><a href="#6-自定义bean对象实现序列化接口（Writable）" class="headerlink" title="6 自定义bean对象实现序列化接口（Writable）"></a>6 自定义bean对象实现序列化接口（Writable）</h4><h5 id="1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"><a href="#1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项" class="headerlink" title="(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"></a>(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项</h5><p>(a)必须实现Writable接口</p>
+<p>(b)反序列化时，需要反射调用空参构造函数，所以必须有空参构造</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(c )重写序列化方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    out.writeLong(upFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(downFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(sumFlow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(d)重写反序列化方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    upFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    downFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    sumFlow = in.readLong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(e)注意反序列化的顺序和序列化的顺序完全一致</p>
+<p>(f)要想把结果显示在文件中，需要重写toString()，可用”\t”分开，方便后续用。</p>
+<p>(g)如果需要将自定义的bean放在key中传输，则还需要实现comparable接口，因为mapreduce框中的shuffle过程一定会对key进行排序。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(FlowBean o)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 倒序排列，从大到小</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sumFlow &gt; o.getSumFlow() ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hadoop-全分布模式搭建</title>
-    <url>/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
+    <url>/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><h5 id="1-安装好linux操作系统"><a href="#1-安装好linux操作系统" class="headerlink" title="(1)安装好linux操作系统"></a>(1)安装好linux操作系统</h5><h5 id="2-关闭防火墙"><a href="#2-关闭防火墙" class="headerlink" title="(2)关闭防火墙"></a>(2)关闭防火墙</h5><h5 id="3-在linux上安装JDK"><a href="#3-在linux上安装JDK" class="headerlink" title="(3)在linux上安装JDK"></a>(3)在linux上安装JDK</h5><h5 id="4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆"><a href="#4-hadoop2-hadoop3-hadoop4三台服务器已经设置过免密登陆" class="headerlink" title="(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆"></a>(4)hadoop2,hadoop3,hadoop4三台服务器已经设置过免密登陆</h5><h4 id="2-解压Hadoop压缩包并配置环境变量"><a href="#2-解压Hadoop压缩包并配置环境变量" class="headerlink" title="2.解压Hadoop压缩包并配置环境变量"></a>2.解压Hadoop压缩包并配置环境变量</h4><h5 id="1-将Hadoop安装包拷贝到-opt-software文件目录下"><a href="#1-将Hadoop安装包拷贝到-opt-software文件目录下" class="headerlink" title="(1)将Hadoop安装包拷贝到/opt/software文件目录下"></a>(1)将Hadoop安装包拷贝到/opt/software文件目录下</h5><h5 id="2-将Hadoop安装包解压到-opt-module文件目录下"><a href="#2-将Hadoop安装包解压到-opt-module文件目录下" class="headerlink" title="(2)将Hadoop安装包解压到/opt/module文件目录下"></a>(2)将Hadoop安装包解压到/opt/module文件目录下</h5><p>命令为：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module          //将hadoop-2.8.4.tar.gz解压到/opt/module目录下</span><br></pre></td></tr></table></figure>
 <h5 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="(3)配置环境变量"></a>(3)配置环境变量</h5><h6 id="a-修改环境变量配置文件"><a href="#a-修改环境变量配置文件" class="headerlink" title="(a)修改环境变量配置文件"></a>(a)修改环境变量配置文件</h6><p>修改命令：</p>
@@ -1314,8 +1361,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Hadoop环境搭建-本地模式搭建</title>
+    <url>/blog/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="1-Hadoop安装准备工作："><a href="#1-Hadoop安装准备工作：" class="headerlink" title="1.Hadoop安装准备工作："></a>1.Hadoop安装准备工作：</h4><p>(1)安装好linux操作系统<br>(2)关闭防火墙<br>(3)在linux上安装JDK</p>
+<h4 id="2-本地模式具体步骤："><a href="#2-本地模式具体步骤：" class="headerlink" title="2.本地模式具体步骤："></a>2.本地模式具体步骤：</h4><h5 id="1-解压hadoop安装包："><a href="#1-解压hadoop安装包：" class="headerlink" title="(1)解压hadoop安装包："></a>(1)解压hadoop安装包：</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/module</span><br></pre></td></tr></table></figure>
+<h5 id="2-配置环境变量："><a href="#2-配置环境变量：" class="headerlink" title="(2)配置环境变量："></a>(2)配置环境变量：</h5><h6 id="a-修改命令："><a href="#a-修改命令：" class="headerlink" title="(a).修改命令："></a>(a).修改命令：</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile          //修改环境变量的文件</span><br></pre></td></tr></table></figure>
+<h6 id="b-添加的内容为："><a href="#b-添加的内容为：" class="headerlink" title="(b).添加的内容为："></a>(b).添加的内容为：</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line">export HADOOP_HOME</span><br><span class="line">PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH</span><br><span class="line">export PATH</span><br></pre></td></tr></table></figure>
+<h6 id="c-使环境变量生效"><a href="#c-使环境变量生效" class="headerlink" title="(c ).使环境变量生效"></a>(c ).使环境变量生效</h6><p>输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-修改配置文件hadoop-env-sh"><a href="#3-修改配置文件hadoop-env-sh" class="headerlink" title="(3)修改配置文件hadoop-env.sh"></a>(3)修改配置文件hadoop-env.sh</h5><h6 id="a-进入hadoop-2-8-4-etc-hadoop文件夹"><a href="#a-进入hadoop-2-8-4-etc-hadoop文件夹" class="headerlink" title="(a).进入hadoop-2.8.4/etc/hadoop文件夹"></a>(a).进入hadoop-2.8.4/etc/hadoop文件夹</h6><p>输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.8.4/etc/hadoop              //进入hadoop-2.8.4/etc/hadoop文件夹</span><br></pre></td></tr></table></figure>
+<h6 id="b-修改配置文件hadoop-env-sh："><a href="#b-修改配置文件hadoop-env-sh：" class="headerlink" title="(b).修改配置文件hadoop-env.sh："></a>(b).修改配置文件hadoop-env.sh：</h6><p>输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi hadoop-env.sh                             //修改hadoop-env.sh文件</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144          //修改JAVAHOME地址，改为自己建的jdk地址，应该在25行</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZlZWZiZWIzYjcxYWFlNjkucG5n?x-oss-process=image/format,png" alt="jdk"></p>
+<h6 id="c-验证（运行一个MR程序）"><a href="#c-验证（运行一个MR程序）" class="headerlink" title="(c ).验证（运行一个MR程序）"></a>(c ).验证（运行一个MR程序）</h6><p>(1)在/root/temp目录下创建一个a.txt文件<br>(2)修改a.txt文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch a.txt                                 //新建a.txt文件</span><br><span class="line">vi a.txt                                    //修改a.txt</span><br><span class="line"></span><br><span class="line">i am a tiger you are also a tiger           //添加内容</span><br></pre></td></tr></table></figure>
+<p>(3)进入/opt/module/hadoop-2.8.4/share/hadoop/mapreduce文件夹下<br>(4)运行wordcount程序 hadoop jar hadoop-mapreduce-examples-2.8.4.jar wordcount ~/temp/a.txt  ~/temp/output/wc0717</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /opt/module/hadoop-2.8.4/share/hadoop/mapreduce   //进入文件夹</span><br><span class="line"></span><br><span class="line">//hadoop jar 程序包 函数名 输入文件地址（这里是本地linux路径，因为本地模式没有hdfs） 输出文件地址</span><br><span class="line">hadoop jar hadoop-mapreduce-examples-2.8.4.jar wordcount ~/temp/a.txt  ~/temp/output/wc0717     //执行MR程序</span><br></pre></td></tr></table></figure>
+<p>运行成功后，会在/root/temp/output/文件夹下，生产wc0717文件下，此文件夹下有两个文件part-r-000000和_SUCCESS<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFkNTUwN2U5NmY0MGZkNGEucG5n?x-oss-process=image/format,png" alt="wordcount程序运行结果"></p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux安装rz,sz</title>
-    <url>/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
+    <url>/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</url>
     <content><![CDATA[<h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
 <li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
 <li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
@@ -1339,7 +1416,7 @@
   </entry>
   <entry>
     <title>MapReduce框架原理</title>
-    <url>/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</url>
+    <url>/blog/2019/01/01/MapReduce%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h3 id="一-MapReduce工作流程"><a href="#一-MapReduce工作流程" class="headerlink" title="一.MapReduce工作流程"></a>一.MapReduce工作流程</h3><h4 id="1-流程示意图："><a href="#1-流程示意图：" class="headerlink" title="1.流程示意图："></a>1.流程示意图：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY5MWMxZjRiM2E0YWIyMjUucG5n?x-oss-process=image/format,png" alt="MapReduce工作流程一"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJmYTZhNzY5OTBjZmUyODIucG5n?x-oss-process=image/format,png" alt="Mapreduce工作流程二"></p>
 <h4 id="2-流程详解"><a href="#2-流程详解" class="headerlink" title="2.流程详解"></a>2.流程详解</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;上面的流程是整个mapreduce最全工作流程，但是shuffle过程只是从第7步开始到第16步结束，具体shuffle过程详解，如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(1)maptask收集我们的map()方法输出的kv对，放到内存缓冲区中</span><br><span class="line"></span><br><span class="line">(2)从内存缓冲区不断溢出本地磁盘文件，可能会溢出多个文件</span><br><span class="line"></span><br><span class="line">(3)多个溢出文件会被合并成大的溢出文件</span><br><span class="line"></span><br><span class="line">(4)在溢出过程中，及合并的过程中，都要调用partitioner进行分区和针对key进行排序</span><br><span class="line"></span><br><span class="line">(5)reducetask根据自己的分区号，去各个maptask机器上取相应的结果分区数据</span><br><span class="line"></span><br><span class="line">(6)reducetask会取到同一个分区的来自不同maptask的结果文件，reducetask会将这些文件再进行合并（归并排序）</span><br><span class="line"></span><br><span class="line">(7)合并成大文件后，shuffle的过程也就结束了，后面进入reducetask的逻辑运算过程（从文件中取出一个一个的键值对group，调用用户自定义的reduce()方法）</span><br></pre></td></tr></table></figure>
@@ -1600,85 +1677,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Hadoop序列化</title>
-    <url>/2019/01/02/Hadoop%E5%BA%8F%E5%88%97%E5%8C%96/</url>
-    <content><![CDATA[<h4 id="1-为什么要序列化？"><a href="#1-为什么要序列化？" class="headerlink" title="1 为什么要序列化？"></a>1 为什么要序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;一般来说，“活的”对象只生存在内存里，关机断电就没有了。而且“活的”对象只能由本地的进程使用，不能被发送到网络上的另外一台计算机。 然而序列化可以存储“活的”对象，可以将“活的”对象发送到远程计算机。</p>
-<h4 id="2-什么是序列化？"><a href="#2-什么是序列化？" class="headerlink" title="2 什么是序列化？"></a>2 什么是序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;序列化就是把内存中的对象，转换成字节序列（或其他数据传输协议）以便于存储（持久化）和网络传输。<br>反序列化就是将收到字节序列（或其他数据传输协议）或者是硬盘的持久化数据，转换成内存中的对象。</p>
-<h4 id="3-为什么不用Java的序列化？"><a href="#3-为什么不用Java的序列化？" class="headerlink" title="3 为什么不用Java的序列化？"></a>3 为什么不用Java的序列化？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Java的序列化是一个重量级序列化框架（Serializable），一个对象被序列化后，会附带很多额外的信息（各种校验信息，header，继承体系等），不便于在网络中高效传输。所以，hadoop自己开发了一套序列化机制（Writable），精简、高效。</p>
-<h4 id="4-为什么序列化对Hadoop很重要？"><a href="#4-为什么序列化对Hadoop很重要？" class="headerlink" title="4 为什么序列化对Hadoop很重要？"></a>4 为什么序列化对Hadoop很重要？</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;因为Hadoop在集群之间进行通讯或者RPC调用的时候，需要序列化，而且要求序列化要快，且体积要小，占用带宽要小。所以必须理解Hadoop的序列化机制。<br>&nbsp;&nbsp;&nbsp;&nbsp;序列化和反序列化在分布式数据处理领域经常出现：进程通信和永久存储。然而Hadoop中各个节点的通信是通过远程调用（RPC）实现的，那么RPC序列化要求具有以下特点：</p>
-<ul>
-<li>紧凑：紧凑的格式能让我们充分利用网络带宽，而带宽是数据中心最稀缺的资</li>
-<li>快速：进程通信形成了分布式系统的骨架，所以需要尽量减少序列化和反序列化的性能开销，这是基本的；</li>
-<li>可扩展：协议为了满足新的需求变化，所以控制客户端和服务器过程中，需要直接引进相应的协议，这些是新协议，原序列化方式能支持新的协议报文；</li>
-<li>互操作：能支持不同语言写的客户端和服务端进行交互；</li>
-</ul>
-<h4 id="5-常用数据序列化类型"><a href="#5-常用数据序列化类型" class="headerlink" title="5.常用数据序列化类型"></a>5.常用数据序列化类型</h4><p>常用的数据类型对应的hadoop数据序列化类型</p>
-<table>
-<thead>
-<tr>
-<th align="center">Java类型</th>
-<th align="center">Hadoop Writable类型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">boolean</td>
-<td align="center">BooleanWritable</td>
-</tr>
-<tr>
-<td align="center">byte</td>
-<td align="center">ByteWritable</td>
-</tr>
-<tr>
-<td align="center">int</td>
-<td align="center">IntWritable</td>
-</tr>
-<tr>
-<td align="center">float</td>
-<td align="center">FloatWritable</td>
-</tr>
-<tr>
-<td align="center">long</td>
-<td align="center">LongWritable</td>
-</tr>
-<tr>
-<td align="center">double</td>
-<td align="center">DoubleWritable</td>
-</tr>
-<tr>
-<td align="center">string</td>
-<td align="center">Text</td>
-</tr>
-<tr>
-<td align="center">map</td>
-<td align="center">MapWritable</td>
-</tr>
-<tr>
-<td align="center">array</td>
-<td align="center">ArrayWritable</td>
-</tr>
-</tbody></table>
-<h4 id="6-自定义bean对象实现序列化接口（Writable）"><a href="#6-自定义bean对象实现序列化接口（Writable）" class="headerlink" title="6 自定义bean对象实现序列化接口（Writable）"></a>6 自定义bean对象实现序列化接口（Writable）</h4><h5 id="1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"><a href="#1-自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项" class="headerlink" title="(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项"></a>(1)自定义bean对象要想序列化传输，必须实现序列化接口，需要注意以下7项</h5><p>(a)必须实现Writable接口</p>
-<p>(b)反序列化时，需要反射调用空参构造函数，所以必须有空参构造</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>(c )重写序列化方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    out.writeLong(upFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(downFlow);</span><br><span class="line"></span><br><span class="line">    out.writeLong(sumFlow);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(d)重写反序列化方法</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    upFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    downFlow = in.readLong();</span><br><span class="line"></span><br><span class="line">    sumFlow = in.readLong();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(e)注意反序列化的顺序和序列化的顺序完全一致</p>
-<p>(f)要想把结果显示在文件中，需要重写toString()，可用”\t”分开，方便后续用。</p>
-<p>(g)如果需要将自定义的bean放在key中传输，则还需要实现comparable接口，因为mapreduce框中的shuffle过程一定会对key进行排序。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(FlowBean o)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 倒序排列，从大到小</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sumFlow &gt; o.getSumFlow() ? -<span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux 新建用户</title>
-    <url>/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
+    <url>/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</url>
     <content><![CDATA[<h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
 <p>使用root用户操作如下命令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------为用户赋予sudo权限</span><br><span class="line">vim &#x2F;etc&#x2F;sudoers  </span><br><span class="line">&#x2F;&#x2F;添加</span><br><span class="line">demouser    ALL&#x3D;(ALL)       ALL</span><br></pre></td></tr></table></figure>
@@ -1693,8 +1693,38 @@
       </tags>
   </entry>
   <entry>
+    <title>MapReduce的基本概念</title>
+    <url>/blog/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h4 id="1-MapReduce定义"><a href="#1-MapReduce定义" class="headerlink" title="1. MapReduce定义"></a>1. MapReduce定义</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。<br>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce核心功能是将用户编写的业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
+<h4 id="2-MapReduce优缺点"><a href="#2-MapReduce优缺点" class="headerlink" title="2. MapReduce优缺点"></a>2. MapReduce优缺点</h4><h5 id="1-优点"><a href="#1-优点" class="headerlink" title="(1) 优点:"></a>(1) 优点:</h5><h6 id="a-MapReduce-易于编程。"><a href="#a-MapReduce-易于编程。" class="headerlink" title="(a)MapReduce 易于编程。"></a>(a)MapReduce 易于编程。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</p>
+<h6 id="b-良好的扩展性。"><a href="#b-良好的扩展性。" class="headerlink" title="(b)良好的扩展性。"></a>(b)良好的扩展性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</p>
+<h6 id="c-高容错性。"><a href="#c-高容错性。" class="headerlink" title="(c )高容错性。"></a>(c )高容错性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由 Hadoop内部完成的。</p>
+<h6 id="d-适合PB级以上海量数据的离线处理。"><a href="#d-适合PB级以上海量数据的离线处理。" class="headerlink" title="(d)适合PB级以上海量数据的离线处理。"></a>(d)适合PB级以上海量数据的离线处理。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，MapReduce很难做到。</p>
+<h5 id="2-缺点"><a href="#2-缺点" class="headerlink" title="(2) 缺点:"></a>(2) 缺点:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
+<h6 id="a-实时计算。"><a href="#a-实时计算。" class="headerlink" title="(a)实时计算。"></a>(a)实时计算。</h6><p>MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</p>
+<h6 id="b-流式计算。"><a href="#b-流式计算。" class="headerlink" title="(b)流式计算。"></a>(b)流式计算。</h6><p>流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定了数据源必须是静态的。</p>
+<h6 id="c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"><a href="#c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。" class="headerlink" title="(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"></a>(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</h6><h4 id="3-MapReduce核心思想"><a href="#3-MapReduce核心思想" class="headerlink" title="3.MapReduce核心思想"></a>3.MapReduce核心思想</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzMDc3ZjIwYzUyNmM4MzEucG5n?x-oss-process=image/format,png" alt="MapReduce核心思想"></p>
+<p>(1)分布式的运算程序往往需要分成至少2个阶段。</p>
+<p>(2)第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
+<p>(3)第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
+<p>(4)MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行</p>
+<h4 id="4-MapReduce进程"><a href="#4-MapReduce进程" class="headerlink" title="4 MapReduce进程"></a>4 MapReduce进程</h4><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：<br>(1)MrAppMaster：负责整个程序的过程调度及状态协调。<br>(2)MapTask：负责map阶段的整个数据处理流程。<br>(3)ReduceTask：负责reduce阶段的整个数据处理流程。</p>
+<h4 id="5-MapReduce编程规范"><a href="#5-MapReduce编程规范" class="headerlink" title="5 MapReduce编程规范"></a>5 MapReduce编程规范</h4><p>用户编写的程序分成三个部分：Mapper，Reducer，Driver(提交运行mr程序的客户端)</p>
+<h5 id="1-Mapper阶段"><a href="#1-Mapper阶段" class="headerlink" title="(1)Mapper阶段"></a>(1)Mapper阶段</h5><p>(a)用户自定义的Mapper要继承自己的父类<br>(b)Mapper的输入数据是KV对的形式（KV的类型可自定义）<br>(c)Mapper中的业务逻辑写在map()方法中<br>(d)Mapper的输出数据是KV对的形式（KV的类型可自定义）<br>(e)map()方法（maptask进程）对每一个&lt;K,V&gt;调用一次</p>
+<h5 id="2-Reducer阶段"><a href="#2-Reducer阶段" class="headerlink" title="(2)Reducer阶段"></a>(2)Reducer阶段</h5><p>(a)用户自定义的Reducer要继承自己的父类<br>(b)Reducer的输入数据类型对应Mapper的输出数据类型，也是KV<br>(c )Reducer的业务逻辑写在reduce()方法中<br>(d)Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</p>
+<h5 id="3-Driver阶段"><a href="#3-Driver阶段" class="headerlink" title="(3)Driver阶段"></a>(3)Driver阶段</h5><p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+        <tag>MapReduce</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Yarn-HA配置</title>
-    <url>/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/</url>
+    <url>/blog/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h3 id="一-Yarn-HA配置"><a href="#一-Yarn-HA配置" class="headerlink" title="一.Yarn-HA配置"></a>一.Yarn-HA配置</h3><h4 id="1-YARN-HA工作机制"><a href="#1-YARN-HA工作机制" class="headerlink" title="1.YARN-HA工作机制"></a>1.YARN-HA工作机制</h4><h5 id="1-官方文档："><a href="#1-官方文档：" class="headerlink" title="(1).官方文档："></a>(1).官方文档：</h5><p><a href="http://hadoop.apache.org/docs/r2.7.2/hadoop-yarn/hadoop-yarn-site/ResourceManagerHA.html" target="_blank" rel="noopener">官方文档</a></p>
 <h5 id="2-YARN-HA工作机制"><a href="#2-YARN-HA工作机制" class="headerlink" title="(2).YARN-HA工作机制"></a>(2).YARN-HA工作机制</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRkMWVjZjhkOWRiOTkyMTAucG5n?x-oss-process=image/format,png" alt="image.png"></p>
 <h4 id="2-配置YARN-HA集群"><a href="#2-配置YARN-HA集群" class="headerlink" title="2.配置YARN-HA集群"></a>2.配置YARN-HA集群</h4><h5 id="0-环境准备"><a href="#0-环境准备" class="headerlink" title="(0).环境准备"></a>(0).环境准备</h5><p>(a)修改IP<br>(b)修改主机名及主机名和IP地址的映射<br>(c )关闭防火墙<br>(d)ssh免密登录<br>(e)安装JDK，配置环境变量等<br>(f)配置Zookeeper集群<br>(g)配置过mapred-site.xml(和以前配置一样)</p>
@@ -1880,36 +1910,6 @@
       <tags>
         <tag>Hadoop</tag>
         <tag>YARN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MapReduce的基本概念</title>
-    <url>/2019/01/01/MapReduce%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h4 id="1-MapReduce定义"><a href="#1-MapReduce定义" class="headerlink" title="1. MapReduce定义"></a>1. MapReduce定义</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce是一个分布式运算程序的编程框架，是用户开发“基于hadoop的数据分析应用”的核心框架。<br>&nbsp;&nbsp;&nbsp;&nbsp;Mapreduce核心功能是将用户编写的业务逻辑代码和自带默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上。</p>
-<h4 id="2-MapReduce优缺点"><a href="#2-MapReduce优缺点" class="headerlink" title="2. MapReduce优缺点"></a>2. MapReduce优缺点</h4><h5 id="1-优点"><a href="#1-优点" class="headerlink" title="(1) 优点:"></a>(1) 优点:</h5><h6 id="a-MapReduce-易于编程。"><a href="#a-MapReduce-易于编程。" class="headerlink" title="(a)MapReduce 易于编程。"></a>(a)MapReduce 易于编程。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;它简单的实现一些接口，就可以完成一个分布式程序，这个分布式程序可以分布到大量廉价的PC机器上运行。也就是说你写一个分布式程序，跟写一个简单的串行程序是一模一样的。就是因为这个特点使得MapReduce编程变得非常流行。</p>
-<h6 id="b-良好的扩展性。"><a href="#b-良好的扩展性。" class="headerlink" title="(b)良好的扩展性。"></a>(b)良好的扩展性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;当你的计算资源不能得到满足的时候，你可以通过简单的增加机器来扩展它的计算能力。</p>
-<h6 id="c-高容错性。"><a href="#c-高容错性。" class="headerlink" title="(c )高容错性。"></a>(c )高容错性。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce设计的初衷就是使程序能够部署在廉价的PC机器上，这就要求它具有很高的容错性。比如其中一台机器挂了，它可以把上面的计算任务转移到另外一个节点上运行，不至于这个任务运行失败，而且这个过程不需要人工参与，而完全是由 Hadoop内部完成的。</p>
-<h6 id="d-适合PB级以上海量数据的离线处理。"><a href="#d-适合PB级以上海量数据的离线处理。" class="headerlink" title="(d)适合PB级以上海量数据的离线处理。"></a>(d)适合PB级以上海量数据的离线处理。</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;这里加红字体离线处理，说明它适合离线处理而不适合在线处理。比如像毫秒级别的返回一个结果，MapReduce很难做到。</p>
-<h5 id="2-缺点"><a href="#2-缺点" class="headerlink" title="(2) 缺点:"></a>(2) 缺点:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;MapReduce不擅长做实时计算、流式计算、DAG（有向图）计算。</p>
-<h6 id="a-实时计算。"><a href="#a-实时计算。" class="headerlink" title="(a)实时计算。"></a>(a)实时计算。</h6><p>MapReduce无法像Mysql一样，在毫秒或者秒级内返回结果。</p>
-<h6 id="b-流式计算。"><a href="#b-流式计算。" class="headerlink" title="(b)流式计算。"></a>(b)流式计算。</h6><p>流式计算的输入数据是动态的，而MapReduce的输入数据集是静态的，不能动态变化。这是因为MapReduce自身的设计特点决定了数据源必须是静态的。</p>
-<h6 id="c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"><a href="#c-DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。" class="headerlink" title="(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。"></a>(c )DAG（有向图）计算。多个应用程序存在依赖关系，后一个应用程序的输入为前一个的输出。在这种情况下，MapReduce并不是不能做，而是使用后，每个MapReduce作业的输出结果都会写入到磁盘，会造成大量的磁盘IO，导致性能非常的低下。</h6><h4 id="3-MapReduce核心思想"><a href="#3-MapReduce核心思想" class="headerlink" title="3.MapReduce核心思想"></a>3.MapReduce核心思想</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzMDc3ZjIwYzUyNmM4MzEucG5n?x-oss-process=image/format,png" alt="MapReduce核心思想"></p>
-<p>(1)分布式的运算程序往往需要分成至少2个阶段。</p>
-<p>(2)第一个阶段的maptask并发实例，完全并行运行，互不相干。</p>
-<p>(3)第二个阶段的reduce task并发实例互不相干，但是他们的数据依赖于上一个阶段的所有maptask并发实例的输出。</p>
-<p>(4)MapReduce编程模型只能包含一个map阶段和一个reduce阶段，如果用户的业务逻辑非常复杂，那就只能多个mapreduce程序，串行运行</p>
-<h4 id="4-MapReduce进程"><a href="#4-MapReduce进程" class="headerlink" title="4 MapReduce进程"></a>4 MapReduce进程</h4><p>一个完整的mapreduce程序在分布式运行时有三类实例进程：<br>(1)MrAppMaster：负责整个程序的过程调度及状态协调。<br>(2)MapTask：负责map阶段的整个数据处理流程。<br>(3)ReduceTask：负责reduce阶段的整个数据处理流程。</p>
-<h4 id="5-MapReduce编程规范"><a href="#5-MapReduce编程规范" class="headerlink" title="5 MapReduce编程规范"></a>5 MapReduce编程规范</h4><p>用户编写的程序分成三个部分：Mapper，Reducer，Driver(提交运行mr程序的客户端)</p>
-<h5 id="1-Mapper阶段"><a href="#1-Mapper阶段" class="headerlink" title="(1)Mapper阶段"></a>(1)Mapper阶段</h5><p>(a)用户自定义的Mapper要继承自己的父类<br>(b)Mapper的输入数据是KV对的形式（KV的类型可自定义）<br>(c)Mapper中的业务逻辑写在map()方法中<br>(d)Mapper的输出数据是KV对的形式（KV的类型可自定义）<br>(e)map()方法（maptask进程）对每一个&lt;K,V&gt;调用一次</p>
-<h5 id="2-Reducer阶段"><a href="#2-Reducer阶段" class="headerlink" title="(2)Reducer阶段"></a>(2)Reducer阶段</h5><p>(a)用户自定义的Reducer要继承自己的父类<br>(b)Reducer的输入数据类型对应Mapper的输出数据类型，也是KV<br>(c )Reducer的业务逻辑写在reduce()方法中<br>(d)Reducetask进程对每一组相同k的&lt;k,v&gt;组调用一次reduce()方法</p>
-<h5 id="3-Driver阶段"><a href="#3-Driver阶段" class="headerlink" title="(3)Driver阶段"></a>(3)Driver阶段</h5><p>整个程序需要一个Drvier来进行提交，提交的是一个描述了各种必要信息的job对象</p>
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-        <tag>MapReduce</tag>
       </tags>
   </entry>
 </search>
