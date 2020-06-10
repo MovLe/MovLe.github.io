@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    ZooKeeper客户端命令行操作 |  Movle&#39;s Blog
+    Kafka之Broker配置信息 |  Movle&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-ZooKeeper客户端命令行操作"
+  id="post-Kafka之Broker配置信息"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,18 +60,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  ZooKeeper客户端命令行操作
+  Kafka之Broker配置信息
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2019-01-03T06:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+      <a href="/2019/02/02/Kafka%E4%B9%8BBroker%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-date">
+  <time datetime="2019-02-02T08:50:00.000Z" itemprop="datePublished">2019-02-02</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
   </div>
   
 <div class="word_count">
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">558</span>
+            <span class="post-count">1.5k</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2 分钟</span>
+            <span class="post-count">7 分钟</span>
         </span>
     </span>
 </div>
@@ -103,114 +103,245 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="0-基础语法"><a href="#0-基础语法" class="headerlink" title="0.基础语法"></a>0.基础语法</h4><table>
+  <h4 id="1-Kafka之Broker配置信息"><a href="#1-Kafka之Broker配置信息" class="headerlink" title="1.Kafka之Broker配置信息"></a>1.Kafka之Broker配置信息</h4><table>
 <thead>
 <tr>
-<th align="center">命令基本语法</th>
-<th align="center">功能描述</th>
+<th align="center">属性</th>
+<th align="center">默认值</th>
+<th align="center">描述</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">help</td>
-<td align="center">显示所有操作命令</td>
+<td align="center">broker.id</td>
+<td align="center"></td>
+<td align="center">必填参数，broker的唯一标识</td>
 </tr>
 <tr>
-<td align="center">ls path [watch]</td>
-<td align="center">使用 ls 命令来查看当前znode中所包含的内容</td>
+<td align="center">log.dirs</td>
+<td align="center">/tmp/kafka-logs</td>
+<td align="center">Kafka数据存放的目录。可以指定多个目录，中间用逗号分隔，当新partition被创建的时会被存放到当前存放partition最少的目录。</td>
 </tr>
 <tr>
-<td align="center">ls2 path [watch]</td>
-<td align="center">查看当前节点数据并能看到更新次数等数据</td>
+<td align="center">port</td>
+<td align="center">9092</td>
+<td align="center">BrokerServer接受客户端连接的端口号</td>
 </tr>
 <tr>
-<td align="center">create</td>
-<td align="center">普通创建(永久节点)</td>
+<td align="center">zookeeper.connect</td>
+<td align="center">null</td>
+<td align="center">Zookeeper的连接串，格式为：hostname1:port1,hostname2:port2,hostname3:port3。可以填一个或多个，为了提高可靠性，建议都填上。注意，此配置允许我们指定一个zookeeper路径来存放此kafka集群的所有数据，为了与其他应用集群区分开，建议在此配置中指定本集群存放目录，格式为：hostname1:port1,hostname2:port2,hostname3:port3/chroot/path 。需要注意的是，消费者的参数要和此参数一致。</td>
 </tr>
 <tr>
-<td align="center">-s</td>
-<td align="center">含有序列</td>
+<td align="center">message.max.bytes</td>
+<td align="center">1000000</td>
+<td align="center">服务器可以接收到的最大的消息大小。注意此参数要和consumer的maximum.message.size大小一致，否则会因为生产者生产的消息太大导致消费者无法消费。</td>
 </tr>
 <tr>
-<td align="center">-e</td>
-<td align="center">临时(重启或者超时消失)</td>
+<td align="center">num.io.threads</td>
+<td align="center">8</td>
+<td align="center">服务器用来执行读写请求的IO线程数，此参数的数量至少要等于服务器上磁盘的数量。</td>
 </tr>
 <tr>
-<td align="center">get path [watch]</td>
-<td align="center">获得节点的值</td>
+<td align="center">queued.max.requests</td>
+<td align="center">500</td>
+<td align="center">I/O线程可以处理请求的队列大小，若实际请求数超过此大小，网络线程将停止接收新的请求。</td>
 </tr>
 <tr>
-<td align="center">set</td>
-<td align="center">设置节点的具体值</td>
+<td align="center">socket.send.buffer.bytes</td>
+<td align="center">100 * 1024</td>
+<td align="center">The SO_SNDBUFF buffer the server prefers for socket connections.</td>
 </tr>
 <tr>
-<td align="center">stat</td>
-<td align="center">查看节点状态</td>
+<td align="center">socket.receive.buffer.bytes</td>
+<td align="center">100 * 1024</td>
+<td align="center">The SO_RCVBUFF buffer the server prefers for socket connections.</td>
 </tr>
 <tr>
-<td align="center">delete</td>
-<td align="center">删除节点</td>
+<td align="center">socket.request.max.bytes</td>
+<td align="center">100 * 1024 * 1024</td>
+<td align="center">服务器允许请求的最大值， 用来防止内存溢出，其值应该小于 Java heap size.</td>
 </tr>
 <tr>
-<td align="center">rmr</td>
-<td align="center">递归删除节点</td>
+<td align="center">num.partitions</td>
+<td align="center">1</td>
+<td align="center">默认partition数量，如果topic在创建时没有指定partition数量，默认使用此值，建议改为5</td>
+</tr>
+<tr>
+<td align="center">log.segment.bytes</td>
+<td align="center">1024 * 1024 * 1024</td>
+<td align="center">Segment文件的大小，超过此值将会自动新建一个segment，此值可以被topic级别的参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.roll.{ms,hours}</td>
+<td align="center">24 * 7 hours</td>
+<td align="center">新建segment文件的时间，此值可以被topic级别的参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.retention.{ms,minutes,hours}</td>
+<td align="center">7 days</td>
+<td align="center">Kafka segment log的保存周期，保存周期超过此时间日志就会被删除。此参数可以被topic级别参数覆盖。数据量大时，建议减小此值</td>
+</tr>
+<tr>
+<td align="center">log.retention.bytes</td>
+<td align="center">-1</td>
+<td align="center">每个partition的最大容量，若数据量超过此值，partition数据将会被删除。注意这个参数控制的是每个partition而不是topic。此参数可以被log级别参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.retention.check.interval.ms</td>
+<td align="center">5 minutes</td>
+<td align="center">删除策略的检查周期</td>
+</tr>
+<tr>
+<td align="center">auto.create.topics.enable</td>
+<td align="center">true</td>
+<td align="center">自动创建topic参数，建议此值设置为false，严格控制topic管理，防止生产者错写topic。</td>
+</tr>
+<tr>
+<td align="center">default.replication.factor</td>
+<td align="center">1</td>
+<td align="center">默认副本数量，建议改为2</td>
+</tr>
+<tr>
+<td align="center">replica.lag.time.max.ms</td>
+<td align="center">10000</td>
+<td align="center">在此窗口时间内没有收到follower的fetch请求，leader会将其从ISR(in-sync replicas)中移除</td>
+</tr>
+<tr>
+<td align="center">replica.lag.max.messages</td>
+<td align="center">4000</td>
+<td align="center">如果replica节点落后leader节点此值大小的消息数量，leader节点就会将其从ISR中移除。</td>
+</tr>
+<tr>
+<td align="center">replica.socket.timeout.ms</td>
+<td align="center">30 * 1000</td>
+<td align="center">replica向leader发送请求的超时时间。</td>
+</tr>
+<tr>
+<td align="center">replica.socket.receive.buffer.bytes</td>
+<td align="center">64 * 1024</td>
+<td align="center">The socket receive buffer for network requests to the leader for replicating data.</td>
+</tr>
+<tr>
+<td align="center">replica.fetch.max.bytes</td>
+<td align="center">1024 * 1024</td>
+<td align="center">The number of byes of messages to attempt to fetch for each partition in the fetch requests the replicas send to the leader.</td>
+</tr>
+<tr>
+<td align="center">replica.fetch.wait.max.ms</td>
+<td align="center">500</td>
+<td align="center">The maximum amount of time to wait time for data to arrive on the leader in the fetch requests sent by the replicas to the leader.</td>
+</tr>
+<tr>
+<td align="center">num.replica.fetchers</td>
+<td align="center">1</td>
+<td align="center">Number of threads used to replicate messages from leaders. Increasing this value can increase the degree of I/O parallelism in the follower broker.</td>
+</tr>
+<tr>
+<td align="center">fetch.purgatory.purge.interval.requests</td>
+<td align="center">1000</td>
+<td align="center">The purge interval (in number of requests) of the fetch request purgatory.</td>
+</tr>
+<tr>
+<td align="center">zookeeper.session.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">ZooKeeper session 超时时间。如果在此时间内server没有向zookeeper发送心跳，zookeeper就会认为此节点已挂掉。 此值太低导致节点容易被标记死亡；若太高，.会导致太迟发现节点死亡</td>
+</tr>
+<tr>
+<td align="center">zookeeper.connection.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">客户端连接zookeeper的超时时间。</td>
+</tr>
+<tr>
+<td align="center">zookeeper.sync.time.ms</td>
+<td align="center">2000</td>
+<td align="center">H ZK follower落后 ZK leader的时间</td>
+</tr>
+<tr>
+<td align="center">controlled.shutdown.enable</td>
+<td align="center">true</td>
+<td align="center">允许broker shutdown。如果启用，broker在关闭自己之前会把它上面的所有leaders转移到其它brokers上，建议启用，增加集群稳定性。</td>
+</tr>
+<tr>
+<td align="center">auto.leader.rebalance.enable</td>
+<td align="center">true</td>
+<td align="center">If this is enabled the controller will automatically try to balance leadership for partitions among the brokers by periodically returning leadership to the “preferred” replica for each partition if it is available.</td>
+</tr>
+<tr>
+<td align="center">leader.imbalance.per.broker.percentage</td>
+<td align="center">10</td>
+<td align="center">The percentage of leader imbalance allowed per broker. The controller will rebalance leadership if this ratio goes above the configured value per broker.</td>
+</tr>
+<tr>
+<td align="center">leader.imbalance.check.interval.seconds</td>
+<td align="center">300</td>
+<td align="center">The frequency with which to check for leader imbalance.</td>
+</tr>
+<tr>
+<td align="center">offset.metadata.max.bytes</td>
+<td align="center">4096</td>
+<td align="center">The maximum amount of metadata to allow clients to save with their offsets.</td>
+</tr>
+<tr>
+<td align="center">connections.max.idle.ms</td>
+<td align="center">600000</td>
+<td align="center">Idle connections timeout: the server socket processor threads close the connections that idle more than this.</td>
+</tr>
+<tr>
+<td align="center">num.recovery.threads.per.data.dir</td>
+<td align="center">1</td>
+<td align="center">The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.</td>
+</tr>
+<tr>
+<td align="center">unclean.leader.election.enable</td>
+<td align="center">true</td>
+<td align="center">Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss.</td>
+</tr>
+<tr>
+<td align="center">delete.topic.enable</td>
+<td align="center">false</td>
+<td align="center">启用deletetopic参数，建议设置为true</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.num.partitions</td>
+<td align="center">50</td>
+<td align="center">The number of partitions for the offset commit topic. Since changing this after deployment is currently unsupported, we recommend using a higher setting for production (e.g., 100-200).</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.retention.minutes</td>
+<td align="center">1440</td>
+<td align="center">Offsets that are older than this age will be marked for deletion. The actual purge will occur when the log cleaner compacts the offsets topic.</td>
+</tr>
+<tr>
+<td align="center">offsets.retention.check.interval.ms</td>
+<td align="center">600000</td>
+<td align="center">The frequency at which the offset manager checks for stale offsets.</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.replication.factor</td>
+<td align="center">3</td>
+<td align="center">The replication factor for the offset commit topic. A higher setting (e.g., three or four) is recommended in order to ensure higher availability. If the offsets topic is created when fewer brokers than the replication factor then the offsets topic will be created with fewer replicas.</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.segment.bytes</td>
+<td align="center">104857600</td>
+<td align="center">Segment size for the offsets topic. Since it uses a compacted topic, this should be kept relatively low in order to facilitate faster log compaction and loads.</td>
+</tr>
+<tr>
+<td align="center">offsets.load.buffer.size</td>
+<td align="center">5242880</td>
+<td align="center">An offset load occurs when a broker becomes the offset manager for a set of consumer groups (i.e., when it becomes a leader for an offsets topic partition). This setting corresponds to the batch size (in bytes) to use when reading from the offsets segments when loading offsets into the offset manager’s cache.</td>
+</tr>
+<tr>
+<td align="center">offsets.commit.required.acks</td>
+<td align="center">-1</td>
+<td align="center">The number of acknowledgements that are required before the offset commit can be accepted. This is similar to the producer’s acknowledgement setting. In general, the default should not be overridden.</td>
+</tr>
+<tr>
+<td align="center">offsets.commit.timeout.ms</td>
+<td align="center">5000</td>
+<td align="center">The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.</td>
 </tr>
 </tbody></table>
-<h4 id="1-启动客户端"><a href="#1-启动客户端" class="headerlink" title="1.启动客户端"></a>1.启动客户端</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
-<h4 id="2-显示所有操作命令"><a href="#2-显示所有操作命令" class="headerlink" title="2.显示所有操作命令"></a>2.显示所有操作命令</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA2MDBjNzlhNzExOTVmNTEucG5n?x-oss-process=image/format,png" alt="help"></p>
-<h4 id="3-查看当前znode中所包含的内容"><a href="#3-查看当前znode中所包含的内容" class="headerlink" title="3.查看当前znode中所包含的内容"></a>3.查看当前znode中所包含的内容</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFlY2EyODgzMDg3NDQ3NmQucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<h4 id="4-查看当前节点数据并能看到更新次数等数据"><a href="#4-查看当前节点数据并能看到更新次数等数据" class="headerlink" title="4.查看当前节点数据并能看到更新次数等数据"></a>4.查看当前节点数据并能看到更新次数等数据</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls2 /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlkZmE4NzhiNzZjNDAwMWUucG5n?x-oss-process=image/format,png" alt="ls2 /"></p>
-<h4 id="5-创建普通节点"><a href="#5-创建普通节点" class="headerlink" title="5.创建普通节点"></a>5.创建普通节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1 "hello app1"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmYjdkNTU3OTYyYTNkMmYucG5n?x-oss-process=image/format,png" alt="create /app1 &quot;hello app1&quot;"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1/server101 "192.168.1.101"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmZTM4NmUwMzQ0Y2NmNTcucG5n?x-oss-process=image/format,png" alt="create /app1/server101 &quot;192.168.1.101&quot;"></p>
-<h4 id="6-获得节点的值"><a href="#6-获得节点的值" class="headerlink" title="6.获得节点的值"></a>6.获得节点的值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhODA3YTJhNDZkYjYzMGMucG5n?x-oss-process=image/format,png" alt="get /app1"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1/server101</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhMzA3ZTExMzhmZWQ1MjAucG5n?x-oss-process=image/format,png" alt="get /app1/server101"></p>
-<h4 id="7-创建短暂节点"><a href="#7-创建短暂节点" class="headerlink" title="7.创建短暂节点"></a>7.创建短暂节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -e /app-emphemeral 8888</span><br></pre></td></tr></table></figure>
-
-<p>(1)在当前客户端是能查看到的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYwNDdmZWZlNjgwNWIzN2MucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<p>(2)退出当前客户端然后再重启客户端</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br><span class="line"></span><br><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
-<p>(3)再次查看根目录下短暂节点已经删除</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRhMzgyYjAxYzUzZWVlODgucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<h4 id="8-创建带序号的节点"><a href="#8-创建带序号的节点" class="headerlink" title="8.创建带序号的节点"></a>8.创建带序号的节点</h4><p>(1)先创建一个普通的根节点app2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app2 "app2"</span><br></pre></td></tr></table></figure>
-<p>(2)创建带序号的节点</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/aa 888</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/bb 888</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/cc 888</span><br></pre></td></tr></table></figure>
-
-
-<p>如果原节点下有1个节点，则再排序时从1开始，以此类推。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app1/aa 888</span><br></pre></td></tr></table></figure>
-
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNjYTViZTQyMWE1NjNkN2IucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="9-修改节点数据值"><a href="#9-修改节点数据值" class="headerlink" title="9.修改节点数据值"></a>9.修改节点数据值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set /app1 999</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNiYmRiNTdkNzIzYzQwM2UucG5n?x-oss-process=image/format,png" alt="set /app1 999"></p>
-<h4 id="10-节点的值变化监听"><a href="#10-节点的值变化监听" class="headerlink" title="10.节点的值变化监听"></a>10.节点的值变化监听</h4><p>(1)在104主机上注册监听/app1节点数据变化</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1 watch</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ5MzIzZThiMDBjNjM5ZDMucG5n?x-oss-process=image/format,png" alt="get /app1 watch"></p>
-<p>(2)在103主机上修改/app1节点的数据</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set /app1  777</span><br><span class="line">```	</span><br><span class="line">(3)观察104主机收到数据变化的监听</span><br><span class="line">![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE1MzA1OGQ4NjVjZjE5MTMucG5n?x-oss-process=image/format,png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 11.节点的子节点变化监听（路径变化）</span></span></span><br><span class="line">(1)在104主机上注册监听/app1节点的子节点变化</span><br></pre></td></tr></table></figure>
-<p>ls /app1 watch</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">![image.png](https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUyNGYwYjhmOTA3NWM5MDMucG5n?x-oss-process&#x3D;image&#x2F;format,png)</span><br><span class="line"></span><br><span class="line">(2)在103主机&#x2F;app1节点上创建子节点</span><br><span class="line">&#96;&#96;&#96;shell</span><br><span class="line">create &#x2F;app1&#x2F;bb 666</span><br></pre></td></tr></table></figure>
-
-<p>(3)观察104主机收到子节点变化的监听<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4OThmMzIxZTcwNzQ2NmMucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="12-删除节点"><a href="#12-删除节点" class="headerlink" title="12.删除节点"></a>12.删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete /app1/bb</span><br></pre></td></tr></table></figure>
-<h4 id="13-递归删除节点"><a href="#13-递归删除节点" class="headerlink" title="13.递归删除节点"></a>13.递归删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmr /app2</span><br></pre></td></tr></table></figure>
-<h4 id="14-查看节点状态"><a href="#14-查看节点状态" class="headerlink" title="14.查看节点状态"></a>14.查看节点状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stat /app1</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEzODk2ZTM4ZDU5NTVkYmMucG5n?x-oss-process=image/format,png" alt=""></p>
  
       <!-- reward -->
       
@@ -277,12 +408,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/02/02/Kafka%E4%B9%8BBroker%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a></li></ul>
 
     </footer>
   </div>
@@ -290,19 +421,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2019/02/01/Kafka%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+      <a href="/2019/02/02/Kafka%E4%B9%8BProducer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Kafka概述
+            Kafka之Producer配置信息
           
         </div>
       </a>
     
     
-      <a href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-nav-link">
+      <a href="/2019/02/02/Kafka%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">ZooKeeper之zoo.cfg配置参数解读</div>
+        <div class="article-nav-title">Kafka命令行操作</div>
       </a>
     
   </nav>

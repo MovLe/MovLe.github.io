@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    ZooKeeper客户端命令行操作 |  Movle&#39;s Blog
+    Kafka概述 |  Movle&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-ZooKeeper客户端命令行操作"
+  id="post-Kafka概述"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,18 +60,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  ZooKeeper客户端命令行操作
+  Kafka概述
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2019-01-03T06:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+      <a href="/2019/02/01/Kafka%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2019-02-01T06:50:00.000Z" itemprop="datePublished">2019-02-01</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
   </div>
   
 <div class="word_count">
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">558</span>
+            <span class="post-count">1.9k</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2 分钟</span>
+            <span class="post-count">6 分钟</span>
         </span>
     </span>
 </div>
@@ -103,114 +103,30 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="0-基础语法"><a href="#0-基础语法" class="headerlink" title="0.基础语法"></a>0.基础语法</h4><table>
-<thead>
-<tr>
-<th align="center">命令基本语法</th>
-<th align="center">功能描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">help</td>
-<td align="center">显示所有操作命令</td>
-</tr>
-<tr>
-<td align="center">ls path [watch]</td>
-<td align="center">使用 ls 命令来查看当前znode中所包含的内容</td>
-</tr>
-<tr>
-<td align="center">ls2 path [watch]</td>
-<td align="center">查看当前节点数据并能看到更新次数等数据</td>
-</tr>
-<tr>
-<td align="center">create</td>
-<td align="center">普通创建(永久节点)</td>
-</tr>
-<tr>
-<td align="center">-s</td>
-<td align="center">含有序列</td>
-</tr>
-<tr>
-<td align="center">-e</td>
-<td align="center">临时(重启或者超时消失)</td>
-</tr>
-<tr>
-<td align="center">get path [watch]</td>
-<td align="center">获得节点的值</td>
-</tr>
-<tr>
-<td align="center">set</td>
-<td align="center">设置节点的具体值</td>
-</tr>
-<tr>
-<td align="center">stat</td>
-<td align="center">查看节点状态</td>
-</tr>
-<tr>
-<td align="center">delete</td>
-<td align="center">删除节点</td>
-</tr>
-<tr>
-<td align="center">rmr</td>
-<td align="center">递归删除节点</td>
-</tr>
-</tbody></table>
-<h4 id="1-启动客户端"><a href="#1-启动客户端" class="headerlink" title="1.启动客户端"></a>1.启动客户端</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
-<h4 id="2-显示所有操作命令"><a href="#2-显示所有操作命令" class="headerlink" title="2.显示所有操作命令"></a>2.显示所有操作命令</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA2MDBjNzlhNzExOTVmNTEucG5n?x-oss-process=image/format,png" alt="help"></p>
-<h4 id="3-查看当前znode中所包含的内容"><a href="#3-查看当前znode中所包含的内容" class="headerlink" title="3.查看当前znode中所包含的内容"></a>3.查看当前znode中所包含的内容</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFlY2EyODgzMDg3NDQ3NmQucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<h4 id="4-查看当前节点数据并能看到更新次数等数据"><a href="#4-查看当前节点数据并能看到更新次数等数据" class="headerlink" title="4.查看当前节点数据并能看到更新次数等数据"></a>4.查看当前节点数据并能看到更新次数等数据</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls2 /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlkZmE4NzhiNzZjNDAwMWUucG5n?x-oss-process=image/format,png" alt="ls2 /"></p>
-<h4 id="5-创建普通节点"><a href="#5-创建普通节点" class="headerlink" title="5.创建普通节点"></a>5.创建普通节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1 "hello app1"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmYjdkNTU3OTYyYTNkMmYucG5n?x-oss-process=image/format,png" alt="create /app1 &quot;hello app1&quot;"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1/server101 "192.168.1.101"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmZTM4NmUwMzQ0Y2NmNTcucG5n?x-oss-process=image/format,png" alt="create /app1/server101 &quot;192.168.1.101&quot;"></p>
-<h4 id="6-获得节点的值"><a href="#6-获得节点的值" class="headerlink" title="6.获得节点的值"></a>6.获得节点的值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhODA3YTJhNDZkYjYzMGMucG5n?x-oss-process=image/format,png" alt="get /app1"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1/server101</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhMzA3ZTExMzhmZWQ1MjAucG5n?x-oss-process=image/format,png" alt="get /app1/server101"></p>
-<h4 id="7-创建短暂节点"><a href="#7-创建短暂节点" class="headerlink" title="7.创建短暂节点"></a>7.创建短暂节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -e /app-emphemeral 8888</span><br></pre></td></tr></table></figure>
-
-<p>(1)在当前客户端是能查看到的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYwNDdmZWZlNjgwNWIzN2MucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<p>(2)退出当前客户端然后再重启客户端</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br><span class="line"></span><br><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
-<p>(3)再次查看根目录下短暂节点已经删除</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRhMzgyYjAxYzUzZWVlODgucG5n?x-oss-process=image/format,png" alt="ls /"></p>
-<h4 id="8-创建带序号的节点"><a href="#8-创建带序号的节点" class="headerlink" title="8.创建带序号的节点"></a>8.创建带序号的节点</h4><p>(1)先创建一个普通的根节点app2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app2 "app2"</span><br></pre></td></tr></table></figure>
-<p>(2)创建带序号的节点</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/aa 888</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/bb 888</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/cc 888</span><br></pre></td></tr></table></figure>
-
-
-<p>如果原节点下有1个节点，则再排序时从1开始，以此类推。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app1/aa 888</span><br></pre></td></tr></table></figure>
-
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNjYTViZTQyMWE1NjNkN2IucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="9-修改节点数据值"><a href="#9-修改节点数据值" class="headerlink" title="9.修改节点数据值"></a>9.修改节点数据值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set /app1 999</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNiYmRiNTdkNzIzYzQwM2UucG5n?x-oss-process=image/format,png" alt="set /app1 999"></p>
-<h4 id="10-节点的值变化监听"><a href="#10-节点的值变化监听" class="headerlink" title="10.节点的值变化监听"></a>10.节点的值变化监听</h4><p>(1)在104主机上注册监听/app1节点数据变化</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1 watch</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ5MzIzZThiMDBjNjM5ZDMucG5n?x-oss-process=image/format,png" alt="get /app1 watch"></p>
-<p>(2)在103主机上修改/app1节点的数据</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set /app1  777</span><br><span class="line">```	</span><br><span class="line">(3)观察104主机收到数据变化的监听</span><br><span class="line">![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE1MzA1OGQ4NjVjZjE5MTMucG5n?x-oss-process=image/format,png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 11.节点的子节点变化监听（路径变化）</span></span></span><br><span class="line">(1)在104主机上注册监听/app1节点的子节点变化</span><br></pre></td></tr></table></figure>
-<p>ls /app1 watch</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">![image.png](https:&#x2F;&#x2F;imgconvert.csdnimg.cn&#x2F;aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUyNGYwYjhmOTA3NWM5MDMucG5n?x-oss-process&#x3D;image&#x2F;format,png)</span><br><span class="line"></span><br><span class="line">(2)在103主机&#x2F;app1节点上创建子节点</span><br><span class="line">&#96;&#96;&#96;shell</span><br><span class="line">create &#x2F;app1&#x2F;bb 666</span><br></pre></td></tr></table></figure>
-
-<p>(3)观察104主机收到子节点变化的监听<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4OThmMzIxZTcwNzQ2NmMucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="12-删除节点"><a href="#12-删除节点" class="headerlink" title="12.删除节点"></a>12.删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete /app1/bb</span><br></pre></td></tr></table></figure>
-<h4 id="13-递归删除节点"><a href="#13-递归删除节点" class="headerlink" title="13.递归删除节点"></a>13.递归删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmr /app2</span><br></pre></td></tr></table></figure>
-<h4 id="14-查看节点状态"><a href="#14-查看节点状态" class="headerlink" title="14.查看节点状态"></a>14.查看节点状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stat /app1</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEzODk2ZTM4ZDU5NTVkYmMucG5n?x-oss-process=image/format,png" alt=""></p>
+  <h3 id="一-Kafka是什么"><a href="#一-Kafka是什么" class="headerlink" title="一.Kafka是什么"></a>一.Kafka是什么</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka是最初由Linkedin公司开发，是一个分布式、支持分区的(partition)、多副本的(replica)，基于zookeeper协调的分布式消息系统，它的最大的特性就是可以实时的处理大量数据以满足各种需求场景：比如基于hadoop的批处理系统、低延迟的实时系统、storm/Spark流式处理引擎，web/nginx日志、访问日志，消息服务等等，用scala语言编写，Linkedin于2010年贡献给了Apache基金会并成为顶级开源 项目。</p>
+<h3 id="二-架构模型"><a href="#二-架构模型" class="headerlink" title="二. 架构模型"></a>二. 架构模型</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJiZTkxMDk3MWY0ZWEzZGEucG5n?x-oss-process=image/format,png" alt="Kafka架构"></p>
+<h3 id="三-JMS是什么"><a href="#三-JMS是什么" class="headerlink" title="三. JMS是什么"></a>三. JMS是什么</h3><h4 id="1-是什么："><a href="#1-是什么：" class="headerlink" title="1.是什么："></a>1.是什么：</h4><p>JMS(Java Message Service)是Java提供的一套技术规范</p>
+<h4 id="2-作用："><a href="#2-作用：" class="headerlink" title="2.作用："></a>2.作用：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;用来异构系统 集成通信，缓解系统瓶颈，提高系统的伸缩性增强系统用户体验，使得系统模块化和组件化变得可行并更加灵活</p>
+<h4 id="3-传输模型："><a href="#3-传输模型：" class="headerlink" title="3.传输模型："></a>3.传输模型：</h4><h5 id="1-点对点模式-一对一，消费者主动拉取数据，消息收到后消息清除"><a href="#1-点对点模式-一对一，消费者主动拉取数据，消息收到后消息清除" class="headerlink" title="(1)点对点模式(一对一，消费者主动拉取数据，消息收到后消息清除)"></a>(1)点对点模式(一对一，消费者主动拉取数据，消息收到后消息清除)</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被一个且只有一个接收者接收处理，即使有多个消息监听者也是如此。</p>
+<h5 id="2-发布-订阅模式-一对多，数据生产后，推送给所有订阅者"><a href="#2-发布-订阅模式-一对多，数据生产后，推送给所有订阅者" class="headerlink" title="(2)发布/订阅模式(一对多，数据生产后，推送给所有订阅者)"></a>(2)发布/订阅模式(一对多，数据生产后，推送给所有订阅者)</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，即使当前订阅者不可用，处于离线状态。</p>
+<h3 id="四-Kafka的特性"><a href="#四-Kafka的特性" class="headerlink" title="四.Kafka的特性"></a>四.Kafka的特性</h3><h4 id="1-高吞吐量、低延迟："><a href="#1-高吞吐量、低延迟：" class="headerlink" title="1.高吞吐量、低延迟："></a>1.高吞吐量、低延迟：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;kafka每秒可以处理几十万条消息，它的延迟最低只有几毫秒，每个topic可以分多个partition, consumer group 对partition进行consume操作。</p>
+<h4 id="2-可扩展性："><a href="#2-可扩展性：" class="headerlink" title="2.可扩展性："></a>2.可扩展性：</h4><p>kafka集群支持热扩展</p>
+<h4 id="3-持久性、可靠性："><a href="#3-持久性、可靠性：" class="headerlink" title="3.持久性、可靠性："></a>3.持久性、可靠性：</h4><p>消息被持久化到本地磁盘，并且支持数据备份防止数据丢失</p>
+<h4 id="4-容错性："><a href="#4-容错性：" class="headerlink" title="4.容错性："></a>4.容错性：</h4><p>允许集群中节点失败（若副本数量为n,则允许n-1个节点失败）</p>
+<h4 id="5-高并发："><a href="#5-高并发：" class="headerlink" title="5.高并发："></a>5.高并发：</h4><p>支持数千个客户端同时读写</p>
+<h3 id="五-使用场景"><a href="#五-使用场景" class="headerlink" title="五. 使用场景"></a>五. 使用场景</h3><h4 id="1-日志收集："><a href="#1-日志收集：" class="headerlink" title="1.日志收集："></a>1.日志收集：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;一个公司可以用Kafka可以收集各种服务的log，通过kafka以统一接口服务的方式开放给各种consumer，例如hadoop、Hbase、Solr等。</p>
+<h4 id="2-消息系统："><a href="#2-消息系统：" class="headerlink" title="2.消息系统："></a>2.消息系统：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;解耦和生产者和消费者、缓存消息等。</p>
+<h4 id="3-用户活动跟踪："><a href="#3-用户活动跟踪：" class="headerlink" title="3.用户活动跟踪："></a>3.用户活动跟踪：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka经常被用来记录web用户或者app用户的各种活动，如浏览网页、搜索、点击等活动，这些活动信息被各个服务器发布到kafka的topic中，然后订阅者通过订阅这些topic来做实时的监控分析，或者装载到hadoop、数据仓库中做离线分析和挖掘。</p>
+<h4 id="4-运营指标："><a href="#4-运营指标：" class="headerlink" title="4.运营指标："></a>4.运营指标：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka也经常用来记录运营监控数据。包括收集各种分布式应用的数据，生产各种操作的集中反馈，比如报警和报告。</p>
+<h4 id="5-流式处理："><a href="#5-流式处理：" class="headerlink" title="5.流式处理："></a>5.流式处理：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;比如spark streaming和storm</p>
+<h4 id="6-事件源"><a href="#6-事件源" class="headerlink" title="6.事件源"></a>6.事件源</h4><h3 id="六-分布式模型"><a href="#六-分布式模型" class="headerlink" title="六.分布式模型"></a>六.分布式模型</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka每个主题的多个分区日志分布式地存储在Kafka集群上，同时为了故障容错，每个分区都会以副本的方式复制到多个消息代理节点上。其中一个节点会作为主副本(Leader)，其他节点作为备份副本(Follower，也叫作从副本)。主副本会负责所有的客户端读写操作，备份副本仅仅从主副本同步数据。当主副本出现故障时，备份副本中的一个副本会被选择为新的主副本。因为每个分区的副本中只有主副本接受读写，所以每个服务器端都会作为某些分区的主副本，以及另外一些分区的备份副本，这样Kafka集群的所有服务端整体上对客户端是负载均衡的。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka的生产者和消费者相对于服务器端而言都是客户端。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka生产者客户端发布消息到服务端的指定主题，会指定消息所属的分区。生产者发布消息时根据消息是否有键，采用不同的分区策略。消息没有键时，通过轮询方式进行客户端负载均衡；消息有键时，根据分区语义（例如hash）确保相同键的消息总是发送到同一分区。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka的消费者通过订阅主题来消费消息，并且每个消费者都会设置一个消费组名称。因为生产者发布到主题的每一条消息都只会发送给消费者组的一个消费者。所以，如果要实现传统消息系统的“队列”模型，可以让每个消费者都拥有相同的消费组名称，这样消息就会负责均衡到所有的消费者；如果要实现“发布-订阅”模型，则每个消费者的消费者组名称都不相同，这样每条消息就会广播给所有的消费者。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;分区是消费者现场模型的最小并行单位。如下图（图1）所示，生产者发布消息到一台服务器的3个分区时，只有一个消费者消费所有的3个分区。在下图（图2）中，3个分区分布在3台服务器上，同时有3个消费者分别消费不同的分区。假设每个服务器的吞吐量时300MB，在下图（图1）中分摊到每个分区只有100MB，而在下图（图2）中，集群整体的吞吐量有900MB。可以看到，增加服务器节点会提升集群的性能，增加消费者数量会提升处理性能。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;同一个消费组下多个消费者互相协调消费工作，Kafka会将所有的分区平均地分配给所有的消费者实例，这样每个消费者都可以分配到数量均等的分区。Kafka的消费组管理协议会动态地维护消费组的成员列表，当一个新消费者加入消费者组，或者有消费者离开消费组，都会触发再平衡操作。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWVmNDZmZDA5MTM3YWI5ZmEucG5n?x-oss-process=image/format,png" alt=""></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Kafka的消费者消费消息时，只保证在一个分区内的消息的完全有序性，并不保证同一个主题汇中多个分区的消息顺序。而且，消费者读取一个分区消息的顺序和生产者写入到这个分区的顺序是一致的。比如，生产者写入“hello”和“Kafka”两条消息到分区P1，则消费者读取到的顺序也一定是“hello”和“Kafka”。如果业务上需要保证所有消息完全一致，只能通过设置一个分区完成，但这种做法的缺点是最多只能有一个消费者进行消费。一般来说，只需要保证每个分区的有序性，再对消息假设键来保证相同键的所有消息落入同一分区，就可以满足绝大多数的应用。</p>
  
       <!-- reward -->
       
@@ -277,12 +193,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2019/02/01/Kafka%E6%A6%82%E8%BF%B0/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a></li></ul>
 
     </footer>
   </div>
@@ -290,19 +206,19 @@
    
   <nav class="article-nav">
     
-      <a href="/2019/02/01/Kafka%E6%A6%82%E8%BF%B0/" class="article-nav-link">
+      <a href="/2019/02/02/Kafka%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Kafka概述
+            Kafka集群安装部署
           
         </div>
       </a>
     
     
-      <a href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-nav-link">
+      <a href="/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">ZooKeeper之zoo.cfg配置参数解读</div>
+        <div class="article-nav-title">ZooKeeper客户端命令行操作</div>
       </a>
     
   </nav>
