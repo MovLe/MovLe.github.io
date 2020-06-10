@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Linux安装rz,sz |  Movle&#39;s Blog
+    Zookeeper之内部原理 |  Movle&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Linux安装rz-sz"
+  id="post-Zookeeper之内部原理"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,18 +60,18 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Linux安装rz,sz
+  Zookeeper之内部原理
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/" class="article-date">
-  <time datetime="2019-08-09T01:49:00.000Z" itemprop="datePublished">2019-08-09</time>
+      <a href="/blog/2019/01/03/Zookeeper%E4%B9%8B%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2019-01-03T05:50:00.000Z" itemprop="datePublished">2019-01-03</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Linux/">Linux</a>
+    <a class="article-category-link" href="/blog/categories/ZooKeeper/">ZooKeeper</a>
   </div>
   
 <div class="word_count">
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">216</span>
+            <span class="post-count">1.3k</span>
         </span>
     </span>
 
@@ -88,7 +88,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">4 分钟</span>
         </span>
     </span>
 </div>
@@ -103,19 +103,46 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h6 id="0-概念："><a href="#0-概念：" class="headerlink" title="0.概念："></a>0.概念：</h6><ul>
-<li>rz命令（Receive ZMODEM），使用ZMODEM协议，将本地文件批量上传到远程Linux/Unix服务器，注意不能上传文件夹</li>
-<li>sz fileName：运行该命令会弹出一个选择窗口，选择好保存路径后，将选定的文件发送到本机选定的目录</li>
+  <h3 id="一-选举机制"><a href="#一-选举机制" class="headerlink" title="一.选举机制"></a>一.选举机制</h3><p><strong>Server ID： myid(权重越大)</strong><br><strong>Zxid：数据ID(先一数据低进行选择)</strong></p>
+<h4 id="1-半数机制（Paxos-协议）："><a href="#1-半数机制（Paxos-协议）：" class="headerlink" title="1.半数机制（Paxos 协议）："></a>1.半数机制（Paxos 协议）：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中半数以上机器存活，集群可用。所以zookeeper适合装在奇数台机器上。</p>
+<h4 id="2-Zookeeper虽然在配置文件中并没有指定master和slave。"><a href="#2-Zookeeper虽然在配置文件中并没有指定master和slave。" class="headerlink" title="2.Zookeeper虽然在配置文件中并没有指定master和slave。"></a>2.Zookeeper虽然在配置文件中并没有指定master和slave。</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;但是，zookeeper工作时，是有一个节点为leader，其他则为follower，Leader是通过内部的选举机制临时产生的。</p>
+<h4 id="3-以一个简单的例子来说明整个选举的过程。"><a href="#3-以一个简单的例子来说明整个选举的过程。" class="headerlink" title="3.以一个简单的例子来说明整个选举的过程。"></a>3.以一个简单的例子来说明整个选举的过程。</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;假设有五台服务器组成的zookeeper集群，它们的id从1-5，同时它们都是最新启动的，也就是没有历史数据，在存放数据量这一点上，都是一样的。假设这些服务器依序启动，来看看会发生什么。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZlOTAwMzA5YTYzZmMzZWQucG5n?x-oss-process=image/format,png" alt=""></p>
+<ul>
+<li>(1)服务器1启动，此时只有它一台服务器启动了，它发出去的报没有任何响应，所以它的选举状态一直是LOOKING状态。</li>
+<li>(2)服务器2启动，它与最开始启动的服务器1进行通信，互相交换自己的选举结果，由于两者都没有历史数据，所以id值较大的服务器2胜出，但是由于没有达到超过半数以上的服务器都同意选举它(这个例子中的半数以上是3)，所以服务器1、2还是继续保持LOOKING状态。</li>
+<li>(3)服务器3启动，根据前面的理论分析，服务器3成为服务器1、2、3中的老大，而与上面不同的是，此时有三台服务器选举了它，所以它成为了这次选举的leader。</li>
+<li>(4)服务器4启动，根据前面的分析，理论上服务器4应该是服务器1、2、3、4中最大的，但是由于前面已经有半数以上的服务器选举了服务器3，所以它只能接收当小弟的命了。</li>
+<li>(5)服务器5启动，同4一样当小弟。</li>
 </ul>
-<h6 id="1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"><a href="#1-由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装" class="headerlink" title="1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装"></a>1.由于在VM安装linux虚拟机时是最小安装，因此很多功能都没有自动安装，此时只能手动安装</h6><h6 id="2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"><a href="#2-对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz-sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。" class="headerlink" title="2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。"></a>2.对于经常使用Linux系统的人员来说，少不了将本地的文件上传到服务器或者从服务器上下载文件到本地，rz / sz命令很方便的帮我们实现了这个功能，但是很多Linux系统初始并没有这两个命令。</h6><h6 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h6><p>(1)搜索</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum search lrzsz</span><br></pre></td></tr></table></figure>
+<h3 id="二-节点类型"><a href="#二-节点类型" class="headerlink" title="二.节点类型"></a>二.节点类型</h3><h4 id="1-Znode有两种类型："><a href="#1-Znode有两种类型：" class="headerlink" title="1.Znode有两种类型："></a>1.Znode有两种类型：</h4><ul>
+<li>短暂(ephemeral)：客户端和服务器端断开连接后，创建的节点自己删除</li>
+<li>持久(persistent)：客户端和服务器端断开连接后，创建的节点不删除</li>
+</ul>
+<h4 id="2-Znode有四种形式的目录节点-默认是persistent"><a href="#2-Znode有四种形式的目录节点-默认是persistent" class="headerlink" title="2.Znode有四种形式的目录节点(默认是persistent)"></a>2.Znode有四种形式的目录节点(默认是persistent)</h4><p>(1)持久化目录节点(PERSISTENT)(小写：persistent)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点依旧存在。</p>
+<p>(2)持久化顺序编号目录节点(PERSISTENT_SEQUENTIAL)(小写：persistent_sequential)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号。</p>
+<p>(3)临时目录节点(EPHEMERAL)(ephemeral)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点被删除。</p>
+<p>(4)临时顺序编号目录节点(EPHEMERAL_SEQUENTIAL)(ephemeral_sequential)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhOWI4MjMzZTI3OGZiNzMucG5n?x-oss-process=image/format,png" alt=""></p>
+<h4 id="3-创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护"><a href="#3-创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护" class="headerlink" title="3.创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护"></a>3.创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护</h4><h4 id="4-在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序"><a href="#4-在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序" class="headerlink" title="4.在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序"></a>4.在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序</h4><h3 id="三-stat结构体"><a href="#三-stat结构体" class="headerlink" title="三.stat结构体"></a>三.stat结构体</h3><h4 id="1-czxid-引起这个znode创建的zxid，创建节点的事务的zxid"><a href="#1-czxid-引起这个znode创建的zxid，创建节点的事务的zxid" class="headerlink" title="1.czxid- 引起这个znode创建的zxid，创建节点的事务的zxid"></a>1.czxid- 引起这个znode创建的zxid，创建节点的事务的zxid</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每次修改ZooKeeper状态都会收到一个zxid形式的时间戳，也就是ZooKeeper事务ID。<br>&nbsp;&nbsp;&nbsp;&nbsp;事务ID是ZooKeeper中所有修改总的次序。每个修改都有唯一的zxid，如果zxid1小于zxid2，那么zxid1在zxid2之前发生。</p>
+<h4 id="2-ctime-znode被创建的毫秒数-从1970年开始"><a href="#2-ctime-znode被创建的毫秒数-从1970年开始" class="headerlink" title="2.ctime - znode被创建的毫秒数(从1970年开始)"></a>2.ctime - znode被创建的毫秒数(从1970年开始)</h4><h4 id="3-mzxid-znode最后更新的zxid"><a href="#3-mzxid-znode最后更新的zxid" class="headerlink" title="3.mzxid - znode最后更新的zxid"></a>3.mzxid - znode最后更新的zxid</h4><h4 id="4-mtime-znode最后修改的毫秒数-从1970年开始"><a href="#4-mtime-znode最后修改的毫秒数-从1970年开始" class="headerlink" title="4.mtime - znode最后修改的毫秒数(从1970年开始)"></a>4.mtime - znode最后修改的毫秒数(从1970年开始)</h4><h4 id="5-pZxid-znode最后更新的子节点zxid"><a href="#5-pZxid-znode最后更新的子节点zxid" class="headerlink" title="5.pZxid-znode最后更新的子节点zxid"></a>5.pZxid-znode最后更新的子节点zxid</h4><h4 id="6-cversion-znode子节点变化号，znode子节点修改次数"><a href="#6-cversion-znode子节点变化号，znode子节点修改次数" class="headerlink" title="6.cversion - znode子节点变化号，znode子节点修改次数"></a>6.cversion - znode子节点变化号，znode子节点修改次数</h4><h4 id="7-dataversion-znode数据变化号"><a href="#7-dataversion-znode数据变化号" class="headerlink" title="7.dataversion - znode数据变化号"></a>7.dataversion - znode数据变化号</h4><h4 id="8-aclVersion-znode访问控制列表的变化号"><a href="#8-aclVersion-znode访问控制列表的变化号" class="headerlink" title="8.aclVersion - znode访问控制列表的变化号"></a>8.aclVersion - znode访问控制列表的变化号</h4><h4 id="9-ephemeralOwner-如果是临时节点，这个是znode拥有者的session-id。如果不是临时节点则是0。"><a href="#9-ephemeralOwner-如果是临时节点，这个是znode拥有者的session-id。如果不是临时节点则是0。" class="headerlink" title="9.ephemeralOwner- 如果是临时节点，这个是znode拥有者的session id。如果不是临时节点则是0。"></a>9.ephemeralOwner- 如果是临时节点，这个是znode拥有者的session id。如果不是临时节点则是0。</h4><h4 id="10-dataLength-znode的数据长度"><a href="#10-dataLength-znode的数据长度" class="headerlink" title="10.dataLength- znode的数据长度"></a>10.dataLength- znode的数据长度</h4><h4 id="11-numChildren-znode子节点数量"><a href="#11-numChildren-znode子节点数量" class="headerlink" title="11.numChildren - znode子节点数量"></a>11.numChildren - znode子节点数量</h4><h3 id="四-监听器原理"><a href="#四-监听器原理" class="headerlink" title="四. 监听器原理"></a>四. 监听器原理</h3><h4 id="1-监听原理详解："><a href="#1-监听原理详解：" class="headerlink" title="1.监听原理详解："></a>1.监听原理详解：</h4><p>(1) 首先要有一个main()线程</p>
+<p>(2) 在main线程中创建ZK客户端，这是会创建两个线程，一个负责网络连接通信(connect),一个负责监听(listener)</p>
+<p>(3) 通过connect线程将注册的监听事件发送给ZK</p>
+<p>(4) 在ZK的注册监听器列表中将注册的监听事件添加到列表中</p>
+<p>(5) ZK监听到有数据或路径发生变化时，就会将这个消息发送给listener线程</p>
+<p>(6) Listener线程内部调用process()方法</p>
+<h4 id="2-常见的监听"><a href="#2-常见的监听" class="headerlink" title="2.常见的监听"></a>2.常见的监听</h4><p>1.监听节点数据的变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get path [watch]</span><br></pre></td></tr></table></figure>
+<p>2.监听子节点增减的变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ls path [watch]</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/1.png" alt="搜索"></p>
-<p>(2)安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install lrzsz.x86_64</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/2.png" alt="安装"></p>
-<p>(3)成功！</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWVjZTExYWYyNzIyY2IucG5n?x-oss-process=image/format,png" alt="监听器原理"></p>
+<h3 id="五-写数据流程"><a href="#五-写数据流程" class="headerlink" title="五. 写数据流程"></a>五. 写数据流程</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ1NDJjNmU2YzlmZTU4ZDAucG5n?x-oss-process=image/format,png" alt="写数据流程"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;读是局部性的，即client只需要从与它相连的server上读取数据即可；而client有写请求的话，与之相连的server会通知leader，然后leader会把写操作分发给所有server。所以定要比读慢很多。</p>
  
       <!-- reward -->
       
@@ -182,12 +209,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://gitee.com/movle/blog/2019/01/03/Zookeeper%E4%B9%8B%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Linux/" rel="tag">Linux</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
 
     </footer>
   </div>
@@ -195,19 +222,19 @@
    
   <nav class="article-nav">
     
-      <a href="/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/" class="article-nav-link">
+      <a href="/blog/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Linux 新建用户
+            ZooKeeper之zoo.cfg配置参数解读
           
         </div>
       </a>
     
     
-      <a href="/blog/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-nav-link">
+      <a href="/blog/2019/01/03/ZooKeeper%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">ZooKeeper客户端命令行操作</div>
+        <div class="article-nav-title">ZooKeeper分布式安装部署</div>
       </a>
     
   </nav>
