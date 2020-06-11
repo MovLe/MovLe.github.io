@@ -3,11 +3,11 @@
   <title>Movle&#39;s Blog</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://gitee.com/movle/blog/"/>
   <updated>2020-06-11T14:54:04.030Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://gitee.com/movle/blog/</id>
   
   <author>
     <name>Movle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>[LeetCode-1]两数之和</title>
-    <link href="http://yoursite.com/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
-    <id>http://yoursite.com/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</id>
+    <link href="http://gitee.com/movle/blog/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
+    <id>http://gitee.com/movle/blog/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</id>
     <published>2020-06-07T03:00:00.000Z</published>
     <updated>2020-06-11T14:54:04.030Z</updated>
     
@@ -37,21 +37,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-剑指Offer-面试题03]数组中重复的数字</title>
-    <link href="http://yoursite.com/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/"/>
-    <id>http://yoursite.com/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/"/>
+    <id>http://gitee.com/movle/blog/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/</id>
     <published>2020-05-21T03:00:00.000Z</published>
     <updated>2020-06-11T14:52:40.851Z</updated>
     
@@ -69,21 +69,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试03.01]三合一</title>
-    <link href="http://yoursite.com/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/"/>
-    <id>http://yoursite.com/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/"/>
+    <id>http://gitee.com/movle/blog/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/</id>
     <published>2020-05-19T03:00:00.000Z</published>
     <updated>2020-06-11T14:50:11.507Z</updated>
     
@@ -100,21 +100,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>Linux 新建用户</title>
-    <link href="http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
-    <id>http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
+    <id>http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
     <published>2020-05-19T01:13:00.000Z</published>
     <updated>2020-06-09T01:53:37.266Z</updated>
     
@@ -131,17 +131,17 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>[LeeCode-面试02.07]链表相交</title>
-    <link href="http://yoursite.com/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/"/>
-    <id>http://yoursite.com/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/"/>
+    <id>http://gitee.com/movle/blog/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/</id>
     <published>2020-05-17T03:00:00.000Z</published>
     <updated>2020-06-11T14:55:58.882Z</updated>
     
@@ -158,21 +158,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.06]回文链表</title>
-    <link href="http://yoursite.com/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/"/>
-    <id>http://yoursite.com/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/"/>
+    <id>http://gitee.com/movle/blog/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/</id>
     <published>2020-05-12T03:00:00.000Z</published>
     <updated>2020-06-11T14:47:35.237Z</updated>
     
@@ -191,21 +191,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7(单节点)安装Redis</title>
-    <link href="http://yoursite.com/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/"/>
-    <id>http://yoursite.com/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/"/>
+    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/</id>
     <published>2020-05-07T04:00:00.000Z</published>
     <updated>2020-06-11T22:49:12.506Z</updated>
     
@@ -222,23 +222,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装redis报错</title>
-    <link href="http://yoursite.com/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/"/>
-    <id>http://yoursite.com/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/"/>
+    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/</id>
     <published>2020-05-07T04:00:00.000Z</published>
     <updated>2020-06-11T22:54:24.995Z</updated>
     
@@ -255,23 +255,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
     
-      <category term="填坑" scheme="http://yoursite.com/tags/%E5%A1%AB%E5%9D%91/"/>
+      <category term="填坑" scheme="http://gitee.com/movle/blog/tags/%E5%A1%AB%E5%9D%91/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7(单节点)安装Mongodb</title>
-    <link href="http://yoursite.com/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/"/>
-    <id>http://yoursite.com/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/"/>
+    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/</id>
     <published>2020-05-07T03:00:00.000Z</published>
     <updated>2020-06-11T22:48:30.729Z</updated>
     
@@ -288,23 +288,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="Mongodb" scheme="http://yoursite.com/tags/Mongodb/"/>
+      <category term="Mongodb" scheme="http://gitee.com/movle/blog/tags/Mongodb/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装MySql</title>
-    <link href="http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/"/>
-    <id>http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/</id>
     <published>2020-05-06T07:00:00.000Z</published>
     <updated>2020-06-11T22:58:10.585Z</updated>
     
@@ -321,23 +321,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://gitee.com/movle/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装MySql(已下载的mysql安装包)</title>
-    <link href="http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"/>
-    <id>http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/</id>
     <published>2020-05-06T03:00:00.000Z</published>
     <updated>2020-06-11T22:44:34.618Z</updated>
     
@@ -354,23 +354,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://gitee.com/movle/blog/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7环境下安装Chrome</title>
-    <link href="http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
-    <id>http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
     <published>2020-05-06T02:00:00.000Z</published>
     <updated>2020-06-11T22:38:19.971Z</updated>
     
@@ -387,23 +387,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="Chrome" scheme="http://yoursite.com/tags/Chrome/"/>
+      <category term="Chrome" scheme="http://gitee.com/movle/blog/tags/Chrome/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装Apache</title>
-    <link href="http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
-    <id>http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
     <published>2020-05-06T02:00:00.000Z</published>
     <updated>2020-06-11T22:36:11.389Z</updated>
     
@@ -420,21 +420,21 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="Apache" scheme="http://yoursite.com/tags/Apache/"/>
+      <category term="Apache" scheme="http://gitee.com/movle/blog/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装Tomcat</title>
-    <link href="http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/"/>
-    <id>http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/</id>
     <published>2020-05-06T01:49:00.000Z</published>
     <updated>2020-06-11T22:33:38.120Z</updated>
     
@@ -451,21 +451,21 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
-      <category term="Tomcat" scheme="http://yoursite.com/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="http://gitee.com/movle/blog/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Linux查看文件前几行和后几行的命令</title>
-    <link href="http://yoursite.com/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
+    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/</id>
     <published>2020-05-06T01:49:00.000Z</published>
     <updated>2020-06-11T22:29:04.545Z</updated>
     
@@ -482,17 +482,17 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.05]链表求和</title>
-    <link href="http://yoursite.com/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/"/>
-    <id>http://yoursite.com/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/</id>
+    <link href="http://gitee.com/movle/blog/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/"/>
+    <id>http://gitee.com/movle/blog/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/</id>
     <published>2020-04-22T03:00:00.000Z</published>
     <updated>2020-06-11T14:46:32.082Z</updated>
     
@@ -509,21 +509,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.04]分割链表</title>
-    <link href="http://yoursite.com/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/"/>
-    <id>http://yoursite.com/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/</id>
+    <link href="http://gitee.com/movle/blog/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/"/>
+    <id>http://gitee.com/movle/blog/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/</id>
     <published>2020-04-12T03:00:00.000Z</published>
     <updated>2020-06-11T14:45:27.954Z</updated>
     
@@ -540,21 +540,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.03]删除中间结点</title>
-    <link href="http://yoursite.com/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/"/>
-    <id>http://yoursite.com/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/</id>
+    <link href="http://gitee.com/movle/blog/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/"/>
+    <id>http://gitee.com/movle/blog/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/</id>
     <published>2020-04-07T03:00:00.000Z</published>
     <updated>2020-06-11T14:44:08.061Z</updated>
     
@@ -571,21 +571,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.02]返回倒数第 k 个节点</title>
-    <link href="http://yoursite.com/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/"/>
-    <id>http://yoursite.com/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/</id>
+    <link href="http://gitee.com/movle/blog/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/"/>
+    <id>http://gitee.com/movle/blog/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/</id>
     <published>2020-04-05T03:00:00.000Z</published>
     <updated>2020-06-11T14:43:05.244Z</updated>
     
@@ -602,21 +602,21 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>[LeetCode-面试02.01]删除单链表中的重复元素</title>
-    <link href="http://yoursite.com/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/"/>
-    <id>http://yoursite.com/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</id>
+    <link href="http://gitee.com/movle/blog/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/"/>
+    <id>http://gitee.com/movle/blog/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</id>
     <published>2020-04-03T03:00:00.000Z</published>
     <updated>2020-06-11T14:41:09.610Z</updated>
     
@@ -635,14 +635,14 @@
     </summary>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+      <category term="LeetCode" scheme="http://gitee.com/movle/blog/tags/LeetCode/"/>
     
-      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="http://gitee.com/movle/blog/tags/%E9%9D%A2%E8%AF%95/"/>
     
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="http://gitee.com/movle/blog/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
