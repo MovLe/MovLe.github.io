@@ -72,6 +72,117 @@
   </entry>
   
   <entry>
+    <title>Sqoop一些常用命令及参数</title>
+    <link href="http://yoursite.com/2019/05/09/Sqoop%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%8F%82%E6%95%B0/"/>
+    <id>http://yoursite.com/2019/05/09/Sqoop%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%8F%82%E6%95%B0/</id>
+    <published>2019-05-09T07:00:00.000Z</published>
+    <updated>2020-06-11T04:17:15.333Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-常用命令列举&quot;&gt;&lt;a href=&quot;#一-常用命令列举&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/categories/Sqoop/"/>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/tags/Sqoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sqoop简单使用案例</title>
+    <link href="http://yoursite.com/2019/05/09/Sqoop%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/"/>
+    <id>http://yoursite.com/2019/05/09/Sqoop%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/</id>
+    <published>2019-05-09T05:00:00.000Z</published>
+    <updated>2020-06-11T04:03:42.943Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-导入数据&quot;&gt;&lt;a href=&quot;#一-导入数据&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/categories/Sqoop/"/>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/tags/Sqoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sqoop安装配置</title>
+    <link href="http://yoursite.com/2019/05/09/Sqoop%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2019/05/09/Sqoop%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-05-09T04:00:00.000Z</published>
+    <updated>2020-06-11T03:59:13.976Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;0-前提&quot;&gt;&lt;a href=&quot;#0-前提&quot; class=&quot;headerlink&quot; title=&quot;0.前提&quot;&gt;&lt;/a&gt;0.前提&lt;/h4&gt;&lt;p&gt;安装Sqoop的前提是已经具备Java和Hadoop的环境。&lt;/p&gt;
+&lt;h4 id=&quot;1-下载并解压&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/categories/Sqoop/"/>
+    
+    
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+    
+      <category term="Sqoop" scheme="http://yoursite.com/tags/Sqoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sqoop简介与原理</title>
+    <link href="http://yoursite.com/2019/05/09/Sqoop%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2019/05/09/Sqoop%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%8E%9F%E7%90%86/</id>
+    <published>2019-05-09T03:00:00.000Z</published>
+    <updated>2020-06-11T03:57:00.269Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-Sqoop简介&quot;&gt;&lt;a href=&quot;#一-Sqoop简介&quot; class=&quot;headerlink&quot; title=&quot;一.Sqoop简介&quot;&gt;&lt;/a&gt;一.Sqoop简介&lt;/h3&gt;&lt;p&gt;Apache Sqoop(TM)是一种旨在有效地在Apache
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/categories/Sqoop/"/>
+    
+    
+      <category term="Sqoop" scheme="http://yoursite.com/tags/Sqoop/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sqoop集成HBase：Mysql TO HBase</title>
     <link href="http://yoursite.com/2019/04/10/Sqoop%E9%9B%86%E6%88%90HBase%EF%BC%9AMysql%20TO%20HBase/"/>
     <id>http://yoursite.com/2019/04/10/Sqoop%E9%9B%86%E6%88%90HBase%EF%BC%9AMysql%20TO%20HBase/</id>
@@ -469,123 +580,6 @@
       <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
       <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark SQL:使用数据源</title>
-    <link href="http://yoursite.com/2019/03/11/Spark%20SQL%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
-    <id>http://yoursite.com/2019/03/11/Spark%20SQL%EF%BC%9A%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E6%BA%90/</id>
-    <published>2019-03-11T03:00:00.000Z</published>
-    <updated>2020-06-11T02:44:21.639Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在Spark SQL中，可以使用各种各样的数据源进行操作。Spark SQL 用于处理结构化的数据&lt;/p&gt;
-&lt;h3 id=&quot;一-通用的Load-Save函数-load函数式加载数据，save函数式存储数据&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark SQL:基础</title>
-    <link href="http://yoursite.com/2019/03/11/Spark%20SQL%EF%BC%9A%E5%9F%BA%E7%A1%80/"/>
-    <id>http://yoursite.com/2019/03/11/Spark%20SQL%EF%BC%9A%E5%9F%BA%E7%A1%80/</id>
-    <published>2019-03-11T02:00:00.000Z</published>
-    <updated>2020-06-11T02:39:34.601Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-Spark-SQL简介&quot;&gt;&lt;a href=&quot;#一-Spark-SQL简介&quot; class=&quot;headerlink&quot; title=&quot;一.Spark SQL简介&quot;&gt;&lt;/a&gt;一.Spark
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark Streaming：性能优化</title>
-    <link href="http://yoursite.com/2019/03/10/Spark%20Streaming%EF%BC%9A%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    <id>http://yoursite.com/2019/03/10/Spark%20Streaming%EF%BC%9A%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</id>
-    <published>2019-03-10T12:00:00.000Z</published>
-    <updated>2020-06-11T02:33:29.783Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-减少批数据的执行时间&quot;&gt;&lt;a href=&quot;#1-减少批数据的执行时间&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark Streaming：高级数据源</title>
-    <link href="http://yoursite.com/2019/03/10/Spark%20Streaming%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
-    <id>http://yoursite.com/2019/03/10/Spark%20Streaming%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E6%BA%90/</id>
-    <published>2019-03-10T11:00:00.000Z</published>
-    <updated>2020-06-11T02:31:14.412Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-Spark-Streaming接收Flume数据&quot;&gt;&lt;a href=&quot;#一-Spark-Streaming接收Flume数据&quot; class=&quot;headerlink&quot; title=&quot;一.Spark Streaming接收Flume数据&quot;&gt;&lt;/a&gt;一.Spark
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
