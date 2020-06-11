@@ -72,6 +72,246 @@
   </entry>
   
   <entry>
+    <title>Azkaban实战-MapReduce任务</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Mapreduce%E4%BB%BB%E5%8A%A1/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Mapreduce%E4%BB%BB%E5%8A%A1/</id>
+    <published>2019-06-02T09:00:00.000Z</published>
+    <updated>2020-06-11T08:13:06.072Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;mapreduce任务依然可以使用azkaban进行调度&lt;/p&gt;
+&lt;h4 id=&quot;1-创建job描述文件，及mr程序jar包&quot;&gt;&lt;a href=&quot;#1-创建job描述文件，及mr程序jar包&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="MapReduce" scheme="http://gitee.com/movle/blog/tags/MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban实战-Hive脚本任务</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/</id>
+    <published>2019-06-02T09:00:00.000Z</published>
+    <updated>2020-06-11T08:15:02.166Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-创建job描述文件和hive脚本&quot;&gt;&lt;a href=&quot;#1-创建job描述文件和hive脚本&quot; class=&quot;headerlink&quot; title=&quot;1.创建job描述文件和hive脚本&quot;&gt;&lt;/a&gt;1.创建job描述文件和hive脚本&lt;/h4&gt;&lt;h5
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban实战-HDFS操作任务</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-HDFS%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-HDFS%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/</id>
+    <published>2019-06-02T08:00:00.000Z</published>
+    <updated>2020-06-11T08:13:11.887Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-创建job描述文件&quot;&gt;&lt;a href=&quot;#1-创建job描述文件&quot; class=&quot;headerlink&quot; title=&quot;1.创建job描述文件&quot;&gt;&lt;/a&gt;1.创建job描述文件&lt;/h4&gt;&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="HDFS" scheme="http://gitee.com/movle/blog/tags/HDFS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban实战-java操作任务</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-java%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-java%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/</id>
+    <published>2019-06-02T07:00:00.000Z</published>
+    <updated>2020-06-11T08:09:06.519Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;使用Azkaban调度java程序&lt;/p&gt;
+&lt;h4 id=&quot;1-编写java程序&quot;&gt;&lt;a href=&quot;#1-编写java程序&quot; class=&quot;headerlink&quot; title=&quot;1.编写java程序&quot;&gt;&lt;/a&gt;1.编写java程序&lt;/h4&gt;&lt;figure
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban实战-多job工作流案例</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%A4%9Ajob%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%A1%88%E4%BE%8B/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%A4%9Ajob%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%A1%88%E4%BE%8B/</id>
+    <published>2019-06-02T06:00:00.000Z</published>
+    <updated>2020-06-11T08:07:23.260Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;0-数据源：&quot;&gt;&lt;a href=&quot;#0-数据源：&quot; class=&quot;headerlink&quot; title=&quot;0.数据源：&quot;&gt;&lt;/a&gt;0.数据源：&lt;/h4&gt;&lt;p&gt;word.txt:&lt;/p&gt;
+&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban实战-单一job案例</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%8D%95%E4%B8%80job%E6%A1%88%E4%BE%8B/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%8D%95%E4%B8%80job%E6%A1%88%E4%BE%8B/</id>
+    <published>2019-06-02T05:00:00.000Z</published>
+    <updated>2020-06-11T08:05:32.135Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Azkaba内置的任务类型支持command、java&lt;/p&gt;
+&lt;h4 id=&quot;1-创建job描述文件-可以在linux里写，也可以在windows或者mac中写完在打包上传&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="Azkaban实战" scheme="http://gitee.com/movle/blog/tags/Azkaban%E5%AE%9E%E6%88%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban安装配置</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-06-02T04:00:00.000Z</published>
+    <updated>2020-06-11T08:02:55.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-安装前准备&quot;&gt;&lt;a href=&quot;#一-安装前准备&quot; class=&quot;headerlink&quot; title=&quot;一.安装前准备&quot;&gt;&lt;/a&gt;一.安装前准备&lt;/h3&gt;&lt;h4
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+      <category term="安装配置" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Azkaban概述</title>
+    <link href="http://gitee.com/movle/blog/2019/06/02/Azkaban%E6%A6%82%E8%BF%B0/"/>
+    <id>http://gitee.com/movle/blog/2019/06/02/Azkaban%E6%A6%82%E8%BF%B0/</id>
+    <published>2019-06-02T03:00:00.000Z</published>
+    <updated>2020-06-11T07:07:47.821Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-为什么需要工作流调度系统&quot;&gt;&lt;a href=&quot;#1-为什么需要工作流调度系统&quot; class=&quot;headerlink&quot; title=&quot;1.为什么需要工作流调度系统&quot;&gt;&lt;/a&gt;1.为什么需要工作流调度系统&lt;/h4&gt;&lt;h5
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="http://gitee.com/movle/blog/tags/Azkaban/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Sqoop一些常用命令及参数</title>
     <link href="http://gitee.com/movle/blog/2019/05/09/Sqoop%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%8F%82%E6%95%B0/"/>
     <id>http://gitee.com/movle/blog/2019/05/09/Sqoop%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%8F%82%E6%95%B0/</id>
@@ -236,11 +476,11 @@
       <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
     
     
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
+    
       <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
     
       <category term="HBase实战" scheme="http://gitee.com/movle/blog/tags/HBase%E5%AE%9E%E6%88%98/"/>
-    
-      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
@@ -360,226 +600,6 @@
       <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
     
       <category term="HBase实战" scheme="http://gitee.com/movle/blog/tags/HBase%E5%AE%9E%E6%88%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase工具类</title>
-    <link href="http://gitee.com/movle/blog/2019/04/09/HBase%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
-    <id>http://gitee.com/movle/blog/2019/04/09/HBase%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
-    <published>2019-04-09T03:00:00.000Z</published>
-    <updated>2020-06-11T03:31:38.933Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h6 id=&quot;1-HBASEUtil-java&quot;&gt;&lt;a href=&quot;#1-HBASEUtil-java&quot; class=&quot;headerlink&quot; title=&quot;1.HBASEUtil.java&quot;&gt;&lt;/a&gt;1.HBASEUtil.java&lt;/h6&gt;&lt;figure
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase之API</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E4%B9%8BAPI/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E4%B9%8BAPI/</id>
-    <published>2019-04-08T08:00:00.000Z</published>
-    <updated>2020-06-11T03:30:12.362Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;0-用途&quot;&gt;&lt;a href=&quot;#0-用途&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase优化</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E4%BC%98%E5%8C%96/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E4%BC%98%E5%8C%96/</id>
-    <published>2019-04-08T07:00:00.000Z</published>
-    <updated>2020-06-11T03:27:33.427Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-高可用&quot;&gt;&lt;a href=&quot;#1-高可用&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase读写数据流程</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/</id>
-    <published>2019-04-08T06:00:00.000Z</published>
-    <updated>2020-06-11T03:18:58.986Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一、读写流程&quot;&gt;&lt;a href=&quot;#一、读写流程&quot; class=&quot;headerlink&quot; title=&quot;一、读写流程&quot;&gt;&lt;/a&gt;一、读写流程&lt;/h3&gt;&lt;h4 id=&quot;1-HBase读数据流程&quot;&gt;&lt;a href=&quot;#1-HBase读数据流程&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase基本操作</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
-    <published>2019-04-08T05:00:00.000Z</published>
-    <updated>2020-06-11T03:16:24.416Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-基本操作&quot;&gt;&lt;a href=&quot;#1-基本操作&quot; class=&quot;headerlink&quot; title=&quot;1. 基本操作&quot;&gt;&lt;/a&gt;1. 基本操作&lt;/h4&gt;&lt;h5 id=&quot;1-进入HBase客户端命令行&quot;&gt;&lt;a href=&quot;#1-进入HBase客户端命令行&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase安装部署</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
-    <published>2019-04-08T04:00:00.000Z</published>
-    <updated>2020-06-11T03:15:45.487Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;HBase部署&quot;&gt;&lt;a href=&quot;#HBase部署&quot; class=&quot;headerlink&quot; title=&quot;HBase部署&quot;&gt;&lt;/a&gt;HBase部署&lt;/h3&gt;&lt;h4 id=&quot;1、Zookeeper正常部署&quot;&gt;&lt;a href=&quot;#1、Zookeeper正常部署&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HBase基础知识</title>
-    <link href="http://gitee.com/movle/blog/2019/04/08/HBase%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    <id>http://gitee.com/movle/blog/2019/04/08/HBase%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
-    <published>2019-04-08T03:00:00.000Z</published>
-    <updated>2020-06-11T03:03:53.914Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-HBase简介&quot;&gt;&lt;a href=&quot;#一-HBase简介&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/categories/HBase/"/>
-    
-    
-      <category term="HBase" scheme="http://gitee.com/movle/blog/tags/HBase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark SQL:性能优化</title>
-    <link href="http://gitee.com/movle/blog/2019/03/11/Spark%20SQL%EF%BC%9A%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    <id>http://gitee.com/movle/blog/2019/03/11/Spark%20SQL%EF%BC%9A%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</id>
-    <published>2019-03-11T04:00:00.000Z</published>
-    <updated>2020-06-11T02:46:26.800Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-在内存中缓存数据&quot;&gt;&lt;a href=&quot;#1-在内存中缓存数据&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://gitee.com/movle/blog/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://gitee.com/movle/blog/tags/Spark/"/>
-    
-      <category term="Spark SQL" scheme="http://gitee.com/movle/blog/tags/Spark-SQL/"/>
     
   </entry>
   
