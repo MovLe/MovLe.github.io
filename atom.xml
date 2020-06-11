@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-09T01:53:37.266Z</updated>
+  <updated>2020-06-11T14:54:04.030Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,101 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[LeetCode-1]两数之和</title>
+    <link href="http://yoursite.com/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
+    <id>http://yoursite.com/2020/06/07/[LeetCode-1]%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</id>
+    <published>2020-06-07T03:00:00.000Z</published>
+    <updated>2020-06-11T14:54:04.030Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-题目&quot;&gt;&lt;a href=&quot;#一-题目&quot; class=&quot;headerlink&quot; title=&quot;一.题目&quot;&gt;&lt;/a&gt;一.题目&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个
+        
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[LeetCode-剑指Offer-面试题03]数组中重复的数字</title>
+    <link href="http://yoursite.com/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/"/>
+    <id>http://yoursite.com/2020/05/21/[LeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803]%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/</id>
+    <published>2020-05-21T03:00:00.000Z</published>
+    <updated>2020-06-11T14:52:40.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;找出数组中重复的数字。&lt;/p&gt;
+&lt;p&gt;在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1
+        
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[LeetCode-面试03.01]三合一</title>
+    <link href="http://yoursite.com/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/"/>
+    <id>http://yoursite.com/2020/05/19/[LeetCode-%E9%9D%A2%E8%AF%9503-01]%E4%B8%89%E5%90%88%E4%B8%80/</id>
+    <published>2020-05-19T03:00:00.000Z</published>
+    <updated>2020-06-11T14:50:11.507Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;三合一。描述如何只用一个数组来实现三个栈。&lt;br&gt;你应该实现push(stackNum,
+        
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
+    
+    
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux 新建用户</title>
@@ -44,11 +139,11 @@
   </entry>
   
   <entry>
-    <title>CentOS7(单节点)安装elasticsearch</title>
-    <link href="http://yoursite.com/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
-    <id>http://yoursite.com/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
-    <published>2019-10-12T07:00:00.000Z</published>
-    <updated>2020-06-11T14:12:54.384Z</updated>
+    <title>[LeeCode-面试02.07]链表相交</title>
+    <link href="http://yoursite.com/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/"/>
+    <id>http://yoursite.com/2020/05/17/[LeeCode-%E9%9D%A2%E8%AF%9502-07]%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/</id>
+    <published>2020-05-17T03:00:00.000Z</published>
+    <updated>2020-06-11T14:55:58.882Z</updated>
     
     <summary type="html">
     
@@ -56,28 +151,30 @@
       
         
         
-          &lt;h4 id=&quot;1-下载安装包&quot;&gt;&lt;a href=&quot;#1-下载安装包&quot; class=&quot;headerlink&quot; title=&quot;1.下载安装包&quot;&gt;&lt;/a&gt;1.下载安装包&lt;/h4&gt;&lt;h4 id=&quot;2-上传到linux&quot;&gt;&lt;a href=&quot;#2-上传到linux&quot;
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch head插件安装</title>
-    <link href="http://yoursite.com/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    <id>http://yoursite.com/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
-    <published>2019-10-12T06:00:00.000Z</published>
-    <updated>2020-06-11T14:10:17.291Z</updated>
+    <title>[LeetCode-面试02.06]回文链表</title>
+    <link href="http://yoursite.com/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/"/>
+    <id>http://yoursite.com/2020/05/12/[LeetCode-%E9%9D%A2%E8%AF%9502-06]%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/</id>
+    <published>2020-05-12T03:00:00.000Z</published>
+    <updated>2020-06-11T14:47:35.237Z</updated>
     
     <summary type="html">
     
@@ -85,29 +182,32 @@
       
         
         
-          &lt;h4 id=&quot;1-下载插件：&quot;&gt;&lt;a href=&quot;#1-下载插件：&quot; class=&quot;headerlink&quot; title=&quot;1.下载插件：&quot;&gt;&lt;/a&gt;1.下载插件：&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;编写一个函数，检查输入的链表是否是回文的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;示例 1：&lt;br&gt;输入：
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch集群安装部署</title>
-    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
-    <published>2019-10-12T05:00:00.000Z</published>
-    <updated>2020-06-11T14:08:26.649Z</updated>
+    <title>[LeetCode-面试02.05]链表求和</title>
+    <link href="http://yoursite.com/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/"/>
+    <id>http://yoursite.com/2020/04/22/[LeetCode-%E9%9D%A2%E8%AF%9502-05]%E9%93%BE%E8%A1%A8%E6%B1%82%E5%92%8C/</id>
+    <published>2020-04-22T03:00:00.000Z</published>
+    <updated>2020-06-11T14:46:32.082Z</updated>
     
     <summary type="html">
     
@@ -115,28 +215,30 @@
       
         
         
-          &lt;h4 id=&quot;1-前提：安装好jdk&quot;&gt;&lt;a href=&quot;#1-前提：安装好jdk&quot; class=&quot;headerlink&quot; title=&quot;1.前提：安装好jdk&quot;&gt;&lt;/a&gt;1.前提：安装好jdk&lt;/h4&gt;&lt;h4 id=&quot;2-下载安装包：&quot;&gt;&lt;a
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch单节点安装部署</title>
-    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
-    <published>2019-10-12T04:00:00.000Z</published>
-    <updated>2020-06-11T14:07:53.759Z</updated>
+    <title>[LeetCode-面试02.04]分割链表</title>
+    <link href="http://yoursite.com/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/"/>
+    <id>http://yoursite.com/2020/04/12/[LeetCode-%E9%9D%A2%E8%AF%9502-04]%E5%88%86%E5%89%B2%E9%93%BE%E8%A1%A8/</id>
+    <published>2020-04-12T03:00:00.000Z</published>
+    <updated>2020-06-11T14:45:27.954Z</updated>
     
     <summary type="html">
     
@@ -144,28 +246,30 @@
       
         
         
-          &lt;h3 id=&quot;一-安装&quot;&gt;&lt;a href=&quot;#一-安装&quot; class=&quot;headerlink&quot; title=&quot;一.安装&quot;&gt;&lt;/a&gt;一.安装&lt;/h3&gt;&lt;h4 id=&quot;1-先前条件：&quot;&gt;&lt;a href=&quot;#1-先前条件：&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;编写程序以 x 为基准分割链表，使得所有小于 x 的节点排在大于或等于 x 的节点之前。如果链表中包含 x，x
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch核心概念</title>
-    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
-    <id>http://yoursite.com/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/</id>
-    <published>2019-10-12T03:00:00.000Z</published>
-    <updated>2020-06-11T14:00:37.767Z</updated>
+    <title>[LeetCode-面试02.03]删除中间结点</title>
+    <link href="http://yoursite.com/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/"/>
+    <id>http://yoursite.com/2020/04/07/[LeetCode-%E9%9D%A2%E8%AF%9502-03]%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/</id>
+    <published>2020-04-07T03:00:00.000Z</published>
+    <updated>2020-06-11T14:44:08.061Z</updated>
     
     <summary type="html">
     
@@ -173,26 +277,30 @@
       
         
         
-          &lt;h4 id=&quot;1-近实时&quot;&gt;&lt;a href=&quot;#1-近实时&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch概览</title>
-    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/"/>
-    <id>http://yoursite.com/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/</id>
-    <published>2019-10-12T02:00:00.000Z</published>
-    <updated>2020-06-11T13:58:08.939Z</updated>
+    <title>[LeetCode-面试02.02]返回倒数第 k 个节点</title>
+    <link href="http://yoursite.com/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/"/>
+    <id>http://yoursite.com/2020/04/05/[LeetCode-%E9%9D%A2%E8%AF%9502-02]%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/</id>
+    <published>2020-04-05T03:00:00.000Z</published>
+    <updated>2020-06-11T14:43:05.244Z</updated>
     
     <summary type="html">
     
@@ -200,26 +308,30 @@
       
         
         
-          &lt;h4 id=&quot;1-什么是Elasticsearch&quot;&gt;&lt;a href=&quot;#1-什么是Elasticsearch&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;实现一种算法，找出单向链表中倒数第 k
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Linux安装rz,sz</title>
-    <link href="http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
-    <id>http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
-    <published>2019-08-09T01:49:00.000Z</published>
-    <updated>2020-06-09T13:28:46.864Z</updated>
+    <title>[LeetCode-面试02.01]删除单链表中的重复元素</title>
+    <link href="http://yoursite.com/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/"/>
+    <id>http://yoursite.com/2020/04/03/[LeetCode-%E9%9D%A2%E8%AF%9502-01]%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</id>
+    <published>2020-04-03T03:00:00.000Z</published>
+    <updated>2020-06-11T14:41:09.610Z</updated>
     
     <summary type="html">
     
@@ -227,27 +339,32 @@
       
         
         
-          &lt;h6 id=&quot;0-概念：&quot;&gt;&lt;a href=&quot;#0-概念：&quot; class=&quot;headerlink&quot; title=&quot;0.概念：&quot;&gt;&lt;/a&gt;0.概念：&lt;/h6&gt;&lt;ul&gt;
-&lt;li&gt;rz命令（Receive
+          &lt;h3 id=&quot;一-题目&quot;&gt;&lt;a href=&quot;#一-题目&quot; class=&quot;headerlink&quot; title=&quot;一.题目&quot;&gt;&lt;/a&gt;一.题目&lt;/h3&gt;&lt;p&gt;编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;示例1:&lt;br&gt;
         
       
     
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之压缩和存储</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/</id>
-    <published>2019-07-15T14:00:00.000Z</published>
-    <updated>2020-06-11T13:48:11.499Z</updated>
+    <title>[LeetCode-面试01.09]字符串轮转</title>
+    <link href="http://yoursite.com/2020/04/01/[LeetCode-%E9%9D%A2%E8%AF%9501-09]%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AE%E8%BD%AC/"/>
+    <id>http://yoursite.com/2020/04/01/[LeetCode-%E9%9D%A2%E8%AF%9501-09]%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AE%E8%BD%AC/</id>
+    <published>2020-04-01T03:00:00.000Z</published>
+    <updated>2020-06-11T14:39:50.541Z</updated>
     
     <summary type="html">
     
@@ -255,26 +372,30 @@
       
         
         
-          &lt;h3 id=&quot;一-Hadoop源码编译支持Snappy压缩&quot;&gt;&lt;a href=&quot;#一-Hadoop源码编译支持Snappy压缩&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;一-题目&quot;&gt;&lt;a href=&quot;#一-题目&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之企业调优</title>
-    <link href="http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/"/>
-    <id>http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/</id>
-    <published>2019-07-15T13:00:00.000Z</published>
-    <updated>2020-06-11T13:33:06.432Z</updated>
+    <title>[LeetCode-面试01.08]零矩阵</title>
+    <link href="http://yoursite.com/2020/03/11/[LeetCode-%E9%9D%A2%E8%AF%9501-08]%E9%9B%B6%E7%9F%A9%E9%98%B5/"/>
+    <id>http://yoursite.com/2020/03/11/[LeetCode-%E9%9D%A2%E8%AF%9501-08]%E9%9B%B6%E7%9F%A9%E9%98%B5/</id>
+    <published>2020-03-11T03:00:00.000Z</published>
+    <updated>2020-06-11T14:38:19.418Z</updated>
     
     <summary type="html">
     
@@ -282,26 +403,30 @@
       
         
         
-          &lt;h3 id=&quot;一-Fetch抓取&quot;&gt;&lt;a href=&quot;#一-Fetch抓取&quot; class=&quot;headerlink&quot; title=&quot;一. Fetch抓取&quot;&gt;&lt;/a&gt;一.
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;编写一种算法，若M ×
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之函数</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/</id>
-    <published>2019-07-15T12:00:00.000Z</published>
-    <updated>2020-06-11T13:22:02.760Z</updated>
+    <title>[LeetCode-面试01.07]旋转矩阵</title>
+    <link href="http://yoursite.com/2020/03/02/[LeetCode-%E9%9D%A2%E8%AF%9501-07]%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/"/>
+    <id>http://yoursite.com/2020/03/02/[LeetCode-%E9%9D%A2%E8%AF%9501-07]%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/</id>
+    <published>2020-03-02T03:00:00.000Z</published>
+    <updated>2020-06-11T14:36:58.506Z</updated>
     
     <summary type="html">
     
@@ -309,26 +434,31 @@
       
         
         
-          &lt;h3 id=&quot;一-系统自带的函数&quot;&gt;&lt;a href=&quot;#一-系统自带的函数&quot; class=&quot;headerlink&quot; title=&quot;一.系统自带的函数&quot;&gt;&lt;/a&gt;一.系统自带的函数&lt;/h3&gt;&lt;h4 id=&quot;1-查看系统自带的函数&quot;&gt;&lt;a href=&quot;#1-查看系统自带的函数&quot;
+          &lt;h3 id=&quot;一-题目&quot;&gt;&lt;a href=&quot;#一-题目&quot; class=&quot;headerlink&quot; title=&quot;一.题目&quot;&gt;&lt;/a&gt;一.题目&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;给你一幅由 N × N 矩阵表示的图像，其中每个像素的大小为 4
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive 查询</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/</id>
-    <published>2019-07-15T11:00:00.000Z</published>
-    <updated>2020-06-11T13:17:25.079Z</updated>
+    <title>[LeetCode-面试01.06]字符串压缩</title>
+    <link href="http://yoursite.com/2020/02/24/[LeetCode-%E9%9D%A2%E8%AF%9501-06]%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/"/>
+    <id>http://yoursite.com/2020/02/24/[LeetCode-%E9%9D%A2%E8%AF%9501-06]%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8E%8B%E7%BC%A9/</id>
+    <published>2020-02-24T03:00:00.000Z</published>
+    <updated>2020-06-11T14:35:30.116Z</updated>
     
     <summary type="html">
     
@@ -336,26 +466,30 @@
       
         
         
-          &lt;h3 id=&quot;一-基本查询（Select…From）&quot;&gt;&lt;a href=&quot;#一-基本查询（Select…From）&quot; class=&quot;headerlink&quot; title=&quot;一.基本查询（Select…From）&quot;&gt;&lt;/a&gt;一.基本查询（Select…From）&lt;/h3&gt;&lt;h4
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive DML数据操作</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/</id>
-    <published>2019-07-15T10:00:00.000Z</published>
-    <updated>2020-06-11T12:51:35.584Z</updated>
+    <title>[LeetCode-面试01.05]一次编辑</title>
+    <link href="http://yoursite.com/2020/02/17/[LeetCode-%E9%9D%A2%E8%AF%9501-05]%E4%B8%80%E6%AC%A1%E7%BC%96%E8%BE%91/"/>
+    <id>http://yoursite.com/2020/02/17/[LeetCode-%E9%9D%A2%E8%AF%9501-05]%E4%B8%80%E6%AC%A1%E7%BC%96%E8%BE%91/</id>
+    <published>2020-02-17T03:00:00.000Z</published>
+    <updated>2020-06-11T14:34:14.116Z</updated>
     
     <summary type="html">
     
@@ -363,26 +497,30 @@
       
         
         
-          &lt;h3 id=&quot;一-数据导入&quot;&gt;&lt;a href=&quot;#一-数据导入&quot; class=&quot;headerlink&quot; title=&quot;一. 数据导入&quot;&gt;&lt;/a&gt;一. 数据导入&lt;/h3&gt;&lt;h4 id=&quot;1-向表中装载数据（Load）&quot;&gt;&lt;a href=&quot;#1-向表中装载数据（Load）&quot;
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot; title=&quot;一.题目：&quot;&gt;&lt;/a&gt;一.题目：&lt;/h3&gt;&lt;p&gt;字符串有三种编辑操作:插入一个字符、删除一个字符或者替换一个字符。
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive DDL数据定义</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/</id>
-    <published>2019-07-15T09:00:00.000Z</published>
-    <updated>2020-06-11T12:44:57.855Z</updated>
+    <title>[LeetCode-面试01.04]回文排列</title>
+    <link href="http://yoursite.com/2020/02/10/[LeetCode-%E9%9D%A2%E8%AF%9501-04]%E5%9B%9E%E6%96%87%E6%8E%92%E5%88%97/"/>
+    <id>http://yoursite.com/2020/02/10/[LeetCode-%E9%9D%A2%E8%AF%9501-04]%E5%9B%9E%E6%96%87%E6%8E%92%E5%88%97/</id>
+    <published>2020-02-10T03:00:00.000Z</published>
+    <updated>2020-06-11T14:33:04.255Z</updated>
     
     <summary type="html">
     
@@ -390,26 +528,30 @@
       
         
         
-          &lt;h3 id=&quot;一-创建数据库&quot;&gt;&lt;a href=&quot;#一-创建数据库&quot; class=&quot;headerlink&quot; title=&quot;一.创建数据库&quot;&gt;&lt;/a&gt;一.创建数据库&lt;/h3&gt;&lt;h4
+          &lt;h3 id=&quot;一-题目：&quot;&gt;&lt;a href=&quot;#一-题目：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive将本地文件导入Hive案例</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/</id>
-    <published>2019-07-15T08:00:00.000Z</published>
-    <updated>2020-06-11T10:49:08.261Z</updated>
+    <title>[LeetCode-面试01.01]判断字符是否唯一</title>
+    <link href="http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-01]%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E6%98%AF%E5%90%A6%E5%94%AF%E4%B8%80/"/>
+    <id>http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-01]%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E6%98%AF%E5%90%A6%E5%94%AF%E4%B8%80/</id>
+    <published>2020-02-03T08:02:00.000Z</published>
+    <updated>2020-06-11T14:28:05.447Z</updated>
     
     <summary type="html">
     
@@ -417,26 +559,31 @@
       
         
         
-          &lt;h4 id=&quot;0-需求：&quot;&gt;&lt;a href=&quot;#0-需求：&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;一-题目描述：&quot;&gt;&lt;a href=&quot;#一-题目描述：&quot; class=&quot;headerlink&quot; title=&quot;一.题目描述：&quot;&gt;&lt;/a&gt;一.题目描述：&lt;/h3&gt;&lt;p&gt;实现一个算法，确定一个字符串 s 的所有字符是否全都不同。&lt;/p&gt;
+&lt;figure
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive参数配置方式</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</id>
-    <published>2019-07-15T07:00:00.000Z</published>
-    <updated>2020-06-11T10:47:21.379Z</updated>
+    <title>[LeetCode-面试01.03]URL化</title>
+    <link href="http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-03]URL%E5%8C%96/"/>
+    <id>http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-03]URL%E5%8C%96/</id>
+    <published>2020-02-03T08:00:00.000Z</published>
+    <updated>2020-06-11T14:32:28.847Z</updated>
     
     <summary type="html">
     
@@ -444,26 +591,30 @@
       
         
         
-          &lt;h4 id=&quot;1-查看当前所有的配置信息&quot;&gt;&lt;a href=&quot;#1-查看当前所有的配置信息&quot; class=&quot;headerlink&quot; title=&quot;1.查看当前所有的配置信息&quot;&gt;&lt;/a&gt;1.查看当前所有的配置信息&lt;/h4&gt;&lt;figure class=&quot;highlight
+          &lt;h3 id=&quot;一-题目描述：&quot;&gt;&lt;a href=&quot;#一-题目描述：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
+    
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
-    <title>Hive常见属性配置</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/</id>
-    <published>2019-07-15T06:00:00.000Z</published>
-    <updated>2020-06-11T10:46:03.827Z</updated>
+    <title>[LeetCode-面试01.02]判断是否互为字符重排</title>
+    <link href="http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-02]%E5%88%A4%E5%AE%9A%E6%98%AF%E5%90%A6%E4%BA%92%E4%B8%BA%E5%AD%97%E7%AC%A6%E9%87%8D%E6%8E%92/"/>
+    <id>http://yoursite.com/2020/02/03/[LeetCode-%E9%9D%A2%E8%AF%9501-02]%E5%88%A4%E5%AE%9A%E6%98%AF%E5%90%A6%E4%BA%92%E4%B8%BA%E5%AD%97%E7%AC%A6%E9%87%8D%E6%8E%92/</id>
+    <published>2020-02-03T07:00:00.000Z</published>
+    <updated>2020-06-11T14:31:18.153Z</updated>
     
     <summary type="html">
     
@@ -471,104 +622,21 @@
       
         
         
-          &lt;h4 id=&quot;1-Hive数据仓库位置配置&quot;&gt;&lt;a href=&quot;#1-Hive数据仓库位置配置&quot; class=&quot;headerlink&quot; title=&quot;1.Hive数据仓库位置配置&quot;&gt;&lt;/a&gt;1.Hive数据仓库位置配置&lt;/h4&gt;&lt;h5
+          &lt;h3 id=&quot;一-题目描述&quot;&gt;&lt;a href=&quot;#一-题目描述&quot; class=&quot;headerlink&quot; title=&quot;一.题目描述&quot;&gt;&lt;/a&gt;一.题目描述&lt;/h3&gt;&lt;p&gt;给定两个字符串 s1 和
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/categories/LeetCode/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="LeetCode" scheme="http://yoursite.com/tags/LeetCode/"/>
     
-  </entry>
-  
-  <entry>
-    <title>Hive基本操作</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
-    <published>2019-07-15T05:00:00.000Z</published>
-    <updated>2020-06-11T10:44:19.597Z</updated>
+      <category term="面试" scheme="http://yoursite.com/tags/%E9%9D%A2%E8%AF%95/"/>
     
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-Hive基本操作&quot;&gt;&lt;a href=&quot;#一-Hive基本操作&quot; class=&quot;headerlink&quot; title=&quot;一.Hive基本操作&quot;&gt;&lt;/a&gt;一.Hive基本操作&lt;/h3&gt;&lt;h4 id=&quot;1-启动hive&quot;&gt;&lt;a href=&quot;#1-启动hive&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hive安装部署</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</id>
-    <published>2019-07-15T04:00:00.000Z</published>
-    <updated>2020-06-11T10:41:20.713Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-前提：&quot;&gt;&lt;a href=&quot;#1-前提：&quot; class=&quot;headerlink&quot; title=&quot;1.前提：&quot;&gt;&lt;/a&gt;1.前提：&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;mysql已安装&lt;/li&gt;
-&lt;li&gt;hadoop集群已配置&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
-    
-    
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hive基本概念</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</id>
-    <published>2019-07-15T03:00:00.000Z</published>
-    <updated>2020-06-11T10:37:40.258Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-Hive基本概念：&quot;&gt;&lt;a href=&quot;#一-Hive基本概念：&quot; class=&quot;headerlink&quot; title=&quot;一.Hive基本概念：&quot;&gt;&lt;/a&gt;一.Hive基本概念：&lt;/h3&gt;&lt;h4 id=&quot;1-Hive&quot;&gt;&lt;a href=&quot;#1-Hive&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
