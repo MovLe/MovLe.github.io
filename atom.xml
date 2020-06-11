@@ -3,11 +3,11 @@
   <title>Movle&#39;s Blog</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://gitee.com/movle/blog/"/>
   <updated>2020-06-09T01:53:37.266Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://gitee.com/movle/blog/</id>
   
   <author>
     <name>Movle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Linux 新建用户</title>
-    <link href="http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
-    <id>http://yoursite.com/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
+    <id>http://gitee.com/movle/blog/2020/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/</id>
     <published>2020-05-19T01:13:00.000Z</published>
     <updated>2020-06-09T01:53:37.266Z</updated>
     
@@ -36,17 +36,17 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装rz,sz</title>
-    <link href="http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
-    <id>http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
+    <link href="http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
+    <id>http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
     <published>2019-08-09T01:49:00.000Z</published>
     <updated>2020-06-09T13:28:46.864Z</updated>
     
@@ -64,17 +64,17 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Hive之压缩和存储</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/</id>
     <published>2019-07-15T14:00:00.000Z</published>
     <updated>2020-06-11T13:48:11.499Z</updated>
     
@@ -91,17 +91,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive之企业调优</title>
-    <link href="http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/"/>
-    <id>http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/</id>
     <published>2019-07-15T13:00:00.000Z</published>
     <updated>2020-06-11T13:33:06.432Z</updated>
     
@@ -118,17 +118,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive之函数</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/</id>
     <published>2019-07-15T12:00:00.000Z</published>
     <updated>2020-06-11T13:22:02.760Z</updated>
     
@@ -145,17 +145,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive 查询</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/</id>
     <published>2019-07-15T11:00:00.000Z</published>
     <updated>2020-06-11T13:17:25.079Z</updated>
     
@@ -172,17 +172,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive DML数据操作</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/</id>
     <published>2019-07-15T10:00:00.000Z</published>
     <updated>2020-06-11T12:51:35.584Z</updated>
     
@@ -199,17 +199,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive DDL数据定义</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/</id>
     <published>2019-07-15T09:00:00.000Z</published>
     <updated>2020-06-11T12:44:57.855Z</updated>
     
@@ -226,17 +226,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive将本地文件导入Hive案例</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/</id>
     <published>2019-07-15T08:00:00.000Z</published>
     <updated>2020-06-11T10:49:08.261Z</updated>
     
@@ -253,17 +253,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive参数配置方式</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</id>
     <published>2019-07-15T07:00:00.000Z</published>
     <updated>2020-06-11T10:47:21.379Z</updated>
     
@@ -280,17 +280,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive常见属性配置</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/</id>
     <published>2019-07-15T06:00:00.000Z</published>
     <updated>2020-06-11T10:46:03.827Z</updated>
     
@@ -307,17 +307,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive基本操作</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</id>
     <published>2019-07-15T05:00:00.000Z</published>
     <updated>2020-06-11T10:44:19.597Z</updated>
     
@@ -334,17 +334,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive安装部署</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</id>
     <published>2019-07-15T04:00:00.000Z</published>
     <updated>2020-06-11T10:41:20.713Z</updated>
     
@@ -365,19 +365,19 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Hive基本概念</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</id>
     <published>2019-07-15T03:00:00.000Z</published>
     <updated>2020-06-11T10:37:40.258Z</updated>
     
@@ -394,17 +394,17 @@
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-自定义拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T15:03:00.000Z</published>
     <updated>2020-06-11T08:51:15.782Z</updated>
     
@@ -421,19 +421,19 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-正则抽取拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E6%8A%BD%E5%8F%96%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E6%8A%BD%E5%8F%96%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E6%8A%BD%E5%8F%96%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E6%8A%BD%E5%8F%96%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T14:03:00.000Z</published>
     <updated>2020-06-11T08:48:30.060Z</updated>
     
@@ -450,19 +450,19 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-正则过滤拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E8%BF%87%E6%BB%A4%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E8%BF%87%E6%BB%A4%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E8%BF%87%E6%BB%A4%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%AD%A3%E5%88%99%E8%BF%87%E6%BB%A4%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T14:01:00.000Z</published>
     <updated>2020-06-11T08:47:32.541Z</updated>
     
@@ -479,19 +479,19 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-查询替换拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%9F%A5%E8%AF%A2%E6%9B%BF%E6%8D%A2%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%9F%A5%E8%AF%A2%E6%9B%BF%E6%8D%A2%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%9F%A5%E8%AF%A2%E6%9B%BF%E6%8D%A2%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E6%9F%A5%E8%AF%A2%E6%9B%BF%E6%8D%A2%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T14:00:00.000Z</published>
     <updated>2020-06-11T08:46:08.120Z</updated>
     
@@ -508,19 +508,19 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-UUID拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-UUID%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-UUID%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-UUID%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-UUID%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T13:00:00.000Z</published>
     <updated>2020-06-11T08:44:58.055Z</updated>
     
@@ -537,19 +537,19 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
   <entry>
     <title>Flume拦截器-主机名拦截器</title>
-    <link href="http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E4%B8%BB%E6%9C%BA%E5%90%8D%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
-    <id>http://yoursite.com/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E4%B8%BB%E6%9C%BA%E5%90%8D%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
+    <link href="http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E4%B8%BB%E6%9C%BA%E5%90%8D%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+    <id>http://gitee.com/movle/blog/2019/07/03/Flume%E6%8B%A6%E6%88%AA%E5%99%A8-%E4%B8%BB%E6%9C%BA%E5%90%8D%E6%8B%A6%E6%88%AA%E5%99%A8/</id>
     <published>2019-07-03T12:00:00.000Z</published>
     <updated>2020-06-11T08:43:55.956Z</updated>
     
@@ -567,12 +567,12 @@
     </summary>
     
     
-      <category term="Flume" scheme="http://yoursite.com/categories/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/categories/Flume/"/>
     
     
-      <category term="Flume" scheme="http://yoursite.com/tags/Flume/"/>
+      <category term="Flume" scheme="http://gitee.com/movle/blog/tags/Flume/"/>
     
-      <category term="Flume拦截器" scheme="http://yoursite.com/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
+      <category term="Flume拦截器" scheme="http://gitee.com/movle/blog/tags/Flume%E6%8B%A6%E6%88%AA%E5%99%A8/"/>
     
   </entry>
   
