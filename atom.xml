@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-11T14:54:04.030Z</updated>
+  <updated>2020-06-12T03:36:31.880Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>百度网盘网页倍速播放</title>
+    <link href="http://yoursite.com/2020/06/10/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%BD%91%E9%A1%B5%E5%80%8D%E9%80%9F%E6%92%AD%E6%94%BE/"/>
+    <id>http://yoursite.com/2020/06/10/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%BD%91%E9%A1%B5%E5%80%8D%E9%80%9F%E6%92%AD%E6%94%BE/</id>
+    <published>2020-06-10T03:00:00.000Z</published>
+    <updated>2020-06-12T03:36:31.880Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-情况描述：&quot;&gt;&lt;a href=&quot;#1-情况描述：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
+    
+      <category term="百度网盘" scheme="http://yoursite.com/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>利用FRP实现内网穿透</title>
+    <link href="http://yoursite.com/2020/06/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    <id>http://yoursite.com/2020/06/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
+    <published>2020-06-09T03:00:00.000Z</published>
+    <updated>2020-06-12T03:33:50.389Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;情况：&lt;br&gt;自己有两台电脑，一台16G内存的Dell，和一台8G内存的MacBook Pro，因为自己学的是大数据开发，所以需要搭建大数据集群，因此在MacBook
+        
+      
+    
+    </summary>
+    
+    
+      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+      <category term="FRP" scheme="http://yoursite.com/tags/FRP/"/>
+    
+      <category term="内网穿透" scheme="http://yoursite.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    
+      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>[LeetCode-1]两数之和</title>
@@ -578,70 +639,6 @@
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
       <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7环境下安装Chrome</title>
-    <link href="http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
-    <id>http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
-    <published>2020-05-06T02:00:00.000Z</published>
-    <updated>2020-06-11T22:38:19.971Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-修改yum源&quot;&gt;&lt;a href=&quot;#1-修改yum源&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
-    
-      <category term="Chrome" scheme="http://yoursite.com/tags/Chrome/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux安装Apache</title>
-    <link href="http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
-    <id>http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
-    <published>2020-05-06T02:00:00.000Z</published>
-    <updated>2020-06-11T23:36:27.571Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-安装Apache&quot;&gt;&lt;a href=&quot;#一-安装Apache&quot; class=&quot;headerlink&quot; title=&quot;一.安装Apache&quot;&gt;&lt;/a&gt;一.安装Apache&lt;/h3&gt;&lt;h4 id=&quot;1-安装&quot;&gt;&lt;a href=&quot;#1-安装&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Apache" scheme="http://yoursite.com/categories/Apache/"/>
-    
-    
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="Apache" scheme="http://yoursite.com/tags/Apache/"/>
     
   </entry>
   
