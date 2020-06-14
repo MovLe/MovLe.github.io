@@ -247,22 +247,22 @@
 </thead>
 <tbody><tr>
 <td align="center">1</td>
-<td align="center">–enclosed-by <char></td>
+<td align="center">–enclosed-by <char></char></td>
 <td align="center">给字段值前加上指定的字符</td>
 </tr>
 <tr>
 <td align="center">2</td>
-<td align="center">–escaped-by <char></td>
+<td align="center">–escaped-by <char></char></td>
 <td align="center">对字段中的双引号加转义符</td>
 </tr>
 <tr>
 <td align="center">3</td>
-<td align="center">–fields-terminated-by <char></td>
+<td align="center">–fields-terminated-by <char></char></td>
 <td align="center">设定每个字段是以什么符号作为结束，默认为逗号</td>
 </tr>
 <tr>
 <td align="center">4</td>
-<td align="center">–lines-terminated-by <char></td>
+<td align="center">–lines-terminated-by <char></char></td>
 <td align="center">设定每行记录之间的分隔符，默认是\n</td>
 </tr>
 <tr>
@@ -272,7 +272,7 @@
 </tr>
 <tr>
 <td align="center">6</td>
-<td align="center">–optionally-enclosed-by <char></td>
+<td align="center">–optionally-enclosed-by <char></char></td>
 <td align="center">给带有双引号或单引号的字段值前后加上指定字符</td>
 </tr>
 </tbody></table>
@@ -286,27 +286,27 @@
 </thead>
 <tbody><tr>
 <td align="center">1</td>
-<td align="center">–input-enclosed-by <char></td>
+<td align="center">–input-enclosed-by <char></char></td>
 <td align="center">对字段值前后加上指定字符</td>
 </tr>
 <tr>
 <td align="center">2</td>
-<td align="center">–input-escaped-by <char></td>
+<td align="center">–input-escaped-by <char></char></td>
 <td align="center">对含有转移符的字段做转义处理</td>
 </tr>
 <tr>
 <td align="center">3</td>
-<td align="center">–input-fields-terminated-by <char></td>
+<td align="center">–input-fields-terminated-by <char></char></td>
 <td align="center">字段之间的分隔符</td>
 </tr>
 <tr>
 <td align="center">4</td>
-<td align="center">–input-lines-terminated-by <char></td>
+<td align="center">–input-lines-terminated-by <char></char></td>
 <td align="center">行之间的分隔符</td>
 </tr>
 <tr>
 <td align="center">5</td>
-<td align="center">–input-optionally-enclosed-by <char></td>
+<td align="center">–input-optionally-enclosed-by <char></char></td>
 <td align="center">给带有双引号或单引号的字段前后加上指定字符</td>
 </tr>
 </tbody></table>
@@ -320,7 +320,7 @@
 </thead>
 <tbody><tr>
 <td align="center">1</td>
-<td align="center">–hive-delims-replacement <arg></td>
+<td align="center">–hive-delims-replacement <arg></arg></td>
 <td align="center">用自定义的字符串替换掉数据中的\r\n和\013 \010等字符</td>
 </tr>
 <tr>
@@ -330,7 +330,7 @@
 </tr>
 <tr>
 <td align="center">3</td>
-<td align="center">–map-column-hive <arg></td>
+<td align="center">–map-column-hive <arg></arg></td>
 <td align="center">生成hive表时，可以更改生成字段的数据类型</td>
 </tr>
 <tr>
@@ -340,12 +340,12 @@
 </tr>
 <tr>
 <td align="center">5</td>
-<td align="center">–hive-partition-value <v></td>
+<td align="center">–hive-partition-value <v></v></td>
 <td align="center">导入数据时，指定某个分区的值</td>
 </tr>
 <tr>
 <td align="center">6</td>
-<td align="center">–hive-home <dir></td>
+<td align="center">–hive-home <dir></dir></td>
 <td align="center">hive的安装目录，可以通过该参数覆盖之前默认配置的目录</td>
 </tr>
 <tr>
@@ -390,7 +390,7 @@
 <p>先在mysql中建表并插入几条数据：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> create table company.staff_timestamp(id int(4), name varchar(255), sex varchar(255), last_modified timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);</span></span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> insert into company.staff_timestamp (id, name, sex) values(1, <span class="string">'AAA'</span>, <span class="string">'female'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> insert into company.staff_timestamp (id, name, sex) values(2, <span class="string">'BBB'</span>, <span class="string">'female'</span>);</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxZjQzNjBmMDRmMjU4MzcucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxZjQzNjBmMDRmMjU4MzcucG5n?x-oss-process=image/format,png" alt></p>
 <p>先导入一部分数据：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop import \</span><br><span class="line">--connect jdbc:mysql://hadoop1:3306/company \</span><br><span class="line">--username root \</span><br><span class="line">--password 000000 \</span><br><span class="line">--table staff_timestamp \</span><br><span class="line">--delete-target-dir \</span><br><span class="line">--hive-import \</span><br><span class="line">--fields-terminated-by "\t" \</span><br><span class="line">--m 1</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlkYmIyZDk1MmRmMTY1ZGIucG5n?x-oss-process=image/format,png" alt="导入命令"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE5NWY3NzZkYzMyMGZmODUucG5n?x-oss-process=image/format,png" alt="导入后hive表"></p>
@@ -437,7 +437,7 @@
 </tr>
 <tr>
 <td align="center">5</td>
-<td align="center">–boundary-query <statement></td>
+<td align="center">–boundary-query <statement></statement></td>
 <td align="center">边界查询，导入的数据为该参数的值（一条sql语句）所执行的结果区间内的数据。</td>
 </tr>
 <tr>
@@ -467,27 +467,27 @@
 </tr>
 <tr>
 <td align="center">11</td>
-<td align="center">–query或–e <statement></td>
+<td align="center">–query或–e <statement></statement></td>
 <td align="center">将查询结果的数据导入，使用时必须伴随参–target-dir，–hive-table，如果查询中有where条件，则条件后必须加上$CONDITIONS关键字</td>
 </tr>
 <tr>
 <td align="center">12</td>
-<td align="center">–split-by <column-name></td>
+<td align="center">–split-by <column-name></column-name></td>
 <td align="center">按照某一列来切分表的工作单元，不能与–autoreset-to-one-mapper连用（请参考官方文档）</td>
 </tr>
 <tr>
 <td align="center">13</td>
-<td align="center">–table <table-name></td>
+<td align="center">–table <table-name></table-name></td>
 <td align="center">关系数据库的表名</td>
 </tr>
 <tr>
 <td align="center">14</td>
-<td align="center">–target-dir <dir></td>
+<td align="center">–target-dir <dir></dir></td>
 <td align="center">指定HDFS路径</td>
 </tr>
 <tr>
 <td align="center">15</td>
-<td align="center">–warehouse-dir <dir></td>
+<td align="center">–warehouse-dir <dir></dir></td>
 <td align="center">与14参数不能同时使用，导入数据到HDFS时指定的目录</td>
 </tr>
 <tr>
@@ -600,7 +600,7 @@
 <h4 id="7-命令-amp-参数：codegen"><a href="#7-命令-amp-参数：codegen" class="headerlink" title="7.命令&amp;参数：codegen"></a>7.命令&amp;参数：codegen</h4><p>将关系型数据库中的表映射为一个Java类，在该类中有各列对应的各个字段。</p>
 <p>如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop codegen \</span><br><span class="line">--connect jdbc:mysql://hadoop1:3306/company \</span><br><span class="line">--username root \</span><br><span class="line">--password 000000 \</span><br><span class="line">--table staff \</span><br><span class="line">--bindir /opt/desktop/staff \</span><br><span class="line">--class-name staff \</span><br><span class="line">--fields-terminated-by "\t"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ZThkOTJmZDZlMGQyYmQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ZThkOTJmZDZlMGQyYmQucG5n?x-oss-process=image/format,png" alt></p>
 <table>
 <thead>
 <tr>
@@ -788,9 +788,9 @@
 <h5 id="1-命令：-5"><a href="#1-命令：-5" class="headerlink" title="(1)命令："></a>(1)命令：</h5><p>如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop job \</span><br><span class="line"> --create myjob -- import-all-tables \</span><br><span class="line"> --connect jdbc:mysql://hadoop1:3306/company \</span><br><span class="line"> --username root \</span><br><span class="line"> --password 000000</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop job \</span><br><span class="line">--list</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk4OWJmODJjMmFhZjk3M2UucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk4OWJmODJjMmFhZjk3M2UucG5n?x-oss-process=image/format,png" alt></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop job \</span><br><span class="line">--exec myjob</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYzNzQ2ZGI0OWZmYTk4NjgucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYzNzQ2ZGI0OWZmYTk4NjgucG5n?x-oss-process=image/format,png" alt></p>
 <p>提示：注意import-all-tables和它左边的–之间有一个空格</p>
 <p>提示：如果需要连接metastore，则–meta-connect</p>
 <p>执行的结果在HDFS：/user/root/ 目录中，即导出所有表到/user/root中</p>
@@ -849,11 +849,11 @@
 <h4 id="12-命令-amp-参数：list-databases"><a href="#12-命令-amp-参数：list-databases" class="headerlink" title="12.命令&amp;参数：list-databases"></a>12.命令&amp;参数：list-databases</h4><h5 id="1-命令：-6"><a href="#1-命令：-6" class="headerlink" title="(1)命令："></a>(1)命令：</h5><p>如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop list-databases \</span><br><span class="line">--connect jdbc:mysql://hadoop1:3306/ \</span><br><span class="line">--username root \</span><br><span class="line">--password 000000</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUwNjhiYjM0ZDExZTQyYjQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUwNjhiYjM0ZDExZTQyYjQucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-参数：与公用参数一样"><a href="#2-参数：与公用参数一样" class="headerlink" title="(2)参数：与公用参数一样"></a>(2)参数：与公用参数一样</h5><h4 id="13-命令-amp-参数：list-tables"><a href="#13-命令-amp-参数：list-tables" class="headerlink" title="13.命令&amp;参数：list-tables"></a>13.命令&amp;参数：list-tables</h4><h5 id="1-命令：-7"><a href="#1-命令：-7" class="headerlink" title="(1)命令："></a>(1)命令：</h5><p>如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop list-tables \</span><br><span class="line">--connect jdbc:mysql://hadoop1:3306/company \</span><br><span class="line">--username root \</span><br><span class="line">--password 000000</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI4NDRkNDY2NjY0MTRkN2UucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI4NDRkNDY2NjY0MTRkN2UucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-参数-与公用参数一样"><a href="#2-参数-与公用参数一样" class="headerlink" title="(2)参数:与公用参数一样"></a>(2)参数:与公用参数一样</h5><h4 id="14-命令-amp-参数：merge"><a href="#14-命令-amp-参数：merge" class="headerlink" title="14.命令&amp;参数：merge"></a>14.命令&amp;参数：merge</h4><p>将HDFS中不同目录下面的数据合并在一起并放入指定目录中</p>
 <p>数据环境：注意:以下数据自己手动改成\t</p>
 <p>new_staff</p>
@@ -867,7 +867,7 @@
 <p>如：</p>
 <p>创建JavaBean：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop codegen \</span><br><span class="line">--connect jdbc:mysql://hadoop1:3306/company \</span><br><span class="line">--username root \</span><br><span class="line">--password 000000 \</span><br><span class="line">--table staff \</span><br><span class="line">--bindir /opt/Desktop/staff \</span><br><span class="line">--class-name Staff \</span><br><span class="line">--fields-terminated-by "\t"</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4MmFhMTAxMjg0MjIxMTAucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4MmFhMTAxMjg0MjIxMTAucG5n?x-oss-process=image/format,png" alt></p>
 <p>开始合并：注：是hdfs路径</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bin/sqoop merge \</span><br><span class="line">--new-data /test/new/ \</span><br><span class="line">--onto /test/old/ \</span><br><span class="line">--target-dir /test/merged1 \</span><br><span class="line">--jar-file /opt/Desktop/staff/Staff.jar \</span><br><span class="line">--class-name Staff \</span><br><span class="line">--merge-key id</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWIwODYzOGNiMWUwYWQ1YmUucG5n?x-oss-process=image/format,png" alt="命令"><br>结果：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2ZDEwMTQ0MDhjMDI3MGUucG5n?x-oss-process=image/format,png" alt="结果"></p>

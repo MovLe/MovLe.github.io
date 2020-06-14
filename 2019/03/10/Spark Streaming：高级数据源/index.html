@@ -104,8 +104,8 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h3 id="一-Spark-Streaming接收Flume数据"><a href="#一-Spark-Streaming接收Flume数据" class="headerlink" title="一.Spark Streaming接收Flume数据"></a>一.Spark Streaming接收Flume数据</h3><h4 id="1-基于Flume的Push模式"><a href="#1-基于Flume的Push模式" class="headerlink" title="1.基于Flume的Push模式"></a>1.基于Flume的Push模式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Flume被用于在Flume agents之间推送数据.在这种方式下,Spark Streaming可以很方便的建立一个receiver,起到一个Avro agent的作用.Flume可以将数据推送到改receiver.</p>
-<h5 id="1-第一步：Flume的配置文件"><a href="#1-第一步：Flume的配置文件" class="headerlink" title="(1)第一步：Flume的配置文件"></a>(1)第一步：Flume的配置文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRlNTIwM2ViNTFjMDg0YTUucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="2-第二步：Spark-Streaming程序"><a href="#2-第二步：Spark-Streaming程序" class="headerlink" title="(2)第二步：Spark Streaming程序"></a>(2)第二步：Spark Streaming程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkyODRiZGZkNWIxZjA3N2EucG5n?x-oss-process=image/format,png" alt=""></p>
+<h5 id="1-第一步：Flume的配置文件"><a href="#1-第一步：Flume的配置文件" class="headerlink" title="(1)第一步：Flume的配置文件"></a>(1)第一步：Flume的配置文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRlNTIwM2ViNTFjMDg0YTUucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="2-第二步：Spark-Streaming程序"><a href="#2-第二步：Spark-Streaming程序" class="headerlink" title="(2)第二步：Spark Streaming程序"></a>(2)第二步：Spark Streaming程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkyODRiZGZkNWIxZjA3N2EucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="3-第三步：注意除了需要使用Flume的lib的jar包以外，还需要以下jar包："><a href="#3-第三步：注意除了需要使用Flume的lib的jar包以外，还需要以下jar包：" class="headerlink" title="(3)第三步：注意除了需要使用Flume的lib的jar包以外，还需要以下jar包："></a>(3)第三步：注意除了需要使用Flume的lib的jar包以外，还需要以下jar包：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-streaming-flume_2.1.0.jar</span><br></pre></td></tr></table></figure>
 
 <h5 id="4-第四步：测试"><a href="#4-第四步：测试" class="headerlink" title="(4)第四步：测试"></a>(4)第四步：测试</h5><ul>
@@ -114,12 +114,12 @@
 <li>拷贝日志文件到/root/training/logs目录</li>
 <li>观察输出，采集到数据</li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQxZDNjMmZjOGU0YzNjYzAucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQxZDNjMmZjOGU0YzNjYzAucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="2-基于Custom-Sink的Pull模式"><a href="#2-基于Custom-Sink的Pull模式" class="headerlink" title="2.基于Custom Sink的Pull模式"></a>2.基于Custom Sink的Pull模式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;不同于Flume直接将数据推送到Spark Streaming中，第二种模式通过以下条件运行一个正常的Flume sink。Flume将数据推送到sink中，并且数据保持buffered状态。Spark Streaming使用一个可靠的Flume接收器和转换器从sink拉取数据。只要当数据被接收并且被Spark Streaming备份后，转换器才运行成功。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;这样,与第一种模式相比,保证了很好的健壮性和容错能力。然而,这种模式需要为Flume配置一个正常的sink。</p>
 <p>以下为配置步骤：</p>
-<h5 id="1-第一步：Flume的配置文件-1"><a href="#1-第一步：Flume的配置文件-1" class="headerlink" title="(1)第一步：Flume的配置文件"></a>(1)第一步：Flume的配置文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYzFiYzk3MDI0MTliMTMucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="2-第二步：Spark-Streaming程序-1"><a href="#2-第二步：Spark-Streaming程序-1" class="headerlink" title="(2)第二步：Spark Streaming程序"></a>(2)第二步：Spark Streaming程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZjODhkMjAyNTVhMzIxNGEucG5n?x-oss-process=image/format,png" alt=""></p>
+<h5 id="1-第一步：Flume的配置文件-1"><a href="#1-第一步：Flume的配置文件-1" class="headerlink" title="(1)第一步：Flume的配置文件"></a>(1)第一步：Flume的配置文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYzFiYzk3MDI0MTliMTMucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="2-第二步：Spark-Streaming程序-1"><a href="#2-第二步：Spark-Streaming程序-1" class="headerlink" title="(2)第二步：Spark Streaming程序"></a>(2)第二步：Spark Streaming程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZjODhkMjAyNTVhMzIxNGEucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="3-第三步：需要的jar包"><a href="#3-第三步：需要的jar包" class="headerlink" title="(3)第三步：需要的jar包"></a>(3)第三步：需要的jar包</h5><ul>
 <li>将Spark的jar包拷贝到Flume的lib目录下</li>
 <li>下面的这个jar包也需要拷贝到Flume的lib目录下，同时加入IDEA工程的classpath</li>
@@ -133,15 +133,15 @@
 <li>将测试数据拷贝到/root/training/logs</li>
 <li>观察IDEA中的输出</li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5OTY2YjU2NTE0MGZmNzcucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5OTY2YjU2NTE0MGZmNzcucG5n?x-oss-process=image/format,png" alt></p>
 <h3 id="二-Spark-Streaming接收Kafka数据"><a href="#二-Spark-Streaming接收Kafka数据" class="headerlink" title="二.Spark Streaming接收Kafka数据"></a>二.Spark Streaming接收Kafka数据</h3><p>Apache Kafka是一种高吞吐量的分布式发布订阅消息系统。</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI3NTNmODdiN2VhZjM1ODUucG5n?x-oss-process=image/format,png" alt="Kafka"></p>
 <h4 id="1-搭建ZooKeeper（Standalone）："><a href="#1-搭建ZooKeeper（Standalone）：" class="headerlink" title="1.搭建ZooKeeper（Standalone）："></a>1.搭建ZooKeeper（Standalone）：</h4><h5 id="1-配置-root-training-zookeeper-3-4-10-conf-zoo-cfg文件"><a href="#1-配置-root-training-zookeeper-3-4-10-conf-zoo-cfg文件" class="headerlink" title="(1)配置/root/training/zookeeper-3.4.10/conf/zoo.cfg文件"></a>(1)配置/root/training/zookeeper-3.4.10/conf/zoo.cfg文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/root/training/zookeeper-3.4.10/tmp</span><br><span class="line">server.1=spark81:2888:3888</span><br></pre></td></tr></table></figure>
 <h5 id="2-在-root-training-zookeeper-3-4-10-tmp目录下创建一个myid的空文件"><a href="#2-在-root-training-zookeeper-3-4-10-tmp目录下创建一个myid的空文件" class="headerlink" title="(2)在/root/training/zookeeper-3.4.10/tmp目录下创建一个myid的空文件"></a>(2)在/root/training/zookeeper-3.4.10/tmp目录下创建一个myid的空文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1 &gt; /root/training/zookeeper-3.4.6/tmp/myid</span><br></pre></td></tr></table></figure>
-<h4 id="2-搭建Kafka环境-单机单broker-："><a href="#2-搭建Kafka环境-单机单broker-：" class="headerlink" title="2.搭建Kafka环境(单机单broker)："></a>2.搭建Kafka环境(单机单broker)：</h4><h5 id="1-修改server-properties文件"><a href="#1-修改server-properties文件" class="headerlink" title="(1)修改server.properties文件"></a>(1)修改server.properties文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWExZTJkMzQ5NzYzMzIxYzYucG5n?x-oss-process=image/format,png" alt=""></p>
+<h4 id="2-搭建Kafka环境-单机单broker-："><a href="#2-搭建Kafka环境-单机单broker-：" class="headerlink" title="2.搭建Kafka环境(单机单broker)："></a>2.搭建Kafka环境(单机单broker)：</h4><h5 id="1-修改server-properties文件"><a href="#1-修改server-properties文件" class="headerlink" title="(1)修改server.properties文件"></a>(1)修改server.properties文件</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWExZTJkMzQ5NzYzMzIxYzYucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-启动Kafka"><a href="#2-启动Kafka" class="headerlink" title="(2)启动Kafka"></a>(2)启动Kafka</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-start.sh config/server.properties &amp;</span><br></pre></td></tr></table></figure>
 <p> 出现以下错误：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxYWFjZjM2OTJmOTVjMmQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxYWFjZjM2OTJmOTVjMmQucG5n?x-oss-process=image/format,png" alt></p>
 <p> 需要修改bin/kafka-run-class.sh文件，将这个选项注释掉。</p>
 <h5 id="3-测试Kafka"><a href="#3-测试Kafka" class="headerlink" title="(3)测试Kafka"></a>(3)测试Kafka</h5><ul>
 <li>创建Topic<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --create --zookeeper spark81:2181 -replication-factor 1 --partitions 3 --topic mydemo1</span><br></pre></td></tr></table></figure></li>
@@ -151,23 +151,23 @@
 </li>
 </ul>
 <h4 id="3-搭建Spark-Streaming和Kafka的集成开发环境"><a href="#3-搭建Spark-Streaming和Kafka的集成开发环境" class="headerlink" title="3.搭建Spark Streaming和Kafka的集成开发环境"></a>3.搭建Spark Streaming和Kafka的集成开发环境</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Spark Streaming和Kafka集成的时候，依赖的jar包比较多，而且还会产生冲突。强烈建议使用Maven的方式来搭建项目工程。<br>下面是依赖的pom.xml文件：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY0NDNmNjA2Y2Y4ZjRkY2MucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY0NDNmNjA2Y2Y4ZjRkY2MucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="4-基于Receiver的方式"><a href="#4-基于Receiver的方式" class="headerlink" title="4.基于Receiver的方式"></a>4.基于Receiver的方式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;这个方法使用了Receivers来接收数据。Receivers的实现使用到Kafka高层次的消费者API。对于所有的Receivers，接收到的数据将会保存在Spark executors中，然后由Spark Streaming启动的Job来处理这些数据。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVmZDc1ODhkZWMzYWQ2NjcucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="1-开发Spark-Streaming的Kafka-Receivers"><a href="#1-开发Spark-Streaming的Kafka-Receivers" class="headerlink" title="(1)开发Spark Streaming的Kafka Receivers"></a>(1)开发Spark Streaming的Kafka Receivers</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ2MDM1OWJmMTQ4YTM2NzkucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVmZDc1ODhkZWMzYWQ2NjcucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="1-开发Spark-Streaming的Kafka-Receivers"><a href="#1-开发Spark-Streaming的Kafka-Receivers" class="headerlink" title="(1)开发Spark Streaming的Kafka Receivers"></a>(1)开发Spark Streaming的Kafka Receivers</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ2MDM1OWJmMTQ4YTM2NzkucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-测试"><a href="#2-测试" class="headerlink" title="(2)测试"></a>(2)测试</h5><ul>
 <li>启动Kafka消息的生产者<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list spark81:9092 --topic mydemo1</span><br></pre></td></tr></table></figure></li>
 <li>在IDEA中启动任务，接收Kafka消息</li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ1NjgyNmU5MzY5MDgwNGEucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ1NjgyNmU5MzY5MDgwNGEucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="5-直接读取方式"><a href="#5-直接读取方式" class="headerlink" title="5.直接读取方式"></a>5.直接读取方式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;和基于Receiver接收数据不一样，这种方式定期地从Kafka的topic+partition中查询最新的偏移量，再根据定义的偏移量范围在每个batch里面处理数据。当作业需要处理的数据来临时，spark通过调用Kafka的简单消费者API读取一定范围的数据。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ZDQ4YzI5ODY1MjczYzkucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="1-开发Spark-Streaming的程序"><a href="#1-开发Spark-Streaming的程序" class="headerlink" title="(1)开发Spark Streaming的程序"></a>(1)开发Spark Streaming的程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmYjViNGQ2ZDQ3MGQ3MmEucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ZDQ4YzI5ODY1MjczYzkucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="1-开发Spark-Streaming的程序"><a href="#1-开发Spark-Streaming的程序" class="headerlink" title="(1)开发Spark Streaming的程序"></a>(1)开发Spark Streaming的程序</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmYjViNGQ2ZDQ3MGQ3MmEucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-测试-1"><a href="#2-测试-1" class="headerlink" title="(2)测试"></a>(2)测试</h5><ul>
 <li>启动Kafka消息的生产者<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list spark81:9092 --topic mydemo1</span><br></pre></td></tr></table></figure></li>
 <li>在IDEA中启动任务，接收Kafka消息</li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEyMzUyZTYzYTRlY2UyZGMucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEyMzUyZTYzYTRlY2UyZGMucG5n?x-oss-process=image/format,png" alt></p>
  
       <!-- reward -->
       

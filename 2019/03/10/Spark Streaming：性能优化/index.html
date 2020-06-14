@@ -105,7 +105,7 @@
        
   <h4 id="1-减少批数据的执行时间"><a href="#1-减少批数据的执行时间" class="headerlink" title="1.减少批数据的执行时间"></a>1.减少批数据的执行时间</h4><p>在Spark中有几个优化可以减少批处理的时间：</p>
 <h5 id="1-数据接收的并行水平"><a href="#1-数据接收的并行水平" class="headerlink" title="(1)数据接收的并行水平"></a>(1)数据接收的并行水平</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;通过网络(如kafka，flume，socket等)接收数据需要这些数据反序列化并被保存到Spark中。如果数据接收成为系统的瓶颈，就要考虑并行地接收数据。注意，每个输入DStream创建一个receiver(运行在worker机器上)接收单个数据流。创建多个输入DStream并配置它们可以从源中接收不同分区的数据流，从而实现多数据流接收。例如，接收两个topic数据的单个输入DStream可以被切分为两个kafka输入流，每个接收一个topic。这将在两个worker上运行两个receiver，因此允许数据并行接收，提高整体的吞吐量。多个DStream可以被合并生成单个DStream，这样运用在单个输入DStream的transformation操作可以运用在合并的DStream上。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM1MmI1NDBmMjBiNjk4ZDIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM1MmI1NDBmMjBiNjk4ZDIucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-数据处理的并行水平"><a href="#2-数据处理的并行水平" class="headerlink" title="(2)数据处理的并行水平"></a>(2)数据处理的并行水平</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;如果运行在计算stage上的并发任务数不足够大，就不会充分利用集群的资源。默认的并发任务数通过配置属性来确定spark.default.parallelism。</p>
 <h5 id="3-数据序列化"><a href="#3-数据序列化" class="headerlink" title="(3)数据序列化"></a>(3)数据序列化</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;可以通过改变序列化格式来减少数据序列化的开销。在流式传输的情况下，有两种类型的数据会被序列化：</p>
 <ul>

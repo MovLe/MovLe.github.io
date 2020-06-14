@@ -130,7 +130,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stop-master.sh</span><br><span class="line">```	</span><br><span class="line">d.观察hadoop2上的输出:</span><br><span class="line">![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM3ODllZTBkNzI4MWNlN2MucG5n?x-oss-process=image/format,png)</span><br><span class="line"></span><br><span class="line">e.在hadoop1上重启master</span><br><span class="line">```shell</span><br><span class="line">start-master.sh</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-基于Zookeeper的Standby-Masters"><a href="#2-基于Zookeeper的Standby-Masters" class="headerlink" title="2.基于Zookeeper的Standby Masters"></a>2.基于Zookeeper的Standby Masters</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;ZooKeeper提供了一个Leader Election机制，利用这个机制可以保证虽然集群存在多个Master，但是只有一个是Active的，其他的都是Standby。当Active的Master出现故障时，另外的一个Standby Master会被选举出来。由于集群的信息，包括Worker， Driver和Application的信息都已经持久化到ZooKeeper，因此在切换的过程中只会影响新Job的提交，对于正在进行的Job没有任何的影响。加入ZooKeeper的集群整体架构如下图所示。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY0YTk3ZmMwNzhkZTdhOWUucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY0YTk3ZmMwNzhkZTdhOWUucG5n?x-oss-process=image/format,png" alt></p>
 <table>
 <thead>
 <tr>
@@ -156,10 +156,10 @@
 <p>(b)另外：每个节点上，需要将以下两行注释掉。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> SPARK_MASTER_HOST=hadoop1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> SPARK_MASTER_PORT=7077</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRjM2IxNTk3ZTI0YWI1NzQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRjM2IxNTk3ZTI0YWI1NzQucG5n?x-oss-process=image/format,png" alt></p>
 <p>(c )start-all启动spark集群<br>从任意Worker节点，再启动一个Master</p>
 <p>(d)ZooKeeper中保存的信息</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM5ZTAzYmRiMzI1MmRlMGMucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM5ZTAzYmRiMzI1MmRlMGMucG5n?x-oss-process=image/format,png" alt></p>
  
       <!-- reward -->
       

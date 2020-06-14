@@ -115,8 +115,8 @@
 <h6 id="d-MemStore"><a href="#d-MemStore" class="headerlink" title="(d). MemStore"></a>(d). MemStore</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;顾名思义，就是内存存储，位于内存中，用来保存当前的数据操作，所以当数据保存在WAL中之后，RegsionServer会在内存中存储键值对。</p>
 <h6 id="e-Region"><a href="#e-Region" class="headerlink" title="(e). Region"></a>(e). Region</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;Hbase表的分片，HBase表会根据RowKey值被切分成不同的region存储在RegionServer中，在一个RegionServer中可以有多个不同的region。</p>
 <h3 id="三-HBase的架构"><a href="#三-HBase的架构" class="headerlink" title="三.HBase的架构"></a>三.HBase的架构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一个RegionServer可以包含多个HRegion，每个RegionServer维护一个HLog，和多个HFiles以及其对应的MemStore。RegionServer运行于DataNode上，数量可以与DatNode数量一致，请参考如下架构图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA0OGI4N2M1NzBlNTM2YTAucG5n?x-oss-process=image/format,png" alt="HBase架构"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE0YmExNDhmMjdlYTZmNjYucG5n?x-oss-process=image/format,png" alt="Hbase架构2"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU5YWUyZDE0ODRjMmI0ODkucG5n?x-oss-process=image/format,png" alt=""></p>
-<h3 id="四-HBase数据模型"><a href="#四-HBase数据模型" class="headerlink" title="四. HBase数据模型"></a>四. HBase数据模型</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ1MDliYmVkNDUyM2M2NjQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA0OGI4N2M1NzBlNTM2YTAucG5n?x-oss-process=image/format,png" alt="HBase架构"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE0YmExNDhmMjdlYTZmNjYucG5n?x-oss-process=image/format,png" alt="Hbase架构2"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU5YWUyZDE0ODRjMmI0ODkucG5n?x-oss-process=image/format,png" alt></p>
+<h3 id="四-HBase数据模型"><a href="#四-HBase数据模型" class="headerlink" title="四. HBase数据模型"></a>四. HBase数据模型</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ1MDliYmVkNDUyM2M2NjQucG5n?x-oss-process=image/format,png" alt></p>
 <p>确定一个单元格的位置（cell），需要如下四个<br>rowkey + Colume Family + Colume + timestamp(版本version)，数据有版本的概念，即一个单元格可能有多个值，但是只有最新得一个对外显示。</p>
 <ul>
 <li>HBase中有两张特殊的Table，-ROOT-和.META.</li>
@@ -125,7 +125,7 @@
 <li>Zookeeper中记录了-ROOT-表的location</li>
 <li>Client访问用户数据之前需要首先访问zookeeper，然后访问-ROOT-表，接着访问.META.表，最后才能找到用户数据的位置去访问，中间需要多次网络操作，不过client端会做cache缓存，注意：<strong>在0.96版本后，Hbase移除了-ROOT-表</strong></li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI2OTUyZTNkMDJiYTYyMTIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI2OTUyZTNkMDJiYTYyMTIucG5n?x-oss-process=image/format,png" alt></p>
 <p><strong>Row Key</strong>: 行键，Table的主键，Table中的记录默认按照Row Key升序排序</p>
 <p><strong>Timestamp</strong>:时间戳，每次数据操作对应的时间戳，可以看作是数据的version number</p>
 <p><strong>Column Family</strong>：列簇，Table在水平方向有一个或者多个Column Family组成，一个Column Family中可以由<strong>任意多个Column</strong>组成，即Column Family支持动态扩展，无需预先定义Column的数量以及类型，所有Column均以二进制格式存储，用户需要自行进行类型转换。</p>

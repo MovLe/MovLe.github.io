@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-12T03:36:31.880Z</updated>
+  <updated>2020-06-14T12:14:49.039Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>周记-2020/6/14</title>
+    <link href="http://yoursite.com/2020/06/14/%E5%91%A8%E8%AE%B0-2020-06-14/"/>
+    <id>http://yoursite.com/2020/06/14/%E5%91%A8%E8%AE%B0-2020-06-14/</id>
+    <published>2020-06-14T06:36:00.000Z</published>
+    <updated>2020-06-14T12:14:49.039Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-关于锻炼&quot;&gt;&lt;a href=&quot;#1-关于锻炼&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/tags/%E5%91%A8%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>百度网盘网页倍速播放</title>
@@ -409,9 +436,9 @@
       <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
       <category term="填坑" scheme="http://yoursite.com/tags/%E5%A1%AB%E5%9D%91/"/>
     
@@ -473,13 +500,13 @@
       <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
-    
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
   </entry>
   
@@ -508,9 +535,9 @@
     
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
       <category term="填坑" scheme="http://yoursite.com/tags/%E5%A1%AB%E5%9D%91/"/>
     
@@ -539,13 +566,13 @@
       <category term="Mongodb" scheme="http://yoursite.com/categories/Mongodb/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="Mongodb" scheme="http://yoursite.com/tags/Mongodb/"/>
+    
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
   </entry>
   
@@ -599,42 +626,9 @@
       <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
-    
-      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7安装MySql(已下载的mysql安装包)</title>
-    <link href="http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"/>
-    <id>http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/</id>
-    <published>2020-05-06T03:00:00.000Z</published>
-    <updated>2020-06-11T23:36:13.850Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-将下载好的安装包上传到linux：&quot;&gt;&lt;a href=&quot;#1-将下载好的安装包上传到linux：&quot; class=&quot;headerlink&quot; title=&quot;1.将下载好的安装包上传到linux：&quot;&gt;&lt;/a&gt;1.将下载好的安装包上传到linux：&lt;/h4&gt;&lt;h4
-        
-      
-    
-    </summary>
-    
-    
-      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
-    
-    
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     

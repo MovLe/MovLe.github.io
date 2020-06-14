@@ -106,7 +106,7 @@
   <h4 id="1-需求："><a href="#1-需求：" class="headerlink" title="1.需求："></a>1.需求：</h4><p>测试同一个消费者组中的消费者，同一时刻只能有一个消费者消费。</p>
 <h4 id="2-案例实操"><a href="#2-案例实操" class="headerlink" title="2.案例实操"></a>2.案例实操</h4><p>(1)在hadoop2、hadoop3上修改/opt/module/kafka-2.11/config/consumer.properties配置文件中的group.id属性为任意组名。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi consumer.properties</span><br><span class="line"></span><br><span class="line">group.id=movle</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWVmYTZhNTU3ZTY3ODU3NDcucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWVmYTZhNTU3ZTY3ODU3NDcucG5n?x-oss-process=image/format,png" alt></p>
 <p>(2)再hadoop3、hadoop4上分别启动消费者</p>
 <pre><code class="shell">./bin/kafka-console-consumer.sh --bootstrap-server hadoop2:9092 --topic topic0519 --consumer.config config/consumer.properties
 
@@ -197,11 +197,11 @@
    
   <nav class="article-nav">
     
-      <a href="/2019/03/05/MacOS%20IDEA%E9%85%8D%E7%BD%AEscala/" class="article-nav-link">
+      <a href="/2019/03/05/MacOS%E5%AE%89%E8%A3%85scala/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            MacOS IDEA配置scala
+            MacOS安装scala
           
         </div>
       </a>

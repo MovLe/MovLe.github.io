@@ -170,7 +170,7 @@
 
 <p>(e)关于sbin/start.all.sh<br>hadoop1:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start.all.sh</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJjNTk2YjE0NWZkMzRlZDEucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJjNTk2YjE0NWZkMzRlZDEucG5n?x-oss-process=image/format,png" alt></p>
 <h3 id="二-HDFS-Federation架构设计"><a href="#二-HDFS-Federation架构设计" class="headerlink" title="二.HDFS Federation架构设计"></a>二.HDFS Federation架构设计</h3><h4 id="1-NameNode架构的局限性"><a href="#1-NameNode架构的局限性" class="headerlink" title="1.NameNode架构的局限性"></a>1.NameNode架构的局限性</h4><h5 id="1-Namespace-命名空间-的限制"><a href="#1-Namespace-命名空间-的限制" class="headerlink" title="(1)Namespace(命名空间)的限制"></a>(1)Namespace(命名空间)的限制</h5><p>由于NameNode在内存中存储所有的元数据(metadata)，因此单个namenode所能存储的对象(文件+块)数目受到namenode所在JVM的heap size的限制。50G的heap能够存储20亿(200million)个对象，这20亿个对象支持4000个datanode，12PB的存储（假设文件平均大小为40MB）。随着数据的飞速增长，存储的需求也随之增长。单个datanode从4T增长到36T，集群的尺寸增长到8000个datanode。存储的需求从12PB增长到大于100PB。</p>
 <h5 id="2-隔离问题"><a href="#2-隔离问题" class="headerlink" title="(2)隔离问题"></a>(2)隔离问题</h5><p>由于HDFS仅有一个namenode，无法隔离各个程序，因此HDFS上的一个实验程序就很有可能影响整个HDFS上运行的程序。</p>
 <h5 id="3-性能的瓶颈"><a href="#3-性能的瓶颈" class="headerlink" title="(3)性能的瓶颈"></a>(3)性能的瓶颈</h5><p>由于是单个namenode的HDFS架构，因此整个HDFS文件系统的吞吐量受限于单个namenode的吞吐量。</p>

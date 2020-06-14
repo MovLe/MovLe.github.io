@@ -105,7 +105,7 @@
        
   <h4 id="1-安装前准备："><a href="#1-安装前准备：" class="headerlink" title="1.安装前准备："></a>1.安装前准备：</h4><p>(1)安装jdk<br>(2)上传zookeeper到linux系统下<br>(3)解压到指定目录</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.10.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU0M2M4YzAzNTNkNDBmMTcucG5n?x-oss-process=image/format,png" alt="解压"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY2MzBmN2FmZDA5ZTg4MTIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU0M2M4YzAzNTNkNDBmMTcucG5n?x-oss-process=image/format,png" alt="解压"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY2MzBmN2FmZDA5ZTg4MTIucG5n?x-oss-process=image/format,png" alt></p>
 <p>(4)配置环境变量</p>
 <p>输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
@@ -116,7 +116,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mv zoo_sample.cfg  zoo.cfg</span><br><span class="line">```	</span><br><span class="line">![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0ZjljM2IxY2Q5M2I1OTEucG5n?x-oss-process=image/format,png)</span><br><span class="line"></span><br><span class="line">(2)进入zoo.cfg文件：</span><br><span class="line">```shell</span><br><span class="line">vim zoo.cfg</span><br></pre></td></tr></table></figure>
 <p>(3)修改dataDir路径为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/opt/module/zookeeper-3.4.10/zkData</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc3ZDhjZDI1MzkzNzVlNmQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc3ZDhjZDI1MzkzNzVlNmQucG5n?x-oss-process=image/format,png" alt></p>
 <p>(4)在/opt/module/zookeeper-3.4.10/这个目录上创建zkData文件夹</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/zookeeper-3.4.10 </span><br><span class="line"></span><br><span class="line">mkdir zkData</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5MGE5ZmNkOTlkNDk3MGYucG5n?x-oss-process=image/format,png" alt="创建文件夹"></p>
@@ -124,7 +124,7 @@
 <h5 id="2-查看进程是否启动"><a href="#2-查看进程是否启动" class="headerlink" title="(2)查看进程是否启动"></a>(2)查看进程是否启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
 
 <h5 id="3-查看状态："><a href="#3-查看状态：" class="headerlink" title="(3)查看状态："></a>(3)查看状态：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh status</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2ZTAwZTRkMGQyODhkN2UucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2ZTAwZTRkMGQyODhkN2UucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="4-启动客户端："><a href="#4-启动客户端：" class="headerlink" title="(4)启动客户端："></a>(4)启动客户端：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFkOTBkZWI3YjQ0ZTQ4NWUucG5n?x-oss-process=image/format,png" alt="启动客户端"></p>
 <h5 id="5-退出客户端："><a href="#5-退出客户端：" class="headerlink" title="(5)退出客户端："></a>(5)退出客户端：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>

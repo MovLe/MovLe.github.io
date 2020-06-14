@@ -107,14 +107,14 @@
 <h4 id="3-检测本地是否有mariadb已存在的包"><a href="#3-检测本地是否有mariadb已存在的包" class="headerlink" title="3.检测本地是否有mariadb已存在的包"></a>3.检测本地是否有mariadb已存在的包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
 <h4 id="4-如果存在，则使用yum命令卸载"><a href="#4-如果存在，则使用yum命令卸载" class="headerlink" title="4.如果存在，则使用yum命令卸载"></a>4.如果存在，则使用yum命令卸载</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mariadb-libs-5.5.54-2.el7.x86_64</span><br><span class="line">//或者</span><br><span class="line">rpm -e --nodeps mariadb-libs-5.5.54-2.el7.x86_64</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWQzMTMwNmQwNDI4MjAucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWQzMTMwNmQwNDI4MjAucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="5-创建一个文件夹，上传jar包到-opt-software-mysql"><a href="#5-创建一个文件夹，上传jar包到-opt-software-mysql" class="headerlink" title="5.创建一个文件夹，上传jar包到/opt/software/mysql"></a>5.创建一个文件夹，上传jar包到/opt/software/mysql</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/module/mysql</span><br></pre></td></tr></table></figure>
 <h4 id="6-解压mysql-jar包"><a href="#6-解压mysql-jar包" class="headerlink" title="6.解压mysql jar包"></a>6.解压mysql jar包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-5.7.19-1.el7.x86_64.rpm-bundle.tar -C /opt/module/mysql</span><br></pre></td></tr></table></figure>
 <h4 id="7-安装mysql的-server、client、common、libs、lib-compat"><a href="#7-安装mysql的-server、client、common、libs、lib-compat" class="headerlink" title="7.安装mysql的 server、client、common、libs、lib-compat"></a>7.安装mysql的 server、client、common、libs、lib-compat</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh --nodeps mysql-community-server-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh --nodeps mysql-community-client-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-common-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-compat-5.7.19-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmMWEwYjdiOGViNDczNTEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
 <h4 id="8-查看mysql的服务是否启动"><a href="#8-查看mysql的服务是否启动" class="headerlink" title="8.查看mysql的服务是否启动"></a>8.查看mysql的服务是否启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxZWI5MTVmOWZkN2EyODIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxZWI5MTVmOWZkN2EyODIucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="9-启动mysql的服务"><a href="#9-启动mysql的服务" class="headerlink" title="9.启动mysql的服务"></a>9.启动mysql的服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMzNzBiMGY1ZjY2Y2EyZDQucG5n?x-oss-process=image/format,png" alt="image.png"></p>
 <h4 id="10-再次检查mysql的服务是否启动"><a href="#10-再次检查mysql的服务是否启动" class="headerlink" title="10.再次检查mysql的服务是否启动"></a>10.再次检查mysql的服务是否启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
@@ -122,7 +122,7 @@
 <h4 id="11-查看默认生成的密码"><a href="#11-查看默认生成的密码" class="headerlink" title="11.查看默认生成的密码"></a>11.查看默认生成的密码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log | grep password</span><br></pre></td></tr></table></figure>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZmOWI4YjNhODYzMDI1ZjkucG5n?x-oss-process=image/format,png" alt="查看默认生成的密码"></p>
 <h4 id="12-登录mysql服务"><a href="#12-登录mysql服务" class="headerlink" title="12.登录mysql服务"></a>12.登录mysql服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p’然后粘贴上密码’</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYjEyMGYxODI4ZGQwYTYucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYjEyMGYxODI4ZGQwYTYucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="13-修改mysql密码规则"><a href="#13-修改mysql密码规则" class="headerlink" title="13.修改mysql密码规则"></a>13.修改mysql密码规则</h4><table>
 <thead>
 <tr>
@@ -154,7 +154,7 @@
 <h6 id="e-密码最小长度，参数默认为8，"><a href="#e-密码最小长度，参数默认为8，" class="headerlink" title="(e).密码最小长度，参数默认为8，"></a>(e).密码最小长度，参数默认为8，</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_length=3;</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;它有最小值的限制，最小值为：validate_password_number_count + 密码至少要包含的数字个数validate_password_special_char_count +特殊字符 (2 * validate_password_mixed_case_count)至少要包含的小写字母个数和大写字母个数</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk3NTE0ZjAyODM4ZDJmZTcucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk3NTE0ZjAyODM4ZDJmZTcucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="14-修改密码："><a href="#14-修改密码：" class="headerlink" title="14.修改密码："></a>14.修改密码：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD FOR 'root'@'localhost'=PASSWORD('000000');</span><br></pre></td></tr></table></figure>
 
 <p>(这两步可以跳过)</p>
@@ -192,13 +192,13 @@
 <td align="center">0</td>
 </tr>
 </tbody></table>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA1NDI2OGMyODczOTQ5MTcucG5n?x-oss-process=image/format,png" alt=""></p>
-<h4 id="15-修改远程登录权限"><a href="#15-修改远程登录权限" class="headerlink" title="15.修改远程登录权限"></a>15.修改远程登录权限</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM0MDVjYjA1MDRkMDE4NjkucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA1NDI2OGMyODczOTQ5MTcucG5n?x-oss-process=image/format,png" alt></p>
+<h4 id="15-修改远程登录权限"><a href="#15-修改远程登录权限" class="headerlink" title="15.修改远程登录权限"></a>15.修改远程登录权限</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM0MDVjYjA1MDRkMDE4NjkucG5n?x-oss-process=image/format,png" alt></p>
 <p>如上图所示：这个是可以成功远程链接得配置<br>大家默认的%的位置是localhost,即意味着只能本机访问</p>
 <h5 id="1-查询当前user表内root的登录权限："><a href="#1-查询当前user表内root的登录权限：" class="headerlink" title="(1)查询当前user表内root的登录权限："></a>(1)查询当前user表内root的登录权限：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select host,user from mysql.user;</span><br></pre></td></tr></table></figure>
 <h5 id="2-修改权限为所有-："><a href="#2-修改权限为所有-：" class="headerlink" title="(2)修改权限为所有%："></a>(2)修改权限为所有%：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set host = '%' where user = 'root';</span><br></pre></td></tr></table></figure>
 <h5 id="3-刷新缓存："><a href="#3-刷新缓存：" class="headerlink" title="(3)刷新缓存："></a>(3)刷新缓存：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI3OWJhZDUxNjljNDdkOTQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI3OWJhZDUxNjljNDdkOTQucG5n?x-oss-process=image/format,png" alt></p>
  
       <!-- reward -->
       

@@ -104,9 +104,9 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h3 id="一-StreamingContext对象详解"><a href="#一-StreamingContext对象详解" class="headerlink" title="一.StreamingContext对象详解"></a>一.StreamingContext对象详解</h3><h4 id="1-初始化StreamingContext"><a href="#1-初始化StreamingContext" class="headerlink" title="1.初始化StreamingContext"></a>1.初始化StreamingContext</h4><h5 id="1-方式一：从SparkConf对象中创建"><a href="#1-方式一：从SparkConf对象中创建" class="headerlink" title="(1)方式一：从SparkConf对象中创建"></a>(1)方式一：从SparkConf对象中创建</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val conf = <span class="keyword">new</span> SparkConf().setAppName(<span class="string">"MyNetworkWordCount"</span>).setMaster(<span class="string">"local[2]"</span>)</span><br><span class="line"></span><br><span class="line">val src = <span class="keyword">new</span> StreamContext(conf, Second(<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRiYTQ3OGExMDI5OGQzNGQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRiYTQ3OGExMDI5OGQzNGQucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-方式二-从一个现有的SparkContext实例中创建"><a href="#2-方式二-从一个现有的SparkContext实例中创建" class="headerlink" title="(2)方式二:从一个现有的SparkContext实例中创建"></a>(2)方式二:从一个现有的SparkContext实例中创建</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala &gt;<span class="keyword">import</span> org.apache.spark.streaming.&#123;Second,StreamingContext&#125;</span><br><span class="line"></span><br><span class="line">scala &gt;val ssc=<span class="keyword">new</span> StreamContext(sc,Second(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc5NmU2MDcwYzRkNjgyMzAucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc5NmU2MDcwYzRkNjgyMzAucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="2-程序中的几点说明："><a href="#2-程序中的几点说明：" class="headerlink" title="2.程序中的几点说明："></a>2.程序中的几点说明：</h4><ul>
 <li><p>appName参数是应用程序在集群UI上显示的名称。 </p>
 </li>
@@ -132,28 +132,28 @@
 </li>
 </ul>
 <h3 id="二-离散流-DStreams-：Discretized-Streams"><a href="#二-离散流-DStreams-：Discretized-Streams" class="headerlink" title="二.离散流(DStreams)：Discretized Streams"></a>二.离散流(DStreams)：Discretized Streams</h3><h4 id="1-DiscretizedStream或DStream-是Spark-Streaming对流式数据的基本抽象。"><a href="#1-DiscretizedStream或DStream-是Spark-Streaming对流式数据的基本抽象。" class="headerlink" title="1.DiscretizedStream或DStream 是Spark Streaming对流式数据的基本抽象。"></a>1.DiscretizedStream或DStream 是Spark Streaming对流式数据的基本抽象。</h4><p>它表示连续的数据流，这些连续的数据流可以是从数据源接收的输入数据流，也可以是通过对输入数据流执行转换操作而生成的经处理的数据流。在内部，DStream由一系列连续的RDD表示，如下图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkZTFhNTM3NmM1N2VjNzQucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkZTFhNTM3NmM1N2VjNzQucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="2-举例分析："><a href="#2-举例分析：" class="headerlink" title="2.举例分析："></a>2.举例分析：</h4><p>在之前的NetworkWordCount的例子中，我们将一行行文本组成的流转换为单词流，具体做法为：将flatMap操作应用于名为lines的 DStream中的每个RDD上，以生成words DStream的RDD。如下图所示：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWIzODg1YTcxNjBlMWM3YWIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWIzODg1YTcxNjBlMWM3YWIucG5n?x-oss-process=image/format,png" alt></p>
 <p>但是DStream和RDD也有区别，下面画图说明：</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYyYTM4MjcyMjA5YWY2MWUucG5n?x-oss-process=image/format,png" alt="RDD的结构"></p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE5Yjg5NDQ2OGIyMWRiNWYucG5n?x-oss-process=image/format,png" alt="DStream的结构"></p>
-<h3 id="三-DStream中的转换操作-transformation"><a href="#三-DStream中的转换操作-transformation" class="headerlink" title="三.DStream中的转换操作(transformation)"></a>三.DStream中的转换操作(transformation)</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFmMzQxZDU2ODhhMjViMTAucG5n?x-oss-process=image/format,png" alt=""></p>
+<h3 id="三-DStream中的转换操作-transformation"><a href="#三-DStream中的转换操作-transformation" class="headerlink" title="三.DStream中的转换操作(transformation)"></a>三.DStream中的转换操作(transformation)</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFmMzQxZDU2ODhhMjViMTAucG5n?x-oss-process=image/format,png" alt></p>
 <p>最后两个transformation算子需要重点介绍一下：</p>
 <h4 id="1-transform-func"><a href="#1-transform-func" class="headerlink" title="1.transform(func)"></a>1.transform(func)</h4><p>(1)通过RDD-to-RDD函数作用于源DStream中的各个RDD，可以是任意的RDD操作，从而返回一个新的RDD</p>
 <p>(2)举例：在NetworkWordCount中，也可以使用transform来生成元组对</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhMTQ2MzU4YzQ1MTZkYWIucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhMTQ2MzU4YzQ1MTZkYWIucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="2-updateStateByKey-func"><a href="#2-updateStateByKey-func" class="headerlink" title="2.updateStateByKey(func)"></a>2.updateStateByKey(func)</h4><h5 id="1-操作允许不断用新信息更新它的同时保持任意状态。"><a href="#1-操作允许不断用新信息更新它的同时保持任意状态。" class="headerlink" title="(1)操作允许不断用新信息更新它的同时保持任意状态。"></a>(1)操作允许不断用新信息更新它的同时保持任意状态。</h5><ul>
 <li>定义状态-状态可以是任何的数据类型</li>
 <li>定义状态更新函数-怎样利用更新前的状态和从输入流里面获取的新值更新状态</li>
 </ul>
-<h5 id="2-重写NetworkWordCount程序，累计每个单词出现的频率-注意：累计"><a href="#2-重写NetworkWordCount程序，累计每个单词出现的频率-注意：累计" class="headerlink" title="(2)重写NetworkWordCount程序，累计每个单词出现的频率(注意：累计)"></a>(2)重写NetworkWordCount程序，累计每个单词出现的频率(注意：累计)</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg0MzAxMDYyYjIxODBkYWEucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="3-输出结果："><a href="#3-输出结果：" class="headerlink" title="(3)输出结果："></a>(3)输出结果：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJkMDA2OGFkYzNhODAwNzMucG5n?x-oss-process=image/format,png" alt=""></p>
+<h5 id="2-重写NetworkWordCount程序，累计每个单词出现的频率-注意：累计"><a href="#2-重写NetworkWordCount程序，累计每个单词出现的频率-注意：累计" class="headerlink" title="(2)重写NetworkWordCount程序，累计每个单词出现的频率(注意：累计)"></a>(2)重写NetworkWordCount程序，累计每个单词出现的频率(注意：累计)</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg0MzAxMDYyYjIxODBkYWEucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="3-输出结果："><a href="#3-输出结果：" class="headerlink" title="(3)输出结果："></a>(3)输出结果：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJkMDA2OGFkYzNhODAwNzMucG5n?x-oss-process=image/format,png" alt></p>
 <h4 id="3-注意："><a href="#3-注意：" class="headerlink" title="3.注意："></a>3.注意：</h4><p>如果在IDEA中，不想输出log4j的日志信息，可以将log4j.properties文件(放在src的目录下)的第一行改为：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log4j.rootCategory=ERROR,console</span><br></pre></td></tr></table></figure>
 
 <h3 id="四-窗口操作"><a href="#四-窗口操作" class="headerlink" title="四.窗口操作"></a>四.窗口操作</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Spark Streaming还提供了窗口计算功能，允许您在数据的滑动窗口上应用转换操作。下图说明了滑动窗口的工作方式：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmYTEzZWJiMWQ5ZDRlMjcucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmYTEzZWJiMWQ5ZDRlMjcucG5n?x-oss-process=image/format,png" alt></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;如图所示，每当窗口滑过originalDStream时，落在窗口内的源RDD被组合并被执行操作以产生windowed DStream的RDD。在上面的例子中，操作应用于最近3个时间单位的数据，并以2个时间单位滑动。这表明任何窗口操作都需要指定两个参数。</p>
 <ul>
 <li>窗口长度(windowlength) - 窗口的时间长度(上图的示例中为：3)。</li>
@@ -161,7 +161,7 @@
 </ul>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;这两个参数必须是源DStream的批间隔的倍数(上图示例中为：1)。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;我们以一个例子来说明窗口操作。 假设您希望对之前的单词计数的示例进行扩展，每10秒钟对过去30秒的数据进行wordcount。为此，我们必须在最近30秒的pairs DStream数据中对(word, 1)键值对应用reduceByKey操作。这是通过使用reduceByKeyAndWindow操作完成的。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQxNGI2YzllYWY4OWZmOGMucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQxNGI2YzllYWY4OWZmOGMucG5n?x-oss-process=image/format,png" alt></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;一些常见的窗口操作如下表所示。所有这些操作都用到了上述两个参数 - windowLength和slideInterval。</p>
 <h5 id="1-window-windowLength-slideInterval"><a href="#1-window-windowLength-slideInterval" class="headerlink" title="(1)window(windowLength, slideInterval)"></a>(1)window(windowLength, slideInterval)</h5><ul>
 <li>基于源DStream产生的窗口化的批数据计算一个新的DStream</li>
@@ -188,23 +188,23 @@
 <li>这些文件通过原子移动或重命名文件的方式在dataDirectory创建</li>
 <li>如果在文件中追加内容，这些追加的新数据也不会被读取。</li>
 </ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE2NzIwMWM2MTdlNmY2ZmUucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE2NzIwMWM2MTdlNmY2ZmUucG5n?x-oss-process=image/format,png" alt></p>
 <p>注意：要演示成功，需要在原文件中编辑，然后拷贝一份。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhMWI0NTI0NjI5N2YzYjMucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhMWI0NTI0NjI5N2YzYjMucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="2-RDD队列流"><a href="#2-RDD队列流" class="headerlink" title="(2)RDD队列流"></a>(2)RDD队列流</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;使用streamingContext.queueStream(queueOfRDD)创建基于RDD队列的DStream，用于调试Spark Streaming应用程序。</p>
-<pre><code></code></pre><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMyY2ZhMWM5MTZhYjMzMTUucG5n?x-oss-process=image/format,png" alt=""></p>
-<h5 id="3-套接字流：通过监听Socket端口来接收数据"><a href="#3-套接字流：通过监听Socket端口来接收数据" class="headerlink" title="(3)套接字流：通过监听Socket端口来接收数据"></a>(3)套接字流：通过监听Socket端口来接收数据</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ4NzY3OTRhOWE3NTdkZDcucG5n?x-oss-process=image/format,png" alt=""></p>
+<pre><code></code></pre><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMyY2ZhMWM5MTZhYjMzMTUucG5n?x-oss-process=image/format,png" alt></p>
+<h5 id="3-套接字流：通过监听Socket端口来接收数据"><a href="#3-套接字流：通过监听Socket端口来接收数据" class="headerlink" title="(3)套接字流：通过监听Socket端口来接收数据"></a>(3)套接字流：通过监听Socket端口来接收数据</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ4NzY3OTRhOWE3NTdkZDcucG5n?x-oss-process=image/format,png" alt></p>
 <h3 id="六-DStreams的输出操作"><a href="#六-DStreams的输出操作" class="headerlink" title="六.DStreams的输出操作"></a>六.DStreams的输出操作</h3><h4 id="1-输出操作允许DStream的操作推到如数据库、文件系统等外部系统中。"><a href="#1-输出操作允许DStream的操作推到如数据库、文件系统等外部系统中。" class="headerlink" title="1.输出操作允许DStream的操作推到如数据库、文件系统等外部系统中。"></a>1.输出操作允许DStream的操作推到如数据库、文件系统等外部系统中。</h4><p>因为输出操作实际上是允许外部系统消费转换后的数据，它们触发的实际操作是DStream转换。</p>
-<h4 id="2-目前，定义了下面几种输出操作："><a href="#2-目前，定义了下面几种输出操作：" class="headerlink" title="2.目前，定义了下面几种输出操作："></a>2.目前，定义了下面几种输出操作：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg4NzBlZWUxNzk2NjI2NmEucG5n?x-oss-process=image/format,png" alt=""></p>
+<h4 id="2-目前，定义了下面几种输出操作："><a href="#2-目前，定义了下面几种输出操作：" class="headerlink" title="2.目前，定义了下面几种输出操作："></a>2.目前，定义了下面几种输出操作：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg4NzBlZWUxNzk2NjI2NmEucG5n?x-oss-process=image/format,png" alt></p>
 <h5 id="1-foreachRDD的设计模式"><a href="#1-foreachRDD的设计模式" class="headerlink" title="(1)foreachRDD的设计模式"></a>(1)foreachRDD的设计模式</h5><p>DStream.foreachRDD是一个强大的原语，发送数据到外部系统中。</p>
-<h6 id="a-第一步：创建连接，将数据写入外部数据库-使用之前的NetworkWordCount，改写之前输出结果的部分，如下"><a href="#a-第一步：创建连接，将数据写入外部数据库-使用之前的NetworkWordCount，改写之前输出结果的部分，如下" class="headerlink" title="(a)第一步：创建连接，将数据写入外部数据库(使用之前的NetworkWordCount，改写之前输出结果的部分，如下)"></a>(a)第一步：创建连接，将数据写入外部数据库(使用之前的NetworkWordCount，改写之前输出结果的部分，如下)</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM3MTAzNDAxNDI4ZjkyNzkucG5n?x-oss-process=image/format,png" alt=""></p>
+<h6 id="a-第一步：创建连接，将数据写入外部数据库-使用之前的NetworkWordCount，改写之前输出结果的部分，如下"><a href="#a-第一步：创建连接，将数据写入外部数据库-使用之前的NetworkWordCount，改写之前输出结果的部分，如下" class="headerlink" title="(a)第一步：创建连接，将数据写入外部数据库(使用之前的NetworkWordCount，改写之前输出结果的部分，如下)"></a>(a)第一步：创建连接，将数据写入外部数据库(使用之前的NetworkWordCount，改写之前输出结果的部分，如下)</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM3MTAzNDAxNDI4ZjkyNzkucG5n?x-oss-process=image/format,png" alt></p>
 <p>出现以下Exception：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRkMmUwOTJhZTM0MWQ2ZmYucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRkMmUwOTJhZTM0MWQ2ZmYucG5n?x-oss-process=image/format,png" alt></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;原因是：Connection对象不是一个可被序列化的对象，不能RDD的每个Worker上运行；即：Connection不能在RDD分布式环境中的每个分区上运行，因为不同的分区可能运行在不同的Worker上。所以需要在每个RDD分区上单独创建Connection对象。</p>
-<h6 id="b-第二步：在每个RDD分区上单独创建Connection对象，如下："><a href="#b-第二步：在每个RDD分区上单独创建Connection对象，如下：" class="headerlink" title="(b)第二步：在每个RDD分区上单独创建Connection对象，如下："></a>(b)第二步：在每个RDD分区上单独创建Connection对象，如下：</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRiZjQxMGExOTk0OTgwMTkucG5n?x-oss-process=image/format,png" alt=""></p>
+<h6 id="b-第二步：在每个RDD分区上单独创建Connection对象，如下："><a href="#b-第二步：在每个RDD分区上单独创建Connection对象，如下：" class="headerlink" title="(b)第二步：在每个RDD分区上单独创建Connection对象，如下："></a>(b)第二步：在每个RDD分区上单独创建Connection对象，如下：</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRiZjQxMGExOTk0OTgwMTkucG5n?x-oss-process=image/format,png" alt></p>
 <h3 id="七-DataFrame和SQL操作"><a href="#七-DataFrame和SQL操作" class="headerlink" title="七.DataFrame和SQL操作"></a>七.DataFrame和SQL操作</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;可以很方便地使用DataFrames和SQL操作来处理流数据。必须使用当前的StreamingContext对应的SparkContext创建一个SparkSession。此外，必须这样做的另一个原因是使得应用可以在driver程序故障时得以重新启动，这是通过创建一个可以延迟实例化的单例SparkSession来实现的。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;在下面的示例中，使用DataFrames和SQL来修改之前的wordcount示例并对单词进行计数。我们将每个RDD转换为DataFrame，并注册为临时表，然后在这张表上执行SQL查询。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ3ZDBjMDcwY2QwZjVkYjAucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ3ZDBjMDcwY2QwZjVkYjAucG5n?x-oss-process=image/format,png" alt></p>
 <h3 id="八-缓存-持久化"><a href="#八-缓存-持久化" class="headerlink" title="八.缓存/持久化"></a>八.缓存/持久化</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;与RDD类似，DStreams还允许开发人员将流数据保留在内存中。也就是说，在DStream上调用persist() 方法会自动将该DStream的每个RDD保留在内存中。如果DStream中的数据将被多次计算(例如，相同数据上执行多个操作)，这个操作就会很有用。对于基于窗口的操作，如reduceByWindow和reduceByKeyAndWindow以及基于状态的操作，如updateStateByKey，数据会默认进行持久化。 因此，基于窗口的操作生成的DStream会自动保存在内存中，而不需要开发人员调用persist()。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;对于通过网络接收数据（例如Kafka，Flume，sockets等）的输入流，默认持久化级别被设置为将数据复制到两个节点进行容错。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;请注意，与RDD不同，DStreams的默认持久化级别将数据序列化保存在内存中。</p>
@@ -224,7 +224,7 @@
 <p>(a)当程序第一次启动时，它将创建一个新的StreamingContext，设置好所有流数据源，然后调用start()方法。</p>
 <p>(b)当程序在失败后重新启动时，它将从checkpoint目录中的检查点数据重新创建一个StreamingContext。<br>使用StreamingContext.getOrCreate可以简化此行为</p>
 <h4 id="4-改写之前的WordCount程序，使得每次计算的结果和状态都保存到检查点目录下"><a href="#4-改写之前的WordCount程序，使得每次计算的结果和状态都保存到检查点目录下" class="headerlink" title="4.改写之前的WordCount程序，使得每次计算的结果和状态都保存到检查点目录下"></a>4.改写之前的WordCount程序，使得每次计算的结果和状态都保存到检查点目录下</h4><p>通过查看HDFS中的信息，可以看到相关的检查点信息，如下：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxNzI2M2VmMzg1NGFjZTEucG5n?x-oss-process=image/format,png" alt=""></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxNzI2M2VmMzg1NGFjZTEucG5n?x-oss-process=image/format,png" alt></p>
  
       <!-- reward -->
       
