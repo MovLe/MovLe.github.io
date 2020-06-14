@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-14T14:34:02.072Z</updated>
+  <updated>2020-06-14T14:38:32.172Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2020/06/14/WeekLog20200614/"/>
     <id>http://yoursite.com/2020/06/14/WeekLog20200614/</id>
     <published>2020-06-14T06:36:00.000Z</published>
-    <updated>2020-06-14T14:34:02.072Z</updated>
+    <updated>2020-06-14T14:38:32.172Z</updated>
     
     <summary type="html">
     
@@ -502,9 +502,9 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
@@ -533,9 +533,9 @@
       <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
@@ -568,11 +568,11 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
       <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="Mongodb" scheme="http://yoursite.com/tags/Mongodb/"/>
-    
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
   </entry>
   
@@ -628,9 +628,9 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
       <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
