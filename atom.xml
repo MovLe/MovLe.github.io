@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Movle&#39;s Blog</title>
+  <title>Movle</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
   <link href="/blog/atom.xml" rel="self"/>
