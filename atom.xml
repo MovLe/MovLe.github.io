@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://gitee.com/movle/blog/"/>
-  <updated>2020-06-21T15:54:49.576Z</updated>
+  <updated>2020-06-21T15:57:46.319Z</updated>
   <id>http://gitee.com/movle/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://gitee.com/movle/blog/2020/06/21/WeekLog20200621/"/>
     <id>http://gitee.com/movle/blog/2020/06/21/WeekLog20200621/</id>
     <published>2020-06-21T15:24:00.000Z</published>
-    <updated>2020-06-21T15:54:49.576Z</updated>
+    <updated>2020-06-21T15:57:46.319Z</updated>
     
     <summary type="html">
     
@@ -529,9 +529,9 @@
     
       <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
-    
       <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+    
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
       <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
     
@@ -560,9 +560,9 @@
       <category term="Redis" scheme="http://gitee.com/movle/blog/categories/Redis/"/>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
-    
       <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+    
+      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
       <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
     
@@ -595,11 +595,11 @@
     
       <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+    
       <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
     
       <category term="Mongodb" scheme="http://gitee.com/movle/blog/tags/Mongodb/"/>
-    
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
   </entry>
   
