@@ -3,11 +3,11 @@
   <title>Movle</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="http://gitee.com/movle/blog/"/>
+  <link href="http://yoursite.com/"/>
   <updated>2020-06-11T23:30:19.084Z</updated>
-  <id>http://gitee.com/movle/blog/</id>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name>Movle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>redis安装报错</title>
-    <link href="http://gitee.com/movle/blog/2020/05/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/"/>
-    <id>http://gitee.com/movle/blog/2020/05/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/</id>
+    <link href="http://yoursite.com/2020/05/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/"/>
+    <id>http://yoursite.com/2020/05/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/</id>
     <published>2020-05-12T04:00:00.000Z</published>
     <updated>2020-06-11T23:30:19.084Z</updated>
     
@@ -36,21 +36,21 @@
     </summary>
     
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/categories/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
-      <category term="填坑" scheme="http://gitee.com/movle/blog/tags/%E5%A1%AB%E5%9D%91/"/>
+      <category term="填坑" scheme="http://yoursite.com/tags/%E5%A1%AB%E5%9D%91/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7(单节点)安装Redis</title>
-    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/"/>
-    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/</id>
+    <link href="http://yoursite.com/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/"/>
+    <id>http://yoursite.com/2020/05/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/</id>
     <published>2020-05-07T04:00:00.000Z</published>
     <updated>2020-06-11T23:35:56.393Z</updated>
     
@@ -67,23 +67,23 @@
     </summary>
     
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/categories/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装redis报错</title>
-    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/"/>
-    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/</id>
+    <link href="http://yoursite.com/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/"/>
+    <id>http://yoursite.com/2020/05/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/</id>
     <published>2020-05-07T04:00:00.000Z</published>
     <updated>2020-06-11T23:35:50.105Z</updated>
     
@@ -100,23 +100,23 @@
     </summary>
     
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/categories/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
+      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
     
-      <category term="填坑" scheme="http://gitee.com/movle/blog/tags/%E5%A1%AB%E5%9D%91/"/>
+      <category term="填坑" scheme="http://yoursite.com/tags/%E5%A1%AB%E5%9D%91/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7(单节点)安装Mongodb</title>
-    <link href="http://gitee.com/movle/blog/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/"/>
-    <id>http://gitee.com/movle/blog/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/</id>
+    <link href="http://yoursite.com/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/"/>
+    <id>http://yoursite.com/2020/05/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/</id>
     <published>2020-05-07T03:00:00.000Z</published>
     <updated>2020-06-11T23:36:05.922Z</updated>
     
@@ -133,23 +133,23 @@
     </summary>
     
     
-      <category term="Mongodb" scheme="http://gitee.com/movle/blog/categories/Mongodb/"/>
+      <category term="Mongodb" scheme="http://yoursite.com/categories/Mongodb/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="Mongodb" scheme="http://gitee.com/movle/blog/tags/Mongodb/"/>
+      <category term="Mongodb" scheme="http://yoursite.com/tags/Mongodb/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装MySql</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/</id>
+    <link href="http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/"/>
+    <id>http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85mysql/</id>
     <published>2020-05-06T07:00:00.000Z</published>
     <updated>2020-06-11T23:30:19.092Z</updated>
     
@@ -166,23 +166,23 @@
     </summary>
     
     
-      <category term="MySQL" scheme="http://gitee.com/movle/blog/categories/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="MySQL" scheme="http://gitee.com/movle/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装MySql(已下载的mysql安装包)</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/</id>
+    <link href="http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"/>
+    <id>http://yoursite.com/2020/05/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/</id>
     <published>2020-05-06T03:00:00.000Z</published>
     <updated>2020-06-11T23:36:13.850Z</updated>
     
@@ -199,23 +199,23 @@
     </summary>
     
     
-      <category term="MySQL" scheme="http://gitee.com/movle/blog/categories/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="MySQL" scheme="http://gitee.com/movle/blog/tags/MySQL/"/>
+      <category term="MySQL" scheme="http://yoursite.com/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7环境下安装Chrome</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
+    <link href="http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
+    <id>http://yoursite.com/2020/05/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
     <published>2020-05-06T02:00:00.000Z</published>
     <updated>2020-06-11T22:38:19.971Z</updated>
     
@@ -232,23 +232,23 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="Chrome" scheme="http://gitee.com/movle/blog/tags/Chrome/"/>
+      <category term="Chrome" scheme="http://yoursite.com/tags/Chrome/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装Apache</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
+    <link href="http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
+    <id>http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
     <published>2020-05-06T02:00:00.000Z</published>
     <updated>2020-06-11T23:36:27.571Z</updated>
     
@@ -265,21 +265,21 @@
     </summary>
     
     
-      <category term="Apache" scheme="http://gitee.com/movle/blog/categories/Apache/"/>
+      <category term="Apache" scheme="http://yoursite.com/categories/Apache/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="Apache" scheme="http://gitee.com/movle/blog/tags/Apache/"/>
+      <category term="Apache" scheme="http://yoursite.com/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装Tomcat</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/</id>
+    <link href="http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/"/>
+    <id>http://yoursite.com/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/</id>
     <published>2020-05-06T01:49:00.000Z</published>
     <updated>2020-06-11T23:36:35.139Z</updated>
     
@@ -296,21 +296,21 @@
     </summary>
     
     
-      <category term="Tomcat" scheme="http://gitee.com/movle/blog/categories/Tomcat/"/>
+      <category term="Tomcat" scheme="http://yoursite.com/categories/Tomcat/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
-      <category term="Tomcat" scheme="http://gitee.com/movle/blog/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="http://yoursite.com/tags/Tomcat/"/>
     
   </entry>
   
   <entry>
     <title>Linux查看文件前几行和后几行的命令</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/</id>
+    <link href="http://yoursite.com/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2020/05/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/</id>
     <published>2020-05-06T01:49:00.000Z</published>
     <updated>2020-06-11T22:29:04.545Z</updated>
     
@@ -327,17 +327,17 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>利用FRP实现内网穿透</title>
-    <link href="http://gitee.com/movle/blog/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
-    <id>http://gitee.com/movle/blog/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
+    <link href="http://yoursite.com/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    <id>http://yoursite.com/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
     <published>2020-01-09T03:00:00.000Z</published>
     <updated>2020-07-03T03:16:35.226Z</updated>
     
@@ -355,21 +355,21 @@
     </summary>
     
     
-      <category term="有用项目" scheme="http://gitee.com/movle/blog/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
     
     
-      <category term="FRP" scheme="http://gitee.com/movle/blog/tags/FRP/"/>
+      <category term="FRP" scheme="http://yoursite.com/tags/FRP/"/>
     
-      <category term="内网穿透" scheme="http://gitee.com/movle/blog/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+      <category term="内网穿透" scheme="http://yoursite.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     
-      <category term="项目" scheme="http://gitee.com/movle/blog/tags/%E9%A1%B9%E7%9B%AE/"/>
+      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
     
   </entry>
   
   <entry>
     <title>记录12306项目抢票成功的经历-CentOS7环境</title>
-    <link href="http://gitee.com/movle/blog/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/"/>
-    <id>http://gitee.com/movle/blog/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/</id>
+    <link href="http://yoursite.com/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/"/>
+    <id>http://yoursite.com/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/</id>
     <published>2019-11-09T03:00:00.000Z</published>
     <updated>2020-07-03T03:21:42.316Z</updated>
     
@@ -387,19 +387,19 @@
     </summary>
     
     
-      <category term="有用项目" scheme="http://gitee.com/movle/blog/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
     
     
-      <category term="项目" scheme="http://gitee.com/movle/blog/tags/%E9%A1%B9%E7%9B%AE/"/>
+      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
     
-      <category term="12306" scheme="http://gitee.com/movle/blog/tags/12306/"/>
+      <category term="12306" scheme="http://yoursite.com/tags/12306/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7(单节点)安装elasticsearch</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
+    <link href="http://yoursite.com/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
+    <id>http://yoursite.com/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
     <published>2019-10-12T07:00:00.000Z</published>
     <updated>2020-06-11T22:50:05.891Z</updated>
     
@@ -416,21 +416,21 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>ElasticSearch实战-使用java连接elasticsearch集群并操作</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/</id>
+    <link href="http://yoursite.com/2019/10/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2019/10/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/</id>
     <published>2019-10-12T07:00:00.000Z</published>
     <updated>2020-06-12T03:30:12.864Z</updated>
     
@@ -448,19 +448,19 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
-      <category term="Elasticsearch实战" scheme="http://gitee.com/movle/blog/tags/Elasticsearch%E5%AE%9E%E6%88%98/"/>
+      <category term="Elasticsearch实战" scheme="http://yoursite.com/tags/Elasticsearch%E5%AE%9E%E6%88%98/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch head插件安装</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
+    <link href="http://yoursite.com/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>http://yoursite.com/2019/10/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
     <published>2019-10-12T06:00:00.000Z</published>
     <updated>2020-06-11T14:10:17.291Z</updated>
     
@@ -478,19 +478,19 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch集群安装部署</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
+    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+    <id>http://yoursite.com/2019/10/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
     <published>2019-10-12T05:00:00.000Z</published>
     <updated>2020-06-11T14:08:26.649Z</updated>
     
@@ -507,19 +507,19 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch单节点安装部署</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
+    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+    <id>http://yoursite.com/2019/10/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
     <published>2019-10-12T04:00:00.000Z</published>
     <updated>2020-06-11T14:07:53.759Z</updated>
     
@@ -536,19 +536,19 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch核心概念</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/</id>
+    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
+    <id>http://yoursite.com/2019/10/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/</id>
     <published>2019-10-12T03:00:00.000Z</published>
     <updated>2020-06-11T14:00:37.767Z</updated>
     
@@ -565,17 +565,17 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>Elasticsearch概览</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/</id>
+    <link href="http://yoursite.com/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/"/>
+    <id>http://yoursite.com/2019/10/12/Elasticsearch%E6%A6%82%E8%A7%88/</id>
     <published>2019-10-12T02:00:00.000Z</published>
     <updated>2020-06-11T13:58:08.939Z</updated>
     
@@ -592,17 +592,17 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
     
     
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>Linux安装rz,sz</title>
-    <link href="http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
-    <id>http://gitee.com/movle/blog/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
+    <link href="http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
+    <id>http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
     <published>2019-08-09T01:49:00.000Z</published>
     <updated>2020-06-09T13:28:46.864Z</updated>
     
@@ -620,10 +620,10 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
     
   </entry>
   
