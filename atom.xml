@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-07-03T03:35:36.163Z</updated>
+  <updated>2020-07-03T03:42:02.645Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ElasticSearch实战-使用java连接elasticsearch集群并操作</title>
-    <link href="http://yoursite.com/2020/01/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2020/01/12/ElasticSearch%E5%AE%9E%E6%88%98-%E4%BD%BF%E7%94%A8java%E8%BF%9E%E6%8E%A5elasticsearch%E9%9B%86%E7%BE%A4%E5%B9%B6%E6%93%8D%E4%BD%9C/</id>
-    <published>2020-01-12T07:00:00.000Z</published>
-    <updated>2020-07-03T03:35:36.163Z</updated>
+    <title>SparkStreaming实战：处理来自flume pull方式发来的数据</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20pull%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20pull%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/</id>
+    <published>2020-03-15T11:00:00.000Z</published>
+    <updated>2020-07-03T03:42:02.645Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,70 @@
       
         
         
-          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用java连接elasticsearch集群，并进行相关操作&lt;/p&gt;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;处理来自flume pull方式发来的数据&lt;/p&gt;
+&lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a href=&quot;#2-代码：&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
+    
+    
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SparkStreaming实战：处理来自flume push方式发来的数据</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20push%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20push%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/</id>
+    <published>2020-03-15T10:00:00.000Z</published>
+    <updated>2020-07-03T03:41:57.950Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;SparkStreaming处理来自flume push方式发来的数据,即flume将数据推给spark
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
+    
+    
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SparkStreaming实战：处理RDD队列流</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86RDD%E9%98%9F%E5%88%97%E6%B5%81/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86RDD%E9%98%9F%E5%88%97%E6%B5%81/</id>
+    <published>2020-03-15T09:00:00.000Z</published>
+    <updated>2020-07-03T03:42:12.390Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;利用SparkStreaming处理RDD队列流&lt;/p&gt;
 &lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a
         
       
@@ -37,21 +100,23 @@
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="Elasticsearch实战" scheme="http://yoursite.com/tags/Elasticsearch%E5%AE%9E%E6%88%98/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch head插件安装</title>
-    <link href="http://yoursite.com/2020/01/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    <id>http://yoursite.com/2020/01/12/Elasticsearch%20head%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
-    <published>2020-01-12T06:00:00.000Z</published>
-    <updated>2020-07-03T03:35:36.145Z</updated>
+    <title>SparkStreaming实战：处理文件流</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E6%B5%81/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E6%B5%81/</id>
+    <published>2020-03-15T08:00:00.000Z</published>
+    <updated>2020-07-03T03:42:07.270Z</updated>
     
     <summary type="html">
     
@@ -59,29 +124,31 @@
       
         
         
-          &lt;h4 id=&quot;1-下载插件：&quot;&gt;&lt;a href=&quot;#1-下载插件：&quot; class=&quot;headerlink&quot; title=&quot;1.下载插件：&quot;&gt;&lt;/a&gt;1.下载插件：&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;利用SparkStreaming处理文件流：&lt;/p&gt;
+&lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch集群安装部署</title>
-    <link href="http://yoursite.com/2020/01/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2020/01/12/Elasticsearch%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
-    <published>2020-01-12T05:00:00.000Z</published>
-    <updated>2020-07-03T03:35:34.969Z</updated>
+    <title>SparkStearming实战：集成Spark SQL，使用SQL语句进行WordCount</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E9%9B%86%E6%88%90Spark%20SQL%EF%BC%8C%E4%BD%BF%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8CWordCount/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E9%9B%86%E6%88%90Spark%20SQL%EF%BC%8C%E4%BD%BF%E7%94%A8SQL%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8CWordCount/</id>
+    <published>2020-03-15T06:00:00.000Z</published>
+    <updated>2020-07-03T03:41:28.443Z</updated>
     
     <summary type="html">
     
@@ -89,28 +156,31 @@
       
         
         
-          &lt;h4 id=&quot;1-前提：安装好jdk&quot;&gt;&lt;a href=&quot;#1-前提：安装好jdk&quot; class=&quot;headerlink&quot; title=&quot;1.前提：安装好jdk&quot;&gt;&lt;/a&gt;1.前提：安装好jdk&lt;/h4&gt;&lt;h4 id=&quot;2-下载安装包：&quot;&gt;&lt;a
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;集成Spark SQL，使用SQL语句进行WordCount&lt;/p&gt;
+&lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch单节点安装部署</title>
-    <link href="http://yoursite.com/2020/01/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2020/01/12/Elasticsearch%E5%8D%95%E8%8A%82%E7%82%B9%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</id>
-    <published>2020-01-12T04:00:00.000Z</published>
-    <updated>2020-07-03T03:35:36.098Z</updated>
+    <title>Spark Streaming实战：设置检查点，写一个wordcount程序并计数，计算端口号1235中的信息</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E8%AE%BE%E7%BD%AE%E6%A3%80%E6%9F%A5%E7%82%B9%EF%BC%8C%E5%86%99%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F%E5%B9%B6%E8%AE%A1%E6%95%B0%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%AB%AF%E5%8F%A3%E5%8F%B71235%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E8%AE%BE%E7%BD%AE%E6%A3%80%E6%9F%A5%E7%82%B9%EF%BC%8C%E5%86%99%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F%E5%B9%B6%E8%AE%A1%E6%95%B0%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%AB%AF%E5%8F%A3%E5%8F%B71235%E4%B8%AD%E7%9A%84%E4%BF%A1%E6%81%AF/</id>
+    <published>2020-03-15T04:00:00.000Z</published>
+    <updated>2020-07-03T03:41:42.021Z</updated>
     
     <summary type="html">
     
@@ -118,28 +188,30 @@
       
         
         
-          &lt;h3 id=&quot;一-安装&quot;&gt;&lt;a href=&quot;#一-安装&quot; class=&quot;headerlink&quot; title=&quot;一.安装&quot;&gt;&lt;/a&gt;一.安装&lt;/h3&gt;&lt;h4 id=&quot;1-先前条件：&quot;&gt;&lt;a href=&quot;#1-先前条件：&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;用spark
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch核心概念</title>
-    <link href="http://yoursite.com/2020/01/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
-    <id>http://yoursite.com/2020/01/12/Elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/</id>
-    <published>2020-01-12T03:00:00.000Z</published>
-    <updated>2020-07-03T03:35:36.114Z</updated>
+    <title>Spark Streaming实战：窗口操作，每10秒，把过去30秒的数据取出来(读取端口号1235中的数据)</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E7%AA%97%E5%8F%A3%E6%93%8D%E4%BD%9C%EF%BC%8C%E6%AF%8F10%E7%A7%92%EF%BC%8C%E6%8A%8A%E8%BF%87%E5%8E%BB30%E7%A7%92%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%96%E5%87%BA%E6%9D%A5(%E8%AF%BB%E5%8F%96%E7%AB%AF%E5%8F%A3%E5%8F%B71235%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE)/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E7%AA%97%E5%8F%A3%E6%93%8D%E4%BD%9C%EF%BC%8C%E6%AF%8F10%E7%A7%92%EF%BC%8C%E6%8A%8A%E8%BF%87%E5%8E%BB30%E7%A7%92%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%96%E5%87%BA%E6%9D%A5(%E8%AF%BB%E5%8F%96%E7%AB%AF%E5%8F%A3%E5%8F%B71235%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE)/</id>
+    <published>2020-03-15T04:00:00.000Z</published>
+    <updated>2020-07-03T03:41:51.644Z</updated>
     
     <summary type="html">
     
@@ -147,26 +219,30 @@
       
         
         
-          &lt;h4 id=&quot;1-近实时&quot;&gt;&lt;a href=&quot;#1-近实时&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>Elasticsearch概览</title>
-    <link href="http://yoursite.com/2020/01/12/Elasticsearch%E6%A6%82%E8%A7%88/"/>
-    <id>http://yoursite.com/2020/01/12/Elasticsearch%E6%A6%82%E8%A7%88/</id>
-    <published>2020-01-12T02:00:00.000Z</published>
-    <updated>2020-07-03T03:35:36.128Z</updated>
+    <title>Spark Streaming实战:写一个wordcount程序，统计从netcat中向端口发送的数据</title>
+    <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%86%99%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F%EF%BC%8C%E7%BB%9F%E8%AE%A1%E4%BB%8Enetcat%E4%B8%AD%E5%90%91%E7%AB%AF%E5%8F%A3%E5%8F%91%E9%80%81%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%86%99%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F%EF%BC%8C%E7%BB%9F%E8%AE%A1%E4%BB%8Enetcat%E4%B8%AD%E5%90%91%E7%AB%AF%E5%8F%A3%E5%8F%91%E9%80%81%E7%9A%84%E6%95%B0%E6%8D%AE/</id>
+    <published>2020-03-15T03:00:00.000Z</published>
+    <updated>2020-07-03T03:42:16.901Z</updated>
     
     <summary type="html">
     
@@ -174,26 +250,31 @@
       
         
         
-          &lt;h4 id=&quot;1-什么是Elasticsearch&quot;&gt;&lt;a href=&quot;#1-什么是Elasticsearch&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;通过spark streaming统计端口号1234中的信息&lt;/p&gt;
+&lt;h4 id=&quot;2-编写代码：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark Streaming" scheme="http://yoursite.com/tags/Spark-Streaming/"/>
     
   </entry>
   
   <entry>
-    <title>CentOS7(单节点)安装elasticsearch</title>
-    <link href="http://yoursite.com/2020/01/11/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
-    <id>http://yoursite.com/2020/01/11/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
-    <published>2020-01-11T07:00:00.000Z</published>
-    <updated>2020-07-03T03:38:56.455Z</updated>
+    <title>Spark SQL实战之UDF与UDAF的使用</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9AUDF%E4%B8%8EUDAF%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9AUDF%E4%B8%8EUDAF%E7%9A%84%E4%BD%BF%E7%94%A8/</id>
+    <published>2020-03-13T11:00:00.000Z</published>
+    <updated>2020-07-03T03:42:54.607Z</updated>
     
     <summary type="html">
     
@@ -201,30 +282,31 @@
       
         
         
-          &lt;h4 id=&quot;1-下载安装包&quot;&gt;&lt;a href=&quot;#1-下载安装包&quot; class=&quot;headerlink&quot; title=&quot;1.下载安装包&quot;&gt;&lt;/a&gt;1.下载安装包&lt;/h4&gt;&lt;h4 id=&quot;2-上传到linux&quot;&gt;&lt;a href=&quot;#2-上传到linux&quot;
+          &lt;h4 id=&quot;1-概念：&quot;&gt;&lt;a href=&quot;#1-概念：&quot; class=&quot;headerlink&quot; title=&quot;1.概念：&quot;&gt;&lt;/a&gt;1.概念：&lt;/h4&gt;&lt;p&gt;UDF就是用户自定义的函数&lt;br&gt;UDAF就是用户自定义的聚合函数&lt;/p&gt;
+&lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/categories/Elasticsearch/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
-      <category term="Elasticsearch" scheme="http://yoursite.com/tags/Elasticsearch/"/>
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>利用FRP实现内网穿透</title>
-    <link href="http://yoursite.com/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
-    <id>http://yoursite.com/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
-    <published>2020-01-09T03:00:00.000Z</published>
-    <updated>2020-07-03T03:16:35.226Z</updated>
+    <title>Spark SQL实战：SparkSQL exmple</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9ASparkSQL%20exmple/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9ASparkSQL%20exmple/</id>
+    <published>2020-03-13T10:00:00.000Z</published>
+    <updated>2020-07-03T03:42:59.024Z</updated>
     
     <summary type="html">
     
@@ -232,31 +314,31 @@
       
         
         
-          &lt;blockquote&gt;
-&lt;p&gt;情况：&lt;br&gt;自己有两台电脑，一台16G内存的Dell，和一台8G内存的MacBook Pro，因为自己学的是大数据开发，所以需要搭建大数据集群，因此在MacBook
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用Spark SQL，读取文件并查询数据表&lt;/p&gt;
+&lt;h4 id=&quot;2-代码：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="FRP" scheme="http://yoursite.com/tags/FRP/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="内网穿透" scheme="http://yoursite.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
-      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>CentOS7环境下安装Chrome</title>
-    <link href="http://yoursite.com/2019/12/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/"/>
-    <id>http://yoursite.com/2019/12/06/CentOS7%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%89%E8%A3%85Chrome/</id>
-    <published>2019-12-06T02:00:00.000Z</published>
-    <updated>2020-07-03T03:32:05.094Z</updated>
+    <title>Spark SQL实战：使用Spark SQL 连接hive ，将统计结果存储到 mysql中</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8Spark%20SQL%20%E8%BF%9E%E6%8E%A5hive%20%EF%BC%8C%E5%B0%86%E7%BB%9F%E8%AE%A1%E7%BB%93%E6%9E%9C%E5%AD%98%E5%82%A8%E5%88%B0%20mysql%E4%B8%AD/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8Spark%20SQL%20%E8%BF%9E%E6%8E%A5hive%20%EF%BC%8C%E5%B0%86%E7%BB%9F%E8%AE%A1%E7%BB%93%E6%9E%9C%E5%AD%98%E5%82%A8%E5%88%B0%20mysql%E4%B8%AD/</id>
+    <published>2020-03-13T08:00:00.000Z</published>
+    <updated>2020-07-03T03:42:46.383Z</updated>
     
     <summary type="html">
     
@@ -264,32 +346,31 @@
       
         
         
-          &lt;h4 id=&quot;1-修改yum源&quot;&gt;&lt;a href=&quot;#1-修改yum源&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用Spark SQL 连接hive ，读取数据，将统计结果存储到 mysql中&lt;/p&gt;
+&lt;h4
         
       
     
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
-    
-      <category term="Chrome" scheme="http://yoursite.com/tags/Chrome/"/>
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>记录12306项目抢票成功的经历-CentOS7环境</title>
-    <link href="http://yoursite.com/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/"/>
-    <id>http://yoursite.com/2019/11/09/%E8%AE%B0%E5%BD%9512306%E9%A1%B9%E7%9B%AE%E6%8A%A2%E7%A5%A8%E6%88%90%E5%8A%9F%E7%9A%84%E7%BB%8F%E5%8E%86-CentOS7%E7%8E%AF%E5%A2%83/</id>
-    <published>2019-11-09T03:00:00.000Z</published>
-    <updated>2020-07-03T03:21:42.316Z</updated>
+    <title>Spark SQL实战：将结果写入 Mysql</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%20Mysql/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%20Mysql/</id>
+    <published>2020-03-13T07:00:00.000Z</published>
+    <updated>2020-07-03T03:42:36.950Z</updated>
     
     <summary type="html">
     
@@ -297,29 +378,31 @@
       
         
         
-          &lt;blockquote&gt;
-&lt;p&gt;过年了，我们每个人都会回家过年，说到过年就不得不提抢票，毕竟过年回家的票都是一票难求，而以前都是靠购买加速包来提速抢票，前几天在公众号看到github上一个很火的12306抢票项目，而且我自己本职也是一个辣鸡程序猿，所以就想试试能不能把这个项目cl
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;读取本地student.txt，并创建DataFrame，并将结果写入mysql数据库中&lt;/p&gt;
+&lt;h4
         
       
     
     </summary>
     
     
-      <category term="有用项目" scheme="http://yoursite.com/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="项目" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-      <category term="12306" scheme="http://yoursite.com/tags/12306/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>Linux安装rz,sz</title>
-    <link href="http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/"/>
-    <id>http://yoursite.com/2019/08/09/Linux%E5%AE%89%E8%A3%85rz-sz/</id>
-    <published>2019-08-09T01:49:00.000Z</published>
-    <updated>2020-06-09T13:28:46.864Z</updated>
+    <title>Spark SQL实战:使用 case class 创建DataFrame</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8%20case%20class%20%E5%88%9B%E5%BB%BADataFrame/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8%20case%20class%20%E5%88%9B%E5%BB%BADataFrame/</id>
+    <published>2020-03-13T06:00:00.000Z</published>
+    <updated>2020-07-03T03:42:50.679Z</updated>
     
     <summary type="html">
     
@@ -327,27 +410,31 @@
       
         
         
-          &lt;h6 id=&quot;0-概念：&quot;&gt;&lt;a href=&quot;#0-概念：&quot; class=&quot;headerlink&quot; title=&quot;0.概念：&quot;&gt;&lt;/a&gt;0.概念：&lt;/h6&gt;&lt;ul&gt;
-&lt;li&gt;rz命令（Receive
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用 case class 创建DataFrame&lt;/p&gt;
+&lt;h4 id=&quot;2-数据源：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之压缩和存储</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/</id>
-    <published>2019-07-15T14:00:00.000Z</published>
-    <updated>2020-06-11T13:48:11.499Z</updated>
+    <title>Spark SQL实战:使用SparkSession创建DataFrame执行sql</title>
+    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8SparkSession%E5%88%9B%E5%BB%BADataFrame%E6%89%A7%E8%A1%8Csql/"/>
+    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8SparkSession%E5%88%9B%E5%BB%BADataFrame%E6%89%A7%E8%A1%8Csql/</id>
+    <published>2020-03-13T03:00:00.000Z</published>
+    <updated>2020-07-03T03:42:42.175Z</updated>
     
     <summary type="html">
     
@@ -355,26 +442,31 @@
       
         
         
-          &lt;h3 id=&quot;一-Hadoop源码编译支持Snappy压缩&quot;&gt;&lt;a href=&quot;#一-Hadoop源码编译支持Snappy压缩&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;在IDEA中编写代码，创建DataFrame 执行sql命令：&lt;/p&gt;
+&lt;h4 id=&quot;2-数据源：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之企业调优</title>
-    <link href="http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/"/>
-    <id>http://yoursite.com/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/</id>
-    <published>2019-07-15T13:00:00.000Z</published>
-    <updated>2020-06-11T13:33:06.432Z</updated>
+    <title>Spark Core实战：使用JDBC RDD操作数据库</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8JDBC%20RDD%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8JDBC%20RDD%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
+    <published>2020-03-12T10:00:00.000Z</published>
+    <updated>2020-07-03T03:43:38.145Z</updated>
     
     <summary type="html">
     
@@ -382,26 +474,31 @@
       
         
         
-          &lt;h3 id=&quot;一-Fetch抓取&quot;&gt;&lt;a href=&quot;#一-Fetch抓取&quot; class=&quot;headerlink&quot; title=&quot;一. Fetch抓取&quot;&gt;&lt;/a&gt;一.
+          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用JDBC RDD 操作数据库&lt;/p&gt;
+&lt;h4 id=&quot;2-在数据库中建表并插入数据：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
     
   </entry>
   
   <entry>
-    <title>Hive之函数</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E5%87%BD%E6%95%B0/</id>
-    <published>2019-07-15T12:00:00.000Z</published>
-    <updated>2020-06-11T13:22:02.760Z</updated>
+    <title>Spark Core实战-将Tomcat日志分析的结果写入mysql数据库</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86Tomcat%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%9A%84%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86Tomcat%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%9A%84%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
+    <published>2020-03-12T09:00:00.000Z</published>
+    <updated>2020-07-03T03:43:28.641Z</updated>
     
     <summary type="html">
     
@@ -409,26 +506,30 @@
       
         
         
-          &lt;h3 id=&quot;一-系统自带的函数&quot;&gt;&lt;a href=&quot;#一-系统自带的函数&quot; class=&quot;headerlink&quot; title=&quot;一.系统自带的函数&quot;&gt;&lt;/a&gt;一.系统自带的函数&lt;/h3&gt;&lt;h4 id=&quot;1-查看系统自带的函数&quot;&gt;&lt;a href=&quot;#1-查看系统自带的函数&quot;
+          &lt;h4 id=&quot;1-Tomcat日志和前面一样&quot;&gt;&lt;a href=&quot;#1-Tomcat日志和前面一样&quot; class=&quot;headerlink&quot; title=&quot;1.Tomcat日志和前面一样&quot;&gt;&lt;/a&gt;1.Tomcat日志和前面一样&lt;/h4&gt;&lt;h4 id=&quot;2-需求：&quot;&gt;&lt;a
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
     
   </entry>
   
   <entry>
-    <title>Hive 查询</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8B%E6%9F%A5%E8%AF%A2/</id>
-    <published>2019-07-15T11:00:00.000Z</published>
-    <updated>2020-06-11T13:17:25.079Z</updated>
+    <title>Spark Core实战-创建自定义分区</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E5%8C%BA/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E5%8C%BA/</id>
+    <published>2020-03-12T08:00:00.000Z</published>
+    <updated>2020-07-03T03:43:33.203Z</updated>
     
     <summary type="html">
     
@@ -436,26 +537,30 @@
       
         
         
-          &lt;h3 id=&quot;一-基本查询（Select…From）&quot;&gt;&lt;a href=&quot;#一-基本查询（Select…From）&quot; class=&quot;headerlink&quot; title=&quot;一.基本查询（Select…From）&quot;&gt;&lt;/a&gt;一.基本查询（Select…From）&lt;/h3&gt;&lt;h4
+          &lt;h4 id=&quot;1-Tomcat日志格式：&quot;&gt;&lt;a href=&quot;#1-Tomcat日志格式：&quot; class=&quot;headerlink&quot; title=&quot;1.Tomcat日志格式：&quot;&gt;&lt;/a&gt;1.Tomcat日志格式：&lt;/h4&gt;&lt;figure class=&quot;highlight
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
     
   </entry>
   
   <entry>
-    <title>Hive DML数据操作</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/</id>
-    <published>2019-07-15T10:00:00.000Z</published>
-    <updated>2020-06-11T12:51:35.584Z</updated>
+    <title>Spark Core实战：解析Tomcat日志</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E8%A7%A3%E6%9E%90Tomcat%E6%97%A5%E5%BF%97/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E8%A7%A3%E6%9E%90Tomcat%E6%97%A5%E5%BF%97/</id>
+    <published>2020-03-12T06:00:00.000Z</published>
+    <updated>2020-07-03T03:43:24.561Z</updated>
     
     <summary type="html">
     
@@ -463,26 +568,30 @@
       
         
         
-          &lt;h3 id=&quot;一-数据导入&quot;&gt;&lt;a href=&quot;#一-数据导入&quot; class=&quot;headerlink&quot; title=&quot;一. 数据导入&quot;&gt;&lt;/a&gt;一. 数据导入&lt;/h3&gt;&lt;h4 id=&quot;1-向表中装载数据（Load）&quot;&gt;&lt;a href=&quot;#1-向表中装载数据（Load）&quot;
+          &lt;h4 id=&quot;1-Tomcat日志格式：&quot;&gt;&lt;a href=&quot;#1-Tomcat日志格式：&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
+    
+      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
     
   </entry>
   
   <entry>
-    <title>Hive DDL数据定义</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/</id>
-    <published>2019-07-15T09:00:00.000Z</published>
-    <updated>2020-06-11T12:44:57.855Z</updated>
+    <title>Spark实战-用Scala编写WordCount程序</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%E5%AE%9E%E6%88%98-%E7%94%A8Scala%E7%BC%96%E5%86%99WordCount%E7%A8%8B%E5%BA%8F/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%E5%AE%9E%E6%88%98-%E7%94%A8Scala%E7%BC%96%E5%86%99WordCount%E7%A8%8B%E5%BA%8F/</id>
+    <published>2020-03-12T05:00:00.000Z</published>
+    <updated>2020-07-03T03:40:53.243Z</updated>
     
     <summary type="html">
     
@@ -490,26 +599,29 @@
       
         
         
-          &lt;h3 id=&quot;一-创建数据库&quot;&gt;&lt;a href=&quot;#一-创建数据库&quot; class=&quot;headerlink&quot; title=&quot;一.创建数据库&quot;&gt;&lt;/a&gt;一.创建数据库&lt;/h3&gt;&lt;h4
+          &lt;h3 id=&quot;一-添加pom依赖：&quot;&gt;&lt;a href=&quot;#一-添加pom依赖：&quot; class=&quot;headerlink&quot; title=&quot;一.添加pom依赖：&quot;&gt;&lt;/a&gt;一.添加pom依赖：&lt;/h3&gt;&lt;p&gt;pom.xml&lt;/p&gt;
+&lt;figure class=&quot;highlight
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
+    
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
   </entry>
   
   <entry>
-    <title>Hive将本地文件导入Hive案例</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/</id>
-    <published>2019-07-15T08:00:00.000Z</published>
-    <updated>2020-06-11T10:49:08.261Z</updated>
+    <title>Spark实战-在Spark Shell中开发一个wordcount程序</title>
+    <link href="http://yoursite.com/2020/03/12/Spark%E5%AE%9E%E6%88%98-%E5%9C%A8Spark%20Shell%E4%B8%AD%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F/"/>
+    <id>http://yoursite.com/2020/03/12/Spark%E5%AE%9E%E6%88%98-%E5%9C%A8Spark%20Shell%E4%B8%AD%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAwordcount%E7%A8%8B%E5%BA%8F/</id>
+    <published>2020-03-12T04:00:00.000Z</published>
+    <updated>2020-07-03T03:40:58.403Z</updated>
     
     <summary type="html">
     
@@ -517,71 +629,19 @@
       
         
         
-          &lt;h4 id=&quot;0-需求：&quot;&gt;&lt;a href=&quot;#0-需求：&quot; class=&quot;headerlink&quot;
+          &lt;h4 id=&quot;1-读取一个本地文件，将结果打印到屏幕上。&quot;&gt;&lt;a href=&quot;#1-读取一个本地文件，将结果打印到屏幕上。&quot; class=&quot;headerlink&quot;
         
       
     
     </summary>
     
     
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
     
     
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
     
-  </entry>
-  
-  <entry>
-    <title>Hive参数配置方式</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</id>
-    <published>2019-07-15T07:00:00.000Z</published>
-    <updated>2020-06-11T10:47:21.379Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-查看当前所有的配置信息&quot;&gt;&lt;a href=&quot;#1-查看当前所有的配置信息&quot; class=&quot;headerlink&quot; title=&quot;1.查看当前所有的配置信息&quot;&gt;&lt;/a&gt;1.查看当前所有的配置信息&lt;/h4&gt;&lt;figure class=&quot;highlight
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hive常见属性配置</title>
-    <link href="http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/</id>
-    <published>2019-07-15T06:00:00.000Z</published>
-    <updated>2020-06-11T10:46:03.827Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-Hive数据仓库位置配置&quot;&gt;&lt;a href=&quot;#1-Hive数据仓库位置配置&quot; class=&quot;headerlink&quot; title=&quot;1.Hive数据仓库位置配置&quot;&gt;&lt;/a&gt;1.Hive数据仓库位置配置&lt;/h4&gt;&lt;h5
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
-    
-    
-      <category term="Hive" scheme="http://yoursite.com/tags/Hive/"/>
+      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
   </entry>
   
