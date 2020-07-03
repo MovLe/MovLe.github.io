@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://gitee.com/movle/blog/"/>
-  <updated>2020-06-11T23:36:27.571Z</updated>
+  <updated>2020-07-03T03:35:36.163Z</updated>
   <id>http://gitee.com/movle/blog/</id>
   
   <author>
@@ -15,68 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Linux安装Apache</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Apache/</id>
-    <published>2020-05-06T02:00:00.000Z</published>
-    <updated>2020-06-11T23:36:27.571Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-安装Apache&quot;&gt;&lt;a href=&quot;#一-安装Apache&quot; class=&quot;headerlink&quot; title=&quot;一.安装Apache&quot;&gt;&lt;/a&gt;一.安装Apache&lt;/h3&gt;&lt;h4 id=&quot;1-安装&quot;&gt;&lt;a href=&quot;#1-安装&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Apache" scheme="http://gitee.com/movle/blog/categories/Apache/"/>
-    
-    
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
-    
-      <category term="Apache" scheme="http://gitee.com/movle/blog/tags/Apache/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux安装Tomcat</title>
-    <link href="http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/"/>
-    <id>http://gitee.com/movle/blog/2020/05/06/Linux%E5%AE%89%E8%A3%85Tomcat/</id>
-    <published>2020-05-06T01:49:00.000Z</published>
-    <updated>2020-06-11T23:36:35.139Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;一-安装Tomcat&quot;&gt;&lt;a href=&quot;#一-安装Tomcat&quot; class=&quot;headerlink&quot; title=&quot;一.安装Tomcat&quot;&gt;&lt;/a&gt;一.安装Tomcat&lt;/h3&gt;&lt;h4 id=&quot;1-解压：&quot;&gt;&lt;a href=&quot;#1-解压：&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Tomcat" scheme="http://gitee.com/movle/blog/categories/Tomcat/"/>
-    
-    
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Linux" scheme="http://gitee.com/movle/blog/tags/Linux/"/>
-    
-      <category term="Tomcat" scheme="http://gitee.com/movle/blog/tags/Tomcat/"/>
-    
-  </entry>
   
   <entry>
     <title>ElasticSearch实战-使用java连接elasticsearch集群并操作</title>
@@ -251,6 +189,37 @@
   </entry>
   
   <entry>
+    <title>CentOS7(单节点)安装elasticsearch</title>
+    <link href="http://gitee.com/movle/blog/2020/01/11/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
+    <id>http://gitee.com/movle/blog/2020/01/11/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
+    <published>2020-01-11T07:00:00.000Z</published>
+    <updated>2020-07-03T03:38:56.455Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-下载安装包&quot;&gt;&lt;a href=&quot;#1-下载安装包&quot; class=&quot;headerlink&quot; title=&quot;1.下载安装包&quot;&gt;&lt;/a&gt;1.下载安装包&lt;/h4&gt;&lt;h4 id=&quot;2-上传到linux&quot;&gt;&lt;a href=&quot;#2-上传到linux&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
+    
+    
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+    
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
+    
+      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
+    
+  </entry>
+  
+  <entry>
     <title>利用FRP实现内网穿透</title>
     <link href="http://gitee.com/movle/blog/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     <id>http://gitee.com/movle/blog/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
@@ -342,37 +311,6 @@
       <category term="项目" scheme="http://gitee.com/movle/blog/tags/%E9%A1%B9%E7%9B%AE/"/>
     
       <category term="12306" scheme="http://gitee.com/movle/blog/tags/12306/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7(单节点)安装elasticsearch</title>
-    <link href="http://gitee.com/movle/blog/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/"/>
-    <id>http://gitee.com/movle/blog/2019/10/12/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85elasticsearch/</id>
-    <published>2019-10-12T07:00:00.000Z</published>
-    <updated>2020-06-11T22:50:05.891Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-下载安装包&quot;&gt;&lt;a href=&quot;#1-下载安装包&quot; class=&quot;headerlink&quot; title=&quot;1.下载安装包&quot;&gt;&lt;/a&gt;1.下载安装包&lt;/h4&gt;&lt;h4 id=&quot;2-上传到linux&quot;&gt;&lt;a href=&quot;#2-上传到linux&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/categories/Elasticsearch/"/>
-    
-    
-      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
-    
-      <category term="Elasticsearch" scheme="http://gitee.com/movle/blog/tags/Elasticsearch/"/>
     
   </entry>
   
@@ -580,6 +518,60 @@
         
         
           &lt;h4 id=&quot;0-需求：&quot;&gt;&lt;a href=&quot;#0-需求：&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
+    
+    
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive参数配置方式</title>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F/</id>
+    <published>2019-07-15T07:00:00.000Z</published>
+    <updated>2020-06-11T10:47:21.379Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-查看当前所有的配置信息&quot;&gt;&lt;a href=&quot;#1-查看当前所有的配置信息&quot; class=&quot;headerlink&quot; title=&quot;1.查看当前所有的配置信息&quot;&gt;&lt;/a&gt;1.查看当前所有的配置信息&lt;/h4&gt;&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Hive" scheme="http://gitee.com/movle/blog/categories/Hive/"/>
+    
+    
+      <category term="Hive" scheme="http://gitee.com/movle/blog/tags/Hive/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive常见属性配置</title>
+    <link href="http://gitee.com/movle/blog/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/"/>
+    <id>http://gitee.com/movle/blog/2019/07/15/Hive%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-07-15T06:00:00.000Z</published>
+    <updated>2020-06-11T10:46:03.827Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;1-Hive数据仓库位置配置&quot;&gt;&lt;a href=&quot;#1-Hive数据仓库位置配置&quot; class=&quot;headerlink&quot; title=&quot;1.Hive数据仓库位置配置&quot;&gt;&lt;/a&gt;1.Hive数据仓库位置配置&lt;/h4&gt;&lt;h5
         
       
     
