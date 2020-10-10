@@ -125,6 +125,33 @@
   </entry>
   
   <entry>
+    <title>读书笔记-《关键20小时 快速学会任何技能》</title>
+    <link href="http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/"/>
+    <id>http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/</id>
+    <published>2020-05-10T04:57:00.000Z</published>
+    <updated>2020-10-10T06:01:07.010Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-作者自序&quot;&gt;&lt;a href=&quot;#一-作者自序&quot; class=&quot;headerlink&quot; title=&quot;一.作者自序&quot;&gt;&lt;/a&gt;一.作者自序&lt;/h3&gt;&lt;h4 id=&quot;1-要“学会”而非“学精”&quot;&gt;&lt;a href=&quot;#1-要“学会”而非“学精”&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SparkStreaming实战：处理来自flume pull方式发来的数据</title>
     <link href="http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20pull%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
     <id>http://yoursite.com/2020/03/15/Spark%20Streaming%E5%AE%9E%E6%88%98%EF%BC%9A%E5%A4%84%E7%90%86%E6%9D%A5%E8%87%AAflume%20pull%E6%96%B9%E5%BC%8F%E5%8F%91%E6%9D%A5%E7%9A%84%E6%95%B0%E6%8D%AE/</id>
@@ -584,37 +611,6 @@
         
           &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用JDBC RDD 操作数据库&lt;/p&gt;
 &lt;h4 id=&quot;2-在数据库中建表并插入数据：&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
-    
-      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark Core实战-将Tomcat日志分析的结果写入mysql数据库</title>
-    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86Tomcat%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%9A%84%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%86Tomcat%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E7%9A%84%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
-    <published>2020-03-12T09:00:00.000Z</published>
-    <updated>2020-07-03T03:43:28.641Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-Tomcat日志和前面一样&quot;&gt;&lt;a href=&quot;#1-Tomcat日志和前面一样&quot; class=&quot;headerlink&quot; title=&quot;1.Tomcat日志和前面一样&quot;&gt;&lt;/a&gt;1.Tomcat日志和前面一样&lt;/h4&gt;&lt;h4 id=&quot;2-需求：&quot;&gt;&lt;a
         
       
     
