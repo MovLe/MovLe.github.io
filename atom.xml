@@ -125,6 +125,33 @@
   </entry>
   
   <entry>
+    <title>读书笔记-《坚持，一种可以养成的习惯》</title>
+    <link href="http://yoursite.com/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/"/>
+    <id>http://yoursite.com/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/</id>
+    <published>2020-06-07T04:57:00.000Z</published>
+    <updated>2020-10-10T08:51:58.790Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;一-为什么你不能坚持&quot;&gt;&lt;a href=&quot;#一-为什么你不能坚持&quot; class=&quot;headerlink&quot; title=&quot;一.为什么你不能坚持&quot;&gt;&lt;/a&gt;一.为什么你不能坚持&lt;/h3&gt;&lt;h5 id=&quot;1-如刷牙般轻松，这就是习惯&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>读书笔记-《关键20小时 快速学会任何技能》</title>
     <link href="http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/"/>
     <id>http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/</id>
@@ -593,38 +620,6 @@
       <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
     
       <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark Core实战：使用JDBC RDD操作数据库</title>
-    <link href="http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8JDBC%20RDD%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>http://yoursite.com/2020/03/12/Spark%20Core%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8JDBC%20RDD%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
-    <published>2020-03-12T10:00:00.000Z</published>
-    <updated>2020-07-03T03:43:38.145Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用JDBC RDD 操作数据库&lt;/p&gt;
-&lt;h4 id=&quot;2-在数据库中建表并插入数据：&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
-    
-      <category term="SparkCore" scheme="http://yoursite.com/tags/SparkCore/"/>
     
   </entry>
   
