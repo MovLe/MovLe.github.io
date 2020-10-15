@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-15T05:35:19.421Z</updated>
+  <updated>2020-10-15T06:37:57.451Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,42 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CentOS7 安装NodeJS-使用二进制文件安装</title>
+    <link href="http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
+    <published>2020-10-15T06:37:00.000Z</published>
+    <updated>2020-10-15T06:37:57.451Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h6 id=&quot;1-下载安装包&quot;&gt;&lt;a href=&quot;#1-下载安装包&quot; class=&quot;headerlink&quot; title=&quot;1.下载安装包&quot;&gt;&lt;/a&gt;1.下载安装包&lt;/h6&gt;&lt;p&gt;&lt;a href=&quot;https://nodejs.org/en/download/&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+    
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="NodeJS" scheme="http://yoursite.com/tags/NodeJS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>CentOS7安装Maven</title>
     <link href="http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/"/>
     <id>http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/</id>
     <published>2020-10-15T05:35:00.000Z</published>
-    <updated>2020-10-15T05:35:19.421Z</updated>
+    <updated>2020-10-15T06:37:38.339Z</updated>
     
     <summary type="html">
     
@@ -41,7 +72,7 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Maven" scheme="http://yoursite.com/tags/Maven/"/>
     
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
@@ -573,38 +604,6 @@
         
           &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;读取本地student.txt，并创建DataFrame，并将结果写入mysql数据库中&lt;/p&gt;
 &lt;h4
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/categories/Spark/"/>
-    
-    
-      <category term="Spark" scheme="http://yoursite.com/tags/Spark/"/>
-    
-      <category term="Spark实战" scheme="http://yoursite.com/tags/Spark%E5%AE%9E%E6%88%98/"/>
-    
-      <category term="Spark SQL" scheme="http://yoursite.com/tags/Spark-SQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spark SQL实战:使用 case class 创建DataFrame</title>
-    <link href="http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8%20case%20class%20%E5%88%9B%E5%BB%BADataFrame/"/>
-    <id>http://yoursite.com/2020/03/13/Spark%20SQL%E5%AE%9E%E6%88%98%EF%BC%9A%E4%BD%BF%E7%94%A8%20case%20class%20%E5%88%9B%E5%BB%BADataFrame/</id>
-    <published>2020-03-13T06:00:00.000Z</published>
-    <updated>2020-07-03T03:42:50.679Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;1-需求：&quot;&gt;&lt;a href=&quot;#1-需求：&quot; class=&quot;headerlink&quot; title=&quot;1.需求：&quot;&gt;&lt;/a&gt;1.需求：&lt;/h4&gt;&lt;p&gt;使用 case class 创建DataFrame&lt;/p&gt;
-&lt;h4 id=&quot;2-数据源：&quot;&gt;&lt;a
         
       
     
