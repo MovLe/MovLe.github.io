@@ -13,7 +13,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Object类常用API |  Movle
+    泛型的使用 |  Movle
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -49,7 +49,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Java-Object类常用API"
+  id="post-java-泛型的使用"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -60,15 +60,15 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Object类常用API
+  泛型的使用
 </h1>
  
 
     </header>
      
     <div class="article-meta">
-      <a href="/2020/11/08/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/" class="article-date">
-  <time datetime="2020-11-08T06:02:00.000Z" itemprop="datePublished">2020-11-08</time>
+      <a href="/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-11-03T06:02:00.000Z" itemprop="datePublished">2020-11-03</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/Java/">Java</a>
@@ -79,7 +79,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">573</span>
+            <span class="post-count">413</span>
         </span>
     </span>
 
@@ -103,21 +103,21 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="1-System类"><a href="#1-System类" class="headerlink" title="1.System类"></a>1.System类</h4><h5 id="1-成员方法"><a href="#1-成员方法" class="headerlink" title="(1)成员方法"></a>(1)成员方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">currentTimeMillis</span><span class="params">()</span>    <span class="comment">//返回以毫秒为单位的当前时间</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">arraycopy</span><span class="params">(Object src,<span class="keyword">int</span> srcPos,Object dest,<span class="keyword">int</span> destPos,<span class="keyword">int</span> Length)</span>  <span class="comment">//将数组中指定的数据拷贝到另一个数组中 src - 源数组 srcPos -源数组起始位置 dest - 目标数组 destPos - 目标数组起始位置 Length - 要复制的数组元素的个数</span></span></span><br></pre></td></tr></table></figure>
+  <h4 id="1-泛型类和泛型方法"><a href="#1-泛型类和泛型方法" class="headerlink" title="1.泛型类和泛型方法"></a>1.泛型类和泛型方法</h4><h5 id="1-格式"><a href="#1-格式" class="headerlink" title="(1)格式"></a>(1)格式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">类名&lt;泛型&gt;</span><br><span class="line">方法名(泛型)</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例"><a href="#2-示例" class="headerlink" title="(2)示例"></a>(2)示例</h5><p>例如<br>a.泛型类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">		System.out.println(t);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b.实现方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Test01&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		MyClass&lt;String&gt; mc1 &#x3D; new MyClass&lt;&gt;();</span><br><span class="line">		mc1.print(&quot;hello1&quot;);</span><br><span class="line">		</span><br><span class="line">		MyClass&lt;Integer&gt; mc2 &#x3D; new MyClass();</span><br><span class="line">		mc2.print(99);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-StringBuilder类"><a href="#2-StringBuilder类" class="headerlink" title="2.StringBuilder类"></a>2.StringBuilder类</h4><h5 id="1-构造方法"><a href="#1-构造方法" class="headerlink" title="(1)构造方法"></a>(1)构造方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">StringBulider();            <span class="comment">//创建一个空的字符串缓冲区对象</span></span><br><span class="line"></span><br><span class="line">StringBulider(String str);  <span class="comment">//根据传入的内容创建一个字符串缓冲区对象</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="2-成员方法"><a href="#2-成员方法" class="headerlink" title="(2)成员方法"></a>(2)成员方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">StringBuilder <span class="title">append</span><span class="params">(Object obj)</span></span>; <span class="comment">//添加内容</span></span><br><span class="line"><span class="function">StringBuilder <span class="title">reverse</span><span class="params">()</span></span>;          <span class="comment">//反转内容</span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span></span>;								<span class="comment">//将缓冲区内容转换为字符串</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-包装类"><a href="#3-包装类" class="headerlink" title="3.包装类"></a>3.包装类</h4><h5 id="1-装箱"><a href="#1-装箱" class="headerlink" title="(1)装箱"></a>(1)装箱</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">构造方法</span><br><span class="line">	Integer(<span class="keyword">int</span> value)       <span class="comment">//构造一个新分配的Integer对象，它表示指定的int值</span></span><br><span class="line">	Integer(String s)				 <span class="comment">//构造一个新分配的Integer对象，它表示String参数所指的int值 如“100” 注意：“a”是不行的</span></span><br><span class="line"></span><br><span class="line">静态方法</span><br><span class="line">	<span class="function"><span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> value)</span>   <span class="comment">//返回一个表示指定int值的Integer实例</span></span></span><br><span class="line"><span class="function">	<span class="keyword">static</span> Integer <span class="title">ValueOf</span><span class="params">(String s)</span>    <span class="comment">//返回保存指定的String的值的Integer对象</span></span></span><br><span class="line"><span class="function">	</span></span><br><span class="line"><span class="function">成员方法<span class="params">(拆箱)</span></span></span><br><span class="line"><span class="function">	<span class="keyword">int</span> <span class="title">intValue</span><span class="params">()</span>  <span class="comment">//以int类型返回该Integer的值</span></span></span><br></pre></td></tr></table></figure>
-
-<h4 id="4-字符串与基本数据类型的转换"><a href="#4-字符串与基本数据类型的转换" class="headerlink" title="4.字符串与基本数据类型的转换"></a>4.字符串与基本数据类型的转换</h4><h5 id="1-基本数据类型转换为字符串"><a href="#1-基本数据类型转换为字符串" class="headerlink" title="(1)基本数据类型转换为字符串"></a>(1)基本数据类型转换为字符串</h5><p>a.基本类型数据与“”相连接即可</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1=<span class="number">100</span>+<span class="string">""</span>;</span><br><span class="line">String s2=<span class="number">28.02</span>+<span class="string">""</span>;</span><br></pre></td></tr></table></figure>
-<p>b.使用包装类中的静态方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span> i)</span>       <span class="comment">//返回一个指定整数的String对象</span></span></span><br></pre></td></tr></table></figure>
-<p>c.使用String类中的静态方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span>        <span class="comment">//返回int参数的字符串表示形式</span></span></span><br></pre></td></tr></table></figure>
-<h5 id="2-String类型转换为对应的基本类型：使用包装类的静态方法parseXX-“字符串”-方法"><a href="#2-String类型转换为对应的基本类型：使用包装类的静态方法parseXX-“字符串”-方法" class="headerlink" title="(2)String类型转换为对应的基本类型：使用包装类的静态方法parseXX(“字符串”)方法"></a>(2)String类型转换为对应的基本类型：使用包装类的静态方法parseXX(“字符串”)方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span> <span class="title">parseByte</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的byte基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">short</span> <span class="title">parseShort</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的Short基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseInt</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的int基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">parseLong</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的long基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">parseFloat</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的float基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">parseDouble</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的double基本类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">parseBoolean</span><span class="params">(String s)</span>     <span class="comment">//将字符串转换为对应的boolean基本类型</span></span></span><br></pre></td></tr></table></figure> 
+<h4 id="2-泛型接口和泛型方法"><a href="#2-泛型接口和泛型方法" class="headerlink" title="2.泛型接口和泛型方法"></a>2.泛型接口和泛型方法</h4><h5 id="1-格式-1"><a href="#1-格式-1" class="headerlink" title="(1)格式"></a>(1)格式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">接口&lt;泛型&gt;</span><br><span class="line">方法名(泛型)</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例-1"><a href="#2-示例-1" class="headerlink" title="(2)示例"></a>(2)示例</h5><p>例如<br>a.接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyInter</span>&lt;<span class="title">O</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(O o)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b.接口实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterImpl</span>&lt;<span class="title">O</span>&gt; <span class="keyword">implements</span> <span class="title">MyInter</span>&lt;<span class="title">O</span>&gt;</span>&#123;</span><br><span class="line">	<span class="meta">@Overide</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(O o)</span></span>&#123;</span><br><span class="line">		System.out.println(o);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c.调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		MyInterImpl&lt;String&gt; m1 = <span class="keyword">new</span> MyInterImpl&lt;&gt;();</span><br><span class="line">		m1.print(<span class="string">"world"</span>);</span><br><span class="line">		</span><br><span class="line">		MyInterImpl&lt;Double&gt; m2 = <span class="keyword">new</span> MyInterImpl();</span><br><span class="line">		m2.print(<span class="number">8.8</span>)</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-泛型通配符"><a href="#3-泛型通配符" class="headerlink" title="3.泛型通配符"></a>3.泛型通配符</h4><h5 id="1-概念"><a href="#1-概念" class="headerlink" title="(1)概念"></a>(1)概念</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">泛型的通配符</span><br><span class="line">	？：代表任意的数据类型</span><br><span class="line">使用方式：</span><br><span class="line">	不能创建对象使用</span><br><span class="line">	只能作为方法的参数使用</span><br><span class="line">泛型的上限限定</span><br><span class="line">	？ extends E 代表使用的泛型只能是E类型的子类&#x2F;本身</span><br><span class="line">泛型类的下限限定</span><br><span class="line">	？ super E 代表使用的泛型只能是E类型的父类&#x2F;本身</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例-2"><a href="#2-示例-2" class="headerlink" title="(2)示例"></a>(2)示例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo1();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.add(<span class="string">"hello"</span>);</span><br><span class="line">        list1.add(<span class="string">"world"</span>);</span><br><span class="line">        list1.add(<span class="string">"beatiful"</span>);</span><br><span class="line">        print(list1);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Integer&gt; list2 =  <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list2.add(<span class="number">100</span>);</span><br><span class="line">        list2.add(<span class="number">200</span>);</span><br><span class="line">        list2.add(<span class="number">300</span>);</span><br><span class="line">        list2.add(<span class="number">500</span>);</span><br><span class="line">        print(list2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 泛型通配符的使用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(ArrayList&lt;?&gt; list)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Object o : list) &#123;</span><br><span class="line">            System.out.println(o);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reward-btn">
@@ -183,7 +183,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/11/08/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -196,10 +196,19 @@
    
   <nav class="article-nav">
     
+      <a href="/2020/11/03/java-List%E6%8E%A5%E5%8F%A3/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            List接口
+          
+        </div>
+      </a>
     
-      <a href="/2020/10/22/ffmpeg%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F/" class="article-nav-link">
+    
+      <a href="/2020/11/02/Java-Collection%E9%9B%86%E5%90%88/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">ffmpeg音视频加速</div>
+        <div class="article-nav-title">Collection集合</div>
       </a>
     
   </nav>
