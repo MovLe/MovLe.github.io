@@ -3,11 +3,11 @@
   <title>Movle</title>
   
   <subtitle>面朝大海，春暖花开&#39;</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://gitee.com/movle/blog/"/>
   <updated>2020-11-10T01:22:55.354Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://gitee.com/movle/blog/</id>
   
   <author>
     <name>Movle</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>编程常用命令</title>
-    <link href="http://yoursite.com/2020/11/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2020/11/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://gitee.com/movle/blog/2020/11/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
     <published>2020-11-10T01:12:00.000Z</published>
     <updated>2020-11-10T01:22:55.354Z</updated>
     
@@ -36,17 +36,17 @@
     </summary>
     
     
-      <category term="速查" scheme="http://yoursite.com/categories/%E9%80%9F%E6%9F%A5/"/>
+      <category term="速查" scheme="http://gitee.com/movle/blog/categories/%E9%80%9F%E6%9F%A5/"/>
     
     
-      <category term="速查" scheme="http://yoursite.com/tags/%E9%80%9F%E6%9F%A5/"/>
+      <category term="速查" scheme="http://gitee.com/movle/blog/tags/%E9%80%9F%E6%9F%A5/"/>
     
   </entry>
   
   <entry>
     <title>线程</title>
-    <link href="http://yoursite.com/2020/11/08/Java-%E7%BA%BF%E7%A8%8B/"/>
-    <id>http://yoursite.com/2020/11/08/Java-%E7%BA%BF%E7%A8%8B/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/08/Java-%E7%BA%BF%E7%A8%8B/"/>
+    <id>http://gitee.com/movle/blog/2020/11/08/Java-%E7%BA%BF%E7%A8%8B/</id>
     <published>2020-11-08T09:20:00.000Z</published>
     <updated>2020-11-08T08:42:44.783Z</updated>
     
@@ -63,17 +63,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>异常</title>
-    <link href="http://yoursite.com/2020/11/08/Java-%E5%BC%82%E5%B8%B8/"/>
-    <id>http://yoursite.com/2020/11/08/Java-%E5%BC%82%E5%B8%B8/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/08/Java-%E5%BC%82%E5%B8%B8/"/>
+    <id>http://gitee.com/movle/blog/2020/11/08/Java-%E5%BC%82%E5%B8%B8/</id>
     <published>2020-11-08T08:20:00.000Z</published>
     <updated>2020-11-08T08:41:57.045Z</updated>
     
@@ -90,17 +90,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>Map</title>
-    <link href="http://yoursite.com/2020/11/07/Java-Map/"/>
-    <id>http://yoursite.com/2020/11/07/Java-Map/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/07/Java-Map/"/>
+    <id>http://gitee.com/movle/blog/2020/11/07/Java-Map/</id>
     <published>2020-11-07T08:20:00.000Z</published>
     <updated>2020-11-08T06:31:30.660Z</updated>
     
@@ -117,17 +117,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>Collections集合工具类</title>
-    <link href="http://yoursite.com/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
-    <id>http://yoursite.com/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+    <id>http://gitee.com/movle/blog/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/</id>
     <published>2020-11-07T08:05:00.000Z</published>
     <updated>2020-11-08T06:26:13.313Z</updated>
     
@@ -144,17 +144,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>Set接口</title>
-    <link href="http://yoursite.com/2020/11/03/java-Set%E6%8E%A5%E5%8F%A3/"/>
-    <id>http://yoursite.com/2020/11/03/java-Set%E6%8E%A5%E5%8F%A3/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/03/java-Set%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://gitee.com/movle/blog/2020/11/03/java-Set%E6%8E%A5%E5%8F%A3/</id>
     <published>2020-11-03T08:05:00.000Z</published>
     <updated>2020-11-08T06:17:41.094Z</updated>
     
@@ -171,17 +171,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>List接口</title>
-    <link href="http://yoursite.com/2020/11/03/java-List%E6%8E%A5%E5%8F%A3/"/>
-    <id>http://yoursite.com/2020/11/03/java-List%E6%8E%A5%E5%8F%A3/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/03/java-List%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://gitee.com/movle/blog/2020/11/03/java-List%E6%8E%A5%E5%8F%A3/</id>
     <published>2020-11-03T07:05:00.000Z</published>
     <updated>2020-11-08T06:15:29.139Z</updated>
     
@@ -198,17 +198,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>泛型的使用</title>
-    <link href="http://yoursite.com/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
-    <id>http://yoursite.com/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://gitee.com/movle/blog/2020/11/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/</id>
     <published>2020-11-03T06:02:00.000Z</published>
     <updated>2020-11-08T06:13:23.396Z</updated>
     
@@ -225,17 +225,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>Collection集合</title>
-    <link href="http://yoursite.com/2020/11/02/Java-Collection%E9%9B%86%E5%90%88/"/>
-    <id>http://yoursite.com/2020/11/02/Java-Collection%E9%9B%86%E5%90%88/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/02/Java-Collection%E9%9B%86%E5%90%88/"/>
+    <id>http://gitee.com/movle/blog/2020/11/02/Java-Collection%E9%9B%86%E5%90%88/</id>
     <published>2020-11-02T06:02:00.000Z</published>
     <updated>2020-11-08T06:16:55.218Z</updated>
     
@@ -252,17 +252,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>Object类常用API</title>
-    <link href="http://yoursite.com/2020/11/01/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/"/>
-    <id>http://yoursite.com/2020/11/01/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/</id>
+    <link href="http://gitee.com/movle/blog/2020/11/01/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/"/>
+    <id>http://gitee.com/movle/blog/2020/11/01/Java-Object%E7%B1%BB%E5%B8%B8%E7%94%A8API/</id>
     <published>2020-11-01T06:02:00.000Z</published>
     <updated>2020-11-08T06:12:53.318Z</updated>
     
@@ -279,17 +279,17 @@
     </summary>
     
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://gitee.com/movle/blog/categories/Java/"/>
     
     
-      <category term="知识点速览" scheme="http://yoursite.com/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
+      <category term="知识点速览" scheme="http://gitee.com/movle/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/"/>
     
   </entry>
   
   <entry>
     <title>ffmpeg音视频加速</title>
-    <link href="http://yoursite.com/2020/10/22/ffmpeg%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F/"/>
-    <id>http://yoursite.com/2020/10/22/ffmpeg%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/22/ffmpeg%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F/"/>
+    <id>http://gitee.com/movle/blog/2020/10/22/ffmpeg%E9%9F%B3%E8%A7%86%E9%A2%91%E5%8A%A0%E9%80%9F/</id>
     <published>2020-10-22T03:55:00.000Z</published>
     <updated>2020-10-22T04:14:56.968Z</updated>
     
@@ -307,17 +307,17 @@
     </summary>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/categories/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/categories/ffmpeg/"/>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/tags/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/tags/ffmpeg/"/>
     
   </entry>
   
   <entry>
     <title>Mac安装Redis</title>
-    <link href="http://yoursite.com/2020/10/15/Mac%E5%AE%89%E8%A3%85redis/"/>
-    <id>http://yoursite.com/2020/10/15/Mac%E5%AE%89%E8%A3%85redis/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/15/Mac%E5%AE%89%E8%A3%85redis/"/>
+    <id>http://gitee.com/movle/blog/2020/10/15/Mac%E5%AE%89%E8%A3%85redis/</id>
     <published>2020-10-15T08:08:00.000Z</published>
     <updated>2020-10-15T08:14:27.154Z</updated>
     
@@ -334,21 +334,21 @@
     </summary>
     
     
-      <category term="Redis" scheme="http://yoursite.com/categories/Redis/"/>
+      <category term="Redis" scheme="http://gitee.com/movle/blog/categories/Redis/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Redis" scheme="http://yoursite.com/tags/Redis/"/>
+      <category term="Redis" scheme="http://gitee.com/movle/blog/tags/Redis/"/>
     
-      <category term="Mac" scheme="http://yoursite.com/tags/Mac/"/>
+      <category term="Mac" scheme="http://gitee.com/movle/blog/tags/Mac/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7 安装NodeJS-使用二进制文件安装</title>
-    <link href="http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    <id>http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
+    <id>http://gitee.com/movle/blog/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/</id>
     <published>2020-10-15T06:37:00.000Z</published>
     <updated>2020-10-15T06:37:57.451Z</updated>
     
@@ -365,21 +365,21 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="NodeJS" scheme="http://yoursite.com/tags/NodeJS/"/>
+      <category term="NodeJS" scheme="http://gitee.com/movle/blog/tags/NodeJS/"/>
     
   </entry>
   
   <entry>
     <title>CentOS7安装Maven</title>
-    <link href="http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/"/>
-    <id>http://yoursite.com/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/"/>
+    <id>http://gitee.com/movle/blog/2020/10/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/</id>
     <published>2020-10-15T05:35:00.000Z</published>
     <updated>2020-10-15T06:37:38.339Z</updated>
     
@@ -396,21 +396,21 @@
     </summary>
     
     
-      <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+      <category term="Linux" scheme="http://gitee.com/movle/blog/categories/Linux/"/>
     
     
-      <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
+      <category term="安装部署" scheme="http://gitee.com/movle/blog/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Maven" scheme="http://yoursite.com/tags/Maven/"/>
+      <category term="CentOS" scheme="http://gitee.com/movle/blog/tags/CentOS/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+      <category term="Maven" scheme="http://gitee.com/movle/blog/tags/Maven/"/>
     
   </entry>
   
   <entry>
     <title>读书笔记-《好好学习；个人知识管理精进指南》</title>
-    <link href="http://yoursite.com/2020/10/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B2%BE%E8%BF%9B%E6%8C%87%E5%8D%97/"/>
-    <id>http://yoursite.com/2020/10/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B2%BE%E8%BF%9B%E6%8C%87%E5%8D%97/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B2%BE%E8%BF%9B%E6%8C%87%E5%8D%97/"/>
+    <id>http://gitee.com/movle/blog/2020/10/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0%EF%BC%9A%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E7%B2%BE%E8%BF%9B%E6%8C%87%E5%8D%97/</id>
     <published>2020-10-10T02:57:00.000Z</published>
     <updated>2020-10-10T06:06:37.747Z</updated>
     
@@ -427,17 +427,17 @@
     </summary>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>ffmpeg合并视频</title>
-    <link href="http://yoursite.com/2020/10/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/"/>
-    <id>http://yoursite.com/2020/10/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/"/>
+    <id>http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/</id>
     <published>2020-10-06T03:55:00.000Z</published>
     <updated>2020-10-06T04:01:38.187Z</updated>
     
@@ -454,17 +454,17 @@
     </summary>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/categories/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/categories/ffmpeg/"/>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/tags/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/tags/ffmpeg/"/>
     
   </entry>
   
   <entry>
     <title>ffmpeg参数</title>
-    <link href="http://yoursite.com/2020/10/06/ffmpeg%E5%8F%82%E6%95%B0/"/>
-    <id>http://yoursite.com/2020/10/06/ffmpeg%E5%8F%82%E6%95%B0/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%8F%82%E6%95%B0/"/>
+    <id>http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%8F%82%E6%95%B0/</id>
     <published>2020-10-06T03:52:00.000Z</published>
     <updated>2020-10-06T03:58:39.658Z</updated>
     
@@ -481,17 +481,17 @@
     </summary>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/categories/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/categories/ffmpeg/"/>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/tags/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/tags/ffmpeg/"/>
     
   </entry>
   
   <entry>
     <title>ffmpeg常用命令</title>
-    <link href="http://yoursite.com/2020/10/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2020/10/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
+    <link href="http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://gitee.com/movle/blog/2020/10/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</id>
     <published>2020-10-06T03:47:00.000Z</published>
     <updated>2020-10-06T03:57:23.496Z</updated>
     
@@ -508,17 +508,17 @@
     </summary>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/categories/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/categories/ffmpeg/"/>
     
     
-      <category term="ffmpeg" scheme="http://yoursite.com/tags/ffmpeg/"/>
+      <category term="ffmpeg" scheme="http://gitee.com/movle/blog/tags/ffmpeg/"/>
     
   </entry>
   
   <entry>
     <title>读书笔记-《坚持，一种可以养成的习惯》</title>
-    <link href="http://yoursite.com/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/"/>
-    <id>http://yoursite.com/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/</id>
+    <link href="http://gitee.com/movle/blog/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/"/>
+    <id>http://gitee.com/movle/blog/2020/06/07/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E5%9D%9A%E6%8C%81%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%85%BB%E6%88%90%E7%9A%84%E4%B9%A0%E6%83%AF/</id>
     <published>2020-06-07T04:57:00.000Z</published>
     <updated>2020-10-10T09:02:14.034Z</updated>
     
@@ -535,17 +535,17 @@
     </summary>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>读书笔记-《关键20小时 快速学会任何技能》</title>
-    <link href="http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/"/>
-    <id>http://yoursite.com/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/</id>
+    <link href="http://gitee.com/movle/blog/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/"/>
+    <id>http://gitee.com/movle/blog/2020/05/10/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E5%85%B3%E9%94%AE20%E5%B0%8F%E6%97%B6%EF%BC%8C%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%BC%9A%E4%BB%BB%E4%BD%95%E6%8A%80%E8%83%BD%E3%80%8B/</id>
     <published>2020-05-10T04:57:00.000Z</published>
     <updated>2020-10-10T06:01:07.010Z</updated>
     
@@ -562,10 +562,10 @@
     </summary>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://gitee.com/movle/blog/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
