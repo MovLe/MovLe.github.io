@@ -20,13 +20,13 @@
   <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
   
   
-<link rel="stylesheet" href="/blog/dist/main.css">
+<link rel="stylesheet" href="/dist/main.css">
 
   
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
 
   
-<link rel="stylesheet" href="/blog/css/custom.css">
+<link rel="stylesheet" href="/css/custom.css">
 
   
   
@@ -37,7 +37,7 @@
 
   
 
-<link rel="alternate" href="/blog/atom.xml" title="Movle" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="Movle" type="application/atom+xml">
 </head>
 
 </html>
@@ -67,11 +67,11 @@
     </header>
      
     <div class="article-meta">
-      <a href="/blog/2020/11/07/Java-Map/" class="article-date">
+      <a href="/2020/11/07/Java-Map/" class="article-date">
   <time datetime="2020-11-07T08:20:00.000Z" itemprop="datePublished">2020-11-07</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/blog/categories/Java/">Java</a>
+    <a class="article-category-link" href="/categories/Java/">Java</a>
   </div>
   
 <div class="word_count">
@@ -126,11 +126,11 @@
 </ul>
 <h5 id="3-entrySet-：把Map集合内部的多个Entry对象取出来存储到一个Set集合中"><a href="#3-entrySet-：把Map集合内部的多个Entry对象取出来存储到一个Set集合中" class="headerlink" title="(3)entrySet()：把Map集合内部的多个Entry对象取出来存储到一个Set集合中"></a>(3)entrySet()：把Map集合内部的多个Entry对象取出来存储到一个Set集合中</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">格式</span><br><span class="line">	Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet()</span><br></pre></td></tr></table></figure>
 
-<h4 id="6-Map集合的遍历方法"><a href="#6-Map集合的遍历方法" class="headerlink" title="6.Map集合的遍历方法"></a>6.Map集合的遍历方法</h4><h5 id="1-Map集合的第一种遍历方式：通过键找值"><a href="#1-Map集合的第一种遍历方式：通过键找值" class="headerlink" title="(1)Map集合的第一种遍历方式：通过键找值"></a>(1)Map集合的第一种遍历方式：通过键找值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	Set&lt;K&gt; keySet() 返回此映射中包含的键的Set视图</span><br><span class="line">实现步骤：</span><br><span class="line">	1.使用Map集合中的keySet()方法，把Map集合所有的key取出来，存储到一个Set集合中</span><br><span class="line">	2.遍历Set集合，获取Map集合中的每一个key</span><br><span class="line">	3.通过Map集合中的方法get(key)，通过key找到value</span><br></pre></td></tr></table></figure>
+<h4 id="6-Map集合的遍历方法"><a href="#6-Map集合的遍历方法" class="headerlink" title="6.Map集合的遍历方法"></a>6.Map集合的遍历方法</h4><h5 id="1-Map集合的第一种遍历方式：通过键找值"><a href="#1-Map集合的第一种遍历方式：通过键找值" class="headerlink" title="(1)Map集合的第一种遍历方式：通过键找值"></a>(1)Map集合的第一种遍历方式：通过键找值</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	<span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> 返回此映射中包含的键的Set视图</span></span><br><span class="line"><span class="function">实现步骤：</span></span><br><span class="line"><span class="function">	1.使用Map集合中的<span class="title">keySet</span><span class="params">()</span>方法，把Map集合所有的key取出来，存储到一个Set集合中</span></span><br><span class="line"><span class="function">	2.遍历Set集合，获取Map集合中的每一个key</span></span><br><span class="line"><span class="function">	3.通过Map集合中的方法<span class="title">get</span><span class="params">(key)</span>，通过key找到value</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>示例</strong>：<br><em>Map02KeySetDemo.java</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class Map02KeySetDemo &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        demo01();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 使用keySet方法遍历Map</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private static void demo01() &#123;</span><br><span class="line">        Map&lt;String,Integer&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">        map.put(&quot;林志玲&quot;,18);</span><br><span class="line">        map.put(&quot;吴亦凡&quot;,38);</span><br><span class="line">        map.put(&quot;林志颖&quot;,28);</span><br><span class="line">        map.put(&quot;赵忠祥&quot;,48);</span><br><span class="line">        map.put(&quot;成龙&quot;,57);</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set &#x3D; map.keySet();</span><br><span class="line"></span><br><span class="line">        for(String k:set)&#123;</span><br><span class="line">            Integer value &#x3D; map.get(k);</span><br><span class="line">            System.out.println(k+&quot;&#x3D;&quot;+value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="2-Map集合的第二种遍历方式：使用Entry对象遍历"><a href="#2-Map集合的第二种遍历方式：使用Entry对象遍历" class="headerlink" title="(2)Map集合的第二种遍历方式：使用Entry对象遍历"></a>(2)Map集合的第二种遍历方式：使用Entry对象遍历</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	Set &lt;Map.Entry&lt;K,V&gt;&gt; entrySet()  返回此映射中包含的映射关系的Set视图</span><br><span class="line">	</span><br><span class="line">实现步骤：</span><br><span class="line">	1.使用Map集合中的方法entrySet()，把Map集合中多个Entry对象取出来，存储到一个Set集合中</span><br><span class="line">	2.遍历Set集合，获取每一个Entry对象</span><br><span class="line">	3.视图Entry对象中的方法getKey()和getValue()获取键和值</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Map02KeySetDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo01();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用keySet方法遍历Map</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"林志玲"</span>,<span class="number">18</span>);</span><br><span class="line">        map.put(<span class="string">"吴亦凡"</span>,<span class="number">38</span>);</span><br><span class="line">        map.put(<span class="string">"林志颖"</span>,<span class="number">28</span>);</span><br><span class="line">        map.put(<span class="string">"赵忠祥"</span>,<span class="number">48</span>);</span><br><span class="line">        map.put(<span class="string">"成龙"</span>,<span class="number">57</span>);</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set = map.keySet();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(String k:set)&#123;</span><br><span class="line">            Integer value = map.get(k);</span><br><span class="line">            System.out.println(k+<span class="string">"="</span>+value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-Map集合的第二种遍历方式：使用Entry对象遍历"><a href="#2-Map集合的第二种遍历方式：使用Entry对象遍历" class="headerlink" title="(2)Map集合的第二种遍历方式：使用Entry对象遍历"></a>(2)Map集合的第二种遍历方式：使用Entry对象遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	Set &lt;Map.Entry&lt;K,V&gt;&gt; entrySet()  返回此映射中包含的映射关系的Set视图</span><br><span class="line">	</span><br><span class="line">实现步骤：</span><br><span class="line">	<span class="number">1</span>.使用Map集合中的方法entrySet()，把Map集合中多个Entry对象取出来，存储到一个Set集合中</span><br><span class="line">	<span class="number">2</span>.遍历Set集合，获取每一个Entry对象</span><br><span class="line">	<span class="number">3</span>.视图Entry对象中的方法getKey()和getValue()获取键和值</span><br></pre></td></tr></table></figure>
 
 <p><strong>示例</strong>：<br><em>Map03EntrySetDemo.java</em></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Map03EntrySetDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo01();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"林志玲"</span>,<span class="number">18</span>);</span><br><span class="line">        map.put(<span class="string">"吴亦凡"</span>,<span class="number">38</span>);</span><br><span class="line">        map.put(<span class="string">"林志颖"</span>,<span class="number">28</span>);</span><br><span class="line">        map.put(<span class="string">"赵忠祥"</span>,<span class="number">48</span>);</span><br><span class="line">        map.put(<span class="string">"成龙"</span>,<span class="number">57</span>);</span><br><span class="line"></span><br><span class="line">        Set&lt;Map.Entry&lt;String,Integer&gt;&gt; set = map.entrySet();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"========使用迭代器遍历========="</span>);</span><br><span class="line">        Iterator&lt;Map.Entry&lt;String,Integer&gt;&gt; it = set.iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">            Map.Entry&lt;String,Integer&gt; m = it.next();</span><br><span class="line">            String K = m.getKey();</span><br><span class="line">            Integer V = m.getValue();</span><br><span class="line"></span><br><span class="line">            System.out.println(K+<span class="string">"="</span>+V);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"========增强for循环遍历========="</span>);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String,Integer&gt; m:set) &#123;</span><br><span class="line">            String Key = m.getKey();</span><br><span class="line">            Integer Value = m.getValue();</span><br><span class="line">            System.out.println(Key+<span class="string">"="</span>+Value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -217,12 +217,12 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://gitee.com/movle/blog/2020/11/07/Java-Map/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/11/07/Java-Map/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
 
     </footer>
   </div>
@@ -230,7 +230,7 @@
    
   <nav class="article-nav">
     
-      <a href="/blog/2020/11/08/Java-%E5%BC%82%E5%B8%B8/" class="article-nav-link">
+      <a href="/2020/11/08/Java-%E5%BC%82%E5%B8%B8/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
@@ -240,7 +240,7 @@
       </a>
     
     
-      <a href="/blog/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="article-nav-link">
+      <a href="/2020/11/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
         <div class="article-nav-title">Collections集合工具类</div>
       </a>
@@ -313,29 +313,29 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/blog/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
   </div>
   
   <ul class="nav nav-main">
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/blog/">主页</a>
+      <a class="nav-item-link" href="/">主页</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/blog/archives">归档</a>
+      <a class="nav-item-link" href="/archives">归档</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/blog/categories">分类</a>
+      <a class="nav-item-link" href="/categories">分类</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/blog/tags">标签</a>
+      <a class="nav-item-link" href="/tags">标签</a>
     </li>
     
     <li class="nav-item">
-      <a class="nav-item-link" href="/blog/about">关于我</a>
+      <a class="nav-item-link" href="/about">关于我</a>
     </li>
     
   </ul>
@@ -349,7 +349,7 @@
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/blog/atom.xml" title="RSS Feed">
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
       </a>
       
@@ -378,23 +378,23 @@
   <div class="reward-box">
     
     <div class="reward-item">
-      <img class="reward-img" src="/blog/images/alipay.jpg">
+      <img class="reward-img" src="/images/alipay.jpg">
       <span class="reward-type">支付宝</span>
     </div>
     
     
     <div class="reward-item">
-      <img class="reward-img" src="/blog/images/wechat.jpg">
+      <img class="reward-img" src="/images/wechat.jpg">
       <span class="reward-type">微信</span>
     </div>
     
   </div>
 </div>
     
-<script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery-2.0.3.min.js"></script>
 
 
-<script src="/blog/js/lazyload.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
 
 <!-- Subtitle -->
 
@@ -416,7 +416,7 @@
 <!-- Tocbot -->
 
 
-<script src="/blog/js/tocbot.min.js"></script>
+<script src="/js/tocbot.min.js"></script>
 
 <script>
   tocbot.init({
@@ -436,7 +436,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
 
-<script src="/blog/dist/main.js"></script>
+<script src="/dist/main.js"></script>
 
 <!-- ImageViewer -->
 
@@ -554,7 +554,7 @@
 <!-- busuanzi  -->
 
 
-<script src="/blog/js/busuanzi-2.3.pure.min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
 
 
 <!-- ClickLove -->
@@ -566,7 +566,7 @@
 <!-- CodeCopy -->
 
 
-<link rel="stylesheet" href="/blog/css/clipboard.css">
+<link rel="stylesheet" href="/css/clipboard.css">
 
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 <script>
