@@ -370,9 +370,9 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
-    
       <category term="NodeJS" scheme="http://yoursite.com/tags/NodeJS/"/>
+    
+      <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
     
   </entry>
   
@@ -401,9 +401,9 @@
     
       <category term="安装部署" scheme="http://yoursite.com/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"/>
     
-      <category term="Maven" scheme="http://yoursite.com/tags/Maven/"/>
-    
       <category term="CentOS" scheme="http://yoursite.com/tags/CentOS/"/>
+    
+      <category term="Maven" scheme="http://yoursite.com/tags/Maven/"/>
     
   </entry>
   
