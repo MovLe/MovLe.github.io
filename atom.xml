@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-06-14T15:15:42.215Z</updated>
+  <updated>2021-06-20T13:29:04.428Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>【周记，复盘，计划】2021-06-20</title>
+    <link href="http://yoursite.com/2021/06/20/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-06-20/"/>
+    <id>http://yoursite.com/2021/06/20/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-06-20/</id>
+    <published>2021-06-20T12:30:00.000Z</published>
+    <updated>2021-06-20T13:29:04.428Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;周记-2021-06-20&quot;&gt;&lt;a href=&quot;#周记-2021-06-20&quot; class=&quot;headerlink&quot; title=&quot;周记 2021-06-20&quot;&gt;&lt;/a&gt;周记
+        
+      
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/tags/%E5%91%A8%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【周记，复盘，计划】2021-06-14</title>
     <link href="http://yoursite.com/2021/06/14/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-06-14/"/>
     <id>http://yoursite.com/2021/06/14/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-06-14/</id>
     <published>2021-06-14T14:00:00.000Z</published>
-    <updated>2021-06-14T15:15:42.215Z</updated>
+    <updated>2021-06-15T01:24:01.696Z</updated>
     
     <summary type="html">
     
@@ -530,33 +557,6 @@
     
     
       <category term="周记" scheme="http://yoursite.com/tags/%E5%91%A8%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2020年终总结</title>
-    <link href="http://yoursite.com/2021/02/12/%E3%80%90%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93%E3%80%912020%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
-    <id>http://yoursite.com/2021/02/12/%E3%80%90%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93%E3%80%912020%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</id>
-    <published>2021-02-12T02:00:00.000Z</published>
-    <updated>2021-02-12T03:58:52.135Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;2020完成的事&quot;&gt;&lt;a href=&quot;#2020完成的事&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="周记" scheme="http://yoursite.com/categories/%E5%91%A8%E8%AE%B0/"/>
-    
-    
-      <category term="年终总结" scheme="http://yoursite.com/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   
