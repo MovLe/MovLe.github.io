@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-06-27T14:26:30.677Z</updated>
+  <updated>2021-07-04T15:13:53.236Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【周记，复盘，计划】2021-07-04</title>
+    <link href="http://yoursite.com/2021/07/04/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-07-04/"/>
+    <id>http://yoursite.com/2021/07/04/%E3%80%90%E5%91%A8%E8%AE%B0%EF%BC%8C%E5%A4%8D%E7%9B%98%EF%BC%8C%E8%AE%A1%E5%88%92%E3%80%912021-07-04/</id>
+    <published>2021-07-04T14:30:00.000Z</published>
+    <updated>2021-07-04T15:13:53.236Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;周记-2021-07-04&quot;&gt;&lt;a href=&quot;#周记-2021-07-04&quot; class=&quot;headerlink&quot; title=&quot;周记 2021/07/04&quot;&gt;&lt;/a&gt;周记
+        
+      
+    
+    </summary>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/categories/%E5%91%A8%E8%AE%B0/"/>
+    
+    
+      <category term="周记" scheme="http://yoursite.com/tags/%E5%91%A8%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>【周记，复盘，计划】2021-06-27</title>
@@ -529,34 +556,6 @@
     
     
       <category term="周记" scheme="http://yoursite.com/tags/%E5%91%A8%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你当像鸟飞向你的山</title>
-    <link href="http://yoursite.com/2021/02/28/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E4%BD%A0%E5%BD%93%E5%83%8F%E9%B8%9F%E9%A3%9E%E5%90%91%E4%BD%A0%E7%9A%84%E5%B1%B1%E3%80%8B/"/>
-    <id>http://yoursite.com/2021/02/28/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E3%80%8A%E4%BD%A0%E5%BD%93%E5%83%8F%E9%B8%9F%E9%A3%9E%E5%90%91%E4%BD%A0%E7%9A%84%E5%B1%B1%E3%80%8B/</id>
-    <published>2021-02-28T01:10:00.000Z</published>
-    <updated>2021-02-28T03:29:08.968Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我曾怯懦、崩溃、自我怀疑，内心里有什么东西腐烂了，恶臭熏天。直到我逃离大山，打开另一个世界。那是教育给我的新世界，那是我生命的无限可能&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;n
-        
-      
-    
-    </summary>
-    
-    
-      <category term="读书笔记" scheme="http://yoursite.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="读书笔记" scheme="http://yoursite.com/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
