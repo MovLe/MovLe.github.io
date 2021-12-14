@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Kafka之Broker配置信息 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Kafka之Broker配置信息"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Kafka之Broker配置信息
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/02/02/Kafka%E4%B9%8BBroker%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-date">
+  <time datetime="2019-02-02T08:50:00.000Z" itemprop="datePublished">2019-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.5k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-Kafka之Broker配置信息"><a href="#1-Kafka之Broker配置信息" class="headerlink" title="1.Kafka之Broker配置信息"></a>1.Kafka之Broker配置信息</h4><table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">默认值</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">broker.id</td>
+<td align="center"></td>
+<td align="center">必填参数，broker的唯一标识</td>
+</tr>
+<tr>
+<td align="center">log.dirs</td>
+<td align="center">/tmp/kafka-logs</td>
+<td align="center">Kafka数据存放的目录。可以指定多个目录，中间用逗号分隔，当新partition被创建的时会被存放到当前存放partition最少的目录。</td>
+</tr>
+<tr>
+<td align="center">port</td>
+<td align="center">9092</td>
+<td align="center">BrokerServer接受客户端连接的端口号</td>
+</tr>
+<tr>
+<td align="center">zookeeper.connect</td>
+<td align="center">null</td>
+<td align="center">Zookeeper的连接串，格式为：hostname1:port1,hostname2:port2,hostname3:port3。可以填一个或多个，为了提高可靠性，建议都填上。注意，此配置允许我们指定一个zookeeper路径来存放此kafka集群的所有数据，为了与其他应用集群区分开，建议在此配置中指定本集群存放目录，格式为：hostname1:port1,hostname2:port2,hostname3:port3/chroot/path 。需要注意的是，消费者的参数要和此参数一致。</td>
+</tr>
+<tr>
+<td align="center">message.max.bytes</td>
+<td align="center">1000000</td>
+<td align="center">服务器可以接收到的最大的消息大小。注意此参数要和consumer的maximum.message.size大小一致，否则会因为生产者生产的消息太大导致消费者无法消费。</td>
+</tr>
+<tr>
+<td align="center">num.io.threads</td>
+<td align="center">8</td>
+<td align="center">服务器用来执行读写请求的IO线程数，此参数的数量至少要等于服务器上磁盘的数量。</td>
+</tr>
+<tr>
+<td align="center">queued.max.requests</td>
+<td align="center">500</td>
+<td align="center">I/O线程可以处理请求的队列大小，若实际请求数超过此大小，网络线程将停止接收新的请求。</td>
+</tr>
+<tr>
+<td align="center">socket.send.buffer.bytes</td>
+<td align="center">100 * 1024</td>
+<td align="center">The SO_SNDBUFF buffer the server prefers for socket connections.</td>
+</tr>
+<tr>
+<td align="center">socket.receive.buffer.bytes</td>
+<td align="center">100 * 1024</td>
+<td align="center">The SO_RCVBUFF buffer the server prefers for socket connections.</td>
+</tr>
+<tr>
+<td align="center">socket.request.max.bytes</td>
+<td align="center">100 * 1024 * 1024</td>
+<td align="center">服务器允许请求的最大值， 用来防止内存溢出，其值应该小于 Java heap size.</td>
+</tr>
+<tr>
+<td align="center">num.partitions</td>
+<td align="center">1</td>
+<td align="center">默认partition数量，如果topic在创建时没有指定partition数量，默认使用此值，建议改为5</td>
+</tr>
+<tr>
+<td align="center">log.segment.bytes</td>
+<td align="center">1024 * 1024 * 1024</td>
+<td align="center">Segment文件的大小，超过此值将会自动新建一个segment，此值可以被topic级别的参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.roll.{ms,hours}</td>
+<td align="center">24 * 7 hours</td>
+<td align="center">新建segment文件的时间，此值可以被topic级别的参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.retention.{ms,minutes,hours}</td>
+<td align="center">7 days</td>
+<td align="center">Kafka segment log的保存周期，保存周期超过此时间日志就会被删除。此参数可以被topic级别参数覆盖。数据量大时，建议减小此值</td>
+</tr>
+<tr>
+<td align="center">log.retention.bytes</td>
+<td align="center">-1</td>
+<td align="center">每个partition的最大容量，若数据量超过此值，partition数据将会被删除。注意这个参数控制的是每个partition而不是topic。此参数可以被log级别参数覆盖。</td>
+</tr>
+<tr>
+<td align="center">log.retention.check.interval.ms</td>
+<td align="center">5 minutes</td>
+<td align="center">删除策略的检查周期</td>
+</tr>
+<tr>
+<td align="center">auto.create.topics.enable</td>
+<td align="center">true</td>
+<td align="center">自动创建topic参数，建议此值设置为false，严格控制topic管理，防止生产者错写topic。</td>
+</tr>
+<tr>
+<td align="center">default.replication.factor</td>
+<td align="center">1</td>
+<td align="center">默认副本数量，建议改为2</td>
+</tr>
+<tr>
+<td align="center">replica.lag.time.max.ms</td>
+<td align="center">10000</td>
+<td align="center">在此窗口时间内没有收到follower的fetch请求，leader会将其从ISR(in-sync replicas)中移除</td>
+</tr>
+<tr>
+<td align="center">replica.lag.max.messages</td>
+<td align="center">4000</td>
+<td align="center">如果replica节点落后leader节点此值大小的消息数量，leader节点就会将其从ISR中移除。</td>
+</tr>
+<tr>
+<td align="center">replica.socket.timeout.ms</td>
+<td align="center">30 * 1000</td>
+<td align="center">replica向leader发送请求的超时时间。</td>
+</tr>
+<tr>
+<td align="center">replica.socket.receive.buffer.bytes</td>
+<td align="center">64 * 1024</td>
+<td align="center">The socket receive buffer for network requests to the leader for replicating data.</td>
+</tr>
+<tr>
+<td align="center">replica.fetch.max.bytes</td>
+<td align="center">1024 * 1024</td>
+<td align="center">The number of byes of messages to attempt to fetch for each partition in the fetch requests the replicas send to the leader.</td>
+</tr>
+<tr>
+<td align="center">replica.fetch.wait.max.ms</td>
+<td align="center">500</td>
+<td align="center">The maximum amount of time to wait time for data to arrive on the leader in the fetch requests sent by the replicas to the leader.</td>
+</tr>
+<tr>
+<td align="center">num.replica.fetchers</td>
+<td align="center">1</td>
+<td align="center">Number of threads used to replicate messages from leaders. Increasing this value can increase the degree of I/O parallelism in the follower broker.</td>
+</tr>
+<tr>
+<td align="center">fetch.purgatory.purge.interval.requests</td>
+<td align="center">1000</td>
+<td align="center">The purge interval (in number of requests) of the fetch request purgatory.</td>
+</tr>
+<tr>
+<td align="center">zookeeper.session.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">ZooKeeper session 超时时间。如果在此时间内server没有向zookeeper发送心跳，zookeeper就会认为此节点已挂掉。 此值太低导致节点容易被标记死亡；若太高，.会导致太迟发现节点死亡</td>
+</tr>
+<tr>
+<td align="center">zookeeper.connection.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">客户端连接zookeeper的超时时间。</td>
+</tr>
+<tr>
+<td align="center">zookeeper.sync.time.ms</td>
+<td align="center">2000</td>
+<td align="center">H ZK follower落后 ZK leader的时间</td>
+</tr>
+<tr>
+<td align="center">controlled.shutdown.enable</td>
+<td align="center">true</td>
+<td align="center">允许broker shutdown。如果启用，broker在关闭自己之前会把它上面的所有leaders转移到其它brokers上，建议启用，增加集群稳定性。</td>
+</tr>
+<tr>
+<td align="center">auto.leader.rebalance.enable</td>
+<td align="center">true</td>
+<td align="center">If this is enabled the controller will automatically try to balance leadership for partitions among the brokers by periodically returning leadership to the “preferred” replica for each partition if it is available.</td>
+</tr>
+<tr>
+<td align="center">leader.imbalance.per.broker.percentage</td>
+<td align="center">10</td>
+<td align="center">The percentage of leader imbalance allowed per broker. The controller will rebalance leadership if this ratio goes above the configured value per broker.</td>
+</tr>
+<tr>
+<td align="center">leader.imbalance.check.interval.seconds</td>
+<td align="center">300</td>
+<td align="center">The frequency with which to check for leader imbalance.</td>
+</tr>
+<tr>
+<td align="center">offset.metadata.max.bytes</td>
+<td align="center">4096</td>
+<td align="center">The maximum amount of metadata to allow clients to save with their offsets.</td>
+</tr>
+<tr>
+<td align="center">connections.max.idle.ms</td>
+<td align="center">600000</td>
+<td align="center">Idle connections timeout: the server socket processor threads close the connections that idle more than this.</td>
+</tr>
+<tr>
+<td align="center">num.recovery.threads.per.data.dir</td>
+<td align="center">1</td>
+<td align="center">The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.</td>
+</tr>
+<tr>
+<td align="center">unclean.leader.election.enable</td>
+<td align="center">true</td>
+<td align="center">Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss.</td>
+</tr>
+<tr>
+<td align="center">delete.topic.enable</td>
+<td align="center">false</td>
+<td align="center">启用deletetopic参数，建议设置为true</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.num.partitions</td>
+<td align="center">50</td>
+<td align="center">The number of partitions for the offset commit topic. Since changing this after deployment is currently unsupported, we recommend using a higher setting for production (e.g., 100-200).</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.retention.minutes</td>
+<td align="center">1440</td>
+<td align="center">Offsets that are older than this age will be marked for deletion. The actual purge will occur when the log cleaner compacts the offsets topic.</td>
+</tr>
+<tr>
+<td align="center">offsets.retention.check.interval.ms</td>
+<td align="center">600000</td>
+<td align="center">The frequency at which the offset manager checks for stale offsets.</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.replication.factor</td>
+<td align="center">3</td>
+<td align="center">The replication factor for the offset commit topic. A higher setting (e.g., three or four) is recommended in order to ensure higher availability. If the offsets topic is created when fewer brokers than the replication factor then the offsets topic will be created with fewer replicas.</td>
+</tr>
+<tr>
+<td align="center">offsets.topic.segment.bytes</td>
+<td align="center">104857600</td>
+<td align="center">Segment size for the offsets topic. Since it uses a compacted topic, this should be kept relatively low in order to facilitate faster log compaction and loads.</td>
+</tr>
+<tr>
+<td align="center">offsets.load.buffer.size</td>
+<td align="center">5242880</td>
+<td align="center">An offset load occurs when a broker becomes the offset manager for a set of consumer groups (i.e., when it becomes a leader for an offsets topic partition). This setting corresponds to the batch size (in bytes) to use when reading from the offsets segments when loading offsets into the offset manager’s cache.</td>
+</tr>
+<tr>
+<td align="center">offsets.commit.required.acks</td>
+<td align="center">-1</td>
+<td align="center">The number of acknowledgements that are required before the offset commit can be accepted. This is similar to the producer’s acknowledgement setting. In general, the default should not be overridden.</td>
+</tr>
+<tr>
+<td align="center">offsets.commit.timeout.ms</td>
+<td align="center">5000</td>
+<td align="center">The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.</td>
+</tr>
+</tbody></table>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/02/02/Kafka%E4%B9%8BBroker%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/02/02/Kafka%E4%B9%8BProducer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Kafka之Producer配置信息
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/02/02/Kafka%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Kafka命令行操作</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

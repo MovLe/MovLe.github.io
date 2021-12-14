@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-Java-线程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/08/Java-%E7%BA%BF%E7%A8%8B/"
+    >线程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/08/Java-%E7%BA%BF%E7%A8%8B/" class="article-date">
+  <time datetime="2020-01-08T09:20:00.000Z" itemprop="datePublished">2020-01-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-线程"><a href="#一-线程" class="headerlink" title="一.线程"></a>一.线程</h3><h4 id="1-创建多线程程序的第一种方式：创建Thread类的子类"><a href="#1-创建多线程程序的第一种方式：创建Thread类的子类" class="headerlink" title="1.创建多线程程序的第一种方式：创建Thread类的子类"></a>1.创建多线程程序的第一种方式：创建Thread类的子类</h4><h5 id="1-实现步骤"><a href="#1-实现步骤" class="headerlink" title="(1)实现步骤"></a>(1)实现步骤</h5><ul>
+<li>创建一个Thread类的子类</li>
+<li>在Thread类的子类中重写Thread类中的run方法，设置线程任务(开启线程要做什么？)</li>
+<li>在创建Thread类的子类对象</li>
+<li>调用Thread类中的start方法，开启新的线程，执行run方法</li>
+</ul>
+<h4 id="2-Thread类"><a href="#2-Thread类" class="headerlink" title="2.Thread类"></a>2.Thread类</h4><h5 id="1-构造方法"><a href="#1-构造方法" class="headerlink" title="(1)构造方法"></a>(1)构造方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Thread</span><span class="params">()</span></span>;      <span class="comment">//分配一个新的线程对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Thread</span><span class="params">(String name)</span></span>;      <span class="comment">//分配一个指定名字的新线程对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Thread</span><span class="params">(Runnable target)</span></span>;      <span class="comment">//分配一个带有指定目标的新的线程对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Thread</span><span class="params">(Runnable target,String name)</span></span>;      <span class="comment">//分配一个带有指定目标的新线程对象并指定名字</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="2-常用方法"><a href="#2-常用方法" class="headerlink" title="(2)常用方法"></a>(2)常用方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;		<span class="comment">//获取当前线程的名称</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;		<span class="comment">//导致此线程开始执行，Java虚拟机调用此线程的run方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;		<span class="comment">//此线程要执行的任务在此定义</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">long</span> millis)</span></span>;		<span class="comment">//使当前正在执行的线程以指定的毫秒数暂停</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Thread <span class="title">currentThread</span><span class="params">()</span></span>;		<span class="comment">//返回对当前正在执行的线程对象的引用</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3-设置线程的名称"><a href="#3-设置线程的名称" class="headerlink" title="(3)设置线程的名称"></a>(3)设置线程的名称</h5><ul>
+<li>使用Thread类中的方法setName(名字)<pre><code>  void setName(String name) 改变线程名称，使之与参数 name 相同。
+</code></pre>
+</li>
+<li>创建一个带参数的构造方法,参数传递线程的名称;调用父类的带参构造方法,把线程名称传递给父类,让父类(Thread)给子线程起一个名字<pre><code>  Thread(String name) 分配新的 Thread 对象。
+</code></pre>
+</li>
+</ul>
+<h4 id="3-创建线程方式二：实现Runnable接口"><a href="#3-创建线程方式二：实现Runnable接口" class="headerlink" title="3.创建线程方式二：实现Runnable接口"></a>3.创建线程方式二：实现Runnable接口</h4><h5 id="1-概念"><a href="#1-概念" class="headerlink" title="(1)概念"></a>(1)概念</h5><ul>
+<li>Runnable 接口应该由那些打算通过某一线程执行其实例的类来实现。类必须定义一个称为run的无参数方法。</li>
+</ul>
+<h5 id="2-实现步骤"><a href="#2-实现步骤" class="headerlink" title="(2)实现步骤:"></a>(2)实现步骤:</h5><ul>
+<li>创建一个Runnable接口的实现类</li>
+<li>在实现类中重写Runnable接口的run方法,设置线程任务</li>
+<li>创建一个Runnable接口的实现类对象</li>
+<li>创建Thread类对象,构造方法中传递Runnable接口的实现类对象</li>
+<li>调用Thread类中的start方法,开启新的线程执行run方法</li>
+</ul>
+<h5 id="3-实现Runnable接口创建多线程程序的好处"><a href="#3-实现Runnable接口创建多线程程序的好处" class="headerlink" title="(3)实现Runnable接口创建多线程程序的好处:"></a>(3)实现Runnable接口创建多线程程序的好处:</h5><p>a.避免了单继承的局限性</p>
+<ul>
+<li>一个类只能继承一个类(一个人只能有一个亲爹),类继承了Thread类就不能继承其他的类</li>
+<li>实现了Runnable接口,还可以继承其他的类,实现其他的接口</li>
+</ul>
+<p>b.增强了程序的扩展性,降低了程序的耦合性(解耦)</p>
+<ul>
+<li>实现Runnable接口的方式,把设置线程任务和开启新线程进行了分离(解耦)</li>
+<li>实现类中,重写了run方法:用来设置线程任务</li>
+<li>创建Thread类对象,调用start方法:用来开启新线程</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Java-异常"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/08/Java-%E5%BC%82%E5%B8%B8/"
+    >异常</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/08/Java-%E5%BC%82%E5%B8%B8/" class="article-date">
+  <time datetime="2020-01-08T08:20:00.000Z" itemprop="datePublished">2020-01-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-异常的特点"><a href="#1-异常的特点" class="headerlink" title="1.异常的特点"></a>1.异常的特点</h4><h5 id="1-java-Lang-Throwable：类是java语言中所有错误或异常的超类"><a href="#1-java-Lang-Throwable：类是java语言中所有错误或异常的超类" class="headerlink" title="(1)java.Lang.Throwable：类是java语言中所有错误或异常的超类"></a>(1)java.Lang.Throwable：类是java语言中所有错误或异常的超类</h5><h5 id="2-Exception"><a href="#2-Exception" class="headerlink" title="(2)Exception:"></a>(2)Exception:</h5><ul>
+<li>编译期异常，进行编译(写代码)java程序时出现的问题</li>
+<li>RuntimeException:运行期异常，java程序在运行过程中出现的问题</li>
+<li>异常就相当于程序得了一个小毛病(感冒，发烧)，把异常处理掉，程序可以继续执行(吃点药，继续工作)</li>
+</ul>
+<h5 id="3-Error-错误"><a href="#3-Error-错误" class="headerlink" title="(3)Error:错误"></a>(3)Error:错误</h5><ul>
+<li>错误就相当于程序得了一个无法治愈的病(艾滋)，必须修改源代码，程序才能继续执行</li>
+</ul>
+<h4 id="2-异常的处理"><a href="#2-异常的处理" class="headerlink" title="2.异常的处理"></a>2.异常的处理</h4><h4 id="3-throw关键字"><a href="#3-throw关键字" class="headerlink" title="3.throw关键字"></a>3.throw关键字</h4><h5 id="1-作用：可以使用throw关键字在指定的方法中抛出指定的异常"><a href="#1-作用：可以使用throw关键字在指定的方法中抛出指定的异常" class="headerlink" title="(1)作用：可以使用throw关键字在指定的方法中抛出指定的异常"></a>(1)作用：可以使用throw关键字在指定的方法中抛出指定的异常</h5><h5 id="2-使用格式：throw-new-xxxException-“异常产生的原因”"><a href="#2-使用格式：throw-new-xxxException-“异常产生的原因”" class="headerlink" title="(2)使用格式：throw new xxxException(“异常产生的原因”);"></a>(2)使用格式：throw new xxxException(“异常产生的原因”);</h5><h5 id="3-注意："><a href="#3-注意：" class="headerlink" title="(3)注意："></a>(3)注意：</h5><ul>
+<li>throw关键字必须写在方法的内部</li>
+<li>throw关键字后边new的对象必须是Exception或者Exception的子类对象</li>
+<li>throw关键字抛出指定的异常对象，就必须处理这个异常对象：</li>
+<li>thorw关键字后边创建的事RuntimeException或者是RuntimeException的子类对象，我们可以不处理，默认交给JVM处理(打印异常对象，中断程序)</li>
+<li>throw关键字后边创建的是编译异常，我们就必须处理这个异常，要么throws，要么try…catch</li>
+</ul>
+<h4 id="4-Objects类中的静态方法"><a href="#4-Objects类中的静态方法" class="headerlink" title="4.Objects类中的静态方法"></a>4.Objects类中的静态方法</h4><h5 id="1-代码源码："><a href="#1-代码源码：" class="headerlink" title="(1)代码源码："></a>(1)代码源码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; requireNoNull(T obj);    <span class="comment">//查看指定引用对象不是null</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; requireNoNull(T obj)&#123;</span><br><span class="line">	<span class="keyword">if</span>(obj == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-用法："><a href="#2-用法：" class="headerlink" title="(2)用法："></a>(2)用法：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectsDemp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo01(<span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Objects.requireNonNull(obj);</span></span><br><span class="line">        Objects.requireNonNull(obj,<span class="string">&quot;传递对象的值是null&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="5-Throws声明异常"><a href="#5-Throws声明异常" class="headerlink" title="5.Throws声明异常"></a>5.Throws声明异常</h4><h5 id="1-throws关键字：异常处理的第一种方式，交给别人处理"><a href="#1-throws关键字：异常处理的第一种方式，交给别人处理" class="headerlink" title="(1)throws关键字：异常处理的第一种方式，交给别人处理"></a>(1)throws关键字：异常处理的第一种方式，交给别人处理</h5><h5 id="2-作用："><a href="#2-作用：" class="headerlink" title="(2)作用："></a>(2)作用：</h5><ul>
+<li>当方法内部抛出异常对象的时候，我们必须处理这个异常</li>
+<li>可以使用throws关键字处理异常对象，会把异常对象声明抛出给方法的调用者处理(自己不处理，交给别人处理)，最终交给JVM处理(中断)</li>
+</ul>
+<h5 id="3-使用格式：在方法声明时使用"><a href="#3-使用格式：在方法声明时使用" class="headerlink" title="(3)使用格式：在方法声明时使用"></a>(3)使用格式：在方法声明时使用</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修饰符 返回值类型 方法名(参数列表) <span class="keyword">throws</span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> XXXException(<span class="string">&quot;产生原因&quot;</span>);</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-注意："><a href="#4-注意：" class="headerlink" title="(4)注意："></a>(4)注意：</h5><ul>
+<li>throws关键字必须写在方法的声明处</li>
+<li>throws关键字后边声明的异常必须是Exception或Exception的子类</li>
+<li>方法内部如果抛出了多个异常对象，那么throws后边必须也声明多个异常，如果抛出的多个异常对象有子父类关系，那么直接声明父类异常即可</li>
+<li>调用了一个声明抛出的方法，我们就必须处理声明的异常，要么继续使用throws声明抛出，交给方法的调用者处理，最终交给JVM，要么try…catch自己处理异常</li>
+</ul>
+<h4 id="6-try…catch：异常处理的第二种方式-自己处理异常"><a href="#6-try…catch：异常处理的第二种方式-自己处理异常" class="headerlink" title="6.try…catch：异常处理的第二种方式 自己处理异常"></a>6.try…catch：异常处理的第二种方式 自己处理异常</h4><h5 id="1-格式："><a href="#1-格式：" class="headerlink" title="(1)格式："></a>(1)格式：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	可能产生异常的代码</span><br><span class="line">&#125;<span class="keyword">catch</span>(定义一个异常的变量，用来接收<span class="keyword">try</span>中抛出的异常对象)&#123;</span><br><span class="line">	异常的处理逻辑，异常对象之后，怎么处理异常对象</span><br><span class="line">	一般在工作中，会把异常的信息记录到一个日志中</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">catch</span>(异常类名 变量名)&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-注意："><a href="#2-注意：" class="headerlink" title="(2)注意："></a>(2)注意：</h5><ul>
+<li>try中可能抛出多个异常对象，那么就可以使用多个catch来处理这些异常对象</li>
+<li>如果try中产生了异常，那么就会执行catch中的异常处理逻辑，执行完毕catch中的处理逻辑，继续执行try…catch之后的代码</li>
+<li>如果try中没有产生异常，就不会执行catch中的异常处理逻辑，执行完try中的代码，继续执行try…catch之后的代码</li>
+</ul>
+<h4 id="7-Throwable类中定义了3个异常处理的方法"><a href="#7-Throwable类中定义了3个异常处理的方法" class="headerlink" title="7.Throwable类中定义了3个异常处理的方法"></a>7.Throwable类中定义了3个异常处理的方法</h4><h5 id="1-代码"><a href="#1-代码" class="headerlink" title="(1)代码"></a>(1)代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getMessage</span><span class="params">()</span></span>;  <span class="comment">//返回此throwable的简短描述</span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span></span>;    <span class="comment">//返回此throwable的详细消息字符串</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printStackTrace</span><span class="params">()</span></span>;   <span class="comment">//JVM打印异常对象，默认此方法，打印的异常信息是最全面的</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="8-异常的注意事项"><a href="#8-异常的注意事项" class="headerlink" title="8.异常的注意事项"></a>8.异常的注意事项</h4><h5 id="1-多个异常使用捕获该如何处理"><a href="#1-多个异常使用捕获该如何处理" class="headerlink" title="(1)多个异常使用捕获该如何处理"></a>(1)多个异常使用捕获该如何处理</h5><ul>
+<li>多个异常分别处理</li>
+<li>多个异常一次捕获，多次处理</li>
+<li>多个异常一次捕获，一次处理</li>
+</ul>
+<h5 id="2-多个异常一次捕获，多次处理-注意："><a href="#2-多个异常一次捕获，多次处理-注意：" class="headerlink" title="(2)多个异常一次捕获，多次处理-注意："></a>(2)多个异常一次捕获，多次处理-注意：</h5><ul>
+<li>catch里边定义的异常变量，如果有子父类关系，那么子类的异常变量必须写在上边，否则会报错</li>
+</ul>
+<h5 id="3-运行时一次被抛出可以不处理，即不捕获也不声明抛出"><a href="#3-运行时一次被抛出可以不处理，即不捕获也不声明抛出" class="headerlink" title="(3)运行时一次被抛出可以不处理，即不捕获也不声明抛出"></a>(3)运行时一次被抛出可以不处理，即不捕获也不声明抛出</h5><h5 id="4-如果finally有return语句，永远返回finally中的结果，避免该情况"><a href="#4-如果finally有return语句，永远返回finally中的结果，避免该情况" class="headerlink" title="(4)如果finally有return语句，永远返回finally中的结果，避免该情况"></a>(4)如果finally有return语句，永远返回finally中的结果，避免该情况</h5><h5 id="5-如果父类抛出了多个异常，子类覆盖父类的方法时，只能抛出相同的异常或者是它的子类"><a href="#5-如果父类抛出了多个异常，子类覆盖父类的方法时，只能抛出相同的异常或者是它的子类" class="headerlink" title="(5)如果父类抛出了多个异常，子类覆盖父类的方法时，只能抛出相同的异常或者是它的子类"></a>(5)如果父类抛出了多个异常，子类覆盖父类的方法时，只能抛出相同的异常或者是它的子类</h5><h5 id="6-父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常，此时子类产生该异常，只能捕获处理，不能声明抛出"><a href="#6-父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常，此时子类产生该异常，只能捕获处理，不能声明抛出" class="headerlink" title="(6)父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常，此时子类产生该异常，只能捕获处理，不能声明抛出"></a>(6)父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常，此时子类产生该异常，只能捕获处理，不能声明抛出</h5><h5 id="7-在try-catch后可以追加finally代码块，其中的代码一定会执行，通过用于资源回收"><a href="#7-在try-catch后可以追加finally代码块，其中的代码一定会执行，通过用于资源回收" class="headerlink" title="(7)在try/catch后可以追加finally代码块，其中的代码一定会执行，通过用于资源回收"></a>(7)在try/catch后可以追加finally代码块，其中的代码一定会执行，通过用于资源回收</h5><h4 id="9-自定义异常"><a href="#9-自定义异常" class="headerlink" title="9.自定义异常"></a>9.自定义异常</h4><h5 id="1-自定义异常类：java提供的异常类，不够我们使用，需要自己定义一些异常类"><a href="#1-自定义异常类：java提供的异常类，不够我们使用，需要自己定义一些异常类" class="headerlink" title="(1)自定义异常类：java提供的异常类，不够我们使用，需要自己定义一些异常类"></a>(1)自定义异常类：java提供的异常类，不够我们使用，需要自己定义一些异常类</h5><h5 id="2-格式："><a href="#2-格式：" class="headerlink" title="(2)格式："></a>(2)格式：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XXXException</span> <span class="keyword">extends</span> <span class="title">Exception</span>|<span class="title">RuntimeException</span></span>&#123;</span><br><span class="line">	添加一个空参数的构造方法</span><br><span class="line">	添加一个带异常信息的构造方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-注意：-1"><a href="#3-注意：-1" class="headerlink" title="(3)注意："></a>(3)注意：</h5><ul>
+<li>自定义异常类一般都是以Exception结尾，说明该类是一个异常类</li>
+<li>自定义异常类，必须得继承Exception或者RuntimeException</li>
+<li>继承Exception，那么该自定义的异常类就是一个编译期异常，如果方法内部抛出了编译期异常，就必须处理这个异常，要么throws,要么t r y…catch</li>
+<li>继承RuntimeException，那么该自定义的异常类就是一个运行期异常，无需处理，交给虚拟机处理(中断)</li>
+</ul>
+<h4 id="10-finally代码块"><a href="#10-finally代码块" class="headerlink" title="10.finally代码块"></a>10.finally代码块</h4><h5 id="1-格式：-1"><a href="#1-格式：-1" class="headerlink" title="(1)格式："></a>(1)格式：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	可能产生异常的代码</span><br><span class="line">&#125;<span class="keyword">catch</span>(定义一个异常的变量，用来接收<span class="keyword">try</span>中抛出的异常对象)&#123;</span><br><span class="line">	异常的处理逻辑，异常对象之后，怎么处理异常对象</span><br><span class="line">	一般在工作中，会把异常的信息记录到一个日志中</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">catch</span>(异常类名 变量名)&#123;</span><br><span class="line">	</span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">	无论是否出现异常都会执行</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-注意：-1"><a href="#2-注意：-1" class="headerlink" title="(2)注意："></a>(2)注意：</h5><ul>
+<li>finally不能单独使用，必须和try一起使用</li>
+<li>finally一般用于资源释放(资源回收)，无论程序是否出现异常，最后都要是否(IO)</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Java-Map"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/07/Java-Map/"
+    >Map</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/07/Java-Map/" class="article-date">
+  <time datetime="2020-01-07T08:20:00.000Z" itemprop="datePublished">2020-01-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-Map-lt-key-value-gt-集合的特点"><a href="#1-Map-lt-key-value-gt-集合的特点" class="headerlink" title="1.Map&lt;key,value&gt;集合的特点"></a>1.Map&lt;key,value&gt;集合的特点</h4><ul>
+<li>Map集合是一个双列集合，一个元素包含两个值(一个key，一个value)</li>
+<li>Map集合中的元素，key和value的数据类型可以相同，也可以不同</li>
+<li>Map集合中的元素，key是不允许重复的，value是可以重复的</li>
+<li>Map集合中的元素，key和value是一一对应的</li>
+</ul>
+<h4 id="2-HashMap"><a href="#2-HashMap" class="headerlink" title="2.HashMap"></a>2.HashMap</h4><h5 id="1-HashMap集合的特点："><a href="#1-HashMap集合的特点：" class="headerlink" title="(1)HashMap集合的特点："></a>(1)HashMap集合的特点：</h5><ul>
+<li>HashMap底层是哈希表：查询的速度特别快：JDK1.8之前：数组+单向链表-JDK1.8之后：数组+单向链表/红黑树(链表的长度超过8)：提高查询的速度</li>
+<li>HashMap集合是一个无序的集合，存储元素和取出元素的顺序有可能不一致</li>
+</ul>
+<h4 id="3-LinkedHashMap"><a href="#3-LinkedHashMap" class="headerlink" title="3.LinkedHashMap"></a>3.LinkedHashMap</h4><p>(1).LinkedHashMap的特点</p>
+<ul>
+<li>LinkedHashMap继承自HashMap</li>
+<li>LinkedHashMap集合底层是哈希表+链表(保证迭代的顺序)</li>
+<li>LinkedHashMap集合是一个有序的集合，存储元素和取出元素的顺序是一致的</li>
+</ul>
+<h4 id="4-Map中的常用方法"><a href="#4-Map中的常用方法" class="headerlink" title="4.Map中的常用方法"></a>4.Map中的常用方法</h4><h5 id="1-常用方法"><a href="#1-常用方法" class="headerlink" title="(1)常用方法"></a>(1)常用方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key,V value)</span></span>;       <span class="comment">//	把指定的键与指定的值添加到Map集合中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(Object key)</span></span>;   <span class="comment">//把指定的键所对应的键值对元素在Map集合中删除，返回被删除元素的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span></span>;           <span class="comment">//根据指定的键，在Map集合中获取对应的值</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(Object key)</span></span>;    <span class="comment">//判断集合中是否包含指定的键</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span></span>;             <span class="comment">//获取Map集合中所有的键，存储到Set集合中</span></span><br><span class="line"><span class="keyword">public</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet();    <span class="comment">//获取到Map集合中所有的键值对对象的集合(Set集合)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-Map-Entry-lt-K-V-gt-："><a href="#5-Map-Entry-lt-K-V-gt-：" class="headerlink" title="5.Map.Entry&lt;K,V&gt;："></a>5.Map.Entry&lt;K,V&gt;：</h4><h5 id="1-在Map接口中有一个内部接口Entry"><a href="#1-在Map接口中有一个内部接口Entry" class="headerlink" title="(1)在Map接口中有一个内部接口Entry"></a>(1)在Map接口中有一个内部接口Entry</h5><h5 id="2-作用："><a href="#2-作用：" class="headerlink" title="(2)作用："></a>(2)作用：</h5><ul>
+<li>当Map集合一创建，那么就会在Map集合中创建一个Entry对象，用来记录键与值(键值对对象，键与值的映射关系)–&gt;结婚证</li>
+</ul>
+<h5 id="3-entrySet-：把Map集合内部的多个Entry对象取出来存储到一个Set集合中"><a href="#3-entrySet-：把Map集合内部的多个Entry对象取出来存储到一个Set集合中" class="headerlink" title="(3)entrySet()：把Map集合内部的多个Entry对象取出来存储到一个Set集合中"></a>(3)entrySet()：把Map集合内部的多个Entry对象取出来存储到一个Set集合中</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">格式</span><br><span class="line">	Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet()</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-Map集合的遍历方法"><a href="#6-Map集合的遍历方法" class="headerlink" title="6.Map集合的遍历方法"></a>6.Map集合的遍历方法</h4><h5 id="1-Map集合的第一种遍历方式：通过键找值"><a href="#1-Map集合的第一种遍历方式：通过键找值" class="headerlink" title="(1)Map集合的第一种遍历方式：通过键找值"></a>(1)Map集合的第一种遍历方式：通过键找值</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	<span class="function">Set&lt;K&gt; <span class="title">keySet</span><span class="params">()</span> 返回此映射中包含的键的Set视图</span></span><br><span class="line"><span class="function">实现步骤：</span></span><br><span class="line"><span class="function">	1.使用Map集合中的<span class="title">keySet</span><span class="params">()</span>方法，把Map集合所有的key取出来，存储到一个Set集合中</span></span><br><span class="line"><span class="function">	2.遍历Set集合，获取Map集合中的每一个key</span></span><br><span class="line"><span class="function">	3.通过Map集合中的方法<span class="title">get</span><span class="params">(key)</span>，通过key找到value</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong>：<br><em>Map02KeySetDemo.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Map02KeySetDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo01();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用keySet方法遍历Map</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;林志玲&quot;</span>,<span class="number">18</span>);</span><br><span class="line">        map.put(<span class="string">&quot;吴亦凡&quot;</span>,<span class="number">38</span>);</span><br><span class="line">        map.put(<span class="string">&quot;林志颖&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        map.put(<span class="string">&quot;赵忠祥&quot;</span>,<span class="number">48</span>);</span><br><span class="line">        map.put(<span class="string">&quot;成龙&quot;</span>,<span class="number">57</span>);</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set = map.keySet();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(String k:set)&#123;</span><br><span class="line">            Integer value = map.get(k);</span><br><span class="line">            System.out.println(k+<span class="string">&quot;=&quot;</span>+value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="2-Map集合的第二种遍历方式：使用Entry对象遍历"><a href="#2-Map集合的第二种遍历方式：使用Entry对象遍历" class="headerlink" title="(2)Map集合的第二种遍历方式：使用Entry对象遍历"></a>(2)Map集合的第二种遍历方式：使用Entry对象遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map集合中的方法：</span><br><span class="line">	Set &lt;Map.Entry&lt;K,V&gt;&gt; entrySet()  返回此映射中包含的映射关系的Set视图</span><br><span class="line">	</span><br><span class="line">实现步骤：</span><br><span class="line">	<span class="number">1.</span>使用Map集合中的方法entrySet()，把Map集合中多个Entry对象取出来，存储到一个Set集合中</span><br><span class="line">	<span class="number">2.</span>遍历Set集合，获取每一个Entry对象</span><br><span class="line">	<span class="number">3.</span>视图Entry对象中的方法getKey()和getValue()获取键和值</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong>：<br><em>Map03EntrySetDemo.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Map03EntrySetDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo01();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">&quot;林志玲&quot;</span>,<span class="number">18</span>);</span><br><span class="line">        map.put(<span class="string">&quot;吴亦凡&quot;</span>,<span class="number">38</span>);</span><br><span class="line">        map.put(<span class="string">&quot;林志颖&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        map.put(<span class="string">&quot;赵忠祥&quot;</span>,<span class="number">48</span>);</span><br><span class="line">        map.put(<span class="string">&quot;成龙&quot;</span>,<span class="number">57</span>);</span><br><span class="line"></span><br><span class="line">        Set&lt;Map.Entry&lt;String,Integer&gt;&gt; set = map.entrySet();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;========使用迭代器遍历=========&quot;</span>);</span><br><span class="line">        Iterator&lt;Map.Entry&lt;String,Integer&gt;&gt; it = set.iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(it.hasNext())&#123;</span><br><span class="line">            Map.Entry&lt;String,Integer&gt; m = it.next();</span><br><span class="line">            String K = m.getKey();</span><br><span class="line">            Integer V = m.getValue();</span><br><span class="line"></span><br><span class="line">            System.out.println(K+<span class="string">&quot;=&quot;</span>+V);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;========增强for循环遍历=========&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String,Integer&gt; m:set) &#123;</span><br><span class="line">            String Key = m.getKey();</span><br><span class="line">            Integer Value = m.getValue();</span><br><span class="line">            System.out.println(Key+<span class="string">&quot;=&quot;</span>+Value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-HashMap存储自定义类型的键值"><a href="#7-HashMap存储自定义类型的键值" class="headerlink" title="7.HashMap存储自定义类型的键值"></a>7.HashMap存储自定义类型的键值</h4><h5 id="1-Map集合保证key是唯一的"><a href="#1-Map集合保证key是唯一的" class="headerlink" title="(1)Map集合保证key是唯一的"></a>(1)Map集合保证key是唯一的</h5><ul>
+<li>作为key的元素，必须重写hashCode方法和equals方法，以保证key唯一</li>
+</ul>
+<h5 id="2-示例"><a href="#2-示例" class="headerlink" title="(2)示例"></a>(2)示例</h5><p><em>a.HashMap01Demo.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap01Demo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//demo01();</span></span><br><span class="line">        demo02();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * HashMap存储自定义类型键值</span></span><br><span class="line"><span class="comment">     *      key:Person类型-Person类必须重写hashCode方法与equals方法，以保证key唯一</span></span><br><span class="line"><span class="comment">     *      value:String类型-可以重复</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo02</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Person,String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="keyword">new</span> Person(<span class="string">&quot;张三&quot;</span>,<span class="number">19</span>),<span class="string">&quot;北京&quot;</span>);</span><br><span class="line">        map.put(<span class="keyword">new</span> Person(<span class="string">&quot;李四&quot;</span>,<span class="number">22</span>),<span class="string">&quot;南京&quot;</span>);</span><br><span class="line">        map.put(<span class="keyword">new</span> Person(<span class="string">&quot;王五&quot;</span>,<span class="number">99</span>),<span class="string">&quot;重庆&quot;</span>);</span><br><span class="line">        map.put(<span class="keyword">new</span> Person(<span class="string">&quot;赵六&quot;</span>,<span class="number">38</span>),<span class="string">&quot;上海&quot;</span>);</span><br><span class="line">        map.put(<span class="keyword">new</span> Person(<span class="string">&quot;张三&quot;</span>,<span class="number">19</span>),<span class="string">&quot;天津&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Set&lt;Map.Entry&lt;Person, String&gt;&gt; entrys = map.entrySet();</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Person,String&gt; en:entrys) &#123;</span><br><span class="line">            Person person = en.getKey();</span><br><span class="line">            String value = en.getValue();</span><br><span class="line">            System.out.println(person+<span class="string">&quot;--&gt;&quot;</span>+value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * HashMap存储自定义类型键值</span></span><br><span class="line"><span class="comment">     *      key：String类型 -String类型重写HashCode和equals方法，可以保证唯一</span></span><br><span class="line"><span class="comment">     *      value：Person类型 - value可以重复(同名同年龄的人视为同一个)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HashMap&lt;String,Person&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        map.put(<span class="string">&quot;北京&quot;</span>,<span class="keyword">new</span> Person(<span class="string">&quot;张三&quot;</span>,<span class="number">19</span>));</span><br><span class="line">        map.put(<span class="string">&quot;南京&quot;</span>,<span class="keyword">new</span> Person(<span class="string">&quot;李四&quot;</span>,<span class="number">17</span>));</span><br><span class="line">        map.put(<span class="string">&quot;重庆&quot;</span>,<span class="keyword">new</span> Person(<span class="string">&quot;王五&quot;</span>,<span class="number">22</span>));</span><br><span class="line">        map.put(<span class="string">&quot;上海&quot;</span>,<span class="keyword">new</span> Person(<span class="string">&quot;赵六&quot;</span>,<span class="number">30</span>));</span><br><span class="line">        map.put(<span class="string">&quot;天津&quot;</span>,<span class="keyword">new</span> Person(<span class="string">&quot;胡八&quot;</span>,<span class="number">18</span>));</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set = map.keySet();</span><br><span class="line">        <span class="keyword">for</span> (String s:set) &#123;</span><br><span class="line">            Person value = map.get(s);</span><br><span class="line">            System.out.println(s+<span class="string">&quot;--&gt;&quot;</span>+value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><em>b.Person.java</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        Person person = (Person) o;</span><br><span class="line">        <span class="keyword">return</span> age == person.age &amp;&amp;</span><br><span class="line">                Objects.equals(name, person.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hash(name, age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="8-LinkedHashMap"><a href="#8-LinkedHashMap" class="headerlink" title="8.LinkedHashMap"></a>8.LinkedHashMap</h4><h5 id="1-LinkedHashMap继承自HashMap"><a href="#1-LinkedHashMap继承自HashMap" class="headerlink" title="(1)LinkedHashMap继承自HashMap"></a>(1)LinkedHashMap继承自HashMap</h5><h5 id="2-LinkedHashMap接口的哈希表和链表实现，具有可预知的迭代顺序"><a href="#2-LinkedHashMap接口的哈希表和链表实现，具有可预知的迭代顺序" class="headerlink" title="(2)LinkedHashMap接口的哈希表和链表实现，具有可预知的迭代顺序"></a>(2)LinkedHashMap接口的哈希表和链表实现，具有可预知的迭代顺序</h5><h5 id="3-底层原理：哈希表-链表-记录元素的顺序"><a href="#3-底层原理：哈希表-链表-记录元素的顺序" class="headerlink" title="(3)底层原理：哈希表+链表(记录元素的顺序)"></a>(3)底层原理：哈希表+链表(记录元素的顺序)</h5><h4 id="9-HashTable"><a href="#9-HashTable" class="headerlink" title="9.HashTable"></a>9.HashTable</h4><h5 id="1-HashTable特点"><a href="#1-HashTable特点" class="headerlink" title="(1)HashTable特点"></a>(1)HashTable特点</h5><ul>
+<li>HashTable继承自Map&lt;K,V&gt;接口</li>
+<li>HashTable：底层是一个哈希表，是一个线程安全的集合，是单线程集合，速度慢</li>
+<li>HashMap：底层是一个哈希表，是一个线程不安全的集合，是多线程集合，速度快</li>
+<li>HashMap集合：可以存储null值，null键</li>
+<li>HashTable集合：不能存储null值，null键</li>
+<li>HashTable和Vector集合一样，在jdk1.2版本之后被更先进的集合(HashMap,ArrayList)取代了</li>
+<li>HashTable的子类Properties依然活跃在历史舞台</li>
+<li>Properties集合是一个唯一和IO流相结合的集合</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-java-Collections集合工具类"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/"
+    >Collections集合工具类</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/07/java-Collections%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB/" class="article-date">
+  <time datetime="2020-01-07T08:05:00.000Z" itemprop="datePublished">2020-01-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-常用功能"><a href="#1-常用功能" class="headerlink" title="1.常用功能"></a>1.常用功能</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">addAll</span><span class="params">(Collection&lt;T&gt; c,T...elements)</span></span>;  <span class="comment">//往集合中添加一些元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shuffle</span><span class="params">(List&lt;?&gt; list)</span></span>;					<span class="comment">//打乱集合的顺序</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List&lt;T&gt; list)</span></span>;				<span class="comment">//将集合中元素按照默认规则排序</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List&lt;T&gt; list,Comparator&lt;? <span class="keyword">super</span> T&gt;)</span></span>;   <span class="comment">//将集合中元素按照指定规则排序</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-注意"><a href="#2-注意" class="headerlink" title="2.注意"></a>2.注意</h4><h5 id="1-sort-List-list-使用前提："><a href="#1-sort-List-list-使用前提：" class="headerlink" title="(1)sort(List list)使用前提："></a>(1)sort(List<T> list)使用前提：</h5><ul>
+<li>被排序的集合里面存储的元素，必须实现comparable，重写接口中的方法compareTo定义排序的规则</li>
+</ul>
+<h5 id="2-Comparable接口的排序规则："><a href="#2-Comparable接口的排序规则：" class="headerlink" title="(2)Comparable接口的排序规则："></a>(2)Comparable接口的排序规则：</h5><ul>
+<li>自己(this)-参数  ：升序</li>
+<li>参数-自己(this)：降序</li>
+</ul>
+<h5 id="3-Comparator和Comparable的区别"><a href="#3-Comparator和Comparable的区别" class="headerlink" title="(3)Comparator和Comparable的区别"></a>(3)Comparator和Comparable的区别</h5><ul>
+<li>Comparable:自己(this)和别人(参数)比较，自己需要实现Comparable接口，重写比较的规则compareTo方法</li>
+<li>Comparator:相当于找一个第三方的裁判，比较两个对象</li>
+</ul>
+<h5 id="4-Comparator的排序规则："><a href="#4-Comparator的排序规则：" class="headerlink" title="(4)Comparator的排序规则："></a>(4)Comparator的排序规则：</h5><ul>
+<li>o1-o2：生序</li>
+<li>o2-o1：降序</li>
+</ul>
+<h4 id="3-示例"><a href="#3-示例" class="headerlink" title="3.示例"></a>3.示例</h4><h5 id="1-CollectionsAPI-java"><a href="#1-CollectionsAPI-java" class="headerlink" title="(1).CollectionsAPI.java"></a>(1).CollectionsAPI.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionsAPI</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//demo01();</span></span><br><span class="line">        <span class="comment">//demo02();</span></span><br><span class="line">        <span class="comment">//demo03();</span></span><br><span class="line">        demo04();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Collections工具类之sort排序另一种方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo04</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; Lisa = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Lisa.add(<span class="number">1</span>);</span><br><span class="line">        Lisa.add(<span class="number">4</span>);</span><br><span class="line">        Lisa.add(<span class="number">2</span>);</span><br><span class="line">        Lisa.add(<span class="number">3</span>);</span><br><span class="line">        Lisa.add(<span class="number">9</span>);</span><br><span class="line">        Lisa.add(<span class="number">8</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序前：lisa&quot;</span>+Lisa);</span><br><span class="line"></span><br><span class="line">        Collections.sort(Lisa, <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</span><br><span class="line">                <span class="comment">//生序</span></span><br><span class="line">                <span class="comment">//return o1-o2;</span></span><br><span class="line">                <span class="comment">//降序</span></span><br><span class="line">                <span class="keyword">return</span> o2-o1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序后：lisa&quot;</span>+Lisa);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Student&gt; stu = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        stu.add(<span class="keyword">new</span> Student(<span class="string">&quot;迪丽热巴&quot;</span>,<span class="number">18</span>));</span><br><span class="line">        stu.add(<span class="keyword">new</span> Student(<span class="string">&quot;古力娜扎&quot;</span>,<span class="number">20</span>));</span><br><span class="line">        stu.add(<span class="keyword">new</span> Student(<span class="string">&quot;胡歌&quot;</span>,<span class="number">17</span>));</span><br><span class="line">        stu.add(<span class="keyword">new</span> Student(<span class="string">&quot;胡歌&quot;</span>,<span class="number">18</span>));</span><br><span class="line">        System.out.println(<span class="string">&quot;排序前的stu:&quot;</span>+stu);</span><br><span class="line"></span><br><span class="line">        Collections.sort(stu, <span class="keyword">new</span> Comparator&lt;Student&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Student o1, Student o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">int</span> result = o1.getAge()-o2.getAge();</span><br><span class="line">                <span class="keyword">if</span>(result==<span class="number">0</span>)&#123;</span><br><span class="line">                    result = o1.getName().charAt(<span class="number">0</span>)-o2.getName().charAt(<span class="number">0</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序前后stu:&quot;</span>+stu);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Collections工具类sort排序之自定义类型的排序</span></span><br><span class="line"><span class="comment">     * 自己(this)-参数 ：升序</span></span><br><span class="line"><span class="comment">     * 参数-自己(this)：降序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo03</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Person&gt; person = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        person.add(<span class="keyword">new</span> Person(<span class="string">&quot;张三&quot;</span>,<span class="number">18</span>));</span><br><span class="line">        person.add(<span class="keyword">new</span> Person(<span class="string">&quot;李四&quot;</span>,<span class="number">20</span>));</span><br><span class="line">        person.add(<span class="keyword">new</span> Person(<span class="string">&quot;王武&quot;</span>,<span class="number">15</span>));</span><br><span class="line">        System.out.println(<span class="string">&quot;排序前的集合：person&quot;</span>+person);</span><br><span class="line"></span><br><span class="line">        Collections.sort(person);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序后的集合：person&quot;</span>+person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Collections工具类之排序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo02</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.add(<span class="number">1</span>);</span><br><span class="line">        list1.add(<span class="number">4</span>);</span><br><span class="line">        list1.add(<span class="number">2</span>);</span><br><span class="line">        list1.add(<span class="number">3</span>);</span><br><span class="line">        list1.add(<span class="number">9</span>);</span><br><span class="line">        list1.add(<span class="number">8</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序前的集合:list1&quot;</span>+list1);</span><br><span class="line"></span><br><span class="line">        Collections.sort(list1);</span><br><span class="line">        System.out.println(<span class="string">&quot;排序后的集合:list1&quot;</span>+list1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Collections工具类的单次加入多个元素与打乱集合顺序</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;d&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;e&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;多次加入单个元素：list1&quot;</span>+list1);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加多个元素</span></span><br><span class="line">        ArrayList&lt;String&gt; list2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Collections.addAll(list2,<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>,<span class="string">&quot;e&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;单次加入多个元素：list2&quot;</span>+list2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//打乱顺序</span></span><br><span class="line">        Collections.shuffle(list1);</span><br><span class="line">        System.out.println(<span class="string">&quot;打乱顺序后的集合：list1&quot;</span>+list1);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-Person-java"><a href="#2-Person-java" class="headerlink" title="(2).Person.java"></a>(2).Person.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Person</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Person o)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*年龄生序排列*/</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getAge()-o.getAge();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//return 0;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-Student-java"><a href="#3-Student-java" class="headerlink" title="(3).Student.java"></a>(3).Student.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ffmpeg合并视频"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/"
+    >ffmpeg合并视频</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/06/ffmpeg%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91/" class="article-date">
+  <time datetime="2020-01-06T03:55:00.000Z" itemprop="datePublished">2020-01-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ffmpeg/">ffmpeg</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-方法一：FFmpeg-concat协议"><a href="#1-方法一：FFmpeg-concat协议" class="headerlink" title="1.方法一：FFmpeg concat协议"></a>1.方法一：FFmpeg concat协议</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i &quot;concat:input1.mp4|input2.mp4|input3.mp4&quot; -c copy output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="2-方法二：FFmpeg-concat分离器"><a href="#2-方法二：FFmpeg-concat分离器" class="headerlink" title="2.方法二：FFmpeg concat分离器"></a>2.方法二：FFmpeg concat分离器</h4><p>新建文件file.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file &#x27;input1.mp4&#x27;</span><br><span class="line">file &#x27;input2.mp4&#x27;</span><br><span class="line">file &#x27;input3.mp4&#x27;</span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -f concat -i file.txt -c copy output.mp4</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ffmpeg参数"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/06/ffmpeg%E5%8F%82%E6%95%B0/"
+    >ffmpeg参数</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/06/ffmpeg%E5%8F%82%E6%95%B0/" class="article-date">
+  <time datetime="2020-01-06T03:52:00.000Z" itemprop="datePublished">2020-01-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ffmpeg/">ffmpeg</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-通用选项"><a href="#1-通用选项" class="headerlink" title="1.通用选项"></a>1.通用选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-L license</span><br><span class="line">-h 帮助</span><br><span class="line">-fromats 显示可用的格式，编解码的，协议的...</span><br><span class="line">-f fmt 强迫采用格式fmt</span><br><span class="line">-I filename 输入文件</span><br><span class="line">-y 覆盖输出文件</span><br><span class="line">-t duration 设置纪录时间 hh:mm:ss[.xxx]格式的记录时间也支持</span><br><span class="line">-ss position 搜索到指定的时间 [-]hh:mm:ss[.xxx]的格式也支持</span><br><span class="line">-title string 设置标题</span><br><span class="line">-author string 设置作者</span><br><span class="line">-copyright string 设置版权</span><br><span class="line">-comment string 设置评论</span><br><span class="line">-target type 设置目标文件类型(vcd,svcd,dvd) 所有的格式选项（比特率，编解码以及缓冲区大小）自动设置，只需要输入如下的就可以了：ffmpeg -i myfile.avi -target vcd /tmp/vcd.mpg</span><br><span class="line">-hq 激活高质量设置</span><br><span class="line">-itsoffset offset 设置以秒为基准的时间偏移，该选项影响所有后面的输入文件。该偏移被加到输入文件的时戳，定义一个正偏移意味着相应的流被延迟了 offset秒。 [-]hh:mm:ss[.xxx]的格式也支持</span><br></pre></td></tr></table></figure>
+<h4 id="2-视频选项"><a href="#2-视频选项" class="headerlink" title="2.视频选项"></a>2.视频选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-b bitrate 设置比特率，缺省200kb/s</span><br><span class="line">-r fps 设置帧频 缺省25</span><br><span class="line">-s size 设置帧大小 格式为WXH 缺省160X128.下面的简写也可以直接使用：</span><br><span class="line">Sqcif 128X96 qcif 176X144 cif 252X288 4cif 704X576</span><br><span class="line">-aspect aspect 设置横纵比 4:3 16:9 或 1.3333 1.7777</span><br><span class="line">-croptop size 设置顶部切除带大小 像素单位</span><br><span class="line">-cropbottom size –cropleft size –cropright size</span><br><span class="line">-padtop size 设置顶部补齐的大小 像素单位</span><br><span class="line">-padbottom size –padleft size –padright size –padcolor color 设置补齐条颜色(hex,6个16进制的数，红:绿:兰排列，比如 000000代表黑色)</span><br><span class="line">-vn 不做视频记录</span><br><span class="line">-bt tolerance 设置视频码率容忍度kbit/s</span><br><span class="line">-maxrate bitrate设置最大视频码率容忍度</span><br><span class="line">-minrate bitreate 设置最小视频码率容忍度</span><br><span class="line">-bufsize size 设置码率控制缓冲区大小</span><br><span class="line">-vcodec codec 强制使用codec编解码方式。如果用copy表示原始编解码数据必须被拷贝。</span><br><span class="line">-sameq 使用同样视频质量作为源（VBR）</span><br><span class="line">-pass n 选择处理遍数（1或者2）。两遍编码非常有用。第一遍生成统计信息，第二遍生成精确的请求的码率</span><br><span class="line">-passlogfile file 选择两遍的纪录文件名为file</span><br></pre></td></tr></table></figure>
+<h4 id="3-高级视频选项"><a href="#3-高级视频选项" class="headerlink" title="3.高级视频选项"></a>3.高级视频选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">-g gop_size 设置图像组大小</span><br><span class="line">-intra 仅适用帧内编码</span><br><span class="line">-qscale q 使用固定的视频量化标度(VBR)</span><br><span class="line">-qmin q 最小视频量化标度(VBR)</span><br><span class="line">-qmax q 最大视频量化标度(VBR)</span><br><span class="line">-qdiff q 量化标度间最大偏差 (VBR)</span><br><span class="line">-qblur blur 视频量化标度柔化(VBR)</span><br><span class="line">-qcomp compression 视频量化标度压缩(VBR)</span><br><span class="line">-rc_init_cplx complexity 一遍编码的初始复杂度</span><br><span class="line">-b_qfactor factor 在p和b帧间的qp因子</span><br><span class="line">-i_qfactor factor 在p和i帧间的qp因子</span><br><span class="line">-b_qoffset offset 在p和b帧间的qp偏差</span><br><span class="line">-i_qoffset offset 在p和i帧间的qp偏差</span><br><span class="line">-rc_eq equation 设置码率控制方程 默认tex^qComp</span><br><span class="line">-rc_override override 特定间隔下的速率控制重载</span><br><span class="line">-me method 设置运动估计的方法 可用方法有 zero phods log x1 epzs(缺省) full</span><br><span class="line">-dct_algo algo 设置dct的算法 可用的有 0 FF_DCT_AUTO 缺省的DCT 1 FF_DCT_FASTINT 2 FF_DCT_INT 3 FF_DCT_MMX 4 FF_DCT_MLIB 5 FF_DCT_ALTIVEC</span><br><span class="line">-idct_algo algo 设置idct算法。可用的有 0 FF_IDCT_AUTO 缺省的IDCT 1 FF_IDCT_INT 2 FF_IDCT_SIMPLE 3 FF_IDCT_SIMPLEMMX 4 FF_IDCT_LIBMPEG2MMX 5 FF_IDCT_PS2 6 FF_IDCT_MLIB 7 FF_IDCT_ARM 8 FF_IDCT_ALTIVEC 9 FF_IDCT_SH4 10 FF_IDCT_SIMPLEARM</span><br><span class="line">-er n 设置错误残留为n 1 FF_ER_CAREFULL 缺省 2 FF_ER_COMPLIANT 3 FF_ER_AGGRESSIVE 4 FF_ER_VERY_AGGRESSIVE</span><br><span class="line">-ec bit_mask 设置错误掩蔽为bit_mask,该值为如下值的位掩码 1 FF_EC_GUESS_MVS (default=enabled) 2 FF_EC_DEBLOCK (default=enabled)</span><br><span class="line">-bf frames 使用frames B 帧，支持mpeg1,mpeg2,mpeg4</span><br><span class="line">-mbd mode 宏块决策 0 FF_MB_DECISION_SIMPLE 使用mb_cmp 1 FF_MB_DECISION_BITS 2 FF_MB_DECISION_RD</span><br><span class="line">-4mv 使用4个运动矢量 仅用于mpeg4</span><br><span class="line">-part 使用数据划分 仅用于mpeg4</span><br><span class="line">-bug param 绕过没有被自动监测到编码器的问题</span><br><span class="line">-strict strictness 跟标准的严格性</span><br><span class="line">-aic 使能高级帧内编码 h263+</span><br><span class="line">-umv 使能无限运动矢量 h263+</span><br><span class="line">-deinterlace 不采用交织方法</span><br><span class="line">-interlace 强迫交织法编码仅对mpeg2和mpeg4有效。当你的输入是交织的并且你想要保持交织以最小图像损失的时候采用该选项。可选的方法是不交织，但是损失更大</span><br><span class="line">-psnr 计算压缩帧的psnr</span><br><span class="line">-vstats 输出视频编码统计到vstats_hhmmss.log</span><br><span class="line">-vhook module 插入视频处理模块 module 包括了模块名和参数，用空格分开</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-音频选项"><a href="#4-音频选项" class="headerlink" title="4.音频选项"></a>4.音频选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-ab bitrate 设置音频码率</span><br><span class="line">-ar freq 设置音频采样率</span><br><span class="line">-ac channels 设置通道 缺省为1</span><br><span class="line">-an 不使能音频纪录</span><br><span class="line">-acodec codec 使用codec编解码</span><br></pre></td></tr></table></figure>
+<h4 id="5-音频-视频捕获选项"><a href="#5-音频-视频捕获选项" class="headerlink" title="5.音频/视频捕获选项"></a>5.音频/视频捕获选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-vd device 设置视频捕获设备。比如/dev/video0</span><br><span class="line">-vc channel 设置视频捕获通道 DV1394专用</span><br><span class="line">-tvstd standard 设置电视标准 NTSC PAL(SECAM)</span><br><span class="line">-dv1394 设置DV1394捕获</span><br><span class="line">-av device 设置音频设备 比如/dev/dsp</span><br></pre></td></tr></table></figure>
+<h4 id="6-高级选项"><a href="#6-高级选项" class="headerlink" title="6.高级选项"></a>6.高级选项</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-map file:stream 设置输入流映射</span><br><span class="line">-debug 打印特定调试信息</span><br><span class="line">-benchmark 为基准测试加入时间</span><br><span class="line">-hex 倾倒每一个输入包</span><br><span class="line">-bitexact 仅使用位精确算法 用于编解码测试</span><br><span class="line">-ps size 设置包大小，以bits为单位</span><br><span class="line">-re 以本地帧频读数据，主要用于模拟捕获设备</span><br><span class="line">-loop 循环输入流（只工作于图像流，用于ffserver测试）</span><br></pre></td></tr></table></figure>
+
+<h4 id="15-压缩视频"><a href="#15-压缩视频" class="headerlink" title="15.压缩视频"></a>15.压缩视频</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -b:a 128k -b:v 7551k output.mp4</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ffmpeg常用命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
+    >ffmpeg常用命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/06/ffmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2020-01-06T03:47:00.000Z" itemprop="datePublished">2020-01-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ffmpeg/">ffmpeg</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-基础概念"><a href="#一-基础概念" class="headerlink" title="一.基础概念"></a>一.基础概念</h3><h4 id="1-FFmpeg-的命令行参数非常多，可以分成五个部分。"><a href="#1-FFmpeg-的命令行参数非常多，可以分成五个部分。" class="headerlink" title="1.FFmpeg 的命令行参数非常多，可以分成五个部分。"></a>1.FFmpeg 的命令行参数非常多，可以分成五个部分。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，五个部分的参数依次如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">全局参数</span><br><span class="line">输入文件参数</span><br><span class="line">输入文件</span><br><span class="line">输出文件参数</span><br><span class="line">输出文件</span><br></pre></td></tr></table></figure>
+<h4 id="2-参数太多的时候，为了便于查看，ffmpeg-命令可以写成多行。"><a href="#2-参数太多的时候，为了便于查看，ffmpeg-命令可以写成多行。" class="headerlink" title="2.参数太多的时候，为了便于查看，ffmpeg 命令可以写成多行。"></a>2.参数太多的时候，为了便于查看，ffmpeg 命令可以写成多行。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">[全局参数] \</span><br><span class="line">[输入文件参数] \</span><br><span class="line">-i [输入文件] \</span><br><span class="line">[输出文件参数] \</span><br><span class="line">[输出文件]</span><br></pre></td></tr></table></figure>
+<p>下面是一个例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-y \ # 全局参数</span><br><span class="line">-c:a libfdk_aac -c:v libx264 \ # 输入文件参数</span><br><span class="line">-i input.mp4 \ # 输入文件</span><br><span class="line">-c:v libvpx-vp9 -c:a libvorbis \ # 输出文件参数</span><br><span class="line">output.webm # 输出文件</span><br></pre></td></tr></table></figure>
+<h4 id="3-FFmpeg-常用的命令行参数如下。"><a href="#3-FFmpeg-常用的命令行参数如下。" class="headerlink" title="3.FFmpeg 常用的命令行参数如下。"></a>3.FFmpeg 常用的命令行参数如下。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-c：指定编码器</span><br><span class="line">-c copy：直接复制，不经过重新编码（这样比较快）</span><br><span class="line">-c:v：指定视频编码器</span><br><span class="line">-c:a：指定音频编码器</span><br><span class="line">-i：指定输入文件</span><br><span class="line">-an：去除音频流</span><br><span class="line">-vn： 去除视频流</span><br><span class="line">-preset：指定输出的视频质量，会影响文件的生成速度，有以下几个可用的值 ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow。</span><br><span class="line">-y：不经过确认，输出时直接覆盖同名文件。</span><br><span class="line"></span><br><span class="line">主要参数：</span><br><span class="line">-i 设定输入流</span><br><span class="line">-f 设定输出格式</span><br><span class="line">-ss 开始时间</span><br><span class="line">视频参数：</span><br><span class="line">-b 设定视频流量，默认为200Kbit/s</span><br><span class="line">-r 设定帧速率，默认为25</span><br><span class="line">-s 设定画面的宽与高</span><br><span class="line">-aspect 设定画面的比例</span><br><span class="line">-vn 不处理视频</span><br><span class="line">-vcodec 设定视频编解码器，未设定时则使用与输入流相同的编解码器</span><br><span class="line">音频参数：</span><br><span class="line">-ar 设定采样率</span><br><span class="line">-ac 设定声音的Channel数</span><br><span class="line">-acodec 设定声音编解码器，未设定时则使用与输入流相同的编解码器</span><br><span class="line">-an 不处理音频</span><br></pre></td></tr></table></figure>
+<h3 id="二-常用命令"><a href="#二-常用命令" class="headerlink" title="二.常用命令"></a>二.常用命令</h3><h4 id="1-视频画面上下翻转："><a href="#1-视频画面上下翻转：" class="headerlink" title="1.视频画面上下翻转："></a>1.视频画面上下翻转：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -vf vflip output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="2-左右翻转："><a href="#2-左右翻转：" class="headerlink" title="2.左右翻转："></a>2.左右翻转：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -vf hflip output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="3-画面顺时针旋转90度："><a href="#3-画面顺时针旋转90度：" class="headerlink" title="3.画面顺时针旋转90度："></a>3.画面顺时针旋转90度：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -vf transpose=1 output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="4-画面逆时针旋转90°："><a href="#4-画面逆时针旋转90°：" class="headerlink" title="4.画面逆时针旋转90°："></a>4.画面逆时针旋转90°：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -vf transpose=2 output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="5-查看文件信息"><a href="#5-查看文件信息" class="headerlink" title="5.查看文件信息"></a>5.查看文件信息</h4><p>查看视频文件的元信息，比如编码格式和比特率，可以只使用-i参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffprobe input.mp4</span><br></pre></td></tr></table></figure>
+<p>上面命令会输出很多冗余信息，加上-hide_banner参数，可以只显示元信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4 -hide_banner</span><br></pre></td></tr></table></figure>
+<h4 id="6-转换编码格式"><a href="#6-转换编码格式" class="headerlink" title="6.转换编码格式"></a>6.转换编码格式</h4><p>转换编码格式（transcoding）指的是， 将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器libx264，所以只需指定输出文件的视频编码器即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i [input.file] -c:v libx264 output.mp4</span><br></pre></td></tr></table></figure>
+<p>下面是转成 H.265 编码的写法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i [input.file] -c:v libx265 output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="7-转换容器格式"><a href="#7-转换容器格式" class="headerlink" title="7.转换容器格式"></a>7.转换容器格式</h4><p>转换容器格式（transmuxing）指的是，将视频文件从一种容器转到另一种容器。下面是 mp4 转 webm 的写法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4 -c copy output.webm</span><br></pre></td></tr></table></figure>
+<p>上面例子中，只是转一下容器，内部的编码格式不变，所以使用-c copy指定直接拷贝，不经过转码，这样比较快。</p>
+<h4 id="8-调整码率"><a href="#8-调整码率" class="headerlink" title="8.调整码率"></a>8.调整码率</h4><p>调整码率（transrating）指的是，改变编码的比特率，一般用来将视频文件的体积变小。下面的例子指定码率最小为964K，最大为3856K，缓冲区大小为 2000K。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-i input.mp4 \</span><br><span class="line">-minrate 964K -maxrate 3856K -bufsize 2000K \</span><br><span class="line">output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="9-改变分辨率（transsizing）"><a href="#9-改变分辨率（transsizing）" class="headerlink" title="9.改变分辨率（transsizing）"></a>9.改变分辨率（transsizing）</h4><p>下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-i input.mp4 \</span><br><span class="line">-vf scale=480:-1 \</span><br><span class="line">output.mp4</span><br></pre></td></tr></table></figure>
+<h4 id="10-提取音频"><a href="#10-提取音频" class="headerlink" title="10.提取音频"></a>10.提取音频</h4><p>有时，需要从视频里面提取音频（demuxing），可以像下面这样写。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-i input.mp4 \</span><br><span class="line">-vn -c:a copy \</span><br><span class="line">output.aac</span><br></pre></td></tr></table></figure>
+<p>上面例子中，-vn表示去掉视频，-c:a copy表示不改变音频编码，直接拷贝。</p>
+<h4 id="11-添加音轨"><a href="#11-添加音轨" class="headerlink" title="11.添加音轨"></a>11.添加音轨</h4><p>添加音轨（muxing）指的是，将外部音频加入视频，比如添加背景音乐或旁白。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-i input.aac -i input.mp4 \</span><br><span class="line">output.mp4</span><br></pre></td></tr></table></figure>
+<p>上面例子中，有音频和视频两个输入文件，FFmpeg 会将它们合成为一个文件。</p>
+<h4 id="12-截图"><a href="#12-截图" class="headerlink" title="12.截图"></a>12.截图</h4><p>下面的例子是从指定时间开始，连续对1秒钟的视频进行截图。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-y \</span><br><span class="line">-i input.mp4 \</span><br><span class="line">-ss 00:01:24 -t 00:00:01 \</span><br><span class="line">output_%3d.jpg</span><br></pre></td></tr></table></figure>
+<p>如果只需要截一张图，可以指定只截取一帧。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-ss 01:23:45 \</span><br><span class="line">-i input \</span><br><span class="line">-vframes 1 -q:v 2 \</span><br><span class="line">output.jpg</span><br></pre></td></tr></table></figure>
+<p>上面例子中，-vframes 1指定只截取一帧，-q:v 2表示输出的图片质量，一般是1到5之间（1 为质量最高）。</p>
+<h4 id="13-裁剪"><a href="#13-裁剪" class="headerlink" title="13.裁剪"></a>13.裁剪</h4><p>裁剪（cutting）指的是，截取原始视频里面的一个片段，输出为一个新视频。可以指定开始时间（start）和持续时间（duration），也可以指定结束时间（end）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -ss [start] -i [input] -t [duration] -c copy [output]</span><br><span class="line">ffmpeg -ss [start] -i [input] -to [end] -c copy [output]</span><br></pre></td></tr></table></figure>
+<p>下面是实际的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -ss 00:01:50 -i [input] -t 10.5 -c copy [output]</span><br><span class="line">ffmpeg -ss 2.5 -i [input] -to 10 -c copy [output]</span><br></pre></td></tr></table></figure>
+<p>上面例子中，-c copy表示不改变音频和视频的编码格式，直接拷贝，这样会快很多。</p>
+<h4 id="14-为音频添加封面"><a href="#14-为音频添加封面" class="headerlink" title="14.为音频添加封面"></a>14.为音频添加封面</h4><p>有些视频网站只允许上传视频文件。如果要上传音频文件，必须为音频添加封面，将其转为视频，然后上传。</p>
+<p>下面命令可以将音频文件，转为带封面的视频文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg \</span><br><span class="line">-loop 1 \</span><br><span class="line">-i cover.jpg -i input.mp3 \</span><br><span class="line">-c:v libx264 -c:a aac -b:a 192k -shortest \</span><br><span class="line">output.mp4</span><br></pre></td></tr></table></figure>
+<p>上面命令中，有两个输入文件，一个是封面图片cover.jpg，另一个是音频文件input.mp3。-loop 1参数表示图片无限循环，-shortest参数表示音频文件结束，输出视频就结束。</p>
+<h4 id="15-压缩视频"><a href="#15-压缩视频" class="headerlink" title="15.压缩视频"></a>15.压缩视频</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i target.mp4 -b:a 128k -b:v 7551k output.mp4</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-java-Set接口"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/03/java-Set%E6%8E%A5%E5%8F%A3/"
+    >Set接口</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/03/java-Set%E6%8E%A5%E5%8F%A3/" class="article-date">
+  <time datetime="2020-01-03T08:05:00.000Z" itemprop="datePublished">2020-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-通用"><a href="#1-通用" class="headerlink" title="1.通用"></a>1.通用</h4><h5 id="1-Set接口的特点"><a href="#1-Set接口的特点" class="headerlink" title="(1)Set接口的特点"></a>(1)Set接口的特点</h5><ul>
+<li>不允许存储重复元素</li>
+<li>没有索引，没有带索引的方法，也不能使用普通for循环遍历</li>
+</ul>
+<h4 id="2-HashSet"><a href="#2-HashSet" class="headerlink" title="2.HashSet"></a>2.HashSet</h4><h5 id="1-HashSet特点"><a href="#1-HashSet特点" class="headerlink" title="(1)HashSet特点"></a>(1)HashSet特点</h5><ul>
+<li>不允许存储重复的元素</li>
+<li>没有索引，没有带索引的方法，也不能使用普通的for循环遍历</li>
+<li>是一个无序的集合，存储元素的取出元素的顺序有可能不一样</li>
+<li>底层是一个哈希表结构(查询的速度非常快)</li>
+</ul>
+<h5 id="2-HashSet存储自定义类型元素"><a href="#2-HashSet存储自定义类型元素" class="headerlink" title="(2)HashSet存储自定义类型元素"></a>(2)HashSet存储自定义类型元素</h5><ul>
+<li>Set集合要保证元素唯一(String,Integer…Student,Person),必须重写hashCode方法和equals方法</li>
+</ul>
+<h4 id="3-哈希值"><a href="#3-哈希值" class="headerlink" title="3.哈希值"></a>3.哈希值</h4><p>(1) 是一个十进制的整数，由系统随机给出(就是对象的地址值，是一个逻辑地址，是模拟出来得到的地址，不是数据实际存储的物理地址)<br>(2)int hashCode() 返回该对象的哈希码值</p>
+<h4 id="4-Hash表-HashSet集合存储数据的结构"><a href="#4-Hash表-HashSet集合存储数据的结构" class="headerlink" title="4.Hash表(HashSet集合存储数据的结构)"></a>4.Hash表(HashSet集合存储数据的结构)</h4><h5 id="1-jdk8之前："><a href="#1-jdk8之前：" class="headerlink" title="(1)jdk8之前："></a>(1)jdk8之前：</h5><ul>
+<li>哈希表=数组+链表</li>
+</ul>
+<h5 id="2-jdk8之后："><a href="#2-jdk8之后：" class="headerlink" title="(2)jdk8之后："></a>(2)jdk8之后：</h5><ul>
+<li>哈希表=数组+链表</li>
+<li>哈希表-数组+红黑树(提高查询的速度)</li>
+</ul>
+<h5 id="3-哈希表的特点"><a href="#3-哈希表的特点" class="headerlink" title="(3)哈希表的特点"></a>(3)哈希表的特点</h5><ul>
+<li>速度快</li>
+</ul>
+<h4 id="5-LinkedHashSet"><a href="#5-LinkedHashSet" class="headerlink" title="5.LinkedHashSet"></a>5.LinkedHashSet</h4><h5 id="1-LinkedHashSet-继承自-HashSet"><a href="#1-LinkedHashSet-继承自-HashSet" class="headerlink" title="(1)LinkedHashSet 继承自 HashSet"></a>(1)LinkedHashSet 继承自 HashSet</h5><h5 id="2-LinkedHashSet集合特点："><a href="#2-LinkedHashSet集合特点：" class="headerlink" title="(2)LinkedHashSet集合特点："></a>(2)LinkedHashSet集合特点：</h5><ul>
+<li>底层是一个哈希表(数组+链表/红黑树)+链表：多了一条链表(记录元素的存储顺序)，保证元素有序</li>
+<li>并且不允许重复</li>
+</ul>
+<h4 id="6-可变参数"><a href="#6-可变参数" class="headerlink" title="6.可变参数"></a>6.可变参数</h4><h5 id="1-可变参数：是JDK1-5之后出现的新特性"><a href="#1-可变参数：是JDK1-5之后出现的新特性" class="headerlink" title="(1)可变参数：是JDK1.5之后出现的新特性"></a>(1)可变参数：是JDK1.5之后出现的新特性</h5><h5 id="2-使用前提："><a href="#2-使用前提：" class="headerlink" title="(2)使用前提："></a>(2)使用前提：</h5><ul>
+<li>当方法的参数列表数据类型已经确定，但是参数的个数不确定，就可以使用可变参数</li>
+</ul>
+<h5 id="3-使用格式：定义方法时使用"><a href="#3-使用格式：定义方法时使用" class="headerlink" title="(3)使用格式：定义方法时使用"></a>(3)使用格式：定义方法时使用</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修饰符 返回值类型 方法名(数据类型...变量名)&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-可变参数原理："><a href="#4-可变参数原理：" class="headerlink" title="(4)可变参数原理："></a>(4)可变参数原理：</h5><ul>
+<li>可变参数底层就是一个数组，根据传递参数个数不同，会创建不同长度的数组，用来存储这些参数</li>
+<li>传递的参数个数，可以是0(不传递)，1，2…多个</li>
+</ul>
+<h5 id="5-示例"><a href="#5-示例" class="headerlink" title="(5)示例"></a>(5)示例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span>...arr)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i:arr)&#123;</span><br><span class="line">		sum+=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="6-可变参数的注意事项"><a href="#6-可变参数的注意事项" class="headerlink" title="(6)可变参数的注意事项"></a>(6)可变参数的注意事项</h5><ul>
+<li>一个方法的参数列表，只能有一个可变参数</li>
+<li>如果方法的参数有多个，那么可变参数必须写在参数列表的末尾</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(String a,Double b,<span class="keyword">int</span>...arr)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i:arr)&#123;</span><br><span class="line">		sum+=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-可变参数的特殊写法"><a href="#7-可变参数的特殊写法" class="headerlink" title="(7)可变参数的特殊写法"></a>(7)可变参数的特殊写法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(Object...obj)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-java-List接口"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/03/java-List%E6%8E%A5%E5%8F%A3/"
+    >List接口</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/03/java-List%E6%8E%A5%E5%8F%A3/" class="article-date">
+  <time datetime="2020-01-03T07:05:00.000Z" itemprop="datePublished">2020-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-List接口特点"><a href="#1-List接口特点" class="headerlink" title="1.List接口特点"></a>1.List接口特点</h4><ul>
+<li>有序的集合，存储元素和取出元素的顺序是一致的</li>
+<li>有索引，包含了一些带索引的方法</li>
+<li>允许存储重复的元素</li>
+</ul>
+<h4 id="2-List接口中带索引的方法"><a href="#2-List接口中带索引的方法" class="headerlink" title="2.List接口中带索引的方法"></a>2.List接口中带索引的方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index,E element)</span></span>;  <span class="comment">//将指定的元素，添加到集合中的指定位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span></span>;							 <span class="comment">//返回集合中指定位置的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span></span>;						 <span class="comment">//移除列表中指定位置的元素，返回的是被移除的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index,E element)</span></span>;		 <span class="comment">//用指定的元素替换指定位置的元素，返回值是更新前的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//注意：操作索引时，一定要防止索引越界异常</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-ArrayList"><a href="#3-ArrayList" class="headerlink" title="3.ArrayList"></a>3.ArrayList</h4><p>(1)ArrayList集合数据存储的结构是数组<br>(2)元素增删慢，查找快</p>
+<h4 id="4-LinkedList"><a href="#4-LinkedList" class="headerlink" title="4.LinkedList"></a>4.LinkedList</h4><p>(1)LinkedList集合的特点</p>
+<ul>
+<li>底层是一个链表结构：查询慢，增删块</li>
+<li>里边包含了大量操作首尾元素的方法</li>
+</ul>
+<p>(2)常用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFrist</span><span class="params">(E e)</span></span>;   <span class="comment">//将指定元素插入到此列表的开头</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLast</span><span class="params">(E e)</span></span>;		 <span class="comment">//将指定元素插入到此列表的结尾</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E e)</span></span>;			 <span class="comment">//将元素推入此列表所表示的堆栈</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">getFrist</span><span class="params">()</span></span>;         <span class="comment">//返回此列表的第一个元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">getLast</span><span class="params">()</span></span>;					 <span class="comment">//返回此列表的最后一个元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">removeFrist</span><span class="params">()</span></span>;			 <span class="comment">//移除并返回此列表的第一个元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">removeLast</span><span class="params">()</span></span>;			 <span class="comment">//移除并返回此列表的最后一个元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">pop</span><span class="params">()</span></span>;							 <span class="comment">//从此列表所表示的堆栈处弹出一个元素</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-Vector"><a href="#5-Vector" class="headerlink" title="5.Vector"></a>5.Vector</h4><p>(1)Vector类可以实现可增长的对象数组<br>(2)Vector是同步的，单线程的</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-java-泛型的使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/"
+    >泛型的使用</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/01/03/java-%E6%B3%9B%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-01-03T06:02:00.000Z" itemprop="datePublished">2020-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-泛型类和泛型方法"><a href="#1-泛型类和泛型方法" class="headerlink" title="1.泛型类和泛型方法"></a>1.泛型类和泛型方法</h4><h5 id="1-格式"><a href="#1-格式" class="headerlink" title="(1)格式"></a>(1)格式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">类名&lt;泛型&gt;</span><br><span class="line">方法名(泛型)</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例"><a href="#2-示例" class="headerlink" title="(2)示例"></a>(2)示例</h5><p>例如<br>a.泛型类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">		System.out.println(t);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b.实现方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Test01&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		MyClass&lt;String&gt; mc1 = new MyClass&lt;&gt;();</span><br><span class="line">		mc1.print(&quot;hello1&quot;);</span><br><span class="line">		</span><br><span class="line">		MyClass&lt;Integer&gt; mc2 = new MyClass();</span><br><span class="line">		mc2.print(99);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;		</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-泛型接口和泛型方法"><a href="#2-泛型接口和泛型方法" class="headerlink" title="2.泛型接口和泛型方法"></a>2.泛型接口和泛型方法</h4><h5 id="1-格式-1"><a href="#1-格式-1" class="headerlink" title="(1)格式"></a>(1)格式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">接口&lt;泛型&gt;</span><br><span class="line">方法名(泛型)</span><br></pre></td></tr></table></figure>
+<h5 id="2-示例-1"><a href="#2-示例-1" class="headerlink" title="(2)示例"></a>(2)示例</h5><p>例如<br>a.接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyInter</span>&lt;<span class="title">O</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(O o)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b.接口实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterImpl</span>&lt;<span class="title">O</span>&gt; <span class="keyword">implements</span> <span class="title">MyInter</span>&lt;<span class="title">O</span>&gt;</span>&#123;</span><br><span class="line">	<span class="meta">@Overide</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(O o)</span></span>&#123;</span><br><span class="line">		System.out.println(o);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c.调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		MyInterImpl&lt;String&gt; m1 = <span class="keyword">new</span> MyInterImpl&lt;&gt;();</span><br><span class="line">		m1.print(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		MyInterImpl&lt;Double&gt; m2 = <span class="keyword">new</span> MyInterImpl();</span><br><span class="line">		m2.print(<span class="number">8.8</span>)</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-泛型通配符"><a href="#3-泛型通配符" class="headerlink" title="3.泛型通配符"></a>3.泛型通配符</h4><h5 id="1-概念"><a href="#1-概念" class="headerlink" title="(1)概念"></a>(1)概念</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">泛型的通配符</span><br><span class="line">	？：代表任意的数据类型</span><br><span class="line">使用方式：</span><br><span class="line">	不能创建对象使用</span><br><span class="line">	只能作为方法的参数使用</span><br><span class="line">泛型的上限限定</span><br><span class="line">	？ extends E 代表使用的泛型只能是E类型的子类/本身</span><br><span class="line">泛型类的下限限定</span><br><span class="line">	？ super E 代表使用的泛型只能是E类型的父类/本身 </span><br></pre></td></tr></table></figure>
+<h5 id="2-示例-2"><a href="#2-示例-2" class="headerlink" title="(2)示例"></a>(2)示例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        demo1();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; list1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list1.add(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">        list1.add(<span class="string">&quot;beatiful&quot;</span>);</span><br><span class="line">        print(list1);</span><br><span class="line"></span><br><span class="line">        ArrayList&lt;Integer&gt; list2 =  <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list2.add(<span class="number">100</span>);</span><br><span class="line">        list2.add(<span class="number">200</span>);</span><br><span class="line">        list2.add(<span class="number">300</span>);</span><br><span class="line">        list2.add(<span class="number">500</span>);</span><br><span class="line">        print(list2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 泛型通配符的使用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(ArrayList&lt;?&gt; list)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Object o : list) &#123;</span><br><span class="line">            System.out.println(o);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E8%A7%88/" rel="tag">知识点速览</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/11/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/13/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

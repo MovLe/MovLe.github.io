@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Hadoop之优化 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Hadoop之优化"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Hadoop之优化
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-01-02T07:50:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">8 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-MapReduce-跑的慢的原因"><a href="#一-MapReduce-跑的慢的原因" class="headerlink" title="一.MapReduce 跑的慢的原因"></a>一.MapReduce 跑的慢的原因</h3><p>Mapreduce 程序效率的瓶颈在于两点：</p>
+<h4 id="1-计算机性能"><a href="#1-计算机性能" class="headerlink" title="1.计算机性能"></a>1.计算机性能</h4><p>CPU、内存、磁盘健康、网络</p>
+<h4 id="2-I-O-操作优化"><a href="#2-I-O-操作优化" class="headerlink" title="2.I/O 操作优化"></a>2.I/O 操作优化</h4><p>(1)数据倾斜<br>(2)map和reduce数设置不合理<br>(3)map运行时间太长，导致reduce等待过久<br>(4)小文件过多<br>(5)大量的不可分块的超大文件<br>(6)spill次数过多<br>(7)merge次数过多等。</p>
+<h3 id="二-MapReduce优化方法"><a href="#二-MapReduce优化方法" class="headerlink" title="二. MapReduce优化方法"></a>二. MapReduce优化方法</h3><p>MapReduce优化方法主要从六个方面考虑：数据输入、Map阶段、Reduce阶段、IO传输、数据倾斜问题和常用的调优参数。</p>
+<h4 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h4><p>(1)合并小文件：在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢。</p>
+<p>(2)采用CombineTextInputFormat来作为输入，解决输入端大量小文件场景。</p>
+<h4 id="2-Map阶段"><a href="#2-Map阶段" class="headerlink" title="2 Map阶段"></a>2 Map阶段</h4><h5 id="1-减少溢写（spill）次数："><a href="#1-减少溢写（spill）次数：" class="headerlink" title="(1)减少溢写（spill）次数："></a>(1)减少溢写（spill）次数：</h5><p>通过调整io.sort.mb及sort.spill.percent参数值，增大触发spill的内存上限，减少spill次数，从而减少磁盘IO。</p>
+<h5 id="2-减少合并（merge）次数："><a href="#2-减少合并（merge）次数：" class="headerlink" title="(2)减少合并（merge）次数："></a>(2)减少合并（merge）次数：</h5><p>通过调整io.sort.factor参数，增大merge的文件数目，减少merge的次数，从而缩短mr处理时间。</p>
+<h5 id="3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。"><a href="#3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。" class="headerlink" title="(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。"></a>(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。</h5><h4 id="3-Reduce阶段"><a href="#3-Reduce阶段" class="headerlink" title="3 Reduce阶段"></a>3 Reduce阶段</h4><h5 id="1-合理设置map和reduce数："><a href="#1-合理设置map和reduce数：" class="headerlink" title="(1)合理设置map和reduce数："></a>(1)合理设置map和reduce数：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致 map、reduce任务间竞争资源，造成处理超时等错误。</p>
+<h5 id="2-设置map、reduce共存："><a href="#2-设置map、reduce共存：" class="headerlink" title="(2)设置map、reduce共存："></a>(2)设置map、reduce共存：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;调整slowstart.completedmaps参数，使map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。</p>
+<h5 id="3-规避使用reduce："><a href="#3-规避使用reduce：" class="headerlink" title="(3)规避使用reduce："></a>(3)规避使用reduce：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;因为reduce在用于连接数据集的时候将会产生大量的网络消耗。</p>
+<h5 id="4-合理设置reduce端的buffer："><a href="#4-合理设置reduce端的buffer：" class="headerlink" title="(4)合理设置reduce端的buffer："></a>(4)合理设置reduce端的buffer：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;默认情况下，数据达到一个阈值的时候，buffer中的数据就会写入磁盘，然后reduce会从磁盘中获得所有的数据。也就是说，buffer和reduce是没有直接关联的，中间多个一个写磁盘-&gt;读磁盘的过程，既然有这个弊端，那么就可以通过参数来配置，使得buffer中的一部分数据可以直接输送到reduce，从而减少IO开销：mapred.job.reduce.input.buffer.percent，默认为0.0。当值大于0的时候，会保留指定比例的内存读buffer中的数据直接拿给reduce使用。这样一来，设置buffer需要内存，读取数据需要内存，reduce计算也要内存，所以要根据作业的运行情况进行调整。</p>
+<h4 id="4-IO传输"><a href="#4-IO传输" class="headerlink" title="4 IO传输"></a>4 IO传输</h4><p>(1)采用数据压缩的方式，减少网络IO的的时间。安装Snappy和LZO压缩编码器。</p>
+<p>(2)使用SequenceFile二进制文件。</p>
+<h4 id="5-数据倾斜问题"><a href="#5-数据倾斜问题" class="headerlink" title="5 数据倾斜问题"></a>5 数据倾斜问题</h4><h5 id="1-数据倾斜现象"><a href="#1-数据倾斜现象" class="headerlink" title="(1)数据倾斜现象"></a>(1)数据倾斜现象</h5><ul>
+<li>数据频率倾斜——某一个区域的数据量要远远大于其他区域。</li>
+<li>数据大小倾斜——部分记录的大小远远大于平均值。</li>
+</ul>
+<h5 id="2-如何收集倾斜数据"><a href="#2-如何收集倾斜数据" class="headerlink" title="(2)如何收集倾斜数据"></a>(2)如何收集倾斜数据</h5><p>在reduce方法中加入记录map输出键的详细情况的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MAX_VALUES = <span class="string">&quot;skew.maxvalues&quot;</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> maxValueThreshold; </span><br><span class="line"> </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(JobConf job)</span> </span>&#123; </span><br><span class="line">     maxValueThreshold = job.getInt(MAX_VALUES, <span class="number">100</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterator&lt;Text&gt; values,</span></span></span><br><span class="line"><span class="params"><span class="function">                     OutputCollector&lt;Text, Text&gt; output, </span></span></span><br><span class="line"><span class="params"><span class="function">                     Reporter reporter)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">while</span> (values.hasNext()) &#123;</span><br><span class="line">         values.next();</span><br><span class="line">         i++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (++i &gt; maxValueThreshold) &#123;</span><br><span class="line">         log.info(<span class="string">&quot;Received &quot;</span> + i + <span class="string">&quot; values for key &quot;</span> + key);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-减少数据倾斜的方法"><a href="#3-减少数据倾斜的方法" class="headerlink" title="(3)减少数据倾斜的方法"></a>(3)减少数据倾斜的方法</h5><ul>
+<li><p>方法1：抽样和范围分区<br>可以通过对原始数据进行抽样得到的结果集来预设分区边界值。</p>
+</li>
+<li><p>方法2：自定义分区<br>基于输出键的背景知识进行自定义分区。例如，如果map输出键的单词来源于一本书。且其中某几个专业词汇较多。那么就可以自定义分区将这这些专业词汇发送给固定的一部分reduce实例。而将其他的都发送给剩余的reduce实例。</p>
+</li>
+<li><p>方法3：Combine<br>使用Combine可以大量地减小数据倾斜。在可能的情况下，combine的目的就是聚合并精简数据。</p>
+</li>
+<li><p>方法4：采用Map Join，尽量避免Reduce Join。</p>
+</li>
+</ul>
+<h4 id="6-常用的调优参数"><a href="#6-常用的调优参数" class="headerlink" title="6 常用的调优参数"></a>6 常用的调优参数</h4><h5 id="1-资源相关参数"><a href="#1-资源相关参数" class="headerlink" title="(1)资源相关参数"></a>(1)资源相关参数</h5><h6 id="a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）"><a href="#a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）" class="headerlink" title="(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）"></a>(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.memory.mb</td>
+<td align="center">一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.memory.mb</td>
+<td align="center">一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.cpu.vcores</td>
+<td align="center">每个Map task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.cpu.vcores</td>
+<td align="center">每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.parallelcopies</td>
+<td align="center">每个reduce去map中拿数据的并行数。默认值是5</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.merge.percent</td>
+<td align="center">buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.input.buffer.percent</td>
+<td align="center">buffer大小占reduce可用内存的比例。默认值0.7</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.input.buffer.percent</td>
+<td align="center">指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
+</tr>
+</tbody></table>
+<h6 id="b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）"><a href="#b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）" class="headerlink" title="(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）"></a>(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">yarn.scheduler.minimum-allocation-mb      1024</td>
+<td align="center">给应用程序container分配的最小内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-mb      8192</td>
+<td align="center">给应用程序container分配的最大内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.minimum-allocation-vcores    1</td>
+<td align="center">每个container申请的最小CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-vcores    32</td>
+<td align="center">每个container申请的最大CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.nodemanager.resource.memory-mb   8192</td>
+<td align="center">给containers分配的最大物理内存</td>
+</tr>
+</tbody></table>
+<h6 id="c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）"><a href="#c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）" class="headerlink" title="(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）"></a>(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.task.io.sort.mb   100</td>
+<td align="center">shuffle的环形缓冲区大小，默认100m</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.sort.spill.percent   0.8</td>
+<td align="center">环形缓冲区溢出的阈值，默认80%</td>
+</tr>
+</tbody></table>
+<h5 id="2-容错相关参数-mapreduce性能优化"><a href="#2-容错相关参数-mapreduce性能优化" class="headerlink" title="(2)容错相关参数(mapreduce性能优化)"></a>(2)容错相关参数(mapreduce性能优化)</h5><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.maxattempts</td>
+<td align="center">每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.maxattempts</td>
+<td align="center">每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.task.timeout</td>
+<td align="center">Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
+</tr>
+</tbody></table>
+<h3 id="三-HDFS小文件优化方法"><a href="#三-HDFS小文件优化方法" class="headerlink" title="三. HDFS小文件优化方法"></a>三. HDFS小文件优化方法</h3><h4 id="1-HDFS小文件弊端"><a href="#1-HDFS小文件弊端" class="headerlink" title="1 HDFS小文件弊端"></a>1 HDFS小文件弊端</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS上每个文件都要在namenode上建立一个索引，这个索引的大小约为150byte，这样当小文件比较多的时候，就会产生很多的索引文件，一方面会大量占用namenode的内存空间，另一方面就是索引文件过大是的索引速度变慢。</p>
+<h4 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2 解决方案"></a>2 解决方案</h4><h5 id="1-Hadoop-Archive"><a href="#1-Hadoop-Archive" class="headerlink" title="(1)Hadoop Archive:"></a>(1)Hadoop Archive:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;是一个高效地将小文件放入HDFS块中的文件存档工具，它能够将多个小文件打包成一个HAR文件，这样就减少了namenode的内存使用。</p>
+<h5 id="2-Sequence-file："><a href="#2-Sequence-file：" class="headerlink" title="(2)Sequence file："></a>(2)Sequence file：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;sequence file由一系列的二进制key/value组成，如果key为文件名，value为文件内容，则可以将大批小文件合并成一个大文件。</p>
+<h5 id="3-CombineFileInputFormat："><a href="#3-CombineFileInputFormat：" class="headerlink" title="(3)CombineFileInputFormat："></a>(3)CombineFileInputFormat：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;CombineFileInputFormat是一种新的inputformat，用于将多个文件合并成一个单独的split，另外，它会考虑数据的存储位置。</p>
+<h5 id="4-开启JVM重用"><a href="#4-开启JVM重用" class="headerlink" title="(4)开启JVM重用"></a>(4)开启JVM重用</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;对于大量小文件Job，可以开启JVM重用会减少45%运行时间。<br>&nbsp;&nbsp;&nbsp;&nbsp;JVM重用理解：一个map运行一个jvm，重用的话，在一个map在jvm上运行完毕后，jvm继续运行其他map。<br>&nbsp;&nbsp;&nbsp;&nbsp;具体设置：mapreduce.job.jvm.numtasks值在10-20之间。</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/01/03/Zookeeper%E6%A6%82%E8%BF%B0%EF%BC%9A/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Zookeeper概述
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Hadoop之数据压缩</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

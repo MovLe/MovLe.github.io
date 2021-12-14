@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-Azkaban实战-Hive脚本任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/"
+    >Azkaban实战-Hive脚本任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2019-06-02T09:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-创建job描述文件和hive脚本"><a href="#1-创建job描述文件和hive脚本" class="headerlink" title="1.创建job描述文件和hive脚本"></a>1.创建job描述文件和hive脚本</h4><h5 id="1-Hive脚本：student-sql"><a href="#1-Hive脚本：student-sql" class="headerlink" title="(1)Hive脚本：student.sql"></a>(1)Hive脚本：student.sql</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim student.sql</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use default;</span><br><span class="line">drop table student;</span><br><span class="line">create table student(id int, name string)</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line">load data local inpath &#x27;/opt/module/datas/student.txt&#x27; into table student;</span><br><span class="line">insert overwrite local directory &#x27;/opt/module/datas/student&#x27;</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line">select * from student;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM5ODhlNTgwYzdmNWU4OGEucG5n?x-oss-process=image/format,png" alt="student.sql"></p>
+<h5 id="2-Job描述文件：hive-job"><a href="#2-Job描述文件：hive-job" class="headerlink" title="(2)Job描述文件：hive.job"></a>(2)Job描述文件：hive.job</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hive.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">hive job</span></span><br><span class="line">type=command</span><br><span class="line">command=/opt/module/hive-1.2.1/bin/hive -f /opt/module/azkaban/jobs/student.sql</span><br></pre></td></tr></table></figure>
+<h4 id="2-将所有job资源文件打到一个zip包中"><a href="#2-将所有job资源文件打到一个zip包中" class="headerlink" title="2.将所有job资源文件打到一个zip包中"></a>2.将所有job资源文件打到一个zip包中</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkY2Y4YWQ1NGMyZjdiZGQucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-在azkaban的web管理界面创建工程并上传zip包"><a href="#3-在azkaban的web管理界面创建工程并上传zip包" class="headerlink" title="3.在azkaban的web管理界面创建工程并上传zip包"></a>3.在azkaban的web管理界面创建工程并上传zip包</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxZGVkMGRkOTM2ODc3ZTIucG5n?x-oss-process=image/format,png" alt="创建"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJiZjRiMzUxMjUwMmU5Y2QucG5n?x-oss-process=image/format,png" alt="上传"></p>
+<h4 id="4-启动job："><a href="#4-启动job：" class="headerlink" title="4.启动job："></a>4.启动job：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUyN2FkMzAyMDM4NDJmZDAucG5n?x-oss-process=image/format,png" alt="执行"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQzZDdjNzYwODM2YWUzM2MucG5n?x-oss-process=image/format,png" alt="执行成功"></p>
+<h4 id="5-查看结果"><a href="#5-查看结果" class="headerlink" title="5.查看结果"></a>5.查看结果</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/module/datas/student/000000_0</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiNzNiNzAyMzUxMTFhNmUucG5n?x-oss-process=image/format,png" alt="结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE3ZWQ5ZjIxY2FlOWViZjUucG5n?x-oss-process=image/format,png" alt="数据源"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-Mapreduce任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Mapreduce%E4%BB%BB%E5%8A%A1/"
+    >Azkaban实战-MapReduce任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Mapreduce%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2019-06-02T09:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>mapreduce任务依然可以使用azkaban进行调度</p>
+<h4 id="1-创建job描述文件，及mr程序jar包"><a href="#1-创建job描述文件，及mr程序jar包" class="headerlink" title="1.创建job描述文件，及mr程序jar包"></a>1.创建job描述文件，及mr程序jar包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi mapreduce.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">mapreduce job</span></span><br><span class="line">type=command</span><br><span class="line">command=/opt/module/hadoop-2.8.4/bin/hadoop jar /opt/module/hadoop-2.8.4/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.4.jar wordcount /wordcount/input /wordcount/output</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-将所有job资源文件打到一个zip包中"><a href="#2-将所有job资源文件打到一个zip包中" class="headerlink" title="2.将所有job资源文件打到一个zip包中"></a>2.将所有job资源文件打到一个zip包中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip mapreduce.zip mapreduce.job </span><br></pre></td></tr></table></figure>
+<p>  adding: mapreduce.job (deflated 43%)</p>
+<h4 id="3-在azkaban的web管理界面创建工程并上传zip包"><a href="#3-在azkaban的web管理界面创建工程并上传zip包" class="headerlink" title="3.在azkaban的web管理界面创建工程并上传zip包"></a>3.在azkaban的web管理界面创建工程并上传zip包</h4><h4 id="4-启动job"><a href="#4-启动job" class="headerlink" title="4.启动job"></a>4.启动job</h4><h4 id="5-查看结果"><a href="#5-查看结果" class="headerlink" title="5.查看结果"></a>5.查看结果</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/" rel="tag">MapReduce</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-HDFS操作任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-HDFS%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/"
+    >Azkaban实战-HDFS操作任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-HDFS%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2019-06-02T08:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-创建job描述文件"><a href="#1-创建job描述文件" class="headerlink" title="1.创建job描述文件"></a>1.创建job描述文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hdfs.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">hdfs job</span></span><br><span class="line">type=command</span><br><span class="line">command=/opt/module/hadoop-2.8.4/bin/hadoop fs -mkdir /azkaban</span><br></pre></td></tr></table></figure>
+<h4 id="2-将job资源文件打包成zip文件"><a href="#2-将job资源文件打包成zip文件" class="headerlink" title="2.将job资源文件打包成zip文件"></a>2.将job资源文件打包成zip文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip fs.zip fs.job </span><br></pre></td></tr></table></figure>
+
+<h4 id="3-通过azkaban的web管理平台创建project并上传job压缩包"><a href="#3-通过azkaban的web管理平台创建project并上传job压缩包" class="headerlink" title="3.通过azkaban的web管理平台创建project并上传job压缩包"></a>3.通过azkaban的web管理平台创建project并上传job压缩包</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg5NjA5NGNmYTFjOGYwOTMucG5n?x-oss-process=image/format,png" alt="创建"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU5MDY4OGY2MDY1ZWJhYzgucG5n?x-oss-process=image/format,png" alt="上传"></p>
+<h4 id="4-执行："><a href="#4-执行：" class="headerlink" title="4.执行："></a>4.执行：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM0NTBkOWI3Y2RlMzE4YzAucG5n?x-oss-process=image/format,png" alt="执行"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA2YjIyMDA5NTdkMDZjYjAucG5n?x-oss-process=image/format,png" alt="执行成功"></p>
+<h4 id="5-查看结果"><a href="#5-查看结果" class="headerlink" title="5.查看结果"></a>5.查看结果</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTExZWExZTA2MDUyNmYyNzgucG5n?x-oss-process=image/format,png" alt="结果"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-java操作任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-java%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/"
+    >Azkaban实战-java操作任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-java%E6%93%8D%E4%BD%9C%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2019-06-02T07:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>使用Azkaban调度java程序</p>
+<h4 id="1-编写java程序"><a href="#1-编写java程序" class="headerlink" title="1.编写java程序"></a>1.编写java程序</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AzkabanTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 根据需求编写具体代码</span></span><br><span class="line"></span><br><span class="line">          FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="string">&quot;/opt/module/azkaban/output.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">          fos.write(<span class="string">&quot;this is a java progress&quot;</span>.getBytes());</span><br><span class="line"></span><br><span class="line">          fos.close();</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">          AzkabanTest azkabanTest = <span class="keyword">new</span> AzkabanTest();</span><br><span class="line"></span><br><span class="line">          azkabanTest.run();</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-将java程序打成jar包，创建lib目录，将jar放入lib内"><a href="#2-将java程序打成jar包，创建lib目录，将jar放入lib内" class="headerlink" title="2.将java程序打成jar包，创建lib目录，将jar放入lib内"></a>2.将java程序打成jar包，创建lib目录，将jar放入lib内</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir lib</span><br><span class="line"></span><br><span class="line">cd lib/</span><br><span class="line"></span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2Yzk4MjMzNGZjMTQ1YzQucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-编写job文件"><a href="#3-编写job文件" class="headerlink" title="3.编写job文件"></a>3.编写job文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi azkabanJava.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">azkabanJava.job</span></span><br><span class="line">type=javaprocess</span><br><span class="line">java.class=AzkabanTest</span><br><span class="line">classpath=/opt/module/azkaban/lib/*</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY5OWVkMjJjMzU0MjkxMTkucG5n?x-oss-process=image/format,png"></p>
+<p>java.class：全类名</p>
+<h4 id="4-将job文件打成zip包"><a href="#4-将job文件打成zip包" class="headerlink" title="4.将job文件打成zip包"></a>4.将job文件打成zip包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip azkabanJava.zip azkabanJava.job </span><br></pre></td></tr></table></figure>
+<h4 id="5-通过azkaban的web管理平台创建project并上传job压缩包，启动执行该job"><a href="#5-通过azkaban的web管理平台创建project并上传job压缩包，启动执行该job" class="headerlink" title="5.通过azkaban的web管理平台创建project并上传job压缩包，启动执行该job"></a>5.通过azkaban的web管理平台创建project并上传job压缩包，启动执行该job</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTliNjQxOTI5ZjNiOTQ4NTAucG5n?x-oss-process=image/format,png" alt="创建项目"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU2MDY0YzVhZjNkNTVkZTUucG5n?x-oss-process=image/format,png" alt="上传"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTliOTczNTUyY2Q3Mjg1ZGMucG5n?x-oss-process=image/format,png" alt="执行"></p>
+<h4 id="6-结果："><a href="#6-结果：" class="headerlink" title="6.结果："></a>6.结果：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/module/azkaban/output.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY4OGE1YjQwN2RlY2JiYzEucG5n?x-oss-process=image/format,png" alt="结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQwYmVmNjdjOTdmZWEzODQucG5n?x-oss-process=image/format,png" alt="结果"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-多job工作流案例"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%A4%9Ajob%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%A1%88%E4%BE%8B/"
+    >Azkaban实战-多job工作流案例</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%A4%9Ajob%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%A1%88%E4%BE%8B/" class="article-date">
+  <time datetime="2019-06-02T06:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="0-数据源："><a href="#0-数据源：" class="headerlink" title="0.数据源："></a>0.数据源：</h4><p>word.txt:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AAA</span><br><span class="line">BBB</span><br><span class="line">DDD</span><br><span class="line">CCC</span><br><span class="line">AAA</span><br><span class="line">Movle</span><br><span class="line">Kai Movle</span><br><span class="line">BBB yue </span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE5ZTBkOTExYmIxYTI3M2MucG5n?x-oss-process=image/format,png" alt="word.txt"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTczMmM4ZjNmM2YyZGQwODUucG5n?x-oss-process=image/format,png"></p>
+<h4 id="1-创建有依赖关系的多个job描述"><a href="#1-创建有依赖关系的多个job描述" class="headerlink" title="1.创建有依赖关系的多个job描述"></a>1.创建有依赖关系的多个job描述</h4><h5 id="1-第一个job：1-job"><a href="#1-第一个job：1-job" class="headerlink" title="(1)第一个job：1.job"></a>(1)第一个job：1.job</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi 1.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type=command</span><br><span class="line">command=/opt/module/hadoop-2.8.4/bin/hadoop fs -put /opt/module/datas/word.txt /</span><br></pre></td></tr></table></figure>
+<h5 id="2-第二个job：2-job依赖1-job"><a href="#2-第二个job：2-job依赖1-job" class="headerlink" title="(2)第二个job：2.job依赖1.job"></a>(2)第二个job：2.job依赖1.job</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi 2.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type=command</span><br><span class="line">command=/opt/module/hadoop-2.8.4/bin/hadoop jar /opt/module/hadoop-2.8.4/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.4.jar wordcount /word.txt /out</span><br><span class="line">dependencies=1</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiNzE4YWNhZTE1YTk4Y2MucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-注意：将所有job资源文件打到一个zip包中"><a href="#2-注意：将所有job资源文件打到一个zip包中" class="headerlink" title="2.注意：将所有job资源文件打到一个zip包中"></a>2.注意：将所有job资源文件打到一个zip包中</h4><h4 id="3-在azkaban的web管理界面创建工程并上传zip包"><a href="#3-在azkaban的web管理界面创建工程并上传zip包" class="headerlink" title="3.在azkaban的web管理界面创建工程并上传zip包"></a>3.在azkaban的web管理界面创建工程并上传zip包</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5MGEyMWY3ZmJjMzc5YjUucG5n?x-oss-process=image/format,png" alt="执行"></p>
+<h4 id="4-查看结果"><a href="#4-查看结果" class="headerlink" title="4.查看结果"></a>4.查看结果</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI0ZGEyNDVmN2E5NmY3MmEucG5n?x-oss-process=image/format,png" alt="结果-查看对word.txt进行wordcount的结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTIwN2ZlODRjMjVmOTQyMjAucG5n?x-oss-process=image/format,png" alt="2.job的运行结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5YTcwOGIxZmJhOGZkMzkucG5n?x-oss-process=image/format,png"></p>
+<p>思考：</p>
+<p>将student.txt文件上传到hdfs，根据所传文件创建外部表，再将表中查询到的结果写入到本地文件</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-单一job案例"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%8D%95%E4%B8%80job%E6%A1%88%E4%BE%8B/"
+    >Azkaban实战-单一job案例</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-%E5%8D%95%E4%B8%80job%E6%A1%88%E4%BE%8B/" class="article-date">
+  <time datetime="2019-06-02T05:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Azkaba内置的任务类型支持command、java</p>
+<h4 id="1-创建job描述文件-可以在linux里写，也可以在windows或者mac中写完在打包上传"><a href="#1-创建job描述文件-可以在linux里写，也可以在windows或者mac中写完在打包上传" class="headerlink" title="1.创建job描述文件(可以在linux里写，也可以在windows或者mac中写完在打包上传)"></a>1.创建job描述文件(可以在linux里写，也可以在windows或者mac中写完在打包上传)</h4><h5 id="1-方法一：在linux里创建并压缩"><a href="#1-方法一：在linux里创建并压缩" class="headerlink" title="(1)方法一：在linux里创建并压缩"></a>(1)方法一：在linux里创建并压缩</h5><p>创建：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi first.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">first.job</span></span><br><span class="line">type=command</span><br><span class="line">command=echo &#x27;this is my first job&#x27;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlhZGE0MjZiMjYxMjZmOWEucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-linux中-将job资源文件打包成zip文件"><a href="#2-linux中-将job资源文件打包成zip文件" class="headerlink" title="2. linux中:将job资源文件打包成zip文件"></a>2. linux中:将job资源文件打包成zip文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip first.zip first.job</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY4NTYwYzAxNzVkMWY4ZDIucG5n?x-oss-process=image/format,png" alt="在linux中创建并压缩"></p>
+<p>注意：</p>
+<p>目前，Azkaban上传的工作流文件只支持xxx.zip文件。zip应包含xxx.job运行作业所需的文件和任何文件（文件名后缀必须以.job结尾，否则无法识别）。作业名称在项目中必须是唯一的。</p>
+<h4 id="3-通过azkaban的web管理平台创建project并上传job的zip包"><a href="#3-通过azkaban的web管理平台创建project并上传job的zip包" class="headerlink" title="3.通过azkaban的web管理平台创建project并上传job的zip包"></a>3.通过azkaban的web管理平台创建project并上传job的zip包</h4><p>首先创建project</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE2ZmM2OTJjZWIxNzc2ZmEucG5n?x-oss-process=image/format,png" alt="创建project"></p>
+<p>上传zip包<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4MDg5YmI0MWRlY2VmNTAucG5n?x-oss-process=image/format,png" alt="上传zip包"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ZmRlZDNkNWIyNDlmNTQucG5n?x-oss-process=image/format,png" alt="选择压缩包"></p>
+<h4 id="4-启动执行该job"><a href="#4-启动执行该job" class="headerlink" title="4.启动执行该job"></a>4.启动执行该job</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE3MDJlZGYxOWRiNzZhYTAucG5n?x-oss-process=image/format,png" alt="启动执行"><br>点击执行工作流<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThhMWEyOGM2MGFmN2ZhZWEucG5n?x-oss-process=image/format,png" alt="点击执行工作流"><br>点击继续<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3Y2M2NWI3ZTE5Y2ZkOWMucG5n?x-oss-process=image/format,png" alt="点击继续"></p>
+<h4 id="5-Job执行成功"><a href="#5-Job执行成功" class="headerlink" title="5.Job执行成功"></a>5.Job执行成功</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThkNmY0NWQ2MzhlMTgyN2MucG5n?x-oss-process=image/format,png" alt="Job执行成功"></p>
+<h4 id="6-点击查看job日志"><a href="#6-点击查看job日志" class="headerlink" title="6.点击查看job日志"></a>6.点击查看job日志</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI1ODg1N2ZhNmU0NmZmYWIucG5n?x-oss-process=image/format,png" alt="点击查看job日志"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban安装配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"
+    >Azkaban安装配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2019-06-02T04:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-安装前准备"><a href="#一-安装前准备" class="headerlink" title="一.安装前准备"></a>一.安装前准备</h3><h4 id="1-将Azkaban-Web服务器、Azkaban执行服务器、Azkaban的sql执行脚本及MySQL安装包拷贝到bigdata111虚拟机-opt-software目录下"><a href="#1-将Azkaban-Web服务器、Azkaban执行服务器、Azkaban的sql执行脚本及MySQL安装包拷贝到bigdata111虚拟机-opt-software目录下" class="headerlink" title="1.将Azkaban Web服务器、Azkaban执行服务器、Azkaban的sql执行脚本及MySQL安装包拷贝到bigdata111虚拟机/opt/software目录下"></a>1.将Azkaban Web服务器、Azkaban执行服务器、Azkaban的sql执行脚本及MySQL安装包拷贝到bigdata111虚拟机/opt/software目录下</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1) azkaban-web-server-2.5.0.tar.gz</span><br><span class="line">2) azkaban-executor-server-2.5.0.tar.gz</span><br><span class="line">3) azkaban-sql-script-2.5.0.tar.gz</span><br><span class="line">4) mysql-libs.zip</span><br></pre></td></tr></table></figure>
+<h4 id="2-选择Mysql作为Azkaban数据库，因为Azkaban建立了一些Mysql连接增强功能，以方便Azkaban设置，并增强服务可靠性。"><a href="#2-选择Mysql作为Azkaban数据库，因为Azkaban建立了一些Mysql连接增强功能，以方便Azkaban设置，并增强服务可靠性。" class="headerlink" title="2.选择Mysql作为Azkaban数据库，因为Azkaban建立了一些Mysql连接增强功能，以方便Azkaban设置，并增强服务可靠性。"></a>2.选择Mysql作为Azkaban数据库，因为Azkaban建立了一些Mysql连接增强功能，以方便Azkaban设置，并增强服务可靠性。</h4><h3 id="二-安装Azkaban"><a href="#二-安装Azkaban" class="headerlink" title="二. 安装Azkaban"></a>二. 安装Azkaban</h3><h4 id="1-在-opt-module-目录下创建azkaban目录"><a href="#1-在-opt-module-目录下创建azkaban目录" class="headerlink" title="1.在/opt/module/目录下创建azkaban目录"></a>1.在/opt/module/目录下创建azkaban目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir azkaban</span><br></pre></td></tr></table></figure>
+<h4 id="2-解压azkaban-web-server-2-5-0-tar-gz、azkaban-executor-server-2-5-0-tar-gz、azkaban-sql-script-2-5-0-tar-gz到-opt-module-azkaban目录下"><a href="#2-解压azkaban-web-server-2-5-0-tar-gz、azkaban-executor-server-2-5-0-tar-gz、azkaban-sql-script-2-5-0-tar-gz到-opt-module-azkaban目录下" class="headerlink" title="2.解压azkaban-web-server-2.5.0.tar.gz、azkaban-executor-server-2.5.0.tar.gz、azkaban-sql-script-2.5.0.tar.gz到/opt/module/azkaban目录下"></a>2.解压azkaban-web-server-2.5.0.tar.gz、azkaban-executor-server-2.5.0.tar.gz、azkaban-sql-script-2.5.0.tar.gz到/opt/module/azkaban目录下</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf azkaban-web-server-2.5.0.tar.gz -C /opt/module/azkaban/</span><br><span class="line"></span><br><span class="line">tar -zxvf azkaban-executor-server-2.5.0.tar.gz -C /opt/module/azkaban/</span><br><span class="line"></span><br><span class="line">tar -zxvf azkaban-sql-script-2.5.0.tar.gz -C /opt/module/azkaban/</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUzMmI3YjkwMDlmN2RkMmYucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-对解压后的文件重新命名"><a href="#3-对解压后的文件重新命名" class="headerlink" title="3.对解压后的文件重新命名"></a>3.对解压后的文件重新命名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban</span><br><span class="line"></span><br><span class="line">mv azkaban-web-2.5.0/ server</span><br><span class="line"></span><br><span class="line">mv azkaban-executor-2.5.0/ executor</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU2YzBhMmY2OGI1ODc2ZDEucG5n?x-oss-process=image/format,png"></p>
+<h4 id="4-azkaban脚本导入"><a href="#4-azkaban脚本导入" class="headerlink" title="4.azkaban脚本导入"></a>4.azkaban脚本导入</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;进入mysql，创建azkaban数据库，并将解压的脚本导入到azkaban数据库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mysql -uroot -p000000</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> create database azkaban;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use azkaban;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">source</span> /opt/module/azkaban/azkaban-2.5.0/create-all-sql-2.5.0.sql</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc0ODVjNzIyNzBjZDFlMzMucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMzNTRkNjFmZTdmZDZhODMucG5n?x-oss-process=image/format,png"></p>
+<p>注：source后跟.sql文件，用于批量处理.sql文件中的sql语句。</p>
+<h3 id="三-生成密钥库"><a href="#三-生成密钥库" class="headerlink" title="三. 生成密钥库"></a>三. 生成密钥库</h3><p>Keytool是java数据证书的管理工具，使用户能够管理自己的公/私钥对及相关证书。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-keystore    指定密钥库的名称及位置(产生的各类信息将不在.keystore文件中)</span><br><span class="line">-genkey      在用户主目录中创建一个默认文件&quot;.keystore&quot; </span><br><span class="line">-alias  对我们生成的.keystore 进行指认别名；如果没有默认是mykey</span><br><span class="line">-keyalg  指定密钥的算法 RSA/DSA 默认是DSA</span><br></pre></td></tr></table></figure>
+<h4 id="1-生成-keystore的密码及相应信息的密钥库"><a href="#1-生成-keystore的密码及相应信息的密钥库" class="headerlink" title="1.生成 keystore的密码及相应信息的密钥库"></a>1.生成 keystore的密码及相应信息的密钥库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -keystore keystore -alias jetty -genkey -keyalg RSA</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEzZDdhZjJjYzYxOTZmNGIucG5n?x-oss-process=image/format,png"></p>
+<p>注意：</p>
+<ul>
+<li>密钥库的密码至少必须6个字符，可以是纯数字或者字母或者数字和字母的组合等等</li>
+<li>密钥库的密码最好和<jetty> 的密钥相同，方便记忆</li>
+</ul>
+<h4 id="2-将keystore-拷贝到-azkaban-web服务器根目录中"><a href="#2-将keystore-拷贝到-azkaban-web服务器根目录中" class="headerlink" title="2.将keystore 拷贝到 azkaban web服务器根目录中"></a>2.将keystore 拷贝到 azkaban web服务器根目录中</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv keystore /opt/module/azkaban/server/</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWVlMzZiM2E1MTU4ZTg2M2UucG5n?x-oss-process=image/format,png"></p>
+<h3 id="四-时间同步配置"><a href="#四-时间同步配置" class="headerlink" title="四. 时间同步配置"></a>四. 时间同步配置</h3><p>先配置好服务器节点上的时区</p>
+<h4 id="1-如果在-usr-share-zoneinfo-这个目录下不存在时区配置文件Asia-Shanghai，就要用-tzselect-生成。"><a href="#1-如果在-usr-share-zoneinfo-这个目录下不存在时区配置文件Asia-Shanghai，就要用-tzselect-生成。" class="headerlink" title="1.如果在/usr/share/zoneinfo/这个目录下不存在时区配置文件Asia/Shanghai，就要用 tzselect 生成。"></a>1.如果在/usr/share/zoneinfo/这个目录下不存在时区配置文件Asia/Shanghai，就要用 tzselect 生成。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop1 azkaban]$ tzselect</span><br><span class="line">Please identify a location so that time zone rules can be set correctly.</span><br><span class="line">Please select a continent or ocean.</span><br><span class="line"> 1) Africa</span><br><span class="line"> 2) Americas</span><br><span class="line"> 3) Antarctica</span><br><span class="line"> 4) Arctic Ocean</span><br><span class="line"> 5) Asia</span><br><span class="line"> 6) Atlantic Ocean</span><br><span class="line"> 7) Australia</span><br><span class="line"> 8) Europe</span><br><span class="line"> 9) Indian Ocean</span><br><span class="line">10) Pacific Ocean</span><br><span class="line">11) none - I want to specify the time zone using the Posix TZ format.</span><br><span class="line"><span class="meta">#</span><span class="bash">? 5</span></span><br><span class="line">Please select a country.</span><br><span class="line"> 1) Afghanistan           18) Israel                35) Palestine</span><br><span class="line"> 2) Armenia               19) Japan                 36) Philippines</span><br><span class="line"> 3) Azerbaijan            20) Jordan                37) Qatar</span><br><span class="line"> 4) Bahrain               21) Kazakhstan            38) Russia</span><br><span class="line"> 5) Bangladesh            22) Korea (North)         39) Saudi Arabia</span><br><span class="line"> 6) Bhutan                23) Korea (South)         40) Singapore</span><br><span class="line"> 7) Brunei                24) Kuwait                41) Sri Lanka</span><br><span class="line"> 8) Cambodia              25) Kyrgyzstan            42) Syria</span><br><span class="line"> 9) China                 26) Laos                  43) Taiwan</span><br><span class="line">10) Cyprus                27) Lebanon               44) Tajikistan</span><br><span class="line">11) East Timor            28) Macau                 45) Thailand</span><br><span class="line">12) Georgia               29) Malaysia              46) Turkmenistan</span><br><span class="line">13) Hong Kong             30) Mongolia              47) United Arab Emirates</span><br><span class="line">14) India                 31) Myanmar (Burma)       48) Uzbekistan</span><br><span class="line">15) Indonesia             32) Nepal                 49) Vietnam</span><br><span class="line">16) Iran                  33) Oman                  50) Yemen</span><br><span class="line">17) Iraq                  34) Pakistan</span><br><span class="line"><span class="meta">#</span><span class="bash">? 9</span></span><br><span class="line">Please select one of the following time zone regions.</span><br><span class="line">1) Beijing Time</span><br><span class="line">2) Xinjiang Time</span><br><span class="line"><span class="meta">#</span><span class="bash">? 1</span></span><br><span class="line"></span><br><span class="line">The following information has been given:</span><br><span class="line"></span><br><span class="line">        China</span><br><span class="line">        Beijing Time</span><br><span class="line"></span><br><span class="line">Therefore TZ=&#x27;Asia/Shanghai&#x27; will be used.</span><br><span class="line">Local time is now:      Thu Oct 18 16:24:23 CST 2018.</span><br><span class="line">Universal Time is now:  Thu Oct 18 08:24:23 UTC 2018.</span><br><span class="line">Is the above information OK?</span><br><span class="line">1) Yes</span><br><span class="line">2) No</span><br><span class="line"><span class="meta">#</span><span class="bash">? 1</span></span><br><span class="line"></span><br><span class="line">You can make this change permanent for yourself by appending the line</span><br><span class="line">        TZ=&#x27;Asia/Shanghai&#x27;; export TZ</span><br><span class="line">to the file &#x27;.profile&#x27; in your home directory; then log out and log in again.</span><br><span class="line"></span><br><span class="line">Here is that TZ value again, this time on standard output so that you</span><br><span class="line">can use the /usr/bin/tzselect command in shell scripts:</span><br><span class="line">Asia/Shanghai</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdjNDE0MGRjNWNhZjg0NGUucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4Zjc3ODdiODU1YmZkZWUucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-拷贝该时区文件，覆盖系统本地时区配置"><a href="#2-拷贝该时区文件，覆盖系统本地时区配置" class="headerlink" title="2.拷贝该时区文件，覆盖系统本地时区配置"></a>2.拷贝该时区文件，覆盖系统本地时区配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime  </span><br></pre></td></tr></table></figure>
+<h4 id="3-集群时间同步（同时发给三个窗口）"><a href="#3-集群时间同步（同时发给三个窗口）" class="headerlink" title="3.集群时间同步（同时发给三个窗口）"></a>3.集群时间同步（同时发给三个窗口）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo date -s &#x27;2019-12-06 08:39:30&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-配置文件"><a href="#五-配置文件" class="headerlink" title="五.配置文件"></a>五.配置文件</h3><h4 id="1-Web服务器配置"><a href="#1-Web服务器配置" class="headerlink" title="1.Web服务器配置"></a>1.Web服务器配置</h4><h5 id="1-进入azkaban-web服务器安装目录-conf目录，打开azkaban-properties文件"><a href="#1-进入azkaban-web服务器安装目录-conf目录，打开azkaban-properties文件" class="headerlink" title="(1).进入azkaban web服务器安装目录 conf目录，打开azkaban.properties文件"></a>(1).进入azkaban web服务器安装目录 conf目录，打开azkaban.properties文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban/server/conf</span><br><span class="line"></span><br><span class="line">vi azkaban.properties</span><br></pre></td></tr></table></figure>
+<h5 id="2-按照如下配置修改azkaban-properties文件"><a href="#2-按照如下配置修改azkaban-properties文件" class="headerlink" title="(2).按照如下配置修改azkaban.properties文件"></a>(2).按照如下配置修改azkaban.properties文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">默认web server存放web文件的目录</span></span><br><span class="line">web.resource.dir=/opt/module/azkaban/server/web/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">默认时区,已改为亚洲/上海 默认为美国</span></span><br><span class="line">default.timezone.id=Asia/Shanghai</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">用户权限管理默认类（绝对路径）</span></span><br><span class="line">user.manager.xml.file=/opt/module/azkaban/server/conf/azkaban-users.xml</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">Loader <span class="keyword">for</span> projects</span></span><br><span class="line"><span class="meta">#</span><span class="bash">global配置文件所在位置（绝对路径）</span></span><br><span class="line">executor.global.properties=/opt/module/azkaban/executor/conf/global.properties</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">数据库连接IP</span></span><br><span class="line">mysql.host=hadoop1</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库实例名</span></span><br><span class="line">mysql.database=azkaban</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库用户名</span></span><br><span class="line">mysql.user=root</span><br><span class="line"><span class="meta">#</span><span class="bash">数据库密码</span></span><br><span class="line">mysql.password=000000</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">SSL文件名（绝对路径）</span></span><br><span class="line">jetty.keystore=/opt/module/azkaban/server/keystore</span><br><span class="line"><span class="meta">#</span><span class="bash">SSL文件密码</span></span><br><span class="line">jetty.password=000000</span><br><span class="line"><span class="meta">#</span><span class="bash">Jetty主密码与keystore文件相同</span></span><br><span class="line">jetty.keypassword=000000</span><br><span class="line"><span class="meta">#</span><span class="bash">SSL文件名（绝对路径）</span></span><br><span class="line">jetty.truststore=/opt/module/azkaban/server/keystore</span><br><span class="line"><span class="meta">#</span><span class="bash">SSL文件密码</span></span><br><span class="line">jetty.trustpassword=000000</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ5MjY4Y2ZlZWNlZTg0ZjUucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-web服务器用户配置"><a href="#3-web服务器用户配置" class="headerlink" title="(3).web服务器用户配置"></a>(3).web服务器用户配置</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;在azkaban web服务器安装目录 conf目录，按照如下配置修改azkaban-users.xml 文件，增加管理员用户。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban/server/conf</span><br><span class="line"></span><br><span class="line">vi azkaban-users.xml</span><br></pre></td></tr></table></figure>
+<p>修改内容为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">azkaban-users</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">&quot;azkaban&quot;</span> <span class="attr">password</span>=<span class="string">&quot;azkaban&quot;</span> <span class="attr">roles</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">groups</span>=<span class="string">&quot;azkaban&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">&quot;metrics&quot;</span> <span class="attr">password</span>=<span class="string">&quot;metrics&quot;</span> <span class="attr">roles</span>=<span class="string">&quot;metrics&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">password</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">roles</span>=<span class="string">&quot;admin,metrics&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">role</span> <span class="attr">name</span>=<span class="string">&quot;admin&quot;</span> <span class="attr">permissions</span>=<span class="string">&quot;ADMIN&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">role</span> <span class="attr">name</span>=<span class="string">&quot;metrics&quot;</span> <span class="attr">permissions</span>=<span class="string">&quot;METRICS&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">azkaban-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQzMWRiOTI0ODU2ODFlYTYucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-执行服务器配置"><a href="#2-执行服务器配置" class="headerlink" title="2.执行服务器配置"></a>2.执行服务器配置</h4><h5 id="1-进入执行服务器安装目录conf，打开azkaban-properties"><a href="#1-进入执行服务器安装目录conf，打开azkaban-properties" class="headerlink" title="(1).进入执行服务器安装目录conf，打开azkaban.properties"></a>(1).进入执行服务器安装目录conf，打开azkaban.properties</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban/executor/conf</span><br><span class="line"></span><br><span class="line">vi azkaban.properties</span><br></pre></td></tr></table></figure>
+<h5 id="2-按照如下配置修改azkaban-properties文件。"><a href="#2-按照如下配置修改azkaban-properties文件。" class="headerlink" title="(2).按照如下配置修改azkaban.properties文件。"></a>(2).按照如下配置修改azkaban.properties文件。</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">时区</span></span><br><span class="line">default.timezone.id=Asia/Shanghai</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">Loader <span class="keyword">for</span> projects</span></span><br><span class="line">executor.global.properties=/opt/module/azkaban/executor/conf/global.properties</span><br><span class="line"></span><br><span class="line">mysql.host=hadoop1</span><br><span class="line">mysql.database=azkaban</span><br><span class="line">mysql.user=root</span><br><span class="line">mysql.password=000000</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc2ZTk5MGRlNmI0NDI0ZmQucG5n?x-oss-process=image/format,png"></p>
+<h3 id="六-启动executor服务器"><a href="#六-启动executor服务器" class="headerlink" title="六.启动executor服务器"></a>六.启动executor服务器</h3><p>在executor服务器目录下执行启动命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban/executor</span><br><span class="line"></span><br><span class="line">bin/azkaban-executor-start.sh</span><br></pre></td></tr></table></figure>
+<h3 id="七-启动web服务器"><a href="#七-启动web服务器" class="headerlink" title="七.启动web服务器"></a>七.启动web服务器</h3><p>在azkaban web服务器目录下执行启动命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/azkaban/server</span><br><span class="line"></span><br><span class="line">bin/azkaban-web-start.sh</span><br></pre></td></tr></table></figure>
+<p>注意：<br>先执行executor，再执行web，避免Web Server会因为找不到执行器启动失败。<br>jps查看进程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ5MWM1MDU2NWI2ZDAwYWEucG5n?x-oss-process=image/format,png"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;启动完成后，在浏览器(建议使用谷歌浏览器)中输入https://服务器IP地址:8443，即可访问azkaban服务了。<br>&nbsp;&nbsp;&nbsp;&nbsp;在登录中输入刚才在azkaban-users.xml文件中新添加的户用名及密码,即admin和admin，点击 login。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYwZTVhZTE3NGQxODg4YjYucG5n?x-oss-process=image/format,png"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ0ZjBiNDYzZDk5NmFhOWIucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban概述"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E6%A6%82%E8%BF%B0/"
+    >Azkaban概述</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2019-06-02T03:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-为什么需要工作流调度系统"><a href="#1-为什么需要工作流调度系统" class="headerlink" title="1.为什么需要工作流调度系统"></a>1.为什么需要工作流调度系统</h4><h5 id="1-一个完整的数据分析系统通常都是由大量任务单元组成："><a href="#1-一个完整的数据分析系统通常都是由大量任务单元组成：" class="headerlink" title="(1).一个完整的数据分析系统通常都是由大量任务单元组成："></a>(1).一个完整的数据分析系统通常都是由大量任务单元组成：</h5><p>shell脚本程序，java程序，mapreduce程序、hive脚本等</p>
+<h5 id="2-各任务单元之间存在时间先后及前后依赖关系"><a href="#2-各任务单元之间存在时间先后及前后依赖关系" class="headerlink" title="2.各任务单元之间存在时间先后及前后依赖关系"></a>2.各任务单元之间存在时间先后及前后依赖关系</h5><h5 id="3-为了很好地组织起这样的复杂执行计划，需要一个工作流调度系统来调度执行；"><a href="#3-为了很好地组织起这样的复杂执行计划，需要一个工作流调度系统来调度执行；" class="headerlink" title="3.为了很好地组织起这样的复杂执行计划，需要一个工作流调度系统来调度执行；"></a>3.为了很好地组织起这样的复杂执行计划，需要一个工作流调度系统来调度执行；</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;例如，我们可能有这样一个需求，某个业务系统每天产生20G原始数据，我们每天都要对其进行处理，处理步骤如下所示：</p>
+<h6 id="a-通过Hadoop先将原始数据上传到HDFS上（HDFS的操作）；"><a href="#a-通过Hadoop先将原始数据上传到HDFS上（HDFS的操作）；" class="headerlink" title="(a)通过Hadoop先将原始数据上传到HDFS上（HDFS的操作）；"></a>(a)通过Hadoop先将原始数据上传到HDFS上（HDFS的操作）；</h6><h6 id="b-使用MapReduce对原始数据进行清洗-MapReduce的操作-；"><a href="#b-使用MapReduce对原始数据进行清洗-MapReduce的操作-；" class="headerlink" title="(b) 使用MapReduce对原始数据进行清洗(MapReduce的操作)；"></a>(b) 使用MapReduce对原始数据进行清洗(MapReduce的操作)；</h6><h6 id="c-将清洗后的数据导入到hive表中（hive的导入操作）；"><a href="#c-将清洗后的数据导入到hive表中（hive的导入操作）；" class="headerlink" title="(c ) 将清洗后的数据导入到hive表中（hive的导入操作）；"></a>(c ) 将清洗后的数据导入到hive表中（hive的导入操作）；</h6><h6 id="d-对Hive中多个表的数据进行JOIN处理，得到一张hive的明细表-创建中间表-；"><a href="#d-对Hive中多个表的数据进行JOIN处理，得到一张hive的明细表-创建中间表-；" class="headerlink" title="(d) 对Hive中多个表的数据进行JOIN处理，得到一张hive的明细表(创建中间表)；"></a>(d) 对Hive中多个表的数据进行JOIN处理，得到一张hive的明细表(创建中间表)；</h6><h6 id="e-通过对明细表的统计和分析，得到结果报表信息（hive的查询操作）；"><a href="#e-通过对明细表的统计和分析，得到结果报表信息（hive的查询操作）；" class="headerlink" title="(e) 通过对明细表的统计和分析，得到结果报表信息（hive的查询操作）；"></a>(e) 通过对明细表的统计和分析，得到结果报表信息（hive的查询操作）；</h6><h4 id="2-Azkaban的适用场景"><a href="#2-Azkaban的适用场景" class="headerlink" title="2. Azkaban的适用场景"></a>2. Azkaban的适用场景</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;根据以上业务场景： (2)任务依赖(1)任务的结果，(3)任务依赖(2)任务的结果，(4)任务依赖(3)任务的结果，(5)任务依赖(4)任务的结果。一般的做法是，先执行完(1)再执行(2)，再一次执行（3)(4)(5)。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这样的话，整个的执行过程都需要人工参加，并且得盯着各任务的进度。但是我们的很多任务都是在深更半夜执行的，通过写脚本设置crontab执行。其实，整个过程类似于一个有向无环图（DAG）。每个子任务相当于大任务中的一个节点，也就是，我们需要的就是一个工作流的调度器，而Azkaban就是能解决上述问题的一个调度器。</p>
+<h4 id="3-什么是azkaban"><a href="#3-什么是azkaban" class="headerlink" title="3. 什么是azkaban"></a>3. 什么是azkaban</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Azkaban是由Linkedin公司推出的一个批量工作流任务调度器，主要用于在一个工作流内以一个特定的顺序运行一组工作和流程，它的配置是通过简单的key:value对的方式，通过配置中的dependencies 来设置依赖关系。Azkaban使用job配置文件建立任务之间的依赖关系，并提供一个易于使用的web用户界面维护和跟踪你的工作流。</p>
+<h4 id="4-Azkaban特点"><a href="#4-Azkaban特点" class="headerlink" title="4. Azkaban特点"></a>4. Azkaban特点</h4><p>(1) 兼容任何版本的hadoop<br>(2) 易于使用的Web用户界面<br>(3) 简单的工作流的上传<br>(4) 方便设置任务之间的关系<br>(5) 调度工作流<br>(6) 模块化和可插拔的插件机制<br>(7) 认证/授权(权限的工作)<br>(8) 能够杀死并重新启动工作流<br>(9) 有关失败和成功的电子邮件提醒</p>
+<h4 id="5-常见工作流调度系统"><a href="#5-常见工作流调度系统" class="headerlink" title="5.常见工作流调度系统"></a>5.常见工作流调度系统</h4><p>1.简单的任务调度：直接使用crontab实现；</p>
+<p>2.复杂的任务调度：开发调度平台或使用现成的开源调度系统，比如ooize、azkaban等</p>
+<h4 id="6-ooize和azkaban特性对比"><a href="#6-ooize和azkaban特性对比" class="headerlink" title="6.ooize和azkaban特性对比"></a>6.ooize和azkaban特性对比</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;下面的表格对上述四种hadoop工作流调度器的关键特性进行了比较，尽管这些工作流调度器能够解决的需求场景基本一致，但在设计理念，目标用户，应用场景等方面还是存在显著的区别，在做技术选型的时候，可以提供参考</p>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">Oozie</th>
+<th align="center">Azkaban</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">工作流描述语言</td>
+<td align="center">XML</td>
+<td align="center">text file with key/value pairs</td>
+</tr>
+<tr>
+<td align="center">是否要web容器</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">进度跟踪</td>
+<td align="center">web page</td>
+<td align="center">web page</td>
+</tr>
+<tr>
+<td align="center">Hadoop job调度支持</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="center">运行模式</td>
+<td align="center">daemon</td>
+<td align="center">daemon</td>
+</tr>
+<tr>
+<td align="center">事件通知</td>
+<td align="center">no</td>
+<td align="center">Yes</td>
+</tr>
+<tr>
+<td align="center">需要安装</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="center">支持的hadoop版本</td>
+<td align="center">0.20+</td>
+<td align="center">currently unknown</td>
+</tr>
+<tr>
+<td align="center">重试支持</td>
+<td align="center">workflownode evel</td>
+<td align="center">yes</td>
+</tr>
+<tr>
+<td align="center">运行任意命令</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+</tbody></table>
+<h4 id="7-Azkaban的架构"><a href="#7-Azkaban的架构" class="headerlink" title="7.Azkaban的架构"></a>7.Azkaban的架构</h4><p>Azkaban由三个关键组件构成：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgwYzFlNDFlZTNkNzFiN2IucG5n?x-oss-process=image/format,png" alt="Azkaban由三个关键组件构成："></p>
+<h5 id="1-AzkabanWebServer："><a href="#1-AzkabanWebServer：" class="headerlink" title="(1).AzkabanWebServer："></a>(1).AzkabanWebServer：</h5><p>AzkabanWebServer是整个Azkaban工作流系统的主要管理者，它用户登录认证、负责project管理、定时执行工作流、跟踪工作流执行进度等一系列任务。</p>
+<h5 id="2-AzkabanExecutorServer："><a href="#2-AzkabanExecutorServer：" class="headerlink" title="(2).AzkabanExecutorServer："></a>(2).AzkabanExecutorServer：</h5><p>负责具体的工作流的提交、执行，它们通过mysql数据库来协调任务的执行。</p>
+<h5 id="3-关系型数据库（MySQL）："><a href="#3-关系型数据库（MySQL）：" class="headerlink" title="(3).关系型数据库（MySQL）："></a>(3).关系型数据库（MySQL）：</h5><p>存储大部分执行流状态，AzkabanWebServer和AzkabanExecutorServer都需要访问数据库。</p>
+<h4 id="8-Azkaban下载地址"><a href="#8-Azkaban下载地址" class="headerlink" title="8.Azkaban下载地址"></a>8.Azkaban下载地址</h4><p>下载地址:<a target="_blank" rel="noopener" href="http://azkaban.github.io/downloads.html">http://azkaban.github.io/downloads.html</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Mac报错Error listen EADDRINUSE address already in use 4000"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/30/Mac%E6%8A%A5%E9%94%99Error%20listen%20EADDRINUSE%20address%20already%20in%20use%204000/"
+    >Mac报错Error listen EADDRINUSE address already in use 4000</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/30/Mac%E6%8A%A5%E9%94%99Error%20listen%20EADDRINUSE%20address%20already%20in%20use%204000/" class="article-date">
+  <time datetime="2019-05-30T07:00:00.000Z" itemprop="datePublished">2019-05-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-错误信息："><a href="#1-错误信息：" class="headerlink" title="1.错误信息："></a>1.错误信息：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: listen EADDRINUSE: address already in use :::4000</span><br></pre></td></tr></table></figure>
+<h4 id="2-问题描述："><a href="#2-问题描述：" class="headerlink" title="2.问题描述："></a>2.问题描述：</h4><p>在hexo博客本地启动的时候，之前启动过，所以4000端口被占用</p>
+<h4 id="3-解决方法："><a href="#3-解决方法：" class="headerlink" title="3.解决方法："></a>3.解决方法：</h4><ul>
+<li>在控制台输入</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i:端口号</span><br></pre></td></tr></table></figure>
+<p>查看被占用进程的pid，</p>
+<ul>
+<li>再输入</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kill -9 pid</span><br></pre></td></tr></table></figure>
+<p>即可杀死进程</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A1%AB%E5%9D%91/" rel="tag">填坑</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Mac环境如何更新Nodejs"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/30/Mac%E7%8E%AF%E5%A2%83%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0Nodejs/"
+    >Mac环境如何更新Nodejs</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/30/Mac%E7%8E%AF%E5%A2%83%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0Nodejs/" class="article-date">
+  <time datetime="2019-05-30T07:00:00.000Z" itemprop="datePublished">2019-05-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-前提条件"><a href="#1-前提条件" class="headerlink" title="1.前提条件"></a>1.前提条件</h4><ul>
+<li>安装npm</li>
+</ul>
+<h4 id="2-解决办法"><a href="#2-解决办法" class="headerlink" title="2.解决办法:"></a>2.解决办法:</h4><h5 id="1-使用npm安装n模块-n模块是专门用来管理nodejs版本的"><a href="#1-使用npm安装n模块-n模块是专门用来管理nodejs版本的" class="headerlink" title="(1)使用npm安装n模块,n模块是专门用来管理nodejs版本的"></a>(1)使用npm安装n模块,n模块是专门用来管理nodejs版本的</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g n</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-升级nodejs"><a href="#2-升级nodejs" class="headerlink" title="(2)升级nodejs"></a>(2)升级nodejs</h5><ul>
+<li>升级到最新版：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo n latest</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>升级到稳定版</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo n stable</span><br></pre></td></tr></table></figure>
+<p>建议还是升级到稳定版</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/16/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/18/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

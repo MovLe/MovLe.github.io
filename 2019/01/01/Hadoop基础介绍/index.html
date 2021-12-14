@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Hadoop基础介绍 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Hadoop基础介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Hadoop基础介绍
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2019-01-01T01:49:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-Hadoop概述"><a href="#一-Hadoop概述" class="headerlink" title="一.Hadoop概述"></a>一.Hadoop概述</h3><h4 id="1-Hadoop的优势"><a href="#1-Hadoop的优势" class="headerlink" title="1.Hadoop的优势"></a>1.Hadoop的优势</h4><ul>
+<li><p>高可靠性：<br>因为Hadoop假设计算元素和存储会出现故障，因为它维护多个工作数据副本，在出现故障时可以对失败的节点重新分布处理。</p>
+</li>
+<li><p>高扩展性：<br>在集群间分配任务数据，可方便的扩展数以千计的节点。</p>
+</li>
+<li><p>高效性：<br>在MapReduce的思想下，Hadoop是并行工作的，以加快任务处理速度。</p>
+</li>
+<li><p>高容错性：<br>自动保存多份副本数据，并且能够自动将失败的任务重新分配。</p>
+</li>
+</ul>
+<h4 id="2-Hadoop组成"><a href="#2-Hadoop组成" class="headerlink" title="2.Hadoop组成"></a>2.Hadoop组成</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFmNmRlYjRkNmZmYTA2OWYucG5n?x-oss-process=image/format,png" alt="hadoop组成"></p>
+<ul>
+<li>Hadoop HDFS：Hadoop Distributed File System<br>  一个高可靠、高吞吐量的分布式文件系统。</li>
+<li>Hadoop MapReduce：<br>一个分布式的离线并行计算框架。</li>
+<li>Hadoop YARN：<br>作业调度与集群资源管理的框架。</li>
+<li>Hadoop Common：<br>支持其他模块的工具模块（Configuration、RPC、序列化机制、日志操作）。</li>
+</ul>
+<h4 id="3-YARN架构概述"><a href="#3-YARN架构概述" class="headerlink" title="3.YARN架构概述"></a>3.YARN架构概述</h4><h5 id="1-ResourceManager-rm-："><a href="#1-ResourceManager-rm-：" class="headerlink" title="(1)ResourceManager(rm)："></a>(1)ResourceManager(rm)：</h5><p>处理客户端请求、启动/监控ApplicationMaster、监控NodeManager、资源分配与调度</p>
+<h5 id="2-NodeManager-nm-："><a href="#2-NodeManager-nm-：" class="headerlink" title="(2)NodeManager(nm)："></a>(2)NodeManager(nm)：</h5><p>单个节点上的资源管理、处理来自ResourceManager的命令、处理来自ApplicationMaster的命令</p>
+<h5 id="3-ApplicationMaster："><a href="#3-ApplicationMaster：" class="headerlink" title="(3)ApplicationMaster："></a>(3)ApplicationMaster：</h5><p>数据切分、为应用程序申请资源，并分配给内部任务、任务监控与容错</p>
+<h5 id="4-Container："><a href="#4-Container：" class="headerlink" title="(4)Container："></a>(4)Container：</h5><p>对任务运行环境的抽象，封装了CPU、内存等多维资源以及环境变量、启动命令等任务运行相关的信息</p>
+<h4 id="4-MapReduce架构概述"><a href="#4-MapReduce架构概述" class="headerlink" title="4.MapReduce架构概述"></a>4.MapReduce架构概述</h4><h5 id="1-MapReduce将计算过程分为两个阶段：Map和Reduce"><a href="#1-MapReduce将计算过程分为两个阶段：Map和Reduce" class="headerlink" title="(1)MapReduce将计算过程分为两个阶段：Map和Reduce"></a>(1)MapReduce将计算过程分为两个阶段：Map和Reduce</h5><ul>
+<li>Map阶段并行处理输入数据</li>
+<li>Reduce阶段对Map结果进行汇总</li>
+</ul>
+<h3 id="二-Hadoop"><a href="#二-Hadoop" class="headerlink" title="二.Hadoop"></a>二.Hadoop</h3><h4 id="1-hadoop启动方式："><a href="#1-hadoop启动方式：" class="headerlink" title="1.hadoop启动方式："></a>1.hadoop启动方式：</h4><h5 id="1-启动hdfs集群："><a href="#1-启动hdfs集群：" class="headerlink" title="(1)启动hdfs集群："></a>(1)启动hdfs集群：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br></pre></td></tr></table></figure>
+<h5 id="2-启动yarn集群："><a href="#2-启动yarn集群：" class="headerlink" title="(2)启动yarn集群："></a>(2)启动yarn集群：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure>
+<h5 id="3-启动hadoop集群："><a href="#3-启动hadoop集群：" class="headerlink" title="(3)启动hadoop集群："></a>(3)启动hadoop集群：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>Hadoop启动和停止命令：</strong><br>以下命令都在$HADOOP_HOME/sbin下，如果直接使用，记得配置环境变量</p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动/停止历史服务器</td>
+<td>mr-jobhistory-daemon.sh start|stop historyserver</td>
+</tr>
+<tr>
+<td>启动/停止总资源管理器</td>
+<td>yarn-daemon.sh start|stop resourcemanager</td>
+</tr>
+<tr>
+<td>启动/停止节点管理器</td>
+<td>yarn-daemon.sh start|stop nodemanager</td>
+</tr>
+<tr>
+<td>启动/停止 NN 和 DN</td>
+<td>start|stop-dfs.sh</td>
+</tr>
+<tr>
+<td>启动/停止 RN 和 NM</td>
+<td>start|stop-yarn.sh</td>
+</tr>
+<tr>
+<td>启动/停止 NN、DN、RN、NM</td>
+<td>start|stop-all.sh</td>
+</tr>
+<tr>
+<td>启动/停止 NN</td>
+<td>hadoop-daemon.sh start|stop namenode</td>
+</tr>
+<tr>
+<td>启动/停止 DN</td>
+<td>hadoop-daemon.sh start|stop datanode</td>
+</tr>
+</tbody></table>
+<h4 id="2-namenode工作机制"><a href="#2-namenode工作机制" class="headerlink" title="2.namenode工作机制"></a>2.namenode工作机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRjNjQxODliOWQ2NDQ5MmMucG5n?x-oss-process=image/format,png" alt="namenode工作机制"></p>
+<h5 id="1-触发checkpoint的条件"><a href="#1-触发checkpoint的条件" class="headerlink" title="(1)触发checkpoint的条件"></a>(1)触发checkpoint的条件</h5><ul>
+<li>定时的时间</li>
+<li>edits中数据已满</li>
+</ul>
+<h5 id="2-配置checkpoint时间-hdfs-site-xml-："><a href="#2-配置checkpoint时间-hdfs-site-xml-：" class="headerlink" title="(2)配置checkpoint时间(hdfs-site.xml)："></a>(2)配置checkpoint时间(hdfs-site.xml)：</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.period<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>7200<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-datanode工作机制"><a href="#3-datanode工作机制" class="headerlink" title="3.datanode工作机制"></a>3.datanode工作机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZkZTU3OWExYTkyMTNjZTkucG5n?x-oss-process=image/format,png" alt="datanode工作机制"></p>
+<h4 id="4-Hadoop-MapReduce"><a href="#4-Hadoop-MapReduce" class="headerlink" title="4.Hadoop-MapReduce"></a>4.Hadoop-MapReduce</h4><h5 id="1-MapReduce分布式计算程序的编程框架。基于hadoop的数据分析的应用。"><a href="#1-MapReduce分布式计算程序的编程框架。基于hadoop的数据分析的应用。" class="headerlink" title="(1)MapReduce分布式计算程序的编程框架。基于hadoop的数据分析的应用。"></a>(1)MapReduce分布式计算程序的编程框架。基于hadoop的数据分析的应用。</h5><h5 id="2-MR优点："><a href="#2-MR优点：" class="headerlink" title="(2)MR优点："></a>(2)MR优点：</h5><ul>
+<li>框架易于编程</li>
+<li>可靠容错（集群）</li>
+<li>可以处理海量数据(T+ PB+)</li>
+<li>拓展性，可以通过动态的增减节点来拓展计算能力</li>
+</ul>
+<h4 id="5-MapReduce的思想"><a href="#5-MapReduce的思想" class="headerlink" title="5.MapReduce的思想"></a>5.MapReduce的思想</h4><p>例如有数据:海量单词 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hello reba </span><br><span class="line">hello mimi </span><br><span class="line">hello liya</span><br><span class="line">mimi big</span><br></pre></td></tr></table></figure>
+<p>解决方式：</p>
+<h5 id="1-每个单词记录一次-map阶段"><a href="#1-每个单词记录一次-map阶段" class="headerlink" title="(1)每个单词记录一次(map阶段)"></a>(1)每个单词记录一次(map阶段)</h5><p>&lt;hello,1&gt; &lt;reba,1&gt; &lt;hello,1&gt; &lt;mimi,1&gt;</p>
+<h5 id="2-相同单词的key不变，value累加求和即可-reduce阶段"><a href="#2-相同单词的key不变，value累加求和即可-reduce阶段" class="headerlink" title="(2)相同单词的key不变，value累加求和即可(reduce阶段)"></a>(2)相同单词的key不变，value累加求和即可(reduce阶段)</h5><p>&lt;hello,1+1+1&gt;</p>
+<p><strong>mapreduce思想</strong>：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRlZTRhNTg0NDRjYTk3N2UucG5n?x-oss-process=image/format,png" alt="mapreduce"></p>
+<h4 id="6-MapReduce程序："><a href="#6-MapReduce程序：" class="headerlink" title="6.MapReduce程序："></a>6.MapReduce程序：</h4><p>命令格式：</p>
+<ul>
+<li>hadoop jar 程序压缩包 函数名称 函数参数</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar hadoop-mapreduce-examples-2.8.4.jar wordcount /in/a.txt /out         //运行wordcount函数，计算HDFS中/in/a.txt文件中单词计数 ，将结果保存在/out目录下</span><br></pre></td></tr></table></figure>
+<h4 id="7-Hadoop数据类型："><a href="#7-Hadoop数据类型：" class="headerlink" title="7.Hadoop数据类型："></a>7.Hadoop数据类型：</h4><h5 id="1-我们看到的wordcount程序中的泛型中的数据类型其实是hadoop的序列化的数据类型。"><a href="#1-我们看到的wordcount程序中的泛型中的数据类型其实是hadoop的序列化的数据类型。" class="headerlink" title="(1)我们看到的wordcount程序中的泛型中的数据类型其实是hadoop的序列化的数据类型。"></a>(1)我们看到的wordcount程序中的泛型中的数据类型其实是hadoop的序列化的数据类型。</h5><h5 id="2-为什么要进行序列化-用java的类型行不行"><a href="#2-为什么要进行序列化-用java的类型行不行" class="headerlink" title="(2)为什么要进行序列化?用java的类型行不行?"></a>(2)为什么要进行序列化?用java的类型行不行?</h5><ul>
+<li>Java的序列化:Serliazable太重。 hadoop自己开发了一套序列化机制。Writable，精简高效。海量数据。<h5 id="3-Hadoop序列化类型与Java数据类型"><a href="#3-Hadoop序列化类型与Java数据类型" class="headerlink" title="(3)Hadoop序列化类型与Java数据类型"></a>(3)Hadoop序列化类型与Java数据类型</h5></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Java数据类型</th>
+<th>Hadoop序列化类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>IntWritable</td>
+</tr>
+<tr>
+<td>long</td>
+<td>LongWritable</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>BooleanWritable</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>ByteWritable</td>
+</tr>
+<tr>
+<td>double</td>
+<td>DoubleWritable</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Text</td>
+</tr>
+<tr>
+<td>float</td>
+<td>FloatWritable</td>
+</tr>
+</tbody></table>
+<h4 id="8-两种模式测试wordcount程序"><a href="#8-两种模式测试wordcount程序" class="headerlink" title="8.两种模式测试wordcount程序"></a>8.两种模式测试wordcount程序</h4><ul>
+<li>本地模式：需要在本地搭建Hadoop（winutils 见另一篇文章）</li>
+<li>集群模式：将在windows写好的wordcount程序打包上传到集群测试运行。</li>
+</ul>
+<h5 id="1-Maptask决定机制："><a href="#1-Maptask决定机制：" class="headerlink" title="(1)Maptask决定机制："></a>(1)Maptask决定机制：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTljMTVkY2YyZDBmMWFhM2IucG5n?x-oss-process=image/format,png" alt="maptask决定机制"></p>
+<h4 id="9-Yarn"><a href="#9-Yarn" class="headerlink" title="9.Yarn"></a>9.Yarn</h4><h5 id="1-Yarn工作流程"><a href="#1-Yarn工作流程" class="headerlink" title="(1)Yarn工作流程"></a>(1)Yarn工作流程</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBkYTE1YzE3ZDA5NjM4YWIucG5n?x-oss-process=image/format,png" alt="yarn工作流程"></p>
+<h5 id="2-yarn架构介绍"><a href="#2-yarn架构介绍" class="headerlink" title="(2)yarn架构介绍"></a>(2)yarn架构介绍</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI4MzBlZDczMjhhNjQ1NDQucG5n?x-oss-process=image/format,png" alt="yarn架构介绍"></p>
+<h4 id="10-小文件优化"><a href="#10-小文件优化" class="headerlink" title="10.小文件优化"></a>10.小文件优化</h4><h5 id="1-如果企业中存在海量的小文件数据-TextInputFormat按照文件规划切片，文件不管多小都是一个单独的切片，启动mapt-ask任务去执行，这样会产生大量的maptask，浪费资源。"><a href="#1-如果企业中存在海量的小文件数据-TextInputFormat按照文件规划切片，文件不管多小都是一个单独的切片，启动mapt-ask任务去执行，这样会产生大量的maptask，浪费资源。" class="headerlink" title="(1)如果企业中存在海量的小文件数据 TextInputFormat按照文件规划切片，文件不管多小都是一个单独的切片，启动mapt ask任务去执行，这样会产生大量的maptask，浪费资源。"></a>(1)如果企业中存在海量的小文件数据 TextInputFormat按照文件规划切片，文件不管多小都是一个单独的切片，启动mapt ask任务去执行，这样会产生大量的maptask，浪费资源。</h5><h5 id="2-优化手段"><a href="#2-优化手段" class="headerlink" title="(2)优化手段:"></a>(2)优化手段:</h5><p>小文件合并大文件，如果不动这个小文件内容。</p>
+<h4 id="11-分区-实例程序IDEAlogs1"><a href="#11-分区-实例程序IDEAlogs1" class="headerlink" title="11.分区(实例程序IDEAlogs1)"></a>11.分区(实例程序IDEAlogs1)</h4><h5 id="1-总结"><a href="#1-总结" class="headerlink" title="(1)总结:"></a>(1)总结:</h5><p>1)自定义类继承partitioner&lt;key,value&gt;<br>2)重写方法getPartition()<br>3)业务逻辑<br>4)在driver类中加入setPartitionerClass<br>5)注意:需要指定setNumReduceTasks(个数=分区数+1)</p>
+<h4 id="12-排序-实例程序logs2"><a href="#12-排序-实例程序logs2" class="headerlink" title="12.排序(实例程序logs2)"></a>12.排序(实例程序logs2)</h4><p>需求:每个分区内进行排序?<br>总结: 1)实现WritableComparable接口 2)重写compareTo方法<br>combineTextInputFormat设置切片的大小 maptask</p>
+<h4 id="13-mapreduce流程"><a href="#13-mapreduce流程" class="headerlink" title="13.mapreduce流程"></a>13.mapreduce流程</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg0YjEyOGM5MGQ0ZWUwYjEucG5n?x-oss-process=image/format,png" alt="mapreduce流程"></p>
+<h4 id="14-combiner合并"><a href="#14-combiner合并" class="headerlink" title="14.combiner合并"></a>14.combiner合并</h4><h5 id="1-combiner是一个组件"><a href="#1-combiner是一个组件" class="headerlink" title="(1)combiner是一个组件"></a>(1)combiner是一个组件</h5><ul>
+<li>注意:是Mapper和Reducer之外的一种组件 但是这个组件的父类是Reduer<h5 id="2-如果想使用combiner继承Reduer即可"><a href="#2-如果想使用combiner继承Reduer即可" class="headerlink" title="(2)如果想使用combiner继承Reduer即可"></a>(2)如果想使用combiner继承Reduer即可</h5><h5 id="3-通过编写combiner发现与reducer代码相同-只需在driver端指定-setCombinerClass-WordCountReduer-class"><a href="#3-通过编写combiner发现与reducer代码相同-只需在driver端指定-setCombinerClass-WordCountReduer-class" class="headerlink" title="(3)通过编写combiner发现与reducer代码相同 只需在driver端指定 setCombinerClass(WordCountReduer.class)"></a>(3)通过编写combiner发现与reducer代码相同 只需在driver端指定 setCombinerClass(WordCountReduer.class)</h5></li>
+<li>注意:前提是不能影响业务逻辑</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a,1&gt;&lt;c,1&gt; &lt;a,2&gt;&lt;a,1&gt; = &lt;a,3&gt; </span><br></pre></td></tr></table></figure>
+<p>数学运算: (3 + 5 + 7)/3 = 5<br>        (2 + 6)/2 = 4<br>不进行局部累加:(3 + 5 + 7 + 2 + 6)/5 = 23/5<br>进行了局部累加:(5+4)/2 = 9/2=4.5 不等于 23/5=4.6</p>
+<h4 id="15-shuffle机制"><a href="#15-shuffle机制" class="headerlink" title="15.shuffle机制"></a>15.shuffle机制</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJkZTVlZTdiMWMyOWI4MjUucG5n?x-oss-process=image/format,png" alt="shuffle机制"></p>
+<h4 id="16-数据压缩"><a href="#16-数据压缩" class="headerlink" title="16.数据压缩"></a>16.数据压缩</h4><h5 id="1-为什么对数据进行压缩"><a href="#1-为什么对数据进行压缩" class="headerlink" title="(1)为什么对数据进行压缩?"></a>(1)为什么对数据进行压缩?</h5><ul>
+<li>mapreduce操作需要对大量数据进行传输</li>
+<li>压缩技术有效的减少底层存储系统读写字节数，hdfs。 </li>
+<li>压缩提高网络带宽和磁盘空间效率。</li>
+<li>数据压缩节省资源，减少网络I/O。 </li>
+<li>通过压缩可以影响到mapreduce性能。(小文件优化，combiner)代码角度进行优化。</li>
+</ul>
+<p>注意:利用好压缩提高性能，运用不好会降低性能。 压缩 -&gt; 解压缩</p>
+<h5 id="2-mapreduce常用的压缩编码"><a href="#2-mapreduce常用的压缩编码" class="headerlink" title="(2)mapreduce常用的压缩编码"></a>(2)mapreduce常用的压缩编码</h5><table>
+<thead>
+<tr>
+<th>压缩格式</th>
+<th>是否需要安装</th>
+<th>文件拓展名</th>
+<th>是否可以切分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEFAULT</td>
+<td>直接使用</td>
+<td>.deflate</td>
+<td>否</td>
+</tr>
+<tr>
+<td>bzip2</td>
+<td>直接使用</td>
+<td>.bz2</td>
+<td>是</td>
+</tr>
+<tr>
+<td>Gzip</td>
+<td>直接使用</td>
+<td>.gz</td>
+<td>否</td>
+</tr>
+<tr>
+<td>LZO</td>
+<td>需要安装</td>
+<td>.lzo</td>
+<td>是</td>
+</tr>
+<tr>
+<td>Snappy</td>
+<td>需要安装</td>
+<td>.snappy</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h5 id="3-性能测试："><a href="#3-性能测试：" class="headerlink" title="(3)性能测试："></a>(3)性能测试：</h5><table>
+<thead>
+<tr>
+<th>压缩格式</th>
+<th>源文件大小</th>
+<th>压缩后大小</th>
+<th>压缩速度</th>
+<th>解压速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gzip</td>
+<td>8.3GB</td>
+<td>1.8GB</td>
+<td>20MB/s</td>
+<td>60MB/s</td>
+</tr>
+<tr>
+<td>LZO</td>
+<td>8.3GB</td>
+<td>3GB</td>
+<td>50MB/s</td>
+<td>70MB/s</td>
+</tr>
+<tr>
+<td>bzip2</td>
+<td>8.3GB</td>
+<td>1.1GB</td>
+<td>3MB/s</td>
+<td>10MB/s</td>
+</tr>
+</tbody></table>
+<h5 id="4-数据压缩发生的阶段"><a href="#4-数据压缩发生的阶段" class="headerlink" title="(4)数据压缩发生的阶段"></a>(4)数据压缩发生的阶段</h5><h6 id="a-数据源"><a href="#a-数据源" class="headerlink" title="(a)数据源"></a>(a)数据源</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;-&gt;数据传输，可以进行数据压缩</p>
+<h6 id="b-mapper阶段"><a href="#b-mapper阶段" class="headerlink" title="(b)mapper阶段"></a>(b)mapper阶段</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;mapper端输出压缩<br>&nbsp;&nbsp;&nbsp;&nbsp;-&gt;数据传输，可以进行压缩（一般数据源到mapper的压缩与Mapper此处压缩的效率是差不多的， 选择在mapper压缩较好 ）</p>
+<h6 id="c-reducer阶段"><a href="#c-reducer阶段" class="headerlink" title="(c )reducer阶段"></a>(c )reducer阶段</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;reduce端输出压缩<br>&nbsp;&nbsp;&nbsp;&nbsp;-&gt;数据传输，可以进行数据压缩</p>
+<h5 id="d-结果数据"><a href="#d-结果数据" class="headerlink" title="(d)结果数据"></a>(d)结果数据</h5><ul>
+<li>设置map端输出压缩</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conf.setBoolean(&quot;mapreduce.map.output.compress&quot;,true);      //开启压缩</span><br><span class="line">conf.setClass(&quot;mapreduce.map.output.compress.codec&quot;,BZip2Codec.class,CompressionCodec.class);  //设置压缩方式，压缩编码</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置reduce端输出压缩：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FileOutputFormat.setCompressOutput(job,true);   //设置reduce端输出压缩</span><br><span class="line"></span><br><span class="line">FileOutputFormat.setOutputCompressorClass(job,BZip2Codec.class);    //设置压缩方式</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="5-压缩编码使用的场景"><a href="#5-压缩编码使用的场景" class="headerlink" title="(5)压缩编码使用的场景"></a>(5)压缩编码使用的场景</h5><h6 id="a-Gzip压缩方式"><a href="#a-Gzip压缩方式" class="headerlink" title="(a).Gzip压缩方式"></a>(a).Gzip压缩方式</h6><ul>
+<li>压缩率比较高，并且压缩解压缩速度很快;</li>
+<li>hadoop自身支持的压缩方式，用gzip格式处理数据就像直接处理文本数据是完全一样的;</li>
+<li>在linux系统自带gzip命令，使用很方便简洁。</li>
+<li>不支持split 使用每个文件压缩之后大小需要在128M以下(块大小) 200M-&gt;设置块大小</li>
+</ul>
+<h6 id="b-LZO压缩方式"><a href="#b-LZO压缩方式" class="headerlink" title="(b).LZO压缩方式"></a>(b).LZO压缩方式</h6><ul>
+<li>压缩解压速度比较快并且，压缩率比较合理;</li>
+<li>支持split 在linux系统不可以直接使用，但是可以进行安装。</li>
+<li>压缩率比gzip和bzip2要弱，hadoop本身不支持。 需要安装。</li>
+</ul>
+<h6 id="c-Bzio2压缩方式"><a href="#c-Bzio2压缩方式" class="headerlink" title="(c ).Bzio2压缩方式"></a>(c ).Bzio2压缩方式</h6><ul>
+<li>支持压缩，具有很强的压缩率。hadoop本身支持。</li>
+<li>linux中可以安装。</li>
+<li>压缩解压缩速度很慢。</li>
+</ul>
+<h6 id="d-Snappy压缩方式"><a href="#d-Snappy压缩方式" class="headerlink" title="(d).Snappy压缩方式"></a>(d).Snappy压缩方式</h6><ul>
+<li>压缩解压缩速度很快。而且有合理的压缩率。 </li>
+<li>不支持split</li>
+</ul>
+<h4 id="17-数据倾斜"><a href="#17-数据倾斜" class="headerlink" title="17.数据倾斜"></a>17.数据倾斜</h4><h5 id="1-如何规避数据倾斜："><a href="#1-如何规避数据倾斜：" class="headerlink" title="(1)如何规避数据倾斜："></a>(1)如何规避数据倾斜：</h5><ul>
+<li>在Map阶段之前就将数据合并</li>
+</ul>
+<h4 id="18-优化-MapReduce程序的编写过程中考虑的问题"><a href="#18-优化-MapReduce程序的编写过程中考虑的问题" class="headerlink" title="18.优化-MapReduce程序的编写过程中考虑的问题"></a>18.优化-MapReduce程序的编写过程中考虑的问题</h4><h5 id="1-优化目的："><a href="#1-优化目的：" class="headerlink" title="(1)优化目的："></a>(1)优化目的：</h5><ul>
+<li>提高程序运行的效率</li>
+</ul>
+<h5 id="2-优化方案：如何优化MR程序"><a href="#2-优化方案：如何优化MR程序" class="headerlink" title="(2)优化方案：如何优化MR程序"></a>(2)优化方案：如何优化MR程序</h5><p>影响MR程序的因素：</p>
+<h6 id="a-硬件"><a href="#a-硬件" class="headerlink" title="(a).硬件"></a>(a).硬件</h6><ul>
+<li>提升硬件(CPU/磁盘(固态、机械)/内存/网络…)</li>
+</ul>
+<h6 id="b-I-O优化：传输"><a href="#b-I-O优化：传输" class="headerlink" title="(b).I/O优化：传输"></a>(b).I/O优化：传输</h6><ul>
+<li>maptask与reducetask合理设置个数</li>
+<li>数据倾斜(reducetask-》merge)：避免出现数据倾斜</li>
+<li>大量小文件情况 (combineTextInputFormat)</li>
+<li>combiner优化(不影响业务逻辑)</li>
+</ul>
+<h5 id="3-具体优化方式：MR-数据接入、Map、Reduce、IO传输、处理倾斜、参数优化"><a href="#3-具体优化方式：MR-数据接入、Map、Reduce、IO传输、处理倾斜、参数优化" class="headerlink" title="(3)具体优化方式：MR(数据接入、Map、Reduce、IO传输、处理倾斜、参数优化)"></a>(3)具体优化方式：MR(数据接入、Map、Reduce、IO传输、处理倾斜、参数优化)</h5><h6 id="a-数据接入："><a href="#a-数据接入：" class="headerlink" title="(a).数据接入："></a>(a).数据接入：</h6><ul>
+<li>解决方式：小文件的话 进行合并 ，namenode存储元数据信息，sn</li>
+</ul>
+<h6 id="b-Map-会发生溢写，如果减少溢写次数也能达到优化-溢写内存增加这样就减少了溢写次数"><a href="#b-Map-会发生溢写，如果减少溢写次数也能达到优化-溢写内存增加这样就减少了溢写次数" class="headerlink" title="(b).Map:会发生溢写，如果减少溢写次数也能达到优化,溢写内存增加这样就减少了溢写次数"></a>(b).Map:会发生溢写，如果减少溢写次数也能达到优化,溢写内存增加这样就减少了溢写次数</h6><ul>
+<li>解决方式：修改mapred-site.xml</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mapreduce.task.io.sort.mb     // 100,调大优化</span><br><span class="line"></span><br><span class="line">mapreduce.map.sort.spill.percent    //0.8，调大优化</span><br></pre></td></tr></table></figure>
+<h6 id="c-combiner"><a href="#c-combiner" class="headerlink" title="(c).combiner:"></a>(c).combiner:</h6><ul>
+<li>解决方式：map后优化</li>
+</ul>
+<h6 id="d-reduce"><a href="#d-reduce" class="headerlink" title="(d).reduce:"></a>(d).reduce:</h6><ul>
+<li>reduceTask设置合理的个数</li>
+<li>写mr程序可以合理避免写reduce阶段 </li>
+<li>设置map/reduce共存,修改配置文件:mapred-site.xml</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapreduce.job.reduce.slowstart.completedmaps //默认时0.05，减少它即优化</span><br></pre></td></tr></table></figure>
+<h6 id="e-I-O传输："><a href="#e-I-O传输：" class="headerlink" title="(e).I/O传输："></a>(e).I/O传输：</h6><ul>
+<li>解决方式：压缩</li>
+</ul>
+<h6 id="f-数据倾斜："><a href="#f-数据倾斜：" class="headerlink" title="(f).数据倾斜："></a>(f).数据倾斜：</h6><ul>
+<li>map端合并。手动的对数据进行分段处理，合理的分区。</li>
+</ul>
+<h5 id="4-其他优化方式-非程序："><a href="#4-其他优化方式-非程序：" class="headerlink" title="(4)其他优化方式-非程序："></a>(4)其他优化方式-非程序：</h5><h6 id="a-JVM重用：不关JVM-一个map运行一个jvm-开启重用，在运行完这个map后JVM继续运行其它map。-例如线程池"><a href="#a-JVM重用：不关JVM-一个map运行一个jvm-开启重用，在运行完这个map后JVM继续运行其它map。-例如线程池" class="headerlink" title="(a).JVM重用：不关JVM 一个map运行一个jvm,开启重用，在运行完这个map后JVM继续运行其它map。 例如线程池"></a>(a).JVM重用：不关JVM 一个map运行一个jvm,开启重用，在运行完这个map后JVM继续运行其它map。 例如线程池</h6><ul>
+<li>修改属性</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapreduce.job.jvm.numtasks    //20,设置合理的数值，能减少40%左右的运行时间·</span><br></pre></td></tr></table></figure>
+
+<h4 id="19-大数据算法：-见其他文件"><a href="#19-大数据算法：-见其他文件" class="headerlink" title="19.大数据算法：(见其他文件)"></a>19.大数据算法：(见其他文件)</h4><h5 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="(1)冒泡排序"></a>(1)冒泡排序</h5><h5 id="2-双冒泡排序"><a href="#2-双冒泡排序" class="headerlink" title="(2)双冒泡排序"></a>(2)双冒泡排序</h5><h5 id="3-快速排序"><a href="#3-快速排序" class="headerlink" title="(3)快速排序"></a>(3)快速排序</h5><h5 id="4-归并排序"><a href="#4-归并排序" class="headerlink" title="(4)归并排序"></a>(4)归并排序</h5> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/01/01/Hadoop%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/01/01/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%85%A8%E5%88%86%E5%B8%83%E6%A8%A1%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Hadoop-全分布模式搭建
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2018/12/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">redis安装报错:jemalloc</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>数据结构与算法(7)-查找 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据结构与算法(7)-查找"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据结构与算法(7)-查找
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(7)-%E6%9F%A5%E6%89%BE/" class="article-date">
+  <time datetime="2019-01-23T09:00:00.000Z" itemprop="datePublished">2019-01-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">4.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">17 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-查找概论"><a href="#一-查找概论" class="headerlink" title="一.查找概论"></a>一.查找概论</h3><h4 id="1-概念："><a href="#1-概念：" class="headerlink" title="1.概念："></a>1.概念：</h4><h5 id="1-查找表-Search-Table"><a href="#1-查找表-Search-Table" class="headerlink" title="(1)查找表(Search Table)"></a>(1)查找表(Search Table)</h5><p>是由同一类型的数据元素(或记录)构成的集合</p>
+<h5 id="2-关键字（Key）"><a href="#2-关键字（Key）" class="headerlink" title="(2)关键字（Key）"></a>(2)关键字（Key）</h5><p>是数据元素中某个数据项的值，又称为键值，用它可以标识一个数据元素。也可以标识一个记录的某个数据项（字段），称为关键码</p>
+<h5 id="3-主关键字："><a href="#3-主关键字：" class="headerlink" title="(3)主关键字："></a>(3)主关键字：</h5><p>若此关键字可以唯一地标识一个记录，则称此关键字为主关键字（Primary Key）</p>
+<h5 id="4-次关键字："><a href="#4-次关键字：" class="headerlink" title="(4)次关键字："></a>(4)次关键字：</h5><p>对于那些可以识别多个数据元素（或记录）的关键字，我们称为次关键字，次关键字也可以理解为是不以唯一标识一个数据元素（或记录）的关键字，它对应的数据项就是次关键码</p>
+<h4 id="2-查找表按照操作方式来分有两大种：静态查找表和动态查找表"><a href="#2-查找表按照操作方式来分有两大种：静态查找表和动态查找表" class="headerlink" title="2.查找表按照操作方式来分有两大种：静态查找表和动态查找表"></a>2.查找表按照操作方式来分有两大种：静态查找表和动态查找表</h4><h5 id="1-静态查找表-Static-Search-Table-：只作查找操作的查找表。"><a href="#1-静态查找表-Static-Search-Table-：只作查找操作的查找表。" class="headerlink" title="(1)静态查找表(Static Search Table)：只作查找操作的查找表。"></a>(1)静态查找表(Static Search Table)：只作查找操作的查找表。</h5><p>它的主要操作有：</p>
+<ul>
+<li>查询某个“特定的”数据元素是否在查找表中</li>
+<li>检索某个“特定的”数据元素和各种属性</li>
+</ul>
+<h5 id="2-动态查找表-Dynamic-Search-Table-："><a href="#2-动态查找表-Dynamic-Search-Table-：" class="headerlink" title="(2)动态查找表(Dynamic Search Table)："></a>(2)动态查找表(Dynamic Search Table)：</h5><p>在查找过程中同时插入查找表中不存在的数据元素，或者从查找表中删除已经存在的某个数据元素<br>动态查找表的操作就是两个：</p>
+<ul>
+<li>查找时插入数据元素</li>
+<li>查找时删除数据元素</li>
+</ul>
+<h4 id="3-面向查找操作的数据结构称为查找结构"><a href="#3-面向查找操作的数据结构称为查找结构" class="headerlink" title="3.面向查找操作的数据结构称为查找结构"></a>3.面向查找操作的数据结构称为查找结构</h4><h3 id="二-顺序表查找"><a href="#二-顺序表查找" class="headerlink" title="二.顺序表查找"></a>二.顺序表查找</h3><h4 id="1-顺序查找-Sequential-Search-又叫线性查找，是最基本的查找技术"><a href="#1-顺序查找-Sequential-Search-又叫线性查找，是最基本的查找技术" class="headerlink" title="1.顺序查找(Sequential Search):又叫线性查找，是最基本的查找技术"></a>1.顺序查找(Sequential Search):又叫线性查找，是最基本的查找技术</h4><h4 id="2-顺序表查找算法："><a href="#2-顺序表查找算法：" class="headerlink" title="2.顺序表查找算法："></a>2.顺序表查找算法：</h4><h4 id="3-顺序表查找算法优化："><a href="#3-顺序表查找算法优化：" class="headerlink" title="3.顺序表查找算法优化："></a>3.顺序表查找算法优化：</h4><h3 id="三-有序表查找"><a href="#三-有序表查找" class="headerlink" title="三.有序表查找"></a>三.有序表查找</h3><h4 id="1-折半查找"><a href="#1-折半查找" class="headerlink" title="1.折半查找"></a>1.折半查找</h4><h5 id="1-折半查找-Binary-Search-技术，又称为二分查找。"><a href="#1-折半查找-Binary-Search-技术，又称为二分查找。" class="headerlink" title="(1)折半查找(Binary Search)技术，又称为二分查找。"></a>(1)折半查找(Binary Search)技术，又称为二分查找。</h5><p>它的前提是线性表中的记录必须是关键码有序（通常从小到大有序），线性表必须采用顺序存储。</p>
+<h5 id="2-折半查找的基本思想是："><a href="#2-折半查找的基本思想是：" class="headerlink" title="(2)折半查找的基本思想是："></a>(2)折半查找的基本思想是：</h5><p>在有序表中，取中间记录作为比较对象，若给定值与中间记录的关键字相等，则查找成功；若给定值小于中间记录的关键字，则在中间记录的左半区继续查找；若给定值大于中间记录的关键字，则在中间记录的右半区继续查找。不断重复上述过程，直到查找成功，或所有查找区域无记录，查找失败为止</p>
+<h5 id="3-折半算法的时间复杂度为O-logn"><a href="#3-折半算法的时间复杂度为O-logn" class="headerlink" title="(3)折半算法的时间复杂度为O(logn)"></a>(3)折半算法的时间复杂度为O(logn)</h5><h4 id="2-插值查找"><a href="#2-插值查找" class="headerlink" title="2.插值查找"></a>2.插值查找</h4><p>插值查找(Interpolation Search)是根据要查找的关键字key与查找表中最大最小记录的关键字比较后的查找方法，其核心就在于插值的计算公式(key-a[low])/(a[high]-a[low])</p>
+<h4 id="3-斐波那契查找"><a href="#3-斐波那契查找" class="headerlink" title="3.斐波那契查找"></a>3.斐波那契查找</h4><h5 id="1-斐波那契查找-Fibonacci-Search-，是利用黄金分割原理来实现的"><a href="#1-斐波那契查找-Fibonacci-Search-，是利用黄金分割原理来实现的" class="headerlink" title="(1)斐波那契查找(Fibonacci Search)，是利用黄金分割原理来实现的"></a>(1)斐波那契查找(Fibonacci Search)，是利用黄金分割原理来实现的</h5><h5 id="2-“斐波那契查找算法的核心在于："><a href="#2-“斐波那契查找算法的核心在于：" class="headerlink" title="(2)“斐波那契查找算法的核心在于："></a>(2)“斐波那契查找算法的核心在于：</h5><ul>
+<li>当key=a[mid]时，查找就成功；</li>
+<li>当key&lt;a[mid]时，新范围是第low个到第mid-1个，此时范围个数为F[k-1]-1个；</li>
+<li>当key&gt;a[mid]时，新范围是第m+1个到第high个，此时范围个数为F[k-2]-1个</li>
+</ul>
+<h4 id="4-三种有序表查找的区别在于："><a href="#4-三种有序表查找的区别在于：" class="headerlink" title="4.三种有序表查找的区别在于："></a>4.三种有序表查找的区别在于：</h4><ul>
+<li>折半查找是进行加法与除法运算(mid=(low＋high)/2)，</li>
+<li>插值查找进行复杂的四则运算(mid=low＋(high-low)*(key-a[low])/(a[high]-a[low]))，</li>
+<li>而斐波那契查找只是最简单加减法运算(mid=low＋F[k-1]-1)</li>
+</ul>
+<h3 id="四-线性索引查找"><a href="#四-线性索引查找" class="headerlink" title="四.线性索引查找"></a>四.线性索引查找</h3><h4 id="1-含义："><a href="#1-含义：" class="headerlink" title="1.含义："></a>1.含义：</h4><h5 id="1-索引是为了加快查找速度而设计的一种数据结构。"><a href="#1-索引是为了加快查找速度而设计的一种数据结构。" class="headerlink" title="(1)索引是为了加快查找速度而设计的一种数据结构。"></a>(1)索引是为了加快查找速度而设计的一种数据结构。</h5><p>索引就是把一个关键字与它对应的记录相关联的过程，一个索引由若干个索引项构成，每个索引项至少应包含关键字和其对应的记录在存储器中的位置等信息</p>
+<h5 id="2-索引按照结构可以分为线性索引、树形索引和多级索引"><a href="#2-索引按照结构可以分为线性索引、树形索引和多级索引" class="headerlink" title="(2)索引按照结构可以分为线性索引、树形索引和多级索引"></a>(2)索引按照结构可以分为线性索引、树形索引和多级索引</h5><h5 id="3-所谓线性索引就是将索引项集合组织为线性结构，也称为索引表"><a href="#3-所谓线性索引就是将索引项集合组织为线性结构，也称为索引表" class="headerlink" title="(3)所谓线性索引就是将索引项集合组织为线性结构，也称为索引表"></a>(3)所谓线性索引就是将索引项集合组织为线性结构，也称为索引表</h5><h4 id="2-稠密索引"><a href="#2-稠密索引" class="headerlink" title="2.稠密索引"></a>2.稠密索引</h4><h5 id="1-稠密索引是指在线性索引中，将数据集中的每个记录对应一个索引项"><a href="#1-稠密索引是指在线性索引中，将数据集中的每个记录对应一个索引项" class="headerlink" title="(1)稠密索引是指在线性索引中，将数据集中的每个记录对应一个索引项"></a>(1)稠密索引是指在线性索引中，将数据集中的每个记录对应一个索引项</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNkZDczYzYzNTM5MWZjYjcucG5n?x-oss-process=image/format,png" alt="稠密索引"></p>
+<h5 id="2-索引项有序也就意味着，我们要查找关键字时，可以用到折半、插值、斐波那契等有序查找算法，大大提高了效率"><a href="#2-索引项有序也就意味着，我们要查找关键字时，可以用到折半、插值、斐波那契等有序查找算法，大大提高了效率" class="headerlink" title="(2)索引项有序也就意味着，我们要查找关键字时，可以用到折半、插值、斐波那契等有序查找算法，大大提高了效率"></a>(2)索引项有序也就意味着，我们要查找关键字时，可以用到折半、插值、斐波那契等有序查找算法，大大提高了效率</h5><h4 id="3-分块索引"><a href="#3-分块索引" class="headerlink" title="3.分块索引"></a>3.分块索引</h4><h5 id="1-分块有序，是把数据集的记录分成了若干块，并且这些块需要满足两个条件："><a href="#1-分块有序，是把数据集的记录分成了若干块，并且这些块需要满足两个条件：" class="headerlink" title="(1)分块有序，是把数据集的记录分成了若干块，并且这些块需要满足两个条件："></a>(1)分块有序，是把数据集的记录分成了若干块，并且这些块需要满足两个条件：</h5><ul>
+<li>块内无序，即每一块内的记录不要求有序 </li>
+<li>块间有序</li>
+</ul>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZmMGQ3MThiYjNiZmZkMWEucG5n?x-oss-process=image/format,png" alt="分块索引"></p>
+<h5 id="2-定义的分块索引的索引项结构分三个数据项："><a href="#2-定义的分块索引的索引项结构分三个数据项：" class="headerlink" title="(2)定义的分块索引的索引项结构分三个数据项："></a>(2)定义的分块索引的索引项结构分三个数据项：</h5><ul>
+<li>最大关键码，它存储每一块中的最大关键字，这样的好处就是可以使得在它之后的下一块中的最小关键字也能比这一块最大的关键字要大；</li>
+<li>存储了块中的记录个数，以便于循环时使用；</li>
+<li>用于指向块首数据元素的指针，便于开始对这一块中记录进行遍历</li>
+</ul>
+<h5 id="3-在分块索引表中查找，就是分两步进行："><a href="#3-在分块索引表中查找，就是分两步进行：" class="headerlink" title="(3)在分块索引表中查找，就是分两步进行："></a>(3)在分块索引表中查找，就是分两步进行：</h5><ul>
+<li>一是在分块索引表中查找要查关键字所在的块</li>
+<li>二是根据块首指针找到相应的块，并在块中顺序查找关键码</li>
+</ul>
+<h4 id="4-倒排索引"><a href="#4-倒排索引" class="headerlink" title="4.倒排索引"></a>4.倒排索引</h4><h5 id="1-倒排索引的索引项通用结构是："><a href="#1-倒排索引的索引项通用结构是：" class="headerlink" title="(1)倒排索引的索引项通用结构是："></a>(1)倒排索引的索引项通用结构是：</h5><ul>
+<li>次关键码，例如上面的“英文单词”；</li>
+<li>记录号表，例如上面的“文章编号”。</li>
+</ul>
+<h5 id="2-其中记录号表存储具有相同次关键字的所有记录的记录号-这样的索引方法就是倒排索引"><a href="#2-其中记录号表存储具有相同次关键字的所有记录的记录号-这样的索引方法就是倒排索引" class="headerlink" title="(2)其中记录号表存储具有相同次关键字的所有记录的记录号,这样的索引方法就是倒排索引"></a>(2)其中记录号表存储具有相同次关键字的所有记录的记录号,这样的索引方法就是倒排索引</h5><h5 id="3-由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引"><a href="#3-由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引" class="headerlink" title="(3)由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引"></a>(3)由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引</h5><h3 id="五-二叉排序树"><a href="#五-二叉排序树" class="headerlink" title="五.二叉排序树"></a>五.二叉排序树</h3><h4 id="1-含义：-1"><a href="#1-含义：-1" class="headerlink" title="1.含义："></a>1.含义：</h4><h5 id="1-二叉排序树-Binary-Sort-Tree-，又称为二叉查找树。"><a href="#1-二叉排序树-Binary-Sort-Tree-，又称为二叉查找树。" class="headerlink" title="(1)二叉排序树(Binary Sort Tree)，又称为二叉查找树。"></a>(1)二叉排序树(Binary Sort Tree)，又称为二叉查找树。</h5><p>它或者是一棵空树，或者是具有下列性质的二叉树。</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结构的值；</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>它的左、右子树也分别为二叉排序树</li>
+</ul>
+<h4 id="2-二叉排序树查找操作"><a href="#2-二叉排序树查找操作" class="headerlink" title="2.二叉排序树查找操作"></a>2.二叉排序树查找操作</h4><h5 id="1-二叉树结构"><a href="#1-二叉树结构" class="headerlink" title="(1)二叉树结构"></a>(1)二叉树结构</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 二叉树的二叉链表结点结构定义 */</span></span><br><span class="line"><span class="comment">/* 结点结构 */</span></span><br><span class="line">typedef  struct BiTNode                 </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 结点数据 */</span></span><br><span class="line">    <span class="keyword">int</span> data;                           </span><br><span class="line">    <span class="comment">/* 左右孩子指针 */</span></span><br><span class="line">    struct BiTNode *lchild, *rchild;    </span><br><span class="line">&#125; BiTNode, *BiTree;</span><br></pre></td></tr></table></figure>
+<h5 id="2-二叉树插入操作"><a href="#2-二叉树插入操作" class="headerlink" title="(2)二叉树插入操作"></a>(2)二叉树插入操作</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 递归查找二叉排序树T中是否存在key, */</span></span><br><span class="line"><span class="comment">/* 指针f指向T的双亲，其初始调用值为NULL */</span></span><br><span class="line"><span class="comment">/* 若查找成功，则指针p指向该数据元素结点，并</span></span><br><span class="line"><span class="comment">   返回TRUE */</span></span><br><span class="line"><span class="comment">/* 否则指针p指向查找路径上访问的最后一个结点</span></span><br><span class="line"><span class="comment">   并返回FALSE */</span></span><br><span class="line"><span class="function">Status <span class="title">SearchBST</span><span class="params">(BiTree T, <span class="keyword">int</span> key, BiTree f, BiTree *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* 查找不成功 */</span></span><br><span class="line">    <span class="keyword">if</span> (!T)                                        </span><br><span class="line">    &#123;</span><br><span class="line">        *p = f;</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 查找成功 */</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key == T-&gt;data)                       </span><br><span class="line">    &#123;</span><br><span class="line">       *p = T;</span><br><span class="line">       <span class="keyword">return</span> TRUE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (key &lt; T-&gt;data)</span><br><span class="line">        <span class="comment">/* 在左子树继续查找 */</span></span><br><span class="line">        <span class="keyword">return</span> SearchBST(T-&gt;lchild, key, T, p);    </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">/* 在右子树继续查找 */</span></span><br><span class="line">        <span class="keyword">return</span> SearchBST(T-&gt;rchild, key, T, p);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-二叉排序树插入操作"><a href="#3-二叉排序树插入操作" class="headerlink" title="3.二叉排序树插入操作"></a>3.二叉排序树插入操作</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 当二叉排序树T中不存在关键字等于key的数据元</span></span><br><span class="line"><span class="comment">   素时， */</span></span><br><span class="line"><span class="comment">/* 插入key并返回TRUE，否则返回FALSE */</span></span><br><span class="line"><span class="function">Status <span class="title">InsertBST</span><span class="params">(BiTree *T, <span class="keyword">int</span> key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BiTree p, s;</span><br><span class="line">    <span class="comment">/* 查找不成功 */</span></span><br><span class="line">    <span class="keyword">if</span> (!SearchBST(*T, key, NULL, &amp;p))    </span><br><span class="line">    &#123;</span><br><span class="line">        s = (BiTree)malloc(sizeof(BiTNode));</span><br><span class="line">        s-&gt;data = key;</span><br><span class="line">        s-&gt;lchild = s-&gt;rchild = NULL;</span><br><span class="line">        <span class="keyword">if</span> (!p)</span><br><span class="line">            <span class="comment">/* 插入s为新的根结点 */</span></span><br><span class="line">            *T = s;                       </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (key &lt; p-&gt;data)</span><br><span class="line">            <span class="comment">/* 插入s为左孩子 */</span></span><br><span class="line">            p-&gt;lchild = s;                </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="comment">/* 插入s为右孩子 */</span></span><br><span class="line">            p-&gt;rchild = s;                </span><br><span class="line">        <span class="keyword">return</span> TRUE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">/* 树中已有关键字相同的结点，不再插入 */</span></span><br><span class="line">        <span class="keyword">return</span> FALSE;                     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-二叉排序树的删除操作："><a href="#4-二叉排序树的删除操作：" class="headerlink" title="4.二叉排序树的删除操作："></a>4.二叉排序树的删除操作：</h4><h5 id="1-删除结点三种情况："><a href="#1-删除结点三种情况：" class="headerlink" title="(1)删除结点三种情况："></a>(1)删除结点三种情况：</h5><ul>
+<li>叶子结点；</li>
+<li>仅有左或右子树的结点；</li>
+<li>左右子树都有的结点，我们来看代码，下面这个算法是递归方式对二叉排序树T查找key，查找到时删除</li>
+</ul>
+<h4 id="5-二叉排序树总结："><a href="#5-二叉排序树总结：" class="headerlink" title="5.二叉排序树总结："></a>5.二叉排序树总结：</h4><h5 id="1-二叉排序树是以链接的方式存储，保持了链接存储结构在执行插入或删除操作时不用移动元素的优点，只要找到合适的插入和删除位置后，仅需修改链接指针即可"><a href="#1-二叉排序树是以链接的方式存储，保持了链接存储结构在执行插入或删除操作时不用移动元素的优点，只要找到合适的插入和删除位置后，仅需修改链接指针即可" class="headerlink" title="(1)二叉排序树是以链接的方式存储，保持了链接存储结构在执行插入或删除操作时不用移动元素的优点，只要找到合适的插入和删除位置后，仅需修改链接指针即可"></a>(1)二叉排序树是以链接的方式存储，保持了链接存储结构在执行插入或删除操作时不用移动元素的优点，只要找到合适的插入和删除位置后，仅需修改链接指针即可</h5><h5 id="2-一个集合按二叉排序树查找，最好是把它构建成一棵平衡的二叉排序树"><a href="#2-一个集合按二叉排序树查找，最好是把它构建成一棵平衡的二叉排序树" class="headerlink" title="(2)一个集合按二叉排序树查找，最好是把它构建成一棵平衡的二叉排序树"></a>(2)一个集合按二叉排序树查找，最好是把它构建成一棵平衡的二叉排序树</h5><h3 id="六-平衡二叉树"><a href="#六-平衡二叉树" class="headerlink" title="六.平衡二叉树"></a>六.平衡二叉树</h3><h4 id="1-含义：-2"><a href="#1-含义：-2" class="headerlink" title="1.含义："></a>1.含义：</h4><h5 id="1-平衡二叉树-Self-Balancing-Binary-SearchTree或Height-Balanced-Binary-Search-Tree"><a href="#1-平衡二叉树-Self-Balancing-Binary-SearchTree或Height-Balanced-Binary-Search-Tree" class="headerlink" title="(1)平衡二叉树(Self-Balancing Binary SearchTree或Height-Balanced Binary Search Tree)"></a>(1)平衡二叉树(Self-Balancing Binary SearchTree或Height-Balanced Binary Search Tree)</h5><p>是一种二叉排序树，其中每一个节点的左子树和右子树的高度差至多等于1</p>
+<h5 id="2-要么它是一棵空树，要么它的左子树和右子树都是平衡二叉树"><a href="#2-要么它是一棵空树，要么它的左子树和右子树都是平衡二叉树" class="headerlink" title="(2)要么它是一棵空树，要么它的左子树和右子树都是平衡二叉树"></a>(2)要么它是一棵空树，要么它的左子树和右子树都是平衡二叉树</h5><h5 id="3-距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树，我们称为最小不平衡子树"><a href="#3-距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树，我们称为最小不平衡子树" class="headerlink" title="(3)距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树，我们称为最小不平衡子树"></a>(3)距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树，我们称为最小不平衡子树</h5><h4 id="2-平衡二叉树的实现原理："><a href="#2-平衡二叉树的实现原理：" class="headerlink" title="2.平衡二叉树的实现原理："></a>2.平衡二叉树的实现原理：</h4><h5 id="1-当最小不平衡子树根结点的平衡因子BF是大于1时，就右旋，小于-1时就左旋"><a href="#1-当最小不平衡子树根结点的平衡因子BF是大于1时，就右旋，小于-1时就左旋" class="headerlink" title="(1)当最小不平衡子树根结点的平衡因子BF是大于1时，就右旋，小于-1时就左旋"></a>(1)当最小不平衡子树根结点的平衡因子BF是大于1时，就右旋，小于-1时就左旋</h5><h4 id="3-平衡二叉树实现算法："><a href="#3-平衡二叉树实现算法：" class="headerlink" title="3.平衡二叉树实现算法："></a>3.平衡二叉树实现算法：</h4><h5 id="1-二叉树结构定义"><a href="#1-二叉树结构定义" class="headerlink" title="(1)二叉树结构定义"></a>(1)二叉树结构定义</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 二叉树的二叉链表结点结构定义 */</span></span><br><span class="line"><span class="comment">/* 结点结构 */</span></span><br><span class="line">typedef struct BiTNode                  </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 结点数据 */</span></span><br><span class="line">    <span class="keyword">int</span> data;                           </span><br><span class="line">    <span class="comment">/* 结点的平衡因子 */</span></span><br><span class="line">    <span class="keyword">int</span> bf;                             </span><br><span class="line">    <span class="comment">/* 左右孩子指针 */</span></span><br><span class="line">    struct BiTNode *lchild, *rchild;    </span><br><span class="line">&#125; BiTNode, *BiTree; </span><br></pre></td></tr></table></figure>
+<h5 id="2-右旋操作："><a href="#2-右旋操作：" class="headerlink" title="(2)右旋操作："></a>(2)右旋操作：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 对以p为根的二叉排序树作右旋处理， */</span></span><br><span class="line"><span class="comment">/* 处理之后p指向新的树根结点，即旋转处理之前</span></span><br><span class="line"><span class="comment">   的左子树的根结点 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">R_Rotate</span><span class="params">(BiTree *P)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BiTree L;</span><br><span class="line">    <span class="comment">/* L指向P的左子树根结点 */</span></span><br><span class="line">    L = (*P)-&gt;lchild;            </span><br><span class="line">    <span class="comment">/* L的右子树挂接为P的左子树 */</span></span><br><span class="line">    (*P)-&gt;lchild = L-&gt;rchild;    </span><br><span class="line">    L-&gt;rchild = (*P);</span><br><span class="line">    <span class="comment">/* P指向新的根结点 */</span></span><br><span class="line">    *P = L;                      </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h5 id="3-左旋操作"><a href="#3-左旋操作" class="headerlink" title="(3)左旋操作"></a>(3)左旋操作</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 对以P为根的二叉排序树作左旋处理， */</span></span><br><span class="line"><span class="comment">/* 处理之后P指向新的树根结点，即旋转处理之前</span></span><br><span class="line"><span class="comment">   的右子树的根结点0 */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">L_Rotate</span><span class="params">(BiTree *P)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BiTree R;</span><br><span class="line">    <span class="comment">/* R指向P的右子树根结点 */</span></span><br><span class="line">    R = (*P)-&gt;rchild;            </span><br><span class="line">    <span class="comment">/* R的左子树挂接为P的右子树 */</span></span><br><span class="line">    (*P)-&gt;rchild = R-&gt;lchild;    </span><br><span class="line">    R-&gt;lchild = (*P);</span><br><span class="line">    <span class="comment">/* P指向新的根结点 */</span></span><br><span class="line">    *P = R;                      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="七-多路查找树-B树"><a href="#七-多路查找树-B树" class="headerlink" title="七.多路查找树(B树)"></a>七.多路查找树(B树)</h3><h4 id="1-含义：-3"><a href="#1-含义：-3" class="headerlink" title="1.含义："></a>1.含义：</h4><h5 id="1-多路查找树-muitl-way-search-tree-，"><a href="#1-多路查找树-muitl-way-search-tree-，" class="headerlink" title="(1)多路查找树(muitl-way search tree)，"></a>(1)多路查找树(muitl-way search tree)，</h5><p>其每一个结点的孩子数可以多于两个，且每一个结点处可以存储多个元素。由于它是查找树，所有元素之间存在某种特定的排序关系。</p>
+<h5 id="2-四种特殊形式：2-3树、2-3-4树、B树和B-树"><a href="#2-四种特殊形式：2-3树、2-3-4树、B树和B-树" class="headerlink" title="(2)四种特殊形式：2-3树、2-3-4树、B树和B+树"></a>(2)四种特殊形式：2-3树、2-3-4树、B树和B+树</h5><h4 id="2-2-3树"><a href="#2-2-3树" class="headerlink" title="2.2-3树"></a>2.2-3树</h4><h5 id="1-含义：-4"><a href="#1-含义：-4" class="headerlink" title="(1)含义："></a>(1)含义：</h5><p>2-3树是这样的一棵多路查找树：其中的每一个结点都具有两个孩子(我们称它为2结点)或三个孩子(我们称它为3结点)</p>
+<h5 id="2-一个2结点包含一个元素和两个孩子-或没有孩子-，"><a href="#2-一个2结点包含一个元素和两个孩子-或没有孩子-，" class="headerlink" title="(2)一个2结点包含一个元素和两个孩子(或没有孩子)，"></a>(2)一个2结点包含一个元素和两个孩子(或没有孩子)，</h5><p>且与二叉排序树类似，左子树包含的元素小于该元素，右子树包含的元素大于该元素，这个2结点要么没有孩子，要有就有两个，不能只有一个孩子</p>
+<h5 id="3-一个3结点包含一小一大两个元素和三个孩子-或没有孩子-，"><a href="#3-一个3结点包含一小一大两个元素和三个孩子-或没有孩子-，" class="headerlink" title="(3)一个3结点包含一小一大两个元素和三个孩子(或没有孩子)，"></a>(3)一个3结点包含一小一大两个元素和三个孩子(或没有孩子)，</h5><p>如果某个3结点有孩子的话，左子树包含小于较小元素的元素，右子树包含大于较大元素的元素，中间子树包含介于两元素之间的元素</p>
+<h5 id="4-2-3树的插入实现："><a href="#4-2-3树的插入实现：" class="headerlink" title="(4)2-3树的插入实现："></a>(4)2-3树的插入实现：</h5><p>对于2-3树的插入来说，与二叉排序树相同，插入操作一定是发生在叶子结点上。可与二叉排序树不同的是，2-3树插入一个元素的过程有可能会对该树的其余结构产生连锁反应</p>
+<h5 id="5-2-3树插入分三种情况："><a href="#5-2-3树插入分三种情况：" class="headerlink" title="(5)2-3树插入分三种情况："></a>(5)2-3树插入分三种情况：</h5><ul>
+<li>对于空树，插入一个2结点即可</li>
+<li>插入结点到一个2结点的叶子上。应该说，由于其本身就只有一个元素，所以只需要将其升级为3结点即可</li>
+<li>要往3结点中插入一个新元素。因为3结点本身已经是2-3树的结点最大容量(已经有两个元素)，因此就需要将其拆分，且将树中两元素或插入元素的三者中选择其一向上移动一层</li>
+</ul>
+<h5 id="6-2-3树的删除实现："><a href="#6-2-3树的删除实现：" class="headerlink" title="(6)2-3树的删除实现："></a>(6)2-3树的删除实现：</h5><ul>
+<li>所删除元素位于一个3结点的叶子结点上， 只需要在该结点处删除该元素即可，不会影响到整棵树的其他结点结构</li>
+<li>所删除的元素位于一个2结点上，即要删除的是一个只有一个元素的结点，分四种情形，情形一，结点的双亲也是2结点，且拥有一个3结点的右孩子。若要删除结点1，那么只需要左旋即可；情形二，结点的双亲是2结点，它的右孩子也是2结点；情形三，此结点的双亲是一个3结点；情形四，当前树是一个满二叉树的情况</li>
+<li>所删除的元素位于非叶子的分支结点。此时通常是将树按中序遍历后得到此元素的前驱或后继元素，考虑让它们来补位即可</li>
+</ul>
+<h4 id="3-2-3-4树"><a href="#3-2-3-4树" class="headerlink" title="3.2-3-4树"></a>3.2-3-4树</h4><h5 id="1-含义：-5"><a href="#1-含义：-5" class="headerlink" title="(1)含义："></a>(1)含义：</h5><p>它其实就是2-3树的概念扩展，包括了4结点的使用。一个4结点包含小中大三个元素和四个孩子(或没有孩子)，一个4结点要么没有孩子，要么具有4个孩子。如果某个4结点有孩子的话，左子树包含小于最小元素的元素；第二子树包含大于最小元素，小于第二元素的元素；第三子树包含大于第二元素，小于最大元素的元素；右子树包含大于最大元素的元素</p>
+<h4 id="4-B树"><a href="#4-B树" class="headerlink" title="4.B树"></a>4.B树</h4><h5 id="1-含义：-6"><a href="#1-含义：-6" class="headerlink" title="(1)含义："></a>(1)含义：</h5><p>结点最大的孩子数目称为B树的阶（order），因此，2-3树是3阶B树，2-3-4树是4阶B树。</p>
+<h5 id="2-一个m阶的B树具有如下属性："><a href="#2-一个m阶的B树具有如下属性：" class="headerlink" title="(2)一个m阶的B树具有如下属性："></a>(2)一个m阶的B树具有如下属性：</h5><ul>
+<li>如果根结点不是叶结点，则其至少有两棵子树。</li>
+<li>每一个非根的分支结点都有k-1个元素和k个孩子，其中。每一个叶子结点n都有k-1个元素，</li>
+<li>所有叶子结点都位于同一层次。</li>
+<li>所有分支结点包含下列信息数据</li>
+</ul>
+<h5 id="3-在B树上查找的过程是一个顺指针查找结点和在结点中查找关键字的交叉过程"><a href="#3-在B树上查找的过程是一个顺指针查找结点和在结点中查找关键字的交叉过程" class="headerlink" title="(3)在B树上查找的过程是一个顺指针查找结点和在结点中查找关键字的交叉过程"></a>(3)在B树上查找的过程是一个顺指针查找结点和在结点中查找关键字的交叉过程</h5><h5 id="4-至于B树的插入和删除，方式是与2-3树和2-3-4树相类似的，只不过阶数可能会很大而已"><a href="#4-至于B树的插入和删除，方式是与2-3树和2-3-4树相类似的，只不过阶数可能会很大而已" class="headerlink" title="(4)至于B树的插入和删除，方式是与2-3树和2-3-4树相类似的，只不过阶数可能会很大而已"></a>(4)至于B树的插入和删除，方式是与2-3树和2-3-4树相类似的，只不过阶数可能会很大而已</h5><h4 id="5-B-树"><a href="#5-B-树" class="headerlink" title="5.B+树"></a>5.B+树</h4><h5 id="1-含义：-7"><a href="#1-含义：-7" class="headerlink" title="(1)含义："></a>(1)含义：</h5><p>B+树是应文件系统所需而出的一种B树的变形树</p>
+<h5 id="2-在B树中，每一个元素在该树中只出现一次，有可能在叶子结点上，也有可能在分支结点上。而在B-树中，出现在分支结点中的元素会被当作它们在该分支结点位置的中序后继者（叶子结点）中再次列出。另外，每一个叶子结点都会保存一个指向后一叶子结点的指针"><a href="#2-在B树中，每一个元素在该树中只出现一次，有可能在叶子结点上，也有可能在分支结点上。而在B-树中，出现在分支结点中的元素会被当作它们在该分支结点位置的中序后继者（叶子结点）中再次列出。另外，每一个叶子结点都会保存一个指向后一叶子结点的指针" class="headerlink" title="(2)在B树中，每一个元素在该树中只出现一次，有可能在叶子结点上，也有可能在分支结点上。而在B+树中，出现在分支结点中的元素会被当作它们在该分支结点位置的中序后继者（叶子结点）中再次列出。另外，每一个叶子结点都会保存一个指向后一叶子结点的指针"></a>(2)在B树中，每一个元素在该树中只出现一次，有可能在叶子结点上，也有可能在分支结点上。而在B+树中，出现在分支结点中的元素会被当作它们在该分支结点位置的中序后继者（叶子结点）中再次列出。另外，每一个叶子结点都会保存一个指向后一叶子结点的指针</h5><h5 id="3-一棵m阶的B-树和m阶的B树的差异在于："><a href="#3-一棵m阶的B-树和m阶的B树的差异在于：" class="headerlink" title="(3)一棵m阶的B+树和m阶的B树的差异在于："></a>(3)一棵m阶的B+树和m阶的B树的差异在于：</h5><ul>
+<li>有n棵子树的结点中包含有n个关键字；</li>
+<li>所有的叶子结点包含全部关键字的信息，及指向含这些关键字记录的指针，叶子结点本身依关键字的大小自小而大顺序链接；</li>
+<li>所有分支结点可以看成是索引，结点中仅含有其子树中的最大(或最小)关键字</li>
+</ul>
+<h5 id="4-B-树的插入、删除过程也都与B树类似，只不过插入和删除的元素都是在叶子结点上进行而已"><a href="#4-B-树的插入、删除过程也都与B树类似，只不过插入和删除的元素都是在叶子结点上进行而已" class="headerlink" title="(4)B+树的插入、删除过程也都与B树类似，只不过插入和删除的元素都是在叶子结点上进行而已"></a>(4)B+树的插入、删除过程也都与B树类似，只不过插入和删除的元素都是在叶子结点上进行而已</h5><h3 id="八-散列表查找-哈希表-概述"><a href="#八-散列表查找-哈希表-概述" class="headerlink" title="八.散列表查找(哈希表)概述"></a>八.散列表查找(哈希表)概述</h3><h4 id="1-散列表查找定义："><a href="#1-散列表查找定义：" class="headerlink" title="1.散列表查找定义："></a>1.散列表查找定义：</h4><p>(1)散列技术是在记录的存储位置和它的关键字之间建立一个确定的对应关系f </p>
+<p>(2)这种对应关系f称为散列函数，又称为哈希（Hash）函数</p>
+<p>(3)按这个思想，采用散列技术将记录存储在一块连续的存储空间中，这块连续存储空间称为散列表或哈希表（Hash table）。那么关键字对应的记录存储位置我们称为散列地址</p>
+<h4 id="2-散列表查找步骤："><a href="#2-散列表查找步骤：" class="headerlink" title="2.散列表查找步骤："></a>2.散列表查找步骤：</h4><p>(1)在存储时，通过散列函数计算记录的散列地址，并按此散列地址存储该记录</p>
+<p>(2)当查找记录时，我们通过同样的散列函数计算记录的散列地址，按此散列地址访问该记录</p>
+<h4 id="3-散列主要是面向查找的存储结构。"><a href="#3-散列主要是面向查找的存储结构。" class="headerlink" title="3.散列主要是面向查找的存储结构。"></a>3.散列主要是面向查找的存储结构。</h4><h3 id="九-散列函数的构造方法"><a href="#九-散列函数的构造方法" class="headerlink" title="九.散列函数的构造方法"></a>九.散列函数的构造方法</h3><h4 id="1-好的散列函数的两个原则："><a href="#1-好的散列函数的两个原则：" class="headerlink" title="1.好的散列函数的两个原则："></a>1.好的散列函数的两个原则：</h4><h5 id="1-计算简单"><a href="#1-计算简单" class="headerlink" title="(1)计算简单"></a>(1)计算简单</h5><h5 id="2-散列地址分布均匀"><a href="#2-散列地址分布均匀" class="headerlink" title="(2)散列地址分布均匀"></a>(2)散列地址分布均匀</h5><h4 id="2-直接定址法"><a href="#2-直接定址法" class="headerlink" title="2.直接定址法"></a>2.直接定址法</h4><h4 id="3-数字分析法："><a href="#3-数字分析法：" class="headerlink" title="3.数字分析法："></a>3.数字分析法：</h4><p>(1)抽取方法是使用关键字的一部分来计算散列存储位置的方法，这在散列函数中是常常用到的手段 </p>
+<p>(2)数字分析法通常适合处理关键字位数比较大的情况，如果事先知道关键字的分布且关键字的若干位分布较均匀，就可以考虑用这个方法</p>
+<h4 id="4-平方取中法"><a href="#4-平方取中法" class="headerlink" title="4.平方取中法"></a>4.平方取中法</h4><h4 id="5-折叠法："><a href="#5-折叠法：" class="headerlink" title="5.折叠法："></a>5.折叠法：</h4><h5 id="1-含义：-8"><a href="#1-含义：-8" class="headerlink" title="(1)含义："></a>(1)含义：</h5><p>折叠法是将关键字从左到右分割成位数相等的几部分（注意最后一部分位数不够时可以短些），然后将这几部分叠加求和，并按散列表表长，取后几位作为散列地址</p>
+<h4 id="6-除留余数法："><a href="#6-除留余数法：" class="headerlink" title="6.除留余数法："></a>6.除留余数法：</h4><p>此方法为最常用的构造散列函数方法。对于散列表长为m的散列函数公式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(key)=key mod p(p≤m)</span><br></pre></td></tr></table></figure>
+<p>mod是取模（求余数）的意思 </p>
+<h4 id="6-随机数法："><a href="#6-随机数法：" class="headerlink" title="6.随机数法："></a>6.随机数法：</h4><h4 id="7-采用不同散列函数的因素："><a href="#7-采用不同散列函数的因素：" class="headerlink" title="7.采用不同散列函数的因素："></a>7.采用不同散列函数的因素：</h4><p>(1).计算散列地址所需的时间<br>(2).关键字的长度<br>(3).散列表的大小<br>(4).关键字的分布情况<br>(5).记录查找的频率</p>
+<h3 id="十-处理散列冲突的方法："><a href="#十-处理散列冲突的方法：" class="headerlink" title="十.处理散列冲突的方法："></a>十.处理散列冲突的方法：</h3><h4 id="1-开放定址法"><a href="#1-开放定址法" class="headerlink" title="1.开放定址法"></a>1.开放定址法</h4><h4 id="2-再散列函数法"><a href="#2-再散列函数法" class="headerlink" title="2.再散列函数法"></a>2.再散列函数法</h4><h4 id="3-链地址法"><a href="#3-链地址法" class="headerlink" title="3.链地址法"></a>3.链地址法</h4><h4 id="4-公共溢出区法"><a href="#4-公共溢出区法" class="headerlink" title="4.公共溢出区法"></a>4.公共溢出区法</h4><h3 id="十一-散列表查找实现"><a href="#十一-散列表查找实现" class="headerlink" title="十一.散列表查找实现"></a>十一.散列表查找实现</h3><h4 id="1-散列表查找算法实现"><a href="#1-散列表查找算法实现" class="headerlink" title="1.散列表查找算法实现"></a>1.散列表查找算法实现</h4><h4 id="2-散列表查找性能分析"><a href="#2-散列表查找性能分析" class="headerlink" title="2.散列表查找性能分析"></a>2.散列表查找性能分析</h4><p>(1)如果没有冲突，散列查找是我们本章介绍的所有查找中效率最高的，因为它的时间复杂度为O(1)<br>(2)散列查找的平均查找长度取决于的因素</p>
+<ul>
+<li>散列函数是否均匀</li>
+<li>处理冲突的方法</li>
+<li>散列表的装填因子，所谓的装填因子α=填入表中的记录个数/散列表长度。α标志着散列表的装满的程度。当填入表中的记录越多，α就越大，产生冲突的可能性就越大</li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(7)-%E6%9F%A5%E6%89%BE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(8)-%E6%8E%92%E5%BA%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据结构与算法(8)-排序
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(6)-%E5%9B%BE/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">数据结构与算法(6)-图</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

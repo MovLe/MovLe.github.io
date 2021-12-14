@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Hive DDL数据定义 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Hive DDL数据定义"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Hive DDL数据定义
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/" class="article-date">
+  <time datetime="2019-07-15T09:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hive/">Hive</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.7k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">12 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-创建数据库"><a href="#一-创建数据库" class="headerlink" title="一.创建数据库"></a>一.创建数据库</h3><h4 id="1-创建一个数据库，数据库在HDFS上的默认存储路径是-user-hive-warehouse-db。"><a href="#1-创建一个数据库，数据库在HDFS上的默认存储路径是-user-hive-warehouse-db。" class="headerlink" title="1.创建一个数据库，数据库在HDFS上的默认存储路径是/user/hive/warehouse/*.db。"></a>1.创建一个数据库，数据库在HDFS上的默认存储路径是/user/hive/warehouse/*.db。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create database db_hive;</span><br></pre></td></tr></table></figure>
+<p><strong>可能出现的报错：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. MetaException(message:For direct MetaStore DB connections, we don&#x27;t support retries at the client level.)</span><br></pre></td></tr></table></figure>
+<p><strong>解决办法</strong>：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mo_ing/article/details/81219533">https://blog.csdn.net/mo_ing/article/details/81219533</a></p>
+<p>个人解决版本：使用mysql-connector-java-5.1.27.jar，而不是mysql-connector-java-5.1.18.jar</p>
+<h4 id="2-避免要创建的数据库已经存在错误，增加if-not-exists判断。（标准写法）"><a href="#2-避免要创建的数据库已经存在错误，增加if-not-exists判断。（标准写法）" class="headerlink" title="2.避免要创建的数据库已经存在错误，增加if not exists判断。（标准写法）"></a>2.避免要创建的数据库已经存在错误，增加if not exists判断。（标准写法）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> create database db_hive;</span></span><br></pre></td></tr></table></figure>
+<p>FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. Database db_hive already exists</p>
+<p>标准写法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create database if not exists db_hive;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-创建一个数据库，指定数据库在HDFS上存放的位置"><a href="#3-创建一个数据库，指定数据库在HDFS上存放的位置" class="headerlink" title="3.创建一个数据库，指定数据库在HDFS上存放的位置"></a>3.创建一个数据库，指定数据库在HDFS上存放的位置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create database db_hive2 location &#x27;/db_hive2.db&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBiNGUzNTY2NjU2MTA3MWMucG5n?x-oss-process=image/format,png"></p>
+<h3 id="二-修改数据库"><a href="#二-修改数据库" class="headerlink" title="二.修改数据库"></a>二.修改数据库</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;用户可以使用ALTER DATABASE命令为某个数据库的DBPROPERTIES设置键-值对属性值，来描述这个数据库的属性信息。数据库的其他元数据信息都是不可更改的，包括数据库名和数据库所在的目录位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter database db_hive set dbproperties(&#x27;createtime&#x27;=&#x27;20190506&#x27;);</span><br></pre></td></tr></table></figure>
+<p>在mysql中查看修改结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> desc database extended db_hive;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxY2E4NDU2MjczM2YyYjcucG5n?x-oss-process=image/format,png"></p>
+<h3 id="三-查询数据库"><a href="#三-查询数据库" class="headerlink" title="三.查询数据库"></a>三.查询数据库</h3><h4 id="1-显示数据库"><a href="#1-显示数据库" class="headerlink" title="1.显示数据库"></a>1.显示数据库</h4><h5 id="1-显示数据库-1"><a href="#1-显示数据库-1" class="headerlink" title="(1)显示数据库"></a>(1)显示数据库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> show databases;</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-过滤显示查询的数据库"><a href="#2-过滤显示查询的数据库" class="headerlink" title="(2)过滤显示查询的数据库"></a>(2)过滤显示查询的数据库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> show databases like <span class="string">&#x27;db_hive*&#x27;</span>;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ4YTEzMzkxZDQ5OThhZTEucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-查看数据库详情"><a href="#2-查看数据库详情" class="headerlink" title="2. 查看数据库详情"></a>2. 查看数据库详情</h4><h5 id="1-显示数据库信息"><a href="#1-显示数据库信息" class="headerlink" title="(1)显示数据库信息"></a>(1)显示数据库信息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> desc database db_hive;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-显示数据库详细信息，extended"><a href="#2-显示数据库详细信息，extended" class="headerlink" title="(2)显示数据库详细信息，extended"></a>(2)显示数据库详细信息，extended</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> desc database extended db_hive;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM1NDI4N2ExN2E3MjE3MGUucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-切换当前数据库"><a href="#3-切换当前数据库" class="headerlink" title="3.切换当前数据库"></a>3.切换当前数据库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; use db_hive;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMxOWI2ZDkzMTQ1NTdiMGYucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h3 id="四-删除数据库"><a href="#四-删除数据库" class="headerlink" title="四.删除数据库"></a>四.删除数据库</h3><h4 id="1-删除空数据库"><a href="#1-删除空数据库" class="headerlink" title="1.删除空数据库"></a>1.删除空数据库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash">drop database db_hive2;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-如果删除的数据库不存在，最好采用-if-exists判断数据库是否存在"><a href="#2-如果删除的数据库不存在，最好采用-if-exists判断数据库是否存在" class="headerlink" title="2.如果删除的数据库不存在，最好采用 if exists判断数据库是否存在"></a>2.如果删除的数据库不存在，最好采用 if exists判断数据库是否存在</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> drop database db_hive2;</span></span><br></pre></td></tr></table></figure>
+<p>正确做法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> drop database <span class="keyword">if</span> exists db_hive2;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBlMmVmMTgyMGQ4NTFjOTkucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-如果数据库不为空，可以采用cascade命令，强制删除"><a href="#3-如果数据库不为空，可以采用cascade命令，强制删除" class="headerlink" title="3.如果数据库不为空，可以采用cascade命令，强制删除"></a>3.如果数据库不为空，可以采用cascade命令，强制删除</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> drop database db_hive;</span></span><br></pre></td></tr></table></figure>
+<p>正确做法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> drop database db_hive cascade;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThlYTEwOTk5OTJmMjNiMzkucG5n?x-oss-process=image/format,png"></p>
+<h3 id="五-创建表"><a href="#五-创建表" class="headerlink" title="五.创建表"></a>五.创建表</h3><h4 id="1-建表语法"><a href="#1-建表语法" class="headerlink" title="1.建表语法"></a>1.建表语法</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[(col_name data_type [COMMENT col_comment], ...)] </span><br><span class="line"></span><br><span class="line">[COMMENT table_comment] </span><br><span class="line"></span><br><span class="line">[PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)] </span><br><span class="line"></span><br><span class="line">[CLUSTERED BY (col_name, col_name, ...) </span><br><span class="line"></span><br><span class="line">[SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS] </span><br><span class="line"></span><br><span class="line">[ROW FORMAT row_format] </span><br><span class="line"></span><br><span class="line">[STORED AS file_format] </span><br><span class="line"></span><br><span class="line">[LOCATION hdfs_path]</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-字段解释说明："><a href="#2-字段解释说明：" class="headerlink" title="2..字段解释说明："></a>2..字段解释说明：</h4><h5 id="1-CREATE-TABLE-创建一个指定名字的表。"><a href="#1-CREATE-TABLE-创建一个指定名字的表。" class="headerlink" title="(1)CREATE TABLE 创建一个指定名字的表。"></a>(1)CREATE TABLE 创建一个指定名字的表。</h5><p>如果相同名字的表已经存在，则抛出异常；用户可以用 IF NOT EXISTS 选项来忽略这个异常。</p>
+<h5 id="2-EXTERNAL关键字可以让用户创建一个外部表"><a href="#2-EXTERNAL关键字可以让用户创建一个外部表" class="headerlink" title="(2)EXTERNAL关键字可以让用户创建一个外部表"></a>(2)EXTERNAL关键字可以让用户创建一个外部表</h5><p>在建表的同时指定一个指向实际数据的路径(LOCATION)，Hive创建内部表时，会将数据移动到数据仓库指向的路径；若创建外部表，仅记录数据所在的路径，不对数据的位置做任何改变。在删除表的时候，内部表的元数据和数据会被一起删除，而外部表只删除元数据，不删除数据。</p>
+<h5 id="3-COMMENT：为表和列添加注释。"><a href="#3-COMMENT：为表和列添加注释。" class="headerlink" title="(3)COMMENT：为表和列添加注释。"></a>(3)COMMENT：为表和列添加注释。</h5><h5 id="4-PARTITIONED-BY-创建分区表"><a href="#4-PARTITIONED-BY-创建分区表" class="headerlink" title="(4)PARTITIONED BY   创建分区表"></a>(4)PARTITIONED BY   创建分区表</h5><h5 id="5-CLUSTERED-BY-创建分桶表"><a href="#5-CLUSTERED-BY-创建分桶表" class="headerlink" title="(5)CLUSTERED BY  创建分桶表"></a>(5)CLUSTERED BY  创建分桶表</h5><h5 id="6-SORTED-BY-不常用"><a href="#6-SORTED-BY-不常用" class="headerlink" title="(6)SORTED BY    不常用"></a>(6)SORTED BY    不常用</h5><h5 id="7-ROW-FORMAT"><a href="#7-ROW-FORMAT" class="headerlink" title="(7)ROW FORMAT"></a>(7)ROW FORMAT</h5><p>DELIMITED [FIELDS TERMINATED BY char] [COLLECTION ITEMS TERMINATED BY char] [MAP KEYS TERMINATED BY char] [LINES TERMINATED BY char] | SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value, property_name=property_value, …)]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;用户在建表的时候可以自定义SerDe或者使用自带的SerDe。如果没有指定ROW FORMAT 或者ROW FORMAT DELIMITED，将会使用自带的SerDe。在建表的时候，用户还需要为表指定列，用户在指定表的列的同时也会指定自定义的SerDe，Hive通过SerDe确定表的具体的列的数据。</p>
+<h5 id="8-STORED-AS指定存储文件类型"><a href="#8-STORED-AS指定存储文件类型" class="headerlink" title="(8)STORED AS指定存储文件类型"></a>(8)STORED AS指定存储文件类型</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;常用的存储文件类型：SEQUENCEFILE(二进制序列文件)、TEXTFILE(文本)、RCFILE(列式存储格式文件)<br>&nbsp;&nbsp;&nbsp;&nbsp;如果文件数据是纯文本，可以使用STORED AS TEXTFILE。如果数据需要压缩，使用 STORED AS SEQUENCEFILE。</p>
+<h5 id="9-LOCATION-：指定表在HDFS上的存储位置。"><a href="#9-LOCATION-：指定表在HDFS上的存储位置。" class="headerlink" title="(9)LOCATION ：指定表在HDFS上的存储位置。"></a>(9)LOCATION ：指定表在HDFS上的存储位置。</h5><h5 id="10-LIKE允许用户复制现有的表结构，但是不复制数据。"><a href="#10-LIKE允许用户复制现有的表结构，但是不复制数据。" class="headerlink" title="(10)LIKE允许用户复制现有的表结构，但是不复制数据。"></a>(10)LIKE允许用户复制现有的表结构，但是不复制数据。</h5><h3 id="六-管理表"><a href="#六-管理表" class="headerlink" title="六.管理表"></a>六.管理表</h3><h4 id="1-理论"><a href="#1-理论" class="headerlink" title="1.理论"></a>1.理论</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;默认创建的表都是所谓的管理表，有时也被称为内部表。因为这种表，Hive会（或多或少地）控制着数据的生命周期。Hive默认情况下会将这些表的数据存储在由配置项hive.metastore.warehouse.dir(例如，/user/hive/warehouse)所定义的目录的子目录下。   当我们删除一个管理表时，Hive也会删除这个表中数据。管理表不适合和其他工具共享数据。</p>
+<h4 id="2-案例实操"><a href="#2-案例实操" class="headerlink" title="2.案例实操"></a>2.案例实操</h4><h5 id="1-普通创建表"><a href="#1-普通创建表" class="headerlink" title="(1)普通创建表"></a>(1)普通创建表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create table if not exists student2(</span><br><span class="line"></span><br><span class="line">id int, name string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as textfile</span><br><span class="line"></span><br><span class="line">location &#x27;/user/hive/warehouse/student2&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-根据查询结果创建表（查询的结果会添加到新创建的表中）"><a href="#2-根据查询结果创建表（查询的结果会添加到新创建的表中）" class="headerlink" title="(2)根据查询结果创建表（查询的结果会添加到新创建的表中）"></a>(2)根据查询结果创建表（查询的结果会添加到新创建的表中）</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create table if not exists student3</span><br><span class="line">as select id from student;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI0NTA4Mzc0MWMwMzU3OTQucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-根据已经存在的表结构创建表"><a href="#3-根据已经存在的表结构创建表" class="headerlink" title="(3)根据已经存在的表结构创建表"></a>(3)根据已经存在的表结构创建表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table if not exists student4 like student;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-查询表的类型"><a href="#4-查询表的类型" class="headerlink" title="(4)查询表的类型"></a>(4)查询表的类型</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; desc formatted student4;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ5ZDQ2NjQ3MGIxZWZlNTkucG5n?x-oss-process=image/format,png"></p>
+<h3 id="七-外部表"><a href="#七-外部表" class="headerlink" title="七. 外部表"></a>七. 外部表</h3><h4 id="1-理论-1"><a href="#1-理论-1" class="headerlink" title="1.理论"></a>1.理论</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;因为表是外部表，所以Hive并非认为其完全拥有这份数据。删除该表并不会删除掉这份数据，不过描述表的元数据信息会被删除掉。</p>
+<h4 id="2-管理表和外部表的使用场景："><a href="#2-管理表和外部表的使用场景：" class="headerlink" title="2.管理表和外部表的使用场景："></a>2.管理表和外部表的使用场景：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每天将收集到的网站日志定期流入HDFS文本文件。在外部表（原始日志表）的基础上做大量的统计分析，用到的中间表、结果表使用内部表存储，数据通过SELECT+INSERT进入内部表。</p>
+<h4 id="3-案例实操"><a href="#3-案例实操" class="headerlink" title="3.案例实操"></a>3.案例实操</h4><p>分别创建部门和员工外部表，并向表中导入数据。</p>
+<h5 id="1-原始数据"><a href="#1-原始数据" class="headerlink" title="(1)原始数据"></a>(1)原始数据</h5><h5 id="2-建表语句"><a href="#2-建表语句" class="headerlink" title="(2)建表语句"></a>(2)建表语句</h5><p>创建部门表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create external table if not exists default.dept(</span><br><span class="line">deptno int,</span><br><span class="line">dname string,</span><br><span class="line">loc int</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU5YWY5OTI0MjIwZGViZmYucG5n?x-oss-process=image/format,png"><br>创建员工表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">create external table if not exists default.emp(</span><br><span class="line">empno int,</span><br><span class="line">ename string,</span><br><span class="line">job string,</span><br><span class="line">mgr int,</span><br><span class="line">hiredate string, </span><br><span class="line">sal double, </span><br><span class="line">comm double,</span><br><span class="line">deptno int)</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="3-查看创建的表"><a href="#3-查看创建的表" class="headerlink" title="(3)查看创建的表"></a>(3)查看创建的表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; show tables;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNiMTI0NzZjZWEzYWZmNWMucG5n?x-oss-process=image/format,png" alt="查看创建的表"></p>
+<h5 id="4-向外部表中导入数据"><a href="#4-向外部表中导入数据" class="headerlink" title="(4)向外部表中导入数据"></a>(4)向外部表中导入数据</h5><p>导入数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table default.dept;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/emp.txt&#x27; into table default.emp;</span><br></pre></td></tr></table></figure>
+<p>查询结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from emp;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select * from dept;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkZjliMWFhOTQ1YjQ1NDMucG5n?x-oss-process=image/format,png"></p>
+<h5 id="5-查看表格式化数据"><a href="#5-查看表格式化数据" class="headerlink" title="(5)查看表格式化数据"></a>(5)查看表格式化数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; desc formatted dept;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgzNGYzNDM4NzYxZmFiN2EucG5n?x-oss-process=image/format,png"></p>
+<h3 id="八-分区表"><a href="#八-分区表" class="headerlink" title="八.分区表"></a>八.分区表</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;分区表实际上就是对应一个HDFS文件系统上的独立的文件夹，该文件夹下是该分区所有的数据文件。Hive中的分区就是分目录，把一个大的数据集根据业务需要分割成小的数据集。在查询时通过WHERE子句中的表达式选择查询所需要的指定的分区，这样的查询效率会提高很多。</p>
+<h4 id="1-分区表基本操作"><a href="#1-分区表基本操作" class="headerlink" title="1.分区表基本操作"></a>1.分区表基本操作</h4><h5 id="1-引入分区表（需要根据日期对日志进行管理）"><a href="#1-引入分区表（需要根据日期对日志进行管理）" class="headerlink" title="(1)引入分区表（需要根据日期对日志进行管理）"></a>(1)引入分区表（需要根据日期对日志进行管理）</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/user/hive/warehouse/log_partition/20190702/20190702.log</span><br><span class="line"></span><br><span class="line">/user/hive/warehouse/log_partition/20190703/20190703.log</span><br><span class="line"></span><br><span class="line">/user/hive/warehouse/log_partition/20190704/20190704.log</span><br></pre></td></tr></table></figure>
+<h5 id="2-创建分区表语法"><a href="#2-创建分区表语法" class="headerlink" title="(2)创建分区表语法"></a>(2)创建分区表语法</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create table dept_partition(</span><br><span class="line">               deptno int, dname string, loc string</span><br><span class="line">               )</span><br><span class="line">               partitioned by (month string)</span><br><span class="line">               row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="3-加载数据到分区表中"><a href="#3-加载数据到分区表中" class="headerlink" title="(3)加载数据到分区表中"></a>(3)加载数据到分区表中</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table default.dept_partition partition(month=&#x27;201909&#x27;);</span><br><span class="line"></span><br><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table default.dept_partition partition(month=&#x27;201908&#x27;);</span><br><span class="line"></span><br><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table default.dept_partition partition(month=&#x27;201907&#x27;);</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTIwNWRjM2RkZDg0ODk3NWIucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJjNGFmM2RiZThhYTgxMzcucG5n?x-oss-process=image/format,png"></p>
+<h5 id="4-查询分区表中数据"><a href="#4-查询分区表中数据" class="headerlink" title="(4)查询分区表中数据"></a>(4)查询分区表中数据</h5><p>单分区查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition where month=&#x27;201909&#x27;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBiZTg5MGUyM2U2NWQxMzUucG5n?x-oss-process=image/format,png"></p>
+<p>多分区联合查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition where month=&#x27;201909&#x27;</span><br><span class="line">              union</span><br><span class="line">              select * from dept_partition where month=&#x27;201908&#x27;</span><br><span class="line">              union</span><br><span class="line">              select * from dept_partition where month=&#x27;201907&#x27;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBjODAxYmRkYTMyZDlkYjgucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5MWRmZGY0ZjJhNWYyM2MucG5n?x-oss-process=image/format,png"></p>
+<h5 id="5-增加分区"><a href="#5-增加分区" class="headerlink" title="(5)增加分区"></a>(5)增加分区</h5><p>创建单个分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition add partition(month=&#x27;201906&#x27;) ;</span><br></pre></td></tr></table></figure>
+<p>同时创建多个分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;  alter table dept_partition add partition(month=&#x27;201905&#x27;) partition(month=&#x27;201904&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzNDQ2M2NiNGRlM2EyZWYucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU1MTZkNDRjMzI0YTVhZjMucG5n?x-oss-process=image/format,png"></p>
+<p>注：增加多个分区之间用空格” “隔开，删除多个分区用”,”隔开</p>
+<h5 id="6-删除分区"><a href="#6-删除分区" class="headerlink" title="(6)删除分区"></a>(6)删除分区</h5><p>删除单个分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition drop partition (month=&#x27;201904&#x27;);</span><br></pre></td></tr></table></figure>
+<p>同时删除多个分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition drop partition (month=&#x27;201905&#x27;), partition (month=&#x27;201906&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTIyNjI0ZTc2MDg3MTBlMDMucG5n?x-oss-process=image/format,png"></p>
+<h5 id="7-查看分区表有多少分区"><a href="#7-查看分区表有多少分区" class="headerlink" title="(7)查看分区表有多少分区"></a>(7)查看分区表有多少分区</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> show partitions dept_partition;</span></span><br></pre></td></tr></table></figure>
+<h5 id="8-查看分区表结构"><a href="#8-查看分区表结构" class="headerlink" title="(8)查看分区表结构"></a>(8)查看分区表结构</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> desc formatted dept_partition;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQxZmZmZWRhNjFkMWRjN2EucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-分区表注意事项"><a href="#2-分区表注意事项" class="headerlink" title="2.分区表注意事项"></a>2.分区表注意事项</h4><h5 id="1-创建二级分区表"><a href="#1-创建二级分区表" class="headerlink" title="(1).创建二级分区表"></a>(1).创建二级分区表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create table dept_partition2(</span><br><span class="line">               deptno int, dname string, loc string</span><br><span class="line">               )</span><br><span class="line">               partitioned by (month string, day string)</span><br><span class="line">               row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-正常的加载数据"><a href="#2-正常的加载数据" class="headerlink" title="(2).正常的加载数据"></a>(2).正常的加载数据</h5><h6 id="a-加载数据到二级分区表中"><a href="#a-加载数据到二级分区表中" class="headerlink" title="(a)加载数据到二级分区表中"></a>(a)加载数据到二级分区表中</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table default.dept_partition2 partition(month=&#x27;201909&#x27;, day=&#x27;13&#x27;);</span><br></pre></td></tr></table></figure>
+<h6 id="b-查询分区数据"><a href="#b-查询分区数据" class="headerlink" title="(b)查询分区数据"></a>(b)查询分区数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition2 where month=&#x27;201909&#x27; and day=&#x27;13&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiYzAwMmY0MmE1ZmJlZGEucG5n?x-oss-process=image/format,png"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5MTdlZjI3NTY3NzM5OGMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-把数据直接上传到分区目录上，让分区表和数据产生关联的两种方式"><a href="#3-把数据直接上传到分区目录上，让分区表和数据产生关联的两种方式" class="headerlink" title="3.把数据直接上传到分区目录上，让分区表和数据产生关联的两种方式"></a>3.把数据直接上传到分区目录上，让分区表和数据产生关联的两种方式</h4><h5 id="1-方式一：上传数据后修复"><a href="#1-方式一：上传数据后修复" class="headerlink" title="(1)方式一：上传数据后修复"></a>(1)方式一：上传数据后修复</h5><p>上传数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -mkdir -p /user/hive/warehouse/dept_partition2/month=201909/day=12;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; dfs -put /opt/module/datas/dept.txt /user/hive/warehouse/dept_partition2/month=201909/day=12;</span><br></pre></td></tr></table></figure>
+
+<p>查询数据（查询不到刚上传的数据）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition2 where month=&#x27;201909&#x27; and day=&#x27;12&#x27;;</span><br></pre></td></tr></table></figure>
+<p>执行修复命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash">msck repair table dept_partition2;</span></span><br></pre></td></tr></table></figure>
+<p>再次查询数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition2 where month=&#x27;201909&#x27; and day=&#x27;12&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMwNzIzNGJhZmYzMGMxZDIucG5n?x-oss-process=image/format,png"></p>
+<h5 id="2-方式二：上传数据后添加分区"><a href="#2-方式二：上传数据后添加分区" class="headerlink" title="(2)方式二：上传数据后添加分区"></a>(2)方式二：上传数据后添加分区</h5><p>上传数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -mkdir -p /user/hive/warehouse/dept_partition2/month=201909/day=11;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; dfs -put /opt/module/datas/dept.txt /user/hive/warehouse/dept_partition2/month=201909/day=11;</span><br></pre></td></tr></table></figure>
+<p>执行添加分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition2 add partition(month=&#x27;201909&#x27;, day=&#x27;11&#x27;);</span><br></pre></td></tr></table></figure>
+<p>查询数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition2 where month=&#x27;201909&#x27; and day=&#x27;11&#x27;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUyNDhjNWVhOTY1ZGRlNmEucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-方式三：上传数据后load数据到分区"><a href="#3-方式三：上传数据后load数据到分区" class="headerlink" title="(3)方式三：上传数据后load数据到分区"></a>(3)方式三：上传数据后load数据到分区</h5><p>创建目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -mkdir -p /user/hive/warehouse/dept_partition2/month=201909/day=10;</span><br></pre></td></tr></table></figure>
+<p>上传数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/dept.txt&#x27; into table dept_partition2 partition(month=&#x27;201909&#x27;,day=&#x27;10&#x27;);</span><br></pre></td></tr></table></figure>
+<p>查询数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select * from dept_partition2 where month=&#x27;201909&#x27; and day=&#x27;10&#x27;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc3MjE3MjlmMzY3NzQyNGQucG5n?x-oss-process=image/format,png"></p>
+<h3 id="九-修改表"><a href="#九-修改表" class="headerlink" title="九.修改表"></a>九.修改表</h3><h4 id="1-重命名表"><a href="#1-重命名表" class="headerlink" title="1.重命名表"></a>1.重命名表</h4><h5 id="1-语法"><a href="#1-语法" class="headerlink" title="(1).语法"></a>(1).语法</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name RENAME TO new_table_name</span><br></pre></td></tr></table></figure>
+<h5 id="2-实操案例"><a href="#2-实操案例" class="headerlink" title="(2).实操案例"></a>(2).实操案例</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition2 rename to dept_partition4;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU4MmQ2MGJjZmFjZGE3N2YucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-增加和删除表分区"><a href="#2-增加和删除表分区" class="headerlink" title="2. 增加和删除表分区"></a>2. 增加和删除表分区</h4><p>详见1.6.1分区表基本操作。同上</p>
+<h4 id="3-增加-修改-替换列信息"><a href="#3-增加-修改-替换列信息" class="headerlink" title="3. 增加/修改/替换列信息"></a>3. 增加/修改/替换列信息</h4><h5 id="1-语法-1"><a href="#1-语法-1" class="headerlink" title="(1).语法"></a>(1).语法</h5><p>更新列</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name CHANGE [COLUMN] col_old_name col_new_name column_type [COMMENT col_comment] [FIRST|AFTER column_name]</span><br></pre></td></tr></table></figure>
+
+<p>增加和替换列</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name ADD|REPLACE COLUMNS (col_name data_type [COMMENT col_comment], ...) </span><br></pre></td></tr></table></figure>
+<p>注：ADD是代表新增一字段，字段位置在所有列后面(partition列前)，REPLACE则是表示替换表中所有字段。</p>
+<h5 id="2-实操案例-1"><a href="#2-实操案例-1" class="headerlink" title="(2).实操案例"></a>(2).实操案例</h5><h6 id="a-查询表结构"><a href="#a-查询表结构" class="headerlink" title="(a)查询表结构"></a>(a)查询表结构</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash"> desc dept_partition;</span></span><br></pre></td></tr></table></figure>
+<h6 id="b-添加列"><a href="#b-添加列" class="headerlink" title="(b)添加列"></a>(b)添加列</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition add columns(deptdesc string);</span><br></pre></td></tr></table></figure>
+<h6 id="c-查询表结构"><a href="#c-查询表结构" class="headerlink" title="(c )查询表结构"></a>(c )查询表结构</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash">desc dept_partition;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZjMzZhZWI2NmE4YTUyNjMucG5n?x-oss-process=image/format,png"></p>
+<h6 id="d-更新列"><a href="#d-更新列" class="headerlink" title="(d)更新列"></a>(d)更新列</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition change column deptdesc desc int;</span><br></pre></td></tr></table></figure>
+<h6 id="e-查询表结构"><a href="#e-查询表结构" class="headerlink" title="(e)查询表结构"></a>(e)查询表结构</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash">desc dept_partition;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThiODRiNjc1ODEwN2U5OTQucG5n?x-oss-process=image/format,png"></p>
+<h6 id="f-替换列"><a href="#f-替换列" class="headerlink" title="(f)替换列"></a>(f)替换列</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; alter table dept_partition replace columns(deptno string, dname string, loc string);</span><br></pre></td></tr></table></figure>
+<h6 id="g-查询表结构"><a href="#g-查询表结构" class="headerlink" title="(g)查询表结构"></a>(g)查询表结构</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span><span class="bash">desc dept_partition;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhMDEzYzJmMWQzNDgwYTUucG5n?x-oss-process=image/format,png"></p>
+<h3 id="十-删除表"><a href="#十-删除表" class="headerlink" title="十.删除表"></a>十.删除表</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; drop table dept_partition;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/07/15/Hive%20DDL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/07/15/Hive%E4%B9%8BDML%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Hive DML数据操作
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/15/Hive%E5%B0%86%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5Hive%E6%A1%88%E4%BE%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Hive将本地文件导入Hive案例</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

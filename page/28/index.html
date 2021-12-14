@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-redis安装报错"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/"
+    >redis安装报错:jemalloc</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/12/redis%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99/" class="article-date">
+  <time datetime="2018-12-12T04:00:00.000Z" itemprop="datePublished">2018-12-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-在安装redis时，make编译时报错：jemalloc-jemalloc-h：没有那个文件或目录"><a href="#1-在安装redis时，make编译时报错：jemalloc-jemalloc-h：没有那个文件或目录" class="headerlink" title="1.在安装redis时，make编译时报错：jemalloc/jemalloc.h：没有那个文件或目录"></a>1.在安装redis时，make编译时报错：jemalloc/jemalloc.h：没有那个文件或目录</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRiNWQzMWM0ODc4NWNlNTkucG5n?x-oss-process=image/format,png" alt="报错"></p>
+<h4 id="2-解决方法："><a href="#2-解决方法：" class="headerlink" title="2.解决方法："></a>2.解决方法：</h4><p>执行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM1Njg0MTYyY2VjNGY0NWUucG5n?x-oss-process=image/format,png" alt="执行命令"></p>
+<h4 id="3-问题解决"><a href="#3-问题解决" class="headerlink" title="3.问题解决"></a>3.问题解决</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A1%AB%E5%9D%91/" rel="tag">填坑</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7(单节点)安装redis"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/"
+    >CentOS7(单节点)安装Redis</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/07/CentOS7(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85redis/" class="article-date">
+  <time datetime="2018-12-07T04:00:00.000Z" itemprop="datePublished">2018-12-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h4><h4 id="2-上传到linux"><a href="#2-上传到linux" class="headerlink" title="2.上传到linux"></a>2.上传到linux</h4><h4 id="3-解压："><a href="#3-解压：" class="headerlink" title="3.解压："></a>3.解压：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tars</span><br><span class="line"></span><br><span class="line">tar -zxvf redis-4.0.2.tar.gz -C /usr/local</span><br></pre></td></tr></table></figure>
+<h4 id="4-编译："><a href="#4-编译：" class="headerlink" title="4.编译："></a>4.编译：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis-4.0.2</span><br><span class="line"></span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY2ZjVlZTJmMmY1YmUxMGEucG5n?x-oss-process=image/format,png" alt="编译"></p>
+<h4 id="5-安装："><a href="#5-安装：" class="headerlink" title="5.安装："></a>5.安装：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis-4.0.2</span><br><span class="line"></span><br><span class="line"> make PREFIX=/usr/local/redis install             //安装</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJlMDJlMDkyMjI1MDdhMjYucG5n?x-oss-process=image/format,png" alt="安装"></p>
+<h4 id="6-拷贝配置文件："><a href="#6-拷贝配置文件：" class="headerlink" title="6.拷贝配置文件："></a>6.拷贝配置文件：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line"></span><br><span class="line">cp ./redis-4.0.2/redis.conf ./redis</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRhMDNhM2ZiNmFiMTQwNTMucG5n?x-oss-process=image/format,png" alt="拷贝"></p>
+<h4 id="7-修改配置文件"><a href="#7-修改配置文件" class="headerlink" title="7.修改配置文件"></a>7.修改配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis</span><br><span class="line"></span><br><span class="line">vi redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>修改内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes        //是否后台启动</span><br><span class="line"></span><br><span class="line">logfile &quot;/usr/local/redis/redis.log&quot;   //日志文件地址</span><br></pre></td></tr></table></figure>
+<h4 id="8-启动："><a href="#8-启动：" class="headerlink" title="8.启动："></a>8.启动：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis</span><br><span class="line"></span><br><span class="line">./bin/redis-server ./redis.conf </span><br></pre></td></tr></table></figure>
+
+<h4 id="9-查看："><a href="#9-查看：" class="headerlink" title="9.查看："></a>9.查看：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep redis</span><br></pre></td></tr></table></figure>
+
+<h4 id="10-启动客户端："><a href="#10-启动客户端：" class="headerlink" title="10.启动客户端："></a>10.启动客户端：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis</span><br><span class="line"></span><br><span class="line">./bin/redis-cli</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI0MDU4MmU2MzJkZjQyYTYucG5n?x-oss-process=image/format,png" alt="查看"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7安装redis报错"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/"
+    >CentOS7安装redis报错</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/07/CentOS7%E5%AE%89%E8%A3%85redis%E6%8A%A5%E9%94%99/" class="article-date">
+  <time datetime="2018-12-07T04:00:00.000Z" itemprop="datePublished">2018-12-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Redis/">Redis</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-错误信息："><a href="#1-错误信息：" class="headerlink" title="1.错误信息："></a>1.错误信息：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh: cc: 未找到命令</span><br></pre></td></tr></table></figure>
+<h4 id="2-原因是CentOS7虚拟机系统中缺少gcc，因此只要安装好gcc即可"><a href="#2-原因是CentOS7虚拟机系统中缺少gcc，因此只要安装好gcc即可" class="headerlink" title="2.原因是CentOS7虚拟机系统中缺少gcc，因此只要安装好gcc即可"></a>2.原因是CentOS7虚拟机系统中缺少gcc，因此只要安装好gcc即可</h4><h4 id="3-解决办法："><a href="#3-解决办法：" class="headerlink" title="3.解决办法："></a>3.解决办法：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+<h4 id="4-完毕"><a href="#4-完毕" class="headerlink" title="4.完毕"></a>4.完毕</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A1%AB%E5%9D%91/" rel="tag">填坑</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7 (单节点)安装Mongodb"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/"
+    >CentOS7(单节点)安装Mongodb</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/07/CentOS7%20(%E5%8D%95%E8%8A%82%E7%82%B9)%E5%AE%89%E8%A3%85Mongodb/" class="article-date">
+  <time datetime="2018-12-07T03:00:00.000Z" itemprop="datePublished">2018-12-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mongodb/">Mongodb</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-上传安装包-将mongodb安装包上传到-usr-local-tars文件目录"><a href="#1-上传安装包-将mongodb安装包上传到-usr-local-tars文件目录" class="headerlink" title="1.上传安装包:将mongodb安装包上传到/usr/local/tars文件目录"></a>1.上传安装包:将mongodb安装包上传到/usr/local/tars文件目录</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiNGMzNDVkM2IwMTViOTUucG5n?x-oss-process=image/format,png" alt="上传"></p>
+<h4 id="2-解压-解压到-usr-local下"><a href="#2-解压-解压到-usr-local下" class="headerlink" title="2.解压:解压到/usr/local下"></a>2.解压:解压到/usr/local下</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/tars</span><br><span class="line"></span><br><span class="line">tar -zxvf mongodb-linux-x86_64-rhel62-3.4.3.tgz -C /usr/local/</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQxYWY4YjY5ODc3MTI3ZGIucG5n?x-oss-process=image/format,png" alt="解压"></p>
+<h4 id="3-新建文件夹"><a href="#3-新建文件夹" class="headerlink" title="3.新建文件夹"></a>3.新建文件夹</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line"></span><br><span class="line">mv mongodb-linux-x86_64-rhel62-3.4.3/ mongodb                        //重命名</span><br><span class="line"></span><br><span class="line">cd mongodb</span><br><span class="line"></span><br><span class="line">mkdir data</span><br><span class="line"></span><br><span class="line">cd /usr/local/mongodb/data</span><br><span class="line"></span><br><span class="line">mkdir db                         //用作存放数据</span><br><span class="line">mkdir logs                      //用作存放日志</span><br><span class="line"></span><br><span class="line">cd /usr/local/mongodb/data/logs</span><br><span class="line"></span><br><span class="line">touch mongodb.log        //新建文件以存放日志</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQwMzBiOGViNWVhZmExMmIucG5n?x-oss-process=image/format,png" alt="新建目录"></p>
+<h4 id="4-修改配置文件"><a href="#4-修改配置文件" class="headerlink" title="4.修改配置文件"></a>4.修改配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mongodb/data</span><br><span class="line"></span><br><span class="line">touch mongodb.conf            //新建配置文件</span><br><span class="line"></span><br><span class="line">vi mongodb.conf                 //修改配置文件</span><br></pre></td></tr></table></figure>
+
+<p>修改内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dbpath=/usr/local/mongodb/data/db                                      //数据库存放目录</span><br><span class="line"></span><br><span class="line">logpath=/usr/local/mongodb/data/logs/mongodb.log                    //日志地址</span><br><span class="line"></span><br><span class="line">fork = true                                                       //是否后台运行</span><br><span class="line"></span><br><span class="line">logappend = true                                            //日志输出形式</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzMTlkODg2ZDJhMDgwY2UucG5n?x-oss-process=image/format,png" alt="修改配置文件"></p>
+<h4 id="5-启动"><a href="#5-启动" class="headerlink" title="5.启动"></a>5.启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mongodb</span><br><span class="line"></span><br><span class="line">./bin/mongod -config ./data/mongodb.conf                      //启动</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNlMzI0ZTUyMjU3Mjg5YWYucG5n?x-oss-process=image/format,png" alt="启动"></p>
+<h4 id="6-关闭："><a href="#6-关闭：" class="headerlink" title="6.关闭："></a>6.关闭：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mongodb</span><br><span class="line"></span><br><span class="line">./bin/mongod -shutdown -config ./data/mongodb.conf     //关闭</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mongodb/" rel="tag">Mongodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7安装mysql"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/06/CentOS7%E5%AE%89%E8%A3%85mysql/"
+    >CentOS7安装MySql</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/06/CentOS7%E5%AE%89%E8%A3%85mysql/" class="article-date">
+  <time datetime="2018-12-06T07:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-yum查找mysql依赖的包"><a href="#1-yum查找mysql依赖的包" class="headerlink" title="1.yum查找mysql依赖的包"></a>1.yum查找mysql依赖的包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum search libaio</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYwZThhZjViZjlmOTBmMTgucG5n?x-oss-process=image/format,png" alt="查找"></p>
+<h4 id="2-yum下载mysql依赖的包"><a href="#2-yum下载mysql依赖的包" class="headerlink" title="2.yum下载mysql依赖的包"></a>2.yum下载mysql依赖的包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiYThkNTRiZTE3NmNlODEucG5n?x-oss-process=image/format,png" alt="下载依赖包"></p>
+<h4 id="3-搜索wget"><a href="#3-搜索wget" class="headerlink" title="3.搜索wget"></a>3.搜索wget</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum search wget</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZjNWJlMTIzZTA0NWM3YjIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="4-下载wget"><a href="#4-下载wget" class="headerlink" title="4.下载wget"></a>4.下载wget</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install wget.x86_64</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFlMTAxNmQ0NGJmNjE0MGYucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZjMjdiMmM5ZWVmYjZjMTQucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum localinstall mysql-community-release-el7-5.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUzYzIwMTExODFjZTc1NTAucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="7-验证是否添加成功"><a href="#7-验证是否添加成功" class="headerlink" title="7.验证是否添加成功"></a>7.验证是否添加成功</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist enabled | grep &quot;mysql.*-community.*&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA4ZGU1MWU5ZTE4MTI1NGIucG5n?x-oss-process=image/format,png" alt="验证"></p>
+<h4 id="8-安装："><a href="#8-安装：" class="headerlink" title="8.安装："></a>8.安装：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU1ZjA0ZjY5NDNlZDY2ZWEucG5n?x-oss-process=image/format,png" alt="安装"></p>
+<h4 id="9-查看是否安装好"><a href="#9-查看是否安装好" class="headerlink" title="9.查看是否安装好"></a>9.查看是否安装好</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis mysql</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE5NTlmYWNlMTZkZTljYzEucG5n?x-oss-process=image/format,png" alt="查看"></p>
+<h4 id="10-启动mysql"><a href="#10-启动mysql" class="headerlink" title="10.启动mysql"></a>10.启动mysql</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+
+<h4 id="11-查看是否启动成功："><a href="#11-查看是否启动成功：" class="headerlink" title="11.查看是否启动成功："></a>11.查看是否启动成功：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVjZDlhMWI0NGRiNTM2Y2EucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="12-关闭mysql"><a href="#12-关闭mysql" class="headerlink" title="12.关闭mysql"></a>12.关闭mysql</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop mysqld</span><br></pre></td></tr></table></figure>
+
+<h4 id="13-修改mysql密码："><a href="#13-修改mysql密码：" class="headerlink" title="13.修改mysql密码："></a>13.修改mysql密码：</h4><h5 id="1-进入mysql"><a href="#1-进入mysql" class="headerlink" title="(1)进入mysql"></a>(1)进入mysql</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql</span><br></pre></td></tr></table></figure>
+<h5 id="2-使用mysql库"><a href="#2-使用mysql库" class="headerlink" title="(2)使用mysql库"></a>(2)使用mysql库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-修改密码："><a href="#3-修改密码：" class="headerlink" title="(3)修改密码："></a>(3)修改密码：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update user set password=password(&#x27;新密码&#x27;) where user=&#x27;要更改密码的用户名&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="4-修改用户权限列表："><a href="#4-修改用户权限列表：" class="headerlink" title="(4)修改用户权限列表："></a>(4)修改用户权限列表：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU4ZDI1YmQ5MzcyZjZkNDMucG5n?x-oss-process=image/format,png" alt="mysql"></p>
+<h5 id="5-重新登陆mysql"><a href="#5-重新登陆mysql" class="headerlink" title="(5)重新登陆mysql"></a>(5)重新登陆mysql</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTViNWVhZmIwMTg4OGU0NGIucG5n?x-oss-process=image/format,png" alt="登陆"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7安装MySql(已下载的mysql安装包)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/"
+    >CentOS7安装MySql(已下载的mysql安装包)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/06/CentOS7%E5%AE%89%E8%A3%85MySql(%E5%B7%B2%E4%B8%8B%E8%BD%BD%E7%9A%84mysql%E5%AE%89%E8%A3%85%E5%8C%85)/" class="article-date">
+  <time datetime="2018-12-06T03:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-将下载好的安装包上传到linux："><a href="#1-将下载好的安装包上传到linux：" class="headerlink" title="1.将下载好的安装包上传到linux："></a>1.将下载好的安装包上传到linux：</h4><h4 id="2-检测本地是否有mysql已存在的包"><a href="#2-检测本地是否有mysql已存在的包" class="headerlink" title="2.检测本地是否有mysql已存在的包"></a>2.检测本地是否有mysql已存在的包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+<h4 id="3-检测本地是否有mariadb已存在的包"><a href="#3-检测本地是否有mariadb已存在的包" class="headerlink" title="3.检测本地是否有mariadb已存在的包"></a>3.检测本地是否有mariadb已存在的包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mariadb</span><br></pre></td></tr></table></figure>
+<h4 id="4-如果存在，则使用yum命令卸载"><a href="#4-如果存在，则使用yum命令卸载" class="headerlink" title="4.如果存在，则使用yum命令卸载"></a>4.如果存在，则使用yum命令卸载</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mariadb-libs-5.5.54-2.el7.x86_64</span><br><span class="line">//或者</span><br><span class="line">rpm -e --nodeps mariadb-libs-5.5.54-2.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWQzMTMwNmQwNDI4MjAucG5n?x-oss-process=image/format,png"></p>
+<h4 id="5-创建一个文件夹，上传jar包到-opt-software-mysql"><a href="#5-创建一个文件夹，上传jar包到-opt-software-mysql" class="headerlink" title="5.创建一个文件夹，上传jar包到/opt/software/mysql"></a>5.创建一个文件夹，上传jar包到/opt/software/mysql</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/module/mysql</span><br></pre></td></tr></table></figure>
+<h4 id="6-解压mysql-jar包"><a href="#6-解压mysql-jar包" class="headerlink" title="6.解压mysql jar包"></a>6.解压mysql jar包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-5.7.19-1.el7.x86_64.rpm-bundle.tar -C /opt/module/mysql</span><br></pre></td></tr></table></figure>
+<h4 id="7-安装mysql的-server、client、common、libs、lib-compat"><a href="#7-安装mysql的-server、client、common、libs、lib-compat" class="headerlink" title="7.安装mysql的 server、client、common、libs、lib-compat"></a>7.安装mysql的 server、client、common、libs、lib-compat</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh --nodeps mysql-community-server-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh --nodeps mysql-community-client-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-common-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-5.7.19-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-compat-5.7.19-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmMWEwYjdiOGViNDczNTEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="8-查看mysql的服务是否启动"><a href="#8-查看mysql的服务是否启动" class="headerlink" title="8.查看mysql的服务是否启动"></a>8.查看mysql的服务是否启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxZWI5MTVmOWZkN2EyODIucG5n?x-oss-process=image/format,png"></p>
+<h4 id="9-启动mysql的服务"><a href="#9-启动mysql的服务" class="headerlink" title="9.启动mysql的服务"></a>9.启动mysql的服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMzNzBiMGY1ZjY2Y2EyZDQucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="10-再次检查mysql的服务是否启动"><a href="#10-再次检查mysql的服务是否启动" class="headerlink" title="10.再次检查mysql的服务是否启动"></a>10.再次检查mysql的服务是否启动</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld</span><br></pre></td></tr></table></figure>
+
+<h4 id="11-查看默认生成的密码"><a href="#11-查看默认生成的密码" class="headerlink" title="11.查看默认生成的密码"></a>11.查看默认生成的密码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log | grep password</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZmOWI4YjNhODYzMDI1ZjkucG5n?x-oss-process=image/format,png" alt="查看默认生成的密码"></p>
+<h4 id="12-登录mysql服务"><a href="#12-登录mysql服务" class="headerlink" title="12.登录mysql服务"></a>12.登录mysql服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p’然后粘贴上密码’</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYjEyMGYxODI4ZGQwYTYucG5n?x-oss-process=image/format,png"></p>
+<h4 id="13-修改mysql密码规则"><a href="#13-修改mysql密码规则" class="headerlink" title="13.修改mysql密码规则"></a>13.修改mysql密码规则</h4><table>
+<thead>
+<tr>
+<th align="center">强度</th>
+<th align="center">规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0 or LOW</td>
+<td align="center">长度</td>
+</tr>
+<tr>
+<td align="center">1 or MEDIUM</td>
+<td align="center">长度、大小写、数字、特殊字符</td>
+</tr>
+<tr>
+<td align="center">2 or STRONG</td>
+<td align="center">长度、大小写、数字、特殊字符、词典</td>
+</tr>
+</tbody></table>
+<p>注：以下修改是临时修改</p>
+<h6 id="a-密码强度检查等级，0-LOW、1-MEDIUM、2-STRONG"><a href="#a-密码强度检查等级，0-LOW、1-MEDIUM、2-STRONG" class="headerlink" title="(a).    密码强度检查等级，0/LOW、1/MEDIUM、2/STRONG"></a>(a).    密码强度检查等级，0/LOW、1/MEDIUM、2/STRONG</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_policy=0;</span><br></pre></td></tr></table></figure>
+
+<h6 id="b-密码至少要包含的小写字母个数和大写字母个数"><a href="#b-密码至少要包含的小写字母个数和大写字母个数" class="headerlink" title="(b).密码至少要包含的小写字母个数和大写字母个数"></a>(b).密码至少要包含的小写字母个数和大写字母个数</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_mixed_case_count=0;</span><br></pre></td></tr></table></figure>
+
+<h6 id="c-密码至少要包含的数字个数"><a href="#c-密码至少要包含的数字个数" class="headerlink" title="(c ).密码至少要包含的数字个数"></a>(c ).密码至少要包含的数字个数</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_number_count=3;</span><br></pre></td></tr></table></figure>
+<h6 id="d-密码至少要包含的特殊字符数"><a href="#d-密码至少要包含的特殊字符数" class="headerlink" title="(d).密码至少要包含的特殊字符数"></a>(d).密码至少要包含的特殊字符数</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_special_char_count=0;</span><br></pre></td></tr></table></figure>
+<h6 id="e-密码最小长度，参数默认为8，"><a href="#e-密码最小长度，参数默认为8，" class="headerlink" title="(e).密码最小长度，参数默认为8，"></a>(e).密码最小长度，参数默认为8，</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_length=3;</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;它有最小值的限制，最小值为：validate_password_number_count + 密码至少要包含的数字个数validate_password_special_char_count +特殊字符 (2 * validate_password_mixed_case_count)至少要包含的小写字母个数和大写字母个数</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk3NTE0ZjAyODM4ZDJmZTcucG5n?x-oss-process=image/format,png"></p>
+<h4 id="14-修改密码："><a href="#14-修改密码：" class="headerlink" title="14.修改密码："></a>14.修改密码：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD FOR &#x27;root&#x27;@&#x27;localhost&#x27;=PASSWORD(&#x27;000000&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>(这两步可以跳过)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">SHOW VARIABLES LIKE &#x27;validate_password%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">Variable_name</th>
+<th align="center">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">validate_password_dictionary_file</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">validate_password_length</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">validate_password_mixed_case_count</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">validate_password_number_count</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">validate_password_policy</td>
+<td align="center">LOW</td>
+</tr>
+<tr>
+<td align="center">validate_password_special_char_count</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA1NDI2OGMyODczOTQ5MTcucG5n?x-oss-process=image/format,png"></p>
+<h4 id="15-修改远程登录权限"><a href="#15-修改远程登录权限" class="headerlink" title="15.修改远程登录权限"></a>15.修改远程登录权限</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM0MDVjYjA1MDRkMDE4NjkucG5n?x-oss-process=image/format,png"></p>
+<p>如上图所示：这个是可以成功远程链接得配置<br>大家默认的%的位置是localhost,即意味着只能本机访问</p>
+<h5 id="1-查询当前user表内root的登录权限："><a href="#1-查询当前user表内root的登录权限：" class="headerlink" title="(1)查询当前user表内root的登录权限："></a>(1)查询当前user表内root的登录权限：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select host,user from mysql.user;</span><br></pre></td></tr></table></figure>
+<h5 id="2-修改权限为所有-："><a href="#2-修改权限为所有-：" class="headerlink" title="(2)修改权限为所有%："></a>(2)修改权限为所有%：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set host = &#x27;%&#x27; where user = &#x27;root&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="3-刷新缓存："><a href="#3-刷新缓存：" class="headerlink" title="(3)刷新缓存："></a>(3)刷新缓存：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI3OWJhZDUxNjljNDdkOTQucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Linux查看文件前几行和后几行的命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/12/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/"
+    >Linux查看文件前几行和后几行的命令</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/12/06/Linux%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%89%8D%E5%87%A0%E8%A1%8C%E5%92%8C%E5%90%8E%E5%87%A0%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2018-12-06T01:49:00.000Z" itemprop="datePublished">2018-12-06</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-可以使用head-查看前几行-、tail-查看末尾几行-两个命令"><a href="#1-可以使用head-查看前几行-、tail-查看末尾几行-两个命令" class="headerlink" title="1.可以使用head(查看前几行)、tail(查看末尾几行)两个命令"></a>1.可以使用head(查看前几行)、tail(查看末尾几行)两个命令</h4><p>例如：<br>查看/opt/a.txt的前20行内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head -n 20 /opt/a.txt</span><br></pre></td></tr></table></figure>
+<p>查看/opt/a.txt的最后5行内容，应该是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail  -n 5 /opt/a.txt</span><br></pre></td></tr></table></figure>
+<h4 id="2-可以同时查看可以将前10行和后5行的显示信息，并通过输出重定向的方法保存到一个文档"><a href="#2-可以同时查看可以将前10行和后5行的显示信息，并通过输出重定向的方法保存到一个文档" class="headerlink" title="2.可以同时查看可以将前10行和后5行的显示信息，并通过输出重定向的方法保存到一个文档"></a>2.可以同时查看可以将前10行和后5行的显示信息，并通过输出重定向的方法保存到一个文档</h4><p>例如：<br>将内容输出到/opt/test文件中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">head -n 10 /opt/a.txt &gt;&gt;/opt/test</span><br><span class="line"></span><br><span class="line">tail  -n 5 /opt/a.txt &gt;&gt;/opt/test</span><br></pre></td></tr></table></figure>
+<p>查看的话只需要打开test文件即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/test</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[0模版]"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/01/01/%5B0%E6%A8%A1%E7%89%88%5D/"
+    >模版</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2018/01/01/%5B0%E6%A8%A1%E7%89%88%5D/" class="article-date">
+  <time datetime="2018-01-01T04:00:00.000Z" itemprop="datePublished">2018-01-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/inbox/">inbox</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A8%A1%E7%89%881/" rel="tag">模版1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A8%A1%E7%89%882/" rel="tag">模版2</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/27/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

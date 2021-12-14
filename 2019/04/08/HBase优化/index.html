@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>HBase优化 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-HBase优化"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  HBase优化
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/08/HBase%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-04-08T07:00:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HBase/">HBase</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-高可用"><a href="#1-高可用" class="headerlink" title="1.高可用"></a>1.高可用</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;在HBase中Hmaster负责监控RegionServer的生命周期，均衡RegionServer的负载，如果Hmaster挂掉了，那么整个HBase集群将陷入不健康的状态，并且此时的工作状态并不会维持太久。所以HBase支持对Hmaster的高可用配置。</p>
+<h5 id="1-关闭HBase集群-如果没有开启则跳过此步"><a href="#1-关闭HBase集群-如果没有开启则跳过此步" class="headerlink" title="(1).关闭HBase集群(如果没有开启则跳过此步)"></a>(1).关闭HBase集群(如果没有开启则跳过此步)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bin/stop-hbase.sh</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-在conf目录下创建backup-masters文件"><a href="#2-在conf目录下创建backup-masters文件" class="headerlink" title="(2).在conf目录下创建backup-masters文件"></a>(2).在conf目录下创建backup-masters文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch conf/backup-masters</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-在backup-masters文件中配置高可用HMaster节点"><a href="#3-在backup-masters文件中配置高可用HMaster节点" class="headerlink" title="(3).在backup-masters文件中配置高可用HMaster节点"></a>(3).在backup-masters文件中配置高可用HMaster节点</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> hadoop2 &gt;  conf/backup-masters</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-将整个conf目录scp到其他节点"><a href="#4-将整个conf目录scp到其他节点" class="headerlink" title="(4).将整个conf目录scp到其他节点"></a>(4).将整个conf目录scp到其他节点</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> scp -r conf/ hadoop2:/opt/module/hbase-1.3.1</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> scp -r conf/ hadoop3:/opt/module/hbase-1.3.1</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="5-重新启动HBase后打开页面测试查看"><a href="#5-重新启动HBase后打开页面测试查看" class="headerlink" title="(5).重新启动HBase后打开页面测试查看"></a>(5).重新启动HBase后打开页面测试查看</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;0.98版本之后：<a target="_blank" rel="noopener" href="http://bigdata111:16010/">http://bigdata111:16010</a></p>
+<h4 id="2-Hadoop的通用性优化"><a href="#2-Hadoop的通用性优化" class="headerlink" title="2.Hadoop的通用性优化"></a>2.Hadoop的通用性优化</h4><h5 id="1-NameNode元数据备份使用SSD"><a href="#1-NameNode元数据备份使用SSD" class="headerlink" title="(1).NameNode元数据备份使用SSD"></a>(1).NameNode元数据备份使用SSD</h5><h5 id="2-定时备份NameNode上的元数据"><a href="#2-定时备份NameNode上的元数据" class="headerlink" title="(2).定时备份NameNode上的元数据"></a>(2).定时备份NameNode上的元数据</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;每小时或者每天备份，如果数据极其重要，可以5~10分钟备份一次。备份可以通过定时任务复制元数据目录即可。</p>
+<h5 id="3-为NameNode指定多个元数据目录"><a href="#3-为NameNode指定多个元数据目录" class="headerlink" title="(3).为NameNode指定多个元数据目录"></a>(3).为NameNode指定多个元数据目录</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;使用dfs.name.dir或者dfs.namenode.name.dir指定。这样可以提供元数据的冗余和健壮性，以免发生故障。</p>
+<h5 id="4-NameNode的dir自恢复"><a href="#4-NameNode的dir自恢复" class="headerlink" title="(4).NameNode的dir自恢复"></a>(4).NameNode的dir自恢复</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;设置dfs.namenode.name.dir.restore为true，允许尝试恢复之前失败的dfs.namenode.name.dir目录，在创建checkpoint时做此尝试，如果设置了多个磁盘，建议允许。</p>
+<h5 id="5-HDFS保证RPC调用会有较多的线程数"><a href="#5-HDFS保证RPC调用会有较多的线程数" class="headerlink" title="(5).HDFS保证RPC调用会有较多的线程数"></a>(5).HDFS保证RPC调用会有较多的线程数</h5><p>hdfs-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.namenode.handler.count</span><br><span class="line"></span><br><span class="line">解释：该属性是NameNode服务默认线程数，的默认值是10，根据机器的可用内存可以调整为50~100</span><br><span class="line"></span><br><span class="line">属性：dfs.datanode.handler.count</span><br><span class="line"></span><br><span class="line">解释：该属性默认值为10，是DataNode的处理线程数，如果HDFS客户端程序读写请求比较多，可以调高到15~20，设置的值越大，内存消耗越多，不要调整的过高，一般业务中，5~10即可。</span><br></pre></td></tr></table></figure>
+<h5 id="6-HDFS副本数的调整"><a href="#6-HDFS副本数的调整" class="headerlink" title="(6).HDFS副本数的调整"></a>(6).HDFS副本数的调整</h5><p>hdfs-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.replication</span><br><span class="line"></span><br><span class="line">解释：如果数据量巨大，且不是非常之重要，可以调整为2~3，如果数据非常之重要，可以调整为3~5。</span><br></pre></td></tr></table></figure>
+<h5 id="7-HDFS文件块大小的调整"><a href="#7-HDFS文件块大小的调整" class="headerlink" title="(7).HDFS文件块大小的调整"></a>(7).HDFS文件块大小的调整</h5><p>hdfs-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.blocksize</span><br><span class="line"></span><br><span class="line">解释：块大小定义，该属性应该根据存储的大量的单个文件大小来设置，如果大量的单个文件都小于100M，建议设置成64M块大小，对于大于100M或者达到GB的这种情况，建议设置成256M，一般设置范围波动在64M~256M之间。</span><br></pre></td></tr></table></figure>
+<h5 id="8-MapReduce-Job任务服务线程数调整"><a href="#8-MapReduce-Job任务服务线程数调整" class="headerlink" title="(8).MapReduce Job任务服务线程数调整"></a>(8).MapReduce Job任务服务线程数调整</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：mapreduce.jobtracker.handler.count</span><br><span class="line"></span><br><span class="line">解释：该属性是Job任务线程数，默认值是10，根据机器的可用内存可以调整为50~100</span><br></pre></td></tr></table></figure>
+<h5 id="9-Http服务器工作线程数"><a href="#9-Http服务器工作线程数" class="headerlink" title="(9).Http服务器工作线程数"></a>(9).Http服务器工作线程数</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：mapreduce.tasktracker.http.threads</span><br><span class="line"></span><br><span class="line">解释：定义HTTP服务器工作线程数，默认值为40，对于大集群可以调整到80~100</span><br></pre></td></tr></table></figure>
+<h5 id="10-文件排序合并优化"><a href="#10-文件排序合并优化" class="headerlink" title="(10).文件排序合并优化"></a>(10).文件排序合并优化</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：mapreduce.task.io.sort.factor</span><br><span class="line"></span><br><span class="line">解释：文件排序时同时合并的数据流的数量，这也定义了同时打开文件的个数，默认值为10，如果调高该参数，可以明显减少磁盘IO，即减少文件读取的次数。</span><br></pre></td></tr></table></figure>
+<h5 id="11-设置任务并发"><a href="#11-设置任务并发" class="headerlink" title="(11).设置任务并发"></a>(11).设置任务并发</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：mapreduce.map.speculative</span><br><span class="line"></span><br><span class="line">解释：该属性可以设置任务是否可以并发执行，如果任务多而小，该属性设置为true可以明显加快任务执行效率，但是对于延迟非常高的任务，建议改为false，这就类似于迅雷下载。</span><br></pre></td></tr></table></figure>
+<h5 id="12-MR输出数据的压缩"><a href="#12-MR输出数据的压缩" class="headerlink" title="(12).MR输出数据的压缩"></a>(12).MR输出数据的压缩</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：mapreduce.map.output.compress、mapreduce.output.fileoutputformat.compress</span><br><span class="line"></span><br><span class="line">解释：对于大集群而言，建议设置Map-Reduce的输出为压缩的数据，而对于小集群，则不需要。</span><br></pre></td></tr></table></figure>
+<h5 id="13-优化Mapper和Reducer的个数"><a href="#13-优化Mapper和Reducer的个数" class="headerlink" title="(13).优化Mapper和Reducer的个数"></a>(13).优化Mapper和Reducer的个数</h5><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">属性：</span><br><span class="line"></span><br><span class="line">mapreduce.tasktracker.map.tasks.maximum</span><br><span class="line"></span><br><span class="line">mapreduce.tasktracker.reduce.tasks.maximum</span><br><span class="line"></span><br><span class="line">解释：以上两个属性分别为一个单独的Job任务可以同时运行的Map和Reduce的数量。</span><br><span class="line"></span><br><span class="line">设置上面两个参数时，需要考虑CPU核数、磁盘和内存容量。假设一个8核的CPU，业务内容非常消耗CPU，那么可以设置map数量为4，如果该业务不是特别消耗CPU类型的，那么可以设置map数量为40，reduce数量为20。这些参数的值修改完成之后，一定要观察是否有较长等待的任务，如果有的话，可以减少数量以加快任务执行，如果设置一个很大的值，会引起大量的上下文切换，以及内存与磁盘之间的数据交换，这里没有标准的配置数值，需要根据业务和硬件配置以及经验来做出选择。</span><br><span class="line"></span><br><span class="line">在同一时刻，不要同时运行太多的MapReduce，这样会消耗过多的内存，任务会执行的非常缓慢，我们需要根据CPU核数，内存容量设置一个MR任务并发的最大值，使固定数据量的任务完全加载到内存中，避免频繁的内存和磁盘数据交换，从而降低磁盘IO，提高性能。</span><br></pre></td></tr></table></figure>
+<p>大概估算公式：</p>
+<p>map = 2 + ⅔cpu_core<br>reduce = 2 + ⅓cpu_core</p>
+<h4 id="3-Linux优化"><a href="#3-Linux优化" class="headerlink" title="3.Linux优化"></a>3.Linux优化</h4><h5 id="1-开启文件系统的预读缓存可以提高读取速度"><a href="#1-开启文件系统的预读缓存可以提高读取速度" class="headerlink" title="(1).开启文件系统的预读缓存可以提高读取速度"></a>(1).开启文件系统的预读缓存可以提高读取速度</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo blockdev --setra 32768 /dev/sda</span></span><br></pre></td></tr></table></figure>
+<p>提示：ra是readahead的缩写</p>
+<h5 id="2-关闭进程睡眠池"><a href="#2-关闭进程睡眠池" class="headerlink" title="(2).关闭进程睡眠池"></a>(2).关闭进程睡眠池</h5><p>即不允许后台进程进入睡眠状态，如果进程空闲，则直接kill掉释放资源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo sysctl -w vm.swappiness=0</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-调整ulimit上限，默认值为比较小的数字"><a href="#3-调整ulimit上限，默认值为比较小的数字" class="headerlink" title="(3).调整ulimit上限，默认值为比较小的数字"></a>(3).调整ulimit上限，默认值为比较小的数字</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">ulimit</span> -n 查看允许最大进程数</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">ulimit</span> -u 查看允许打开最大文件数</span></span><br></pre></td></tr></table></figure>
+<p>优化修改：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/security/limits.conf 修改打开文件数限制</span></span><br></pre></td></tr></table></figure>
+<p>末尾添加：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*                soft    nofile          1024000</span><br><span class="line"></span><br><span class="line">*                hard    nofile          1024000</span><br><span class="line"></span><br><span class="line">Hive             -       nofile          1024000</span><br><span class="line"></span><br><span class="line">hive             -       nproc           1024000 </span><br></pre></td></tr></table></figure>
+
+<p>修改用户打开进程数限制</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo vi /etc/security/limits.d/20-nproc.conf</span> </span><br></pre></td></tr></table></figure>
+<p>修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">*          soft    nproc     4096</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">root       soft    nproc     unlimited</span></span><br><span class="line"></span><br><span class="line">*          soft    nproc     40960</span><br><span class="line"></span><br><span class="line">root       soft    nproc     unlimited</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-开启集群的时间同步NTP"><a href="#4-开启集群的时间同步NTP" class="headerlink" title="(4).开启集群的时间同步NTP"></a>(4).开启集群的时间同步NTP</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中某台机器同步网络时间服务器的时间，集群中其他机器则同步这台机器的时间。</p>
+<h5 id="5-更新系统补丁"><a href="#5-更新系统补丁" class="headerlink" title="(5).更新系统补丁"></a>(5).更新系统补丁</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;更新补丁前，请先测试新版本补丁对集群节点的兼容性。</p>
+<h4 id="4-Zookeeper优化"><a href="#4-Zookeeper优化" class="headerlink" title="4.Zookeeper优化"></a>4.Zookeeper优化</h4><h5 id="1-优化Zookeeper会话超时时间"><a href="#1-优化Zookeeper会话超时时间" class="headerlink" title="(1).优化Zookeeper会话超时时间"></a>(1).优化Zookeeper会话超时时间</h5><p>hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参数：zookeeper.session.timeout</span><br><span class="line"></span><br><span class="line">解释：In hbase-site.xml, set zookeeper.session.timeout to 30 seconds or less to bound failure detection (20-30 seconds is a good start).该值会直接关系到master发现服务器宕机的最大周期，默认值为30秒（不同的HBase版本，该默认值不一样），如果该值过小，会在HBase在写入大量数据发生而GC时，导致RegionServer短暂的不可用，从而没有向ZK发送心跳包，最终导致认为从节点shutdown。一般20台左右的集群需要配置5台zookeeper。</span><br></pre></td></tr></table></figure>
+<h4 id="5-HBase优化"><a href="#5-HBase优化" class="headerlink" title="5.HBase优化"></a>5.HBase优化</h4><h5 id="1-预分区"><a href="#1-预分区" class="headerlink" title="(1).预分区"></a>(1).预分区</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;每一个region维护着startRow与endRowKey，如果加入的数据符合某个region维护的rowKey范围，则该数据交给这个region维护。那么依照这个原则，我们可以将数据索要投放的分区提前大致的规划好，以提高HBase性能。</p>
+<h6 id="a-手动设定预分区"><a href="#a-手动设定预分区" class="headerlink" title="(a).手动设定预分区"></a>(a).手动设定预分区</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> create <span class="string">&#x27;staff&#x27;</span>,<span class="string">&#x27;info&#x27;</span>,<span class="string">&#x27;partition1&#x27;</span>,SPLITS =&gt; [<span class="string">&#x27;1000&#x27;</span>,<span class="string">&#x27;2000&#x27;</span>,<span class="string">&#x27;3000&#x27;</span>,<span class="string">&#x27;4000&#x27;</span>]</span></span><br></pre></td></tr></table></figure>
+<h6 id="b-生成16进制序列预分区"><a href="#b-生成16进制序列预分区" class="headerlink" title="(b).生成16进制序列预分区"></a>(b).生成16进制序列预分区</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;staff2&#x27;,&#x27;info&#x27;,&#x27;partition2&#x27;,&#123;NUMREGIONS =&gt; 15, SPLITALGO =&gt; &#x27;HexStringSplit&#x27;&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="c-按照文件中设置的规则预分区"><a href="#c-按照文件中设置的规则预分区" class="headerlink" title="(c ).按照文件中设置的规则预分区"></a>(c ).按照文件中设置的规则预分区</h6><p>创建splits.txt文件内容如下：<br>spilts.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">aaaa</span><br><span class="line"></span><br><span class="line">bbbb</span><br><span class="line"></span><br><span class="line">cccc</span><br><span class="line"></span><br><span class="line">dddd</span><br></pre></td></tr></table></figure>
+
+<p>然后执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;staff3&#x27;,&#x27;partition3&#x27;,SPLITS_FILE =&gt; &#x27;/opt/module/hbase-1.3.1/splits.txt&#x27;</span><br></pre></td></tr></table></figure>
+<h6 id="d-使用JavaAPI创建预分区"><a href="#d-使用JavaAPI创建预分区" class="headerlink" title="(d).使用JavaAPI创建预分区"></a>(d).使用JavaAPI创建预分区</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//自定义算法，产生一系列Hash散列值存储在二维数组中</span><br><span class="line"></span><br><span class="line">byte[][] splitKeys = 某个散列值函数</span><br><span class="line"></span><br><span class="line">//创建HBaseAdmin实例</span><br><span class="line"></span><br><span class="line">HBaseAdmin hAdmin = new HBaseAdmin(HBaseConfiguration.create());</span><br><span class="line"></span><br><span class="line">//创建HTableDescriptor实例</span><br><span class="line"></span><br><span class="line">HTableDescriptor tableDesc = new HTableDescriptor(tableName);</span><br><span class="line"></span><br><span class="line">//通过HTableDescriptor实例和散列值二维数组创建带有预分区的HBase表</span><br><span class="line"></span><br><span class="line">hAdmin.createTable(tableDesc, splitKeys);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-RowKey设计"><a href="#2-RowKey设计" class="headerlink" title="(2).RowKey设计"></a>(2).RowKey设计</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;一条数据的唯一标识就是rowkey，那么这条数据存储于哪个分区，取决于rowkey处于哪个一个预分区的区间内，设计rowkey的主要目的 ，就是让数据均匀的分布于所有的region中，在一定程度上防止数据倾斜。接下来我们就谈一谈rowkey常用的设计方案。</p>
+<h6 id="a-生成随机数-hash、散列值"><a href="#a-生成随机数-hash、散列值" class="headerlink" title="(a).生成随机数,hash、散列值"></a>(a).生成随机数,hash、散列值</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">比如：</span><br><span class="line"></span><br><span class="line">原本rowKey为1001的，SHA1后变成：dd01903921ea24941c26a48f2cec24e0bb0e8cc7</span><br><span class="line"></span><br><span class="line">原本rowKey为3001的，SHA1后变成：49042c54de64a1e9bf0b33e00245660ef92dc7bd</span><br><span class="line"></span><br><span class="line">原本rowKey为5001的，SHA1后变成：7b61dec07e02c188790670af43e717f0f46e8913</span><br><span class="line"></span><br><span class="line">在做此操作之前，一般我们会选择从数据集中抽取样本，来决定什么样的rowKey来Hash后作为每个分区的临界值。</span><br></pre></td></tr></table></figure>
+<h6 id="b-字符串反转"><a href="#b-字符串反转" class="headerlink" title="(b).字符串反转"></a>(b).字符串反转</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">20170524000001转成10000042507102</span><br><span class="line"></span><br><span class="line">20170524000002转成20000042507102</span><br></pre></td></tr></table></figure>
+<p>这样也可以在一定程度上散列逐步put进来的数据。</p>
+<h6 id="c-字符串拼接"><a href="#c-字符串拼接" class="headerlink" title="(c ).字符串拼接"></a>(c ).字符串拼接</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">20170524000001_a12e</span><br><span class="line"></span><br><span class="line">20170524000001_93i7</span><br></pre></td></tr></table></figure>
+<h5 id="3-内存优化"><a href="#3-内存优化" class="headerlink" title="(3).内存优化"></a>(3).内存优化</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase操作过程中需要大量的内存开销，毕竟Table是可以缓存在内存中的，一般会分配整个可用内存的70%给HBase的Java堆。但是不建议分配非常大的堆内存，因为GC过程持续太久会导致RegionServer处于长期不可用状态，一般16~48G内存就可以了，如果因为框架占用内存过高导致系统内存不足，框架一样会被系统服务拖死。</p>
+<h5 id="4-基础优化"><a href="#4-基础优化" class="headerlink" title="(4).基础优化"></a>(4).基础优化</h5><h6 id="a-允许在HDFS的文件中追加内容"><a href="#a-允许在HDFS的文件中追加内容" class="headerlink" title="(a).允许在HDFS的文件中追加内容"></a>(a).允许在HDFS的文件中追加内容</h6><p>不是不允许追加内容么？没错，请看背景故事：</p>
+<p><a target="_blank" rel="noopener" href="http://blog.cloudera.com/">http://blog.cloudera.com/blog/2009/07/file-appends-in-hdfs/</a></p>
+<p>hdfs-site.xml、hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.support.append</span><br><span class="line"></span><br><span class="line">解释：开启HDFS追加同步，可以优秀的配合HBase的数据同步和持久化。默认值为true。</span><br></pre></td></tr></table></figure>
+<h6 id="b-优化DataNode允许的最大文件打开数"><a href="#b-优化DataNode允许的最大文件打开数" class="headerlink" title="(b).优化DataNode允许的最大文件打开数"></a>(b).优化DataNode允许的最大文件打开数</h6><p>hdfs-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.datanode.max.transfer.threads</span><br><span class="line"></span><br><span class="line">解释：HBase一般都会同一时间操作大量的文件，根据集群的数量和规模以及数据动作，设置为4096或者更高。默认值：4096</span><br></pre></td></tr></table></figure>
+<h6 id="c-优化延迟高的数据操作的等待时间"><a href="#c-优化延迟高的数据操作的等待时间" class="headerlink" title="(c ).优化延迟高的数据操作的等待时间"></a>(c ).优化延迟高的数据操作的等待时间</h6><p>hdfs-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.image.transfer.timeout</span><br><span class="line"></span><br><span class="line">解释：如果对于某一次数据操作来讲，延迟非常高，socket需要等待更长的时间，建议把该值设置为更大的值（默认60000毫秒），以确保socket不会被timeout掉。</span><br></pre></td></tr></table></figure>
+
+<h6 id="d-优化数据的写入效率"><a href="#d-优化数据的写入效率" class="headerlink" title="(d).优化数据的写入效率"></a>(d).优化数据的写入效率</h6><p>mapred-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">属性：</span><br><span class="line"></span><br><span class="line">mapreduce.map.output.compress</span><br><span class="line"></span><br><span class="line">mapreduce.map.output.compress.codec</span><br><span class="line"></span><br><span class="line">解释：开启这两个数据可以大大提高文件的写入效率，减少写入时间。第一个属性值修改为true，第二个属性值修改为：org.apache.hadoop.io.compress.GzipCodec或者其他压缩方式。</span><br></pre></td></tr></table></figure>
+<h6 id="e-优化DataNode存储"><a href="#e-优化DataNode存储" class="headerlink" title="(e).优化DataNode存储"></a>(e).优化DataNode存储</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：dfs.datanode.failed.volumes.tolerated</span><br><span class="line"></span><br><span class="line">解释： 默认为0，意思是当DataNode中有一个磁盘出现故障，则会认为该DataNode shutdown了。如果修改为1，则一个磁盘出现故障时，数据会被复制到其他正常的DataNode上，当前的DataNode继续工作。</span><br></pre></td></tr></table></figure>
+<h6 id="f-设置RPC监听数量"><a href="#f-设置RPC监听数量" class="headerlink" title="(f).设置RPC监听数量"></a>(f).设置RPC监听数量</h6><p>hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：hbase.regionserver.handler.count</span><br><span class="line"></span><br><span class="line">解释：默认值为30，用于指定RPC监听的数量，可以根据客户端的请求数进行调整，读写请求较多时，增加此值。</span><br></pre></td></tr></table></figure>
+<h6 id="g-优化HStore文件大小"><a href="#g-优化HStore文件大小" class="headerlink" title="(g).优化HStore文件大小"></a>(g).优化HStore文件大小</h6><p>hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：hbase.hregion.max.filesize</span><br><span class="line"></span><br><span class="line">解释：默认值10737418240（10GB），如果需要运行HBase的MR任务，可以减小此值，因为一个region对应一个map任务，如果单个region过大，会导致map任务执行时间过长。该值的意思就是，如果HFile的大小达到这个数值，则这个region会被切分为两个Hfile。</span><br></pre></td></tr></table></figure>
+<h6 id="h-优化hbase客户端缓存"><a href="#h-优化hbase客户端缓存" class="headerlink" title="(h).优化hbase客户端缓存"></a>(h).优化hbase客户端缓存</h6><p>hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：hbase.client.write.buffer</span><br><span class="line"></span><br><span class="line">解释：用于指定HBase客户端缓存，增大该值可以减少RPC调用次数，但是会消耗更多内存，反之则反之。一般我们需要设定一定的缓存大小，以达到减少RPC次数的目的。</span><br></pre></td></tr></table></figure>
+<h6 id="i-指定scan-next扫描HBase所获取的行数"><a href="#i-指定scan-next扫描HBase所获取的行数" class="headerlink" title="(i).指定scan.next扫描HBase所获取的行数"></a>(i).指定scan.next扫描HBase所获取的行数</h6><p>hbase-site.xml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">属性：hbase.client.scanner.caching</span><br><span class="line"></span><br><span class="line">解释：用于指定scan.next方法获取的默认行数，值越大，消耗内存越大。</span><br></pre></td></tr></table></figure>
+<h6 id="j-flush、compact、split机制"><a href="#j-flush、compact、split机制" class="headerlink" title="(j).flush、compact、split机制"></a>(j).flush、compact、split机制</h6><p>&nbsp;&nbsp;&nbsp;当MemStore达到阈值，将Memstore中的数据Flush进Storefile；compact机制则是把flush出来的小文件合并成大的Storefile文件。split则是当Region达到阈值，会把过大的Region一分为二。</p>
+<p>涉及属性：</p>
+<p>即：128M就是Memstore的默认阈值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase.hregion.memstore.flush.size：134217728</span><br></pre></td></tr></table></figure>
+
+<p>即：这个参数的作用是当单个HRegion内所有的Memstore大小总和超过指定值时，flush该HRegion的所有memstore。RegionServer的flush是通过将请求添加一个队列，模拟生产消费模型来异步处理的。那这里就有一个问题，当队列来不及消费，产生大量积压请求时，可能会导致内存陡增，最坏的情况是触发OOM。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hbase.regionserver.global.memstore.upperLimit：0.4</span><br><span class="line"></span><br><span class="line">hbase.regionserver.global.memstore.lowerLimit：0.38</span><br></pre></td></tr></table></figure>
+
+<p>即：当MemStore使用内存总量达到hbase.regionserver.global.memstore.upperLimit指定值时，将会有多个MemStores flush到文件中，MemStore flush 顺序是按照大小降序执行的，直到刷新到MemStore使用内存略小于lowerLimit</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2019/04/08/HBase%E4%BC%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HBase/" rel="tag">HBase</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2019/04/08/HBase%E4%B9%8BAPI/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            HBase之API
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/04/08/HBase%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">HBase读写数据流程</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

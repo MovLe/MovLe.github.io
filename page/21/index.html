@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-HBase基本操作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/08/HBase%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"
+    >HBase基本操作</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/08/HBase%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2019-04-08T05:00:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HBase/">HBase</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-基本操作"><a href="#1-基本操作" class="headerlink" title="1. 基本操作"></a>1. 基本操作</h4><h5 id="1-进入HBase客户端命令行"><a href="#1-进入HBase客户端命令行" class="headerlink" title="(1).进入HBase客户端命令行"></a>(1).进入HBase客户端命令行</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hbase shell</span><br></pre></td></tr></table></figure>
+<h5 id="2-查看帮助命令"><a href="#2-查看帮助命令" class="headerlink" title="(2).查看帮助命令"></a>(2).查看帮助命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> <span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ5YTI1MDUzMTY0ODNiODUucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-查看当前数据库中有哪些表"><a href="#3-查看当前数据库中有哪些表" class="headerlink" title="(3). 查看当前数据库中有哪些表"></a>(3). 查看当前数据库中有哪些表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> list</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-查看当前数据库中有哪些命名空间"><a href="#4-查看当前数据库中有哪些命名空间" class="headerlink" title="(4)查看当前数据库中有哪些命名空间"></a>(4)查看当前数据库中有哪些命名空间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> list_namespace</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUzMjk3OGU2ZjgzM2JmMWQucG5n?x-oss-process=image/format,png"></p>
+<p>(5)列出指定命名空间下的所有表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> list_namespace_tables <span class="string">&#x27;ns1&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="2-命名空间的操作"><a href="#2-命名空间的操作" class="headerlink" title="2.命名空间的操作"></a>2.命名空间的操作</h4><h5 id="1-列出所有命名空间"><a href="#1-列出所有命名空间" class="headerlink" title="(1)列出所有命名空间"></a>(1)列出所有命名空间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> list_namespace</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-新建命名空间"><a href="#2-新建命名空间" class="headerlink" title="(2)新建命名空间"></a>(2)新建命名空间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> create_namespace <span class="string">&#x27;ns1&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="3-删除命名空间"><a href="#3-删除命名空间" class="headerlink" title="(3)删除命名空间"></a>(3)删除命名空间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> drop_namespace <span class="string">&#x27;ns1&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<p>该命名空间必须为空，否则会报错。</p>
+<h5 id="4-修改命名空间"><a href="#4-修改命名空间" class="headerlink" title="(4)修改命名空间"></a>(4)修改命名空间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> alter_namespace <span class="string">&#x27;ns&#x27;</span>, &#123;METHOD =&gt; <span class="string">&#x27;set&#x27;</span>, <span class="string">&#x27;PROPERTY_NAME&#x27;</span> =&gt; <span class="string">&#x27;PROPERTY_VALUE&#x27;</span>&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-表的操作"><a href="#3-表的操作" class="headerlink" title="3. 表的操作"></a>3. 表的操作</h4><h5 id="1-创建表"><a href="#1-创建表" class="headerlink" title="(1).创建表"></a>(1).创建表</h5><h6 id="a-格式："><a href="#a-格式：" class="headerlink" title="(a)格式："></a>(a)格式：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;表名&#x27;,&#x27;列簇名&#x27;</span><br><span class="line"></span><br><span class="line">create &#x27;命名空间:表名&#x27;,&#x27;列簇名&#x27;</span><br></pre></td></tr></table></figure>
+<h6 id="b-举例："><a href="#b-举例：" class="headerlink" title="(b)举例："></a>(b)举例：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> create <span class="string">&#x27;student&#x27;</span>,<span class="string">&#x27;info&#x27;</span></span></span><br><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> create <span class="string">&#x27;iparkmerchant_order&#x27;</span>,<span class="string">&#x27;smzf&#x27;</span></span></span><br><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> create <span class="string">&#x27;staff&#x27;</span>,<span class="string">&#x27;info&#x27;</span></span></span><br><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> create <span class="string">&#x27;ns_ct:calllog&#x27;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUzZTdmYmExYzYxZDg5MmEucG5n?x-oss-process=image/format,png"></p>
+<h5 id="2-插入数据到表"><a href="#2-插入数据到表" class="headerlink" title="(2).插入数据到表"></a>(2).插入数据到表</h5><h6 id="a-格式：-1"><a href="#a-格式：-1" class="headerlink" title="(a)格式："></a>(a)格式：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">put &#x27;表名&#x27;,&#x27;rowkey&#x27;,&#x27;列簇:列&#x27;,&#x27;属性&#x27;</span><br></pre></td></tr></table></figure>
+<h6 id="b-举例：-1"><a href="#b-举例：-1" class="headerlink" title="(b)举例："></a>(b)举例：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:name&#x27;,&#x27;Thomas&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:sex&#x27;,&#x27;male&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:age&#x27;,&#x27;18&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1002&#x27;,&#x27;info:name&#x27;,&#x27;Janna&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1002&#x27;,&#x27;info:sex&#x27;,&#x27;female&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1002&#x27;,&#x27;info:age&#x27;,&#x27;20&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmYTIyNWYyNjJlYTdkMzEucG5n?x-oss-process=image/format,png"></p>
+<p>数据插入后的数据模型</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTllOTA1MDE0ZTFjMDZlNzAucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-扫描查看表数据"><a href="#3-扫描查看表数据" class="headerlink" title="(3).扫描查看表数据"></a>(3).扫描查看表数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; scan &#x27;student&#x27;</span><br><span class="line">hbase(main) &gt; scan &#x27;student&#x27;,&#123;STARTROW =&gt; &#x27;1001&#x27;, STOPROW  =&gt; &#x27;1001&#x27;&#125;</span><br><span class="line">hbase(main) &gt; scan &#x27;student&#x27;,&#123;STARTROW =&gt; &#x27;1001&#x27;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA4MWIyZWMyOTllZTZlZGQucG5n?x-oss-process=image/format,png"></p>
+<p>注：这个是从哪一个rowkey开始扫描</p>
+<h5 id="4-查看表结构"><a href="#4-查看表结构" class="headerlink" title="(4).查看表结构"></a>(4).查看表结构</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase(main)&gt;</span><span class="bash"> desc <span class="string">&#x27;student&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI0NjFiNzA1MWU2NWFmNjQucG5n?x-oss-process=image/format,png"></p>
+<h5 id="5-更新指定字段的数据"><a href="#5-更新指定字段的数据" class="headerlink" title="(5).更新指定字段的数据"></a>(5).更新指定字段的数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:name&#x27;,&#x27;Nick&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:age&#x27;,&#x27;100&#x27;</span><br><span class="line">hbase(main) &gt; put &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:isNull&#x27;,&#x27;&#x27;          //仅测试空值问题</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgwNDJkYTEyOTNhYzBmMGIucG5n?x-oss-process=image/format,png"></p>
+<h5 id="6-查看“指定行”或“指定列族-列”的数据"><a href="#6-查看“指定行”或“指定列族-列”的数据" class="headerlink" title="(6).查看“指定行”或“指定列族:列”的数据"></a>(6).查看“指定行”或“指定列族:列”的数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; get &#x27;student&#x27;,&#x27;1001&#x27;</span><br><span class="line">hbase(main) &gt; get &#x27;student&#x27;,&#x27;1001&#x27;,&#x27;info:name&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4YTQyZjM2YzY4MTNiNjcucG5n?x-oss-process=image/format,png"></p>
+<h5 id="7-删除数据"><a href="#7-删除数据" class="headerlink" title="(7).删除数据"></a>(7).删除数据</h5><p>删除某rowkey的全部数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; deleteall &#x27;student&#x27;,&#x27;1001&#x27;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWViNTA3OGUwNzQ5YjlmNGUucG5n?x-oss-process=image/format,png"></p>
+<h5 id="8-清空表数据"><a href="#8-清空表数据" class="headerlink" title="(8).清空表数据"></a>(8).清空表数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; truncate &#x27;student&#x27;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThmNTVhMTRlMmIwMzcwZTIucG5n?x-oss-process=image/format,png"></p>
+<p>提示：清空表的操作顺序为先disable，然后再truncate。</p>
+<p>(9). 删除表</p>
+<p>首先需要先让该表为disable状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; disable &#x27;student&#x27;</span><br></pre></td></tr></table></figure>
+<p>检查这个表是否被禁用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; is_enabled &#x27;student&#x27;</span><br><span class="line">hbase(main) &gt; is_disabled &#x27;student&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU5YmJmNGIzMzhkOWNjZjIucG5n?x-oss-process=image/format,png"></p>
+<p>恢复被禁用得表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; enable &#x27;student&#x27;</span><br></pre></td></tr></table></figure>
+<p>disable后才能drop这个表：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; drop &#x27;student&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJhOWRiMWJjOWI0NjYwMDcucG5n?x-oss-process=image/format,png"></p>
+<p>提示：如果直接drop表，会报错：Drop the named table. Table must first be disabled<br>ERROR: Table student is enabled. Disable it first.</p>
+<h5 id="10-统计表数据行数"><a href="#10-统计表数据行数" class="headerlink" title="(10).统计表数据行数"></a>(10).统计表数据行数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; count &#x27;staff&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhMWM2ZDE3ZTU3ZDZiOTkucG5n?x-oss-process=image/format,png"></p>
+<h5 id="11-变更表信息"><a href="#11-变更表信息" class="headerlink" title="(11). 变更表信息"></a>(11). 变更表信息</h5><p>将info列族中的数据存放3个版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; alter &#x27;student&#x27;,&#123;NAME=&gt;&#x27;info&#x27;,VERSIONS=&gt;3&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFiZWJlMTQ5NmVhMjk3YmIucG5n?x-oss-process=image/format,png"></p>
+<p>查看student的最新的版本的数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; get &#x27;student&#x27;,&#x27;1001&#x27;</span><br></pre></td></tr></table></figure>
+<p>查看HBase中的多版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main) &gt; get &#x27;student&#x27;,&#x27;1001&#x27;,&#123;COLUMN=&gt;&#x27;info:name&#x27;,VERSIONS=&gt;10&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY3ZDk2MTYyYTM2NjViOGUucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-常用Shell操作"><a href="#3-常用Shell操作" class="headerlink" title="3. 常用Shell操作"></a>3. 常用Shell操作</h4><h5 id="1-status-例如：显示服务器状态"><a href="#1-status-例如：显示服务器状态" class="headerlink" title="(1).status 例如：显示服务器状态"></a>(1).status 例如：显示服务器状态</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> status <span class="string">&#x27;bigdata111&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="2-exists-检查表是否存在，适用于表量特别多的情况"><a href="#2-exists-检查表是否存在，适用于表量特别多的情况" class="headerlink" title="(2).exists 检查表是否存在，适用于表量特别多的情况"></a>(2).exists 检查表是否存在，适用于表量特别多的情况</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> exists <span class="string">&#x27;hbase_book&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="3-is-enabled-is-disabled-检查表是否启用或禁用"><a href="#3-is-enabled-is-disabled-检查表是否启用或禁用" class="headerlink" title="(3).is_enabled/is_disabled 检查表是否启用或禁用"></a>(3).is_enabled/is_disabled 检查表是否启用或禁用</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> is_enabled <span class="string">&#x27;hbase_book&#x27;</span></span></span><br><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> is_disabled <span class="string">&#x27;hbase_book&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="4-alter-该命令可以改变表和列族的模式，例如："><a href="#4-alter-该命令可以改变表和列族的模式，例如：" class="headerlink" title="(4).alter 该命令可以改变表和列族的模式，例如："></a>(4).alter 该命令可以改变表和列族的模式，例如：</h5><p>为当前表增加列族：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> alter <span class="string">&#x27;hbase_book&#x27;</span>, NAME =&gt; <span class="string">&#x27;CF2&#x27;</span>, VERSIONS =&gt; 2</span></span><br></pre></td></tr></table></figure>
+<p>为当前表删除列族：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> alter <span class="string">&#x27;hbase_book&#x27;</span>, <span class="string">&#x27;delete&#x27;</span> =&gt; <span class="string">&#x27;CF2&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="5-disable禁用一张表"><a href="#5-disable禁用一张表" class="headerlink" title="(5).disable禁用一张表"></a>(5).disable禁用一张表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> <span class="built_in">disable</span> <span class="string">&#x27;hbase_book&#x27;</span></span></span><br><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> drop <span class="string">&#x27;hbase_book&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="6-delete"><a href="#6-delete" class="headerlink" title="(6).delete"></a>(6).delete</h5><p>删除一行中一个单元格的值，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> delete <span class="string">&#x27;hbase_book&#x27;</span>, <span class="string">&#x27;rowKey&#x27;</span>, <span class="string">&#x27;CF:C&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="7-truncate清空表数据，即禁用表-删除表-创建表"><a href="#7-truncate清空表数据，即禁用表-删除表-创建表" class="headerlink" title="(7).truncate清空表数据，即禁用表-删除表-创建表"></a>(7).truncate清空表数据，即禁用表-删除表-创建表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> truncate <span class="string">&#x27;hbase_book&#x27;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="8-create创建多个列族："><a href="#8-create创建多个列族：" class="headerlink" title="(8).create创建多个列族："></a>(8).create创建多个列族：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hbase&gt;</span><span class="bash"> create <span class="string">&#x27;t1&#x27;</span>, &#123;NAME =&gt; <span class="string">&#x27;f1&#x27;</span>&#125;, &#123;NAME =&gt; <span class="string">&#x27;f2&#x27;</span>&#125;, &#123;NAME =&gt; <span class="string">&#x27;f3&#x27;</span>&#125;</span></span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HBase/" rel="tag">HBase</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-HBase安装部署"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/08/HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"
+    >HBase安装部署</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/08/HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time datetime="2019-04-08T04:00:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HBase/">HBase</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="HBase部署"><a href="#HBase部署" class="headerlink" title="HBase部署"></a>HBase部署</h3><h4 id="1、Zookeeper正常部署"><a href="#1、Zookeeper正常部署" class="headerlink" title="1、Zookeeper正常部署"></a>1、Zookeeper正常部署</h4><p>首先保证Zookeeper集群的正常部署，并启动之：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/module/zookeeper-3.4.5/bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+<h4 id="2、Hadoop正常部署"><a href="#2、Hadoop正常部署" class="headerlink" title="2、Hadoop正常部署"></a>2、Hadoop正常部署</h4><p>Hadoop集群的正常部署并启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/opt/module/hadoop-2.8.4/sbin/start-dfs.sh</span><br><span class="line">/opt/module/hadoop-2.8.4/sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+<h4 id="3、HBase的解压"><a href="#3、HBase的解压" class="headerlink" title="3、HBase的解压"></a>3、HBase的解压</h4><p>解压HBase到指定目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf /opt/soft/hbase-1.3.1-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<h4 id="4、HBase的配置文件"><a href="#4、HBase的配置文件" class="headerlink" title="4、HBase的配置文件"></a>4、HBase的配置文件</h4><p>需要修改HBase对应的配置文件。</p>
+<h5 id="1-hbase-env-sh"><a href="#1-hbase-env-sh" class="headerlink" title="(1)hbase-env.sh:"></a>(1)hbase-env.sh:</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hbase-1.3.1/conf</span><br><span class="line"></span><br><span class="line">vi hbase-env.sh</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144</span><br><span class="line">export HBASE_MANAGES_ZK=false</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTllMGY0YjVjYzcxZWRjMzIucG5n?x-oss-process=image/format,png" alt="hbase-env.sh"></p>
+<p>提示：如果使用的是JDK8以上版本，注释掉hbase-env.sh的45-47行，不然会报警告</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiNjFhYTgzYmVmZTgxOGQucG5n?x-oss-process=image/format,png" alt="注释"></p>
+<h5 id="2-hbase-site-xml"><a href="#2-hbase-site-xml" class="headerlink" title="(2)hbase-site.xml"></a>(2)hbase-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hbase-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>修改内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://hadoop1:9000/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:2181,hadoop2:2181,hadoop3:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>  </span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.4.10/zkData<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.maxclockskew<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>180000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM3NzM0ODVjMmQ4OTM4MjEucG5n?x-oss-process=image/format,png" alt="hbase-site.xml"></p>
+<h5 id="3-regionservers："><a href="#3-regionservers：" class="headerlink" title="(3)regionservers："></a>(3)regionservers：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi regionservers</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop1</span><br><span class="line">hadoop2</span><br><span class="line">hadoop3</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxNGVhY2ZkNmE5ZjBiY2QucG5n?x-oss-process=image/format,png" alt="regionservers"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNkNmUxNTM4NGRkZTQyZGEucG5n?x-oss-process=image/format,png" alt="修改配置文件"></p>
+<h4 id="5-HBase需要依赖的Jar包-额外，不用配置-当hbase与hadoop版本不一致时，可能会出现hbase输出存储不到hdfs的情况，那时需要配置这些"><a href="#5-HBase需要依赖的Jar包-额外，不用配置-当hbase与hadoop版本不一致时，可能会出现hbase输出存储不到hdfs的情况，那时需要配置这些" class="headerlink" title="5.HBase需要依赖的Jar包(额外，不用配置,当hbase与hadoop版本不一致时，可能会出现hbase输出存储不到hdfs的情况，那时需要配置这些)"></a>5.HBase需要依赖的Jar包(额外，不用配置,当hbase与hadoop版本不一致时，可能会出现hbase输出存储不到hdfs的情况，那时需要配置这些)</h4><p>由于HBase需要依赖Hadoop，所以替换HBase的lib目录下的jar包，以解决兼容问题：</p>
+<h5 id="1-删除原有的jar："><a href="#1-删除原有的jar：" class="headerlink" title="(1). 删除原有的jar："></a>(1). 删除原有的jar：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /opt/module/hbase-1.3.1/lib/hadoop-*</span><br><span class="line">rm -rf /opt/module/hbase-1.3.1/lib/zookeeper-3.4.10.jar</span><br></pre></td></tr></table></figure>
+<h5 id="2-拷贝新jar，涉及的jar有："><a href="#2-拷贝新jar，涉及的jar有：" class="headerlink" title="(2). 拷贝新jar，涉及的jar有："></a>(2). 拷贝新jar，涉及的jar有：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">hadoop-annotations-2.8.4.jar</span><br><span class="line">hadoop-auth-2.8.4.jar</span><br><span class="line">hadoop-client-2.8.4.jar</span><br><span class="line">hadoop-common-2.8.4.jar</span><br><span class="line">hadoop-hdfs-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-app-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-common-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-core-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-hs-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-hs-plugins-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-jobclient-2.8.4.jar</span><br><span class="line">hadoop-mapreduce-client-jobclient-2.8.4-tests.jar</span><br><span class="line">hadoop-mapreduce-client-shuffle-2.8.4.jar</span><br><span class="line">hadoop-yarn-api-2.8.4.jar</span><br><span class="line">hadoop-yarn-applications-distributedshell-2.8.4.jar</span><br><span class="line">hadoop-yarn-applications-unmanaged-am-launcher-2.8.4.jar</span><br><span class="line">hadoop-yarn-client-2.8.4.jar</span><br><span class="line">hadoop-yarn-common-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-applicationhistoryservice-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-common-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-nodemanager-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-resourcemanager-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-tests-2.8.4.jar</span><br><span class="line">hadoop-yarn-server-web-proxy-2.8.4.jar</span><br><span class="line">zookeeper-3.4.10.jar</span><br></pre></td></tr></table></figure>
+<p>提示：这些jar包的对应版本应替换成你目前使用的hadoop版本，具体情况具体分析。</p>
+<p>查找jar包举例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /opt/module/hadoop-2.8.4/ -name hadoop-annotations*</span><br></pre></td></tr></table></figure>
+<p>然后将找到的jar包复制到HBase的lib目录下即可。</p>
+<h4 id="6-HBase软连接Hadoop配置-额外，不用配置"><a href="#6-HBase软连接Hadoop配置-额外，不用配置" class="headerlink" title="6.HBase软连接Hadoop配置(额外，不用配置)"></a>6.HBase软连接Hadoop配置(额外，不用配置)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -s /opt/module/hadoop-2.8.4/etc/hadoop/core-site.xml /opt/module/hbase-1.3.1/conf/core-site.xml</span><br><span class="line"></span><br><span class="line">ln -s /opt/module/hadoop-2.8.4/etc/hadoop/hdfs-site.xml /opt/module/hbase-1.3.1/conf/hdfs-site.xml</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-配置环境变量"><a href="#7-配置环境变量" class="headerlink" title="7.配置环境变量"></a>7.配置环境变量</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HBASE_HOME=/opt/module/hbase-1.3.1</span><br><span class="line">export PATH=$PATH:$HBASE_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFhZTI5YzBiMWVlZTU3OWQucG5n?x-oss-process=image/format,png" alt="配置环境变量"></p>
+<p>使环境变量生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h4 id="8、HBase远程scp到其他集群"><a href="#8、HBase远程scp到其他集群" class="headerlink" title="8、HBase远程scp到其他集群"></a>8、HBase远程scp到其他集群</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/module/hbase-1.3.1/ root@hadoop2:/opt/module/</span><br><span class="line"></span><br><span class="line">scp -r /opt/module/hbase-1.3.1/ root@hadoop3:/opt/module/</span><br></pre></td></tr></table></figure>
+
+<h4 id="9、HBase服务的启动"><a href="#9、HBase服务的启动" class="headerlink" title="9、HBase服务的启动"></a>9、HBase服务的启动</h4><h5 id="1-启动方式1："><a href="#1-启动方式1：" class="headerlink" title="(1)启动方式1："></a>(1)启动方式1：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hbase-daemon.sh start master</span><br><span class="line">bin/hbase-daemon.sh start regionserver</span><br></pre></td></tr></table></figure>
+<p>提示：如果集群之间的节点时间不同步，会导致regionserver无法启动，抛出ClockOutOfSyncException异常。</p>
+<h5 id="2-启动方式2："><a href="#2-启动方式2：" class="headerlink" title="(2)启动方式2："></a>(2)启动方式2：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/start-hbase.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNjMzBlNTlmMGFmNDBiZGQucG5n?x-oss-process=image/format,png"></p>
+<p>对应的停止服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/stop-hbase.sh</span><br></pre></td></tr></table></figure>
+<h4 id="10、查看Hbse页面"><a href="#10、查看Hbse页面" class="headerlink" title="10、查看Hbse页面"></a>10、查看Hbse页面</h4><p>启动成功后，可以通过“host:port”的方式来访问HBase管理页面，例如：<br><a target="_blank" rel="noopener" href="http://hadoop1:16010/">http://hadoop1:16010</a></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY3NGRkMDMzMjIxN2MwYTkucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HBase/" rel="tag">HBase</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-HBase基础知识"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/08/HBase%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"
+    >HBase基础知识</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/08/HBase%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="article-date">
+  <time datetime="2019-04-08T03:00:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HBase/">HBase</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-HBase简介"><a href="#一-HBase简介" class="headerlink" title="一.HBase简介"></a>一.HBase简介</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase是一个分布式的、面向列的开源数据库，它是一个适合于非结构化数据存储的数据库。另一个不同的是HBase基于列的而不是基于行的模式。</p>
+<p>大：上亿行、百万列</p>
+<p>面向列：面向列（簇）的存储和权限控制，列（簇）独立检索</p>
+<p>稀疏：对于为空(null)的列，并不占用存储空间，因此，表的设计的非常的稀疏</p>
+<h3 id="二-HBase的角色"><a href="#二-HBase的角色" class="headerlink" title="二. HBase的角色"></a>二. HBase的角色</h3><h4 id="1-HMaster"><a href="#1-HMaster" class="headerlink" title="1. HMaster"></a>1. HMaster</h4><h5 id="1-功能："><a href="#1-功能：" class="headerlink" title="(1).功能："></a>(1).功能：</h5><p>(a) 监控RegionServer<br>(b) 处理RegionServer故障转移<br>(c ) 处理元数据的变更<br>(d) 处理region的分配或移除<br>(e) 在空闲时间进行数据的负载均衡<br>(f) 通过Zookeeper发布自己的位置给客户端</p>
+<h4 id="2-HRegionServer"><a href="#2-HRegionServer" class="headerlink" title="2.HRegionServer"></a>2.HRegionServer</h4><h5 id="1-功能：-1"><a href="#1-功能：-1" class="headerlink" title="(1).功能："></a>(1).功能：</h5><p>(a) 负责存储HBase的实际数据<br>(b) 处理分配给它的Region<br>(c ) 刷新缓存到HDFS<br>(d) 维护HLog<br>(e) 执行压缩<br>(f) 负责处理Region分片</p>
+<h5 id="2-组件："><a href="#2-组件：" class="headerlink" title="(2).组件："></a>(2).组件：</h5><h6 id="a-Write-Ahead-logs"><a href="#a-Write-Ahead-logs" class="headerlink" title="(a). Write-Ahead logs"></a>(a). Write-Ahead logs</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase的修改记录，当对HBase读写数据的时候，数据不是直接写进磁盘，它会在内存中保留一段时间（时间以及数据量阈值,可以设定）。但把数据保存在内存中可能有更高的概率引起数据丢失，为了解决这个问题，数据会先写在一个叫做Write-Ahead logfile的文件中，然后再写入内存中。所以在系统出现故障的时候，数据可以通过这个日志文件重建。</p>
+<h6 id="b-HFile"><a href="#b-HFile" class="headerlink" title="(b). HFile"></a>(b). HFile</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;这是在磁盘上保存原始数据的实际的物理文件，是实际的存储文件。</p>
+<h6 id="c-Store"><a href="#c-Store" class="headerlink" title="(c ). Store"></a>(c ). Store</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;HFile存储在Store中，一个Store对应HBase表中的一个列簇。</p>
+<h6 id="d-MemStore"><a href="#d-MemStore" class="headerlink" title="(d). MemStore"></a>(d). MemStore</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;顾名思义，就是内存存储，位于内存中，用来保存当前的数据操作，所以当数据保存在WAL中之后，RegsionServer会在内存中存储键值对。</p>
+<h6 id="e-Region"><a href="#e-Region" class="headerlink" title="(e). Region"></a>(e). Region</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;Hbase表的分片，HBase表会根据RowKey值被切分成不同的region存储在RegionServer中，在一个RegionServer中可以有多个不同的region。</p>
+<h3 id="三-HBase的架构"><a href="#三-HBase的架构" class="headerlink" title="三.HBase的架构"></a>三.HBase的架构</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;一个RegionServer可以包含多个HRegion，每个RegionServer维护一个HLog，和多个HFiles以及其对应的MemStore。RegionServer运行于DataNode上，数量可以与DatNode数量一致，请参考如下架构图：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA0OGI4N2M1NzBlNTM2YTAucG5n?x-oss-process=image/format,png" alt="HBase架构"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE0YmExNDhmMjdlYTZmNjYucG5n?x-oss-process=image/format,png" alt="Hbase架构2"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU5YWUyZDE0ODRjMmI0ODkucG5n?x-oss-process=image/format,png"></p>
+<h3 id="四-HBase数据模型"><a href="#四-HBase数据模型" class="headerlink" title="四. HBase数据模型"></a>四. HBase数据模型</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ1MDliYmVkNDUyM2M2NjQucG5n?x-oss-process=image/format,png"></p>
+<p>确定一个单元格的位置（cell），需要如下四个<br>rowkey + Colume Family + Colume + timestamp(版本version)，数据有版本的概念，即一个单元格可能有多个值，但是只有最新得一个对外显示。</p>
+<ul>
+<li>HBase中有两张特殊的Table，-ROOT-和.META.</li>
+<li>.META.：记录了用户表的Region信息，**.META.可以有多个region**</li>
+<li>-ROOT-：记录了.META.表的Region信息，**-ROOT-只有一个region**</li>
+<li>Zookeeper中记录了-ROOT-表的location</li>
+<li>Client访问用户数据之前需要首先访问zookeeper，然后访问-ROOT-表，接着访问.META.表，最后才能找到用户数据的位置去访问，中间需要多次网络操作，不过client端会做cache缓存，注意：<strong>在0.96版本后，Hbase移除了-ROOT-表</strong></li>
+</ul>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI2OTUyZTNkMDJiYTYyMTIucG5n?x-oss-process=image/format,png"></p>
+<p><strong>Row Key</strong>: 行键，Table的主键，Table中的记录默认按照Row Key升序排序</p>
+<p><strong>Timestamp</strong>:时间戳，每次数据操作对应的时间戳，可以看作是数据的version number</p>
+<p><strong>Column Family</strong>：列簇，Table在水平方向有一个或者多个Column Family组成，一个Column Family中可以由<strong>任意多个Column</strong>组成，即Column Family支持动态扩展，无需预先定义Column的数量以及类型，所有Column均以二进制格式存储，用户需要自行进行类型转换。</p>
+<p><strong>Table &amp; Region:</strong> 当Table随着记录数不断增加而变大后，会逐渐分裂成多份splits，成为regions，一个region由[startkey,endkey)表示，不同的region会被Master分配给相应的RegionServer进行管理：.</p>
+<h3 id="五-HMaster"><a href="#五-HMaster" class="headerlink" title="五.HMaster"></a>五.HMaster</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;HMaster没有单点问题，HBase中可以启动多个HMaster，通过Zookeeper的Master Election机制保证总有一个Master运行，HMaster在功能上主要负责Table和Region的管理工作：</p>
+<p>(1). 管理用户对Table的增、删、改、查操作</p>
+<p>(2). 管理HRegionServer的负载均衡，调整Region分布</p>
+<p>(3). 在Region Split后，负责新Region的分配</p>
+<p>(4). 在HRegionServer停机后，负责失效HRegionServer 上的Regions迁移</p>
+<h3 id="六-HRegionServer"><a href="#六-HRegionServer" class="headerlink" title="六. HRegionServer"></a>六. HRegionServer</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;HRegionServer内部管理了一系列HRegion对象，每个HRegion对应了Table中的一个Region，HRegion中由多个HStore组成。<strong>每个HStore对应了Table中的一个Column Family</strong>的存储，可以看出每个Column Family其实就是一个集中的存储单元，因此最好将具备共同IO特性的column放在一个Column Family中，这样最高效。</p>
+<h4 id="1-MemStore-amp-StoreFiles"><a href="#1-MemStore-amp-StoreFiles" class="headerlink" title="1. MemStore &amp; StoreFiles"></a>1. MemStore &amp; StoreFiles</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HStore存储是HBase存储的核心了，其中由两部分组成，一部分是<strong>MemStore</strong>，一部分是<strong>StoreFiles</strong>。MemStore是Sorted Memory Buffer，用户写入的数据<strong>首先</strong>会放入MemStore，当MemStore满了以后会Flush成一个StoreFile（底层实现是HFile），当StoreFile文件数量增长到一定阈值，会触发Compact合并操作，将多个StoreFiles合并成一个StoreFile，合并过程中会进行版本合并和数据删除，因此可以看出HBase其实只有增加数据，所有的更新和删除操作都是在后续的compact过程中进行的，这使得用户的写操作只要进入内存中就可以立即返回，保证了HBase I/O的高性能。当StoreFiles Compact后，会逐步形成越来越大的StoreFile，当单个StoreFile大小超过一定阈值后，会触发Split操作，同时把当前Region Split成2个Region，父Region会下线，新Split出的2个孩子Region会被HMaster分配到相应的HRegionServer上，使得原先1个Region的压力得以分流到2个Region上。</p>
+<h4 id="2-HLog"><a href="#2-HLog" class="headerlink" title="2. HLog"></a>2. HLog</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每个HRegionServer中都有一个HLog对象，HLog是一个实现Write Ahead Log的类，在每次用户操作写入MemStore的同时，也会写一份数据到HLog文件中，HLog文件定期会滚动出新的，并删除旧的文件（已持久化到StoreFile中的数据）。当HRegionServer意外终止后，HMaster会通过Zookeeper感知到，HMaster首先会处理遗留的 HLog文件，将其中不同Region的Log数据进行拆分，分别放到相应region的目录下，然后再将失效的region重新分配，领取 到这些region的HRegionServer在Load Region的过程中，会发现有历史HLog需要处理，因此会Replay HLog中的数据到MemStore中，然后flush到StoreFiles，完成数据恢复。</p>
+<h4 id="3-文件类型"><a href="#3-文件类型" class="headerlink" title="3.文件类型"></a>3.文件类型</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase中的所有数据文件都存储在Hadoop HDFS文件系统上，主要包括上述提出的两种文件类型：</p>
+<h5 id="1-HFile"><a href="#1-HFile" class="headerlink" title="(1).HFile"></a>(1).HFile</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase中KeyValue数据的存储格式，HFile是Hadoop的二进制格式文件，实际上StoreFile就是对HFile做了轻量级包装，即StoreFile底层就是HFile</p>
+<h5 id="2-HLog-File"><a href="#2-HLog-File" class="headerlink" title="(2).HLog File"></a>(2).HLog File</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;HBase中WAL（Write Ahead Log） 的存储格式，物理上是Hadoop的Sequence File</p>
+<h4 id="4-Zookeeper中hbase的节点的存储信息："><a href="#4-Zookeeper中hbase的节点的存储信息：" class="headerlink" title="4. Zookeeper中hbase的节点的存储信息："></a>4. Zookeeper中hbase的节点的存储信息：</h4><ul>
+<li><p>rs：regionserver节点信息</p>
+</li>
+<li><p>table-lock：hbase的除meta以外的所有表</p>
+</li>
+<li><p>Table：hbase的所有的表</p>
+</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HBase/" rel="tag">HBase</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试02-03]删除中间结点"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/07/%5BLeetCode-%E9%9D%A2%E8%AF%9502-03%5D%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/"
+    >[LeetCode-面试02.03]删除中间结点</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/07/%5BLeetCode-%E9%9D%A2%E8%AF%9502-03%5D%E5%88%A0%E9%99%A4%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9/" class="article-date">
+  <time datetime="2019-04-07T03:00:00.000Z" itemprop="datePublished">2019-04-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>实现一种算法，删除单向链表中间的某个节点（除了第一个和最后一个节点，不一定是中间节点），假定你只能访问该节点。</p>
+<blockquote>
+<p>示例：<br>输入：单向链表a-&gt;b-&gt;c-&gt;d-&gt;e-&gt;f中的节点c<br>结果：不返回任何数据，但该链表变为a-&gt;b-&gt;d-&gt;e-&gt;f</p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种解法："><a href="#1-第一种解法：" class="headerlink" title="1.第一种解法："></a>1.第一种解法：</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>把节点c的val变为节点d(node.next)的val，</li>
+<li>此时可以看成节点c已经变成了节点d，</li>
+<li>改变c(node)的下一个节点为e(node.next.next)</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(ListNode node)</span> </span>&#123;</span><br><span class="line">        node.val = node.next.val;</span><br><span class="line">        node.next=node.next.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试02-02]返回倒数第 k 个节点"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/05/%5BLeetCode-%E9%9D%A2%E8%AF%9502-02%5D%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/"
+    >[LeetCode-面试02.02]返回倒数第 k 个节点</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/05/%5BLeetCode-%E9%9D%A2%E8%AF%9502-02%5D%E8%BF%94%E5%9B%9E%E5%80%92%E6%95%B0%E7%AC%AC%20k%20%E4%B8%AA%E8%8A%82%E7%82%B9/" class="article-date">
+  <time datetime="2019-04-05T03:00:00.000Z" itemprop="datePublished">2019-04-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>实现一种算法，找出单向链表中倒数第 k 个节点。返回该节点的值。<br>注意：本题相对原题稍作改动</p>
+<blockquote>
+<p>示例：<br>输入： 1-&gt;2-&gt;3-&gt;4-&gt;5 和 k = 2<br>输出： 4</p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种解法"><a href="#1-第一种解法" class="headerlink" title="1.第一种解法"></a>1.第一种解法</h4><h5 id="1-解题思路"><a href="#1-解题思路" class="headerlink" title="(1)解题思路:"></a>(1)解题思路:</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE1NmQwMjJmYjUyZjA0N2MucG5n?x-oss-process=image/format,png" alt="双指针法"></p>
+<ul>
+<li>新建指针p，指向头结点</li>
+<li>再利用for循环，让p后移k位</li>
+<li>再利用while循环，同时使p向后移，head指针也向后移</li>
+<li>直到p指向null，即尾结点，此时head指向的就是倒数第k个结点</li>
+<li>返回此时head的val值即可</li>
+</ul>
+<h5 id="2-代码"><a href="#2-代码" class="headerlink" title="(2)代码"></a>(2)代码</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthToLast</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        ListNode p = head;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;k;i++)&#123;</span><br><span class="line">            p=p.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(p!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            p=p.next;</span><br><span class="line">            head=head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head.val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试02-01]删除单链表中的重复元素"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/03/%5BLeetCode-%E9%9D%A2%E8%AF%9502-01%5D%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/"
+    >[LeetCode-面试02.01]删除单链表中的重复元素</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/03/%5BLeetCode-%E9%9D%A2%E8%AF%9502-01%5D%E5%88%A0%E9%99%A4%E5%8D%95%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/" class="article-date">
+  <time datetime="2019-04-03T03:00:00.000Z" itemprop="datePublished">2019-04-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目"><a href="#一-题目" class="headerlink" title="一.题目"></a>一.题目</h3><p>编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。</p>
+<blockquote>
+<p>示例1:<br> 输入：[1, 2, 3, 3, 2, 1]<br> 输出：[1, 2, 3]<br>示例2:<br> 输入：[1, 1, 1, 1, 2]<br> 输出：[1, 2]<br>提示：<br>链表长度在[0, 20000]范围内。<br>链表元素在[0, 20000]范围内</p>
+</blockquote>
+<h3 id="二-题解"><a href="#二-题解" class="headerlink" title="二.题解"></a>二.题解</h3><h4 id="1-第一种方法：双指针法"><a href="#1-第一种方法：双指针法" class="headerlink" title="1.第一种方法：双指针法"></a>1.第一种方法：双指针法</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>HashSet中存入未曾出现的元素，pre和current依次向后推进</li>
+<li>HashSet出现出现过的元素，使用pre和current删除重复结点</li>
+<li>只用单层循环即可完成目标</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">removeDuplicateNodes</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(head==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode pre = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        ListNode current = head;</span><br><span class="line">        pre.next=head;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">while</span>(current!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!set.contains(current.val))&#123;</span><br><span class="line">                pre=current;</span><br><span class="line">                set.add(current.val);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pre.next=current.next;</span><br><span class="line">            &#125;</span><br><span class="line">            current=current.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试01-09]字符串轮转"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/04/01/%5BLeetCode-%E9%9D%A2%E8%AF%9501-09%5D%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AE%E8%BD%AC/"
+    >[LeetCode-面试01.09]字符串轮转</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/04/01/%5BLeetCode-%E9%9D%A2%E8%AF%9501-09%5D%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AE%E8%BD%AC/" class="article-date">
+  <time datetime="2019-04-01T03:00:00.000Z" itemprop="datePublished">2019-04-01</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目"><a href="#一-题目" class="headerlink" title="一.题目"></a>一.题目</h3><p>字符串轮转。给定两个字符串s1和s2，请编写代码检查s2是否为s1旋转而成（比如，waterbottle是erbottlewat旋转后的字符串）。</p>
+<blockquote>
+<p>示例1:<br> 输入：s1 = “waterbottle”, s2 = “erbottlewat”<br> 输出：True</p>
+</blockquote>
+<blockquote>
+<p>示例2:<br> 输入：s1 = “aa”, “aba”<br> 输出：False</p>
+</blockquote>
+<h3 id="二-题解"><a href="#二-题解" class="headerlink" title="二.题解"></a>二.题解</h3><h4 id="1-第一种方法："><a href="#1-第一种方法：" class="headerlink" title="1.第一种方法："></a>1.第一种方法：</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>首先判定两个字符串s1,s2长度是否相等，不想等返回false</li>
+<li>在判定两个字符串是否equals.若相同返回true</li>
+<li>再使s1叠加到s1后面</li>
+<li>判定新形成的s1是否包含s2，若包含返回true</li>
+<li>否则返回false</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isFlipedString</span><span class="params">(String s1,String s2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s1.length()!=s2.length())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(s1.equals(s2))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    s1+=s1;</span><br><span class="line">    <span class="keyword">if</span>(s1.contains(s2))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-第二种方法："><a href="#2-第二种方法：" class="headerlink" title="2.第二种方法："></a>2.第二种方法：</h4><h5 id="1-解题思路：-1"><a href="#1-解题思路：-1" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>还是先判定字符串s1,s2长度是否相等，以及s1是否与s2相同</li>
+<li>利用for循环，找到s1中的字符与s2第一个字符相同的下标i,</li>
+<li>新建一个StringBuilder sb，截取s2从第i位到最后的字符串，赋值给sb，sb=s2.substring(i)</li>
+<li>再截取s2从0位到i位字符串，添加到sb,sb.append(s2.substring(0,i))</li>
+<li>再比较sb.toString与s1是否相同</li>
+<li>若相同返回true，否则返回false</li>
+</ul>
+<h5 id="2-代码：-1"><a href="#2-代码：-1" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isFlipedString2</span><span class="params">(String s1,String s2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s1.length()!=s2.length())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(s1.equals(s2))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//&quot;[erbottle]wat&quot;,&quot;wat[erbottle]&quot;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s1.length();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s1.charAt(i)==s2.charAt(<span class="number">0</span>))&#123;</span><br><span class="line">            <span class="comment">//i=3</span></span><br><span class="line">            StringBuilder sb = <span class="keyword">new</span> StringBuilder(s1.substring(i));</span><br><span class="line">            sb.append(s1.substring(<span class="number">0</span>,i));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(s2.equals(sb.toString()))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试01-08]零矩阵"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/03/11/%5BLeetCode-%E9%9D%A2%E8%AF%9501-08%5D%E9%9B%B6%E7%9F%A9%E9%98%B5/"
+    >[LeetCode-面试01.08]零矩阵</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/03/11/%5BLeetCode-%E9%9D%A2%E8%AF%9501-08%5D%E9%9B%B6%E7%9F%A9%E9%98%B5/" class="article-date">
+  <time datetime="2019-03-11T03:00:00.000Z" itemprop="datePublished">2019-03-11</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>编写一种算法，若M × N矩阵中某个元素为0，则将其所在的行与列清零。</p>
+<blockquote>
+<p>示例 1：<br>输入：<br>[[1,1,1],<br>  [1,0,1],<br>  [1,1,1]]<br>输出：<br>[[1,0,1],<br>  [0,0,0],<br>  [1,0,1]]</p>
+</blockquote>
+<blockquote>
+<p>示例 2：<br>输入：<br>[[0,1,2,0],<br>  [3,4,5,2],<br>  [1,3,1,5]]<br>输出：<br>[[0,0,0,0],<br>  [0,4,5,0],<br>  [0,3,1,0]]</p>
+</blockquote>
+<h3 id="二题解："><a href="#二题解：" class="headerlink" title="二题解："></a>二题解：</h3><h4 id="1-第一种解法："><a href="#1-第一种解法：" class="headerlink" title="1.第一种解法："></a>1.第一种解法：</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>利用两个HashSet表row_set,col_set存储矩阵元素为0的横纵坐标</li>
+<li>再根据横坐标row_set，将元素0所在行重置为0</li>
+<li>再根据纵坐标col_set，将元素0所在列重置为0</li>
+</ul>
+<h5 id="2-具体实现："><a href="#2-具体实现：" class="headerlink" title="(2)具体实现："></a>(2)具体实现：</h5><ul>
+<li>利用HashSet表记录矩阵中元素为0的下标，其中row_set记录元素0所在的行数，col_set记录元素0所在的列数</li>
+<li>再利用for循环，循环元素为int row_index,row_set将行数为row_set中成员所在行重置为0，Arrays.fill(matrix[row_index],0);</li>
+<li>再利用嵌套for循环，将0元素所在的列重置为0</li>
+<li>外循环循环元素为 int col_index,col_set,内循环为下标为i,从0开始遍历，直到matrix.length-1</li>
+<li>内层循环下标为i，从0开始，遍历到matrix[0].length-1，matrix[i][col_index]=0;</li>
+<li>循环结束即转换完毕</li>
+</ul>
+<h5 id="3-代码："><a href="#3-代码：" class="headerlink" title="(3)代码："></a>(3)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] setZeros(<span class="keyword">int</span>[][] matrix)&#123;</span><br><span class="line">    HashSet&lt;Integer&gt; row_set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line">    HashSet&lt;Integer&gt; col_set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;matrix.length;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;matrix[<span class="number">0</span>].length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(matrix[i][j]==<span class="number">0</span>)&#123;</span><br><span class="line">                row_set.add(i);</span><br><span class="line">                col_set.add(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> row_index:row_set)&#123;</span><br><span class="line">        Arrays.fill(matrix[row_index],<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> col_index:col_set)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;matrix[<span class="number">0</span>].length;i++)&#123;</span><br><span class="line">            matrix[i][col_index]=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> matrix;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-MacOS IDEA配置scala"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/03/05/MacOS%20IDEA%E9%85%8D%E7%BD%AEscala/"
+    >MacOS IDEA配置scala</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/03/05/MacOS%20IDEA%E9%85%8D%E7%BD%AEscala/" class="article-date">
+  <time datetime="2019-03-05T07:50:00.000Z" itemprop="datePublished">2019-03-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Scala/">Scala</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-前提："><a href="#1-前提：" class="headerlink" title="1.前提："></a>1.前提：</h4><ul>
+<li>scala已经在mac本地安装：</li>
+</ul>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFlOGM3NDMyZjMxNTlkZTkucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-新建项目后，点击项目，右键，点击Add-Framwork-Support"><a href="#2-新建项目后，点击项目，右键，点击Add-Framwork-Support" class="headerlink" title="2.新建项目后，点击项目，右键，点击Add Framwork Support"></a>2.新建项目后，点击项目，右键，点击Add Framwork Support</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdjODkwNWQ0MWI5N2M0OGMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-找到scala，刚开始时“scala-dk-2-11-8”是没有的，需要自己找"><a href="#3-找到scala，刚开始时“scala-dk-2-11-8”是没有的，需要自己找" class="headerlink" title="3.找到scala，刚开始时“scala-dk-2.11.8”是没有的，需要自己找"></a>3.找到scala，刚开始时“scala-dk-2.11.8”是没有的，需要自己找</h4><p>所以点击create，再点击Browe…<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiOTlkYmYwZmE2MWU2YjEucG5n?x-oss-process=image/format,png"></p>
+<h4 id="4-来到自己安装scala的目录。选择scala-2-11-8目录下的lib目录，点击open，即可"><a href="#4-来到自己安装scala的目录。选择scala-2-11-8目录下的lib目录，点击open，即可" class="headerlink" title="4.来到自己安装scala的目录。选择scala-2.11.8目录下的lib目录，点击open，即可"></a>4.来到自己安装scala的目录。选择scala-2.11.8目录下的lib目录，点击open，即可</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMwODU4MmIyNDFlZDhhM2EucG5n?x-oss-process=image/format,png"></p>
+<h4 id="5-点击ok"><a href="#5-点击ok" class="headerlink" title="5.点击ok"></a>5.点击ok</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBiYWRiMTg3NWYyMTE0NGYucG5n?x-oss-process=image/format,png"></p>
+<h4 id="6-点击file-gt-Project-Structure"><a href="#6-点击file-gt-Project-Structure" class="headerlink" title="6.点击file-&gt;Project Structure"></a>6.点击file-&gt;Project Structure</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE0MDRkNWVlMjZlYjQ1NjAucG5n?x-oss-process=image/format,png"></p>
+<h4 id="7-选择module"><a href="#7-选择module" class="headerlink" title="7.选择module"></a>7.选择module</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThmMWM2NGJkOTE5OWI2NDMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="8-在main，新建一个scala目录-点击Source-即可在Scala目录中写scala代码了："><a href="#8-在main，新建一个scala目录-点击Source-即可在Scala目录中写scala代码了：" class="headerlink" title="8.在main，新建一个scala目录,点击Source.即可在Scala目录中写scala代码了："></a>8.在main，新建一个scala目录,点击Source.即可在Scala目录中写scala代码了：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdjYzVjZDVhMzRjZGNlNDQucG5n?x-oss-process=image/format,png"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWViNzdlNjk4OTdmZTQwYWYucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-MacOS安装scala"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/03/05/MacOS%E5%AE%89%E8%A3%85scala/"
+    >MacOS安装scala</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/03/05/MacOS%E5%AE%89%E8%A3%85scala/" class="article-date">
+  <time datetime="2019-03-05T07:50:00.000Z" itemprop="datePublished">2019-03-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Scala/">Scala</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-下载安装包："><a href="#1-下载安装包：" class="headerlink" title="1.下载安装包："></a>1.下载安装包：</h4><p>下载地址：<a target="_blank" rel="noopener" href="http://www.scala-lang.org/download/">http://www.scala-lang.org/download/</a><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRhNTA5NmU5ZWE1ZGFkNzAucG5n?x-oss-process=image/format,png" alt="下载"></p>
+<h4 id="2-将下载好的scala压缩包解压到目录："><a href="#2-将下载好的scala压缩包解压到目录：" class="headerlink" title="2.将下载好的scala压缩包解压到目录："></a>2.将下载好的scala压缩包解压到目录：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf scala-2.13.1.tgz -C /Users/macbook/Documents/scala</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYwM2I5YTgyMjFiMDRiMGMucG5n?x-oss-process=image/format,png" alt="解压"></p>
+<h4 id="3-配置环境变量："><a href="#3-配置环境变量：" class="headerlink" title="3.配置环境变量："></a>3.配置环境变量：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export SCALA_HOME=/Users/macbook/Documents/scala/scala-2.13.1</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$SCALA_HOME/bin</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRjMWRjOGNjNmVlY2IxZDkucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>使环境变量生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBlMjY5N2I2MGNhZGI0YmUucG5n?x-oss-process=image/format,png" alt=" 使环境变量生效"></p>
+<h4 id="4-验证："><a href="#4-验证：" class="headerlink" title="4.验证："></a>4.验证：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFlYzQyNGM2NmFlOTM3YzMucG5n?x-oss-process=image/format,png" alt="验证"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/20/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/22/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

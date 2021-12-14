@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-Windows访问Macbook共享文件夹"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/28/Windows%E8%AE%BF%E9%97%AEMacbook%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/"
+    >Windows访问Macbook共享文件夹</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/28/Windows%E8%AE%BF%E9%97%AEMacbook%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
+  <time datetime="2019-05-28T07:00:00.000Z" itemprop="datePublished">2019-05-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-条件：macbook与windows在同一局域网内"><a href="#1-条件：macbook与windows在同一局域网内" class="headerlink" title="1.条件：macbook与windows在同一局域网内"></a>1.条件：macbook与windows在同一局域网内</h4><h4 id="2-设置MacBook共享文件夹"><a href="#2-设置MacBook共享文件夹" class="headerlink" title="2.设置MacBook共享文件夹"></a>2.设置MacBook共享文件夹</h4><h5 id="1-左上角系统偏好设置"><a href="#1-左上角系统偏好设置" class="headerlink" title="(1).左上角系统偏好设置"></a>(1).左上角系统偏好设置</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJkMmIyYzZlNmRiODhkYzgucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h5 id="2-点击文件共享"><a href="#2-点击文件共享" class="headerlink" title="(2)点击文件共享"></a>(2)点击文件共享</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVjYjg5Y2I5ZmZiODZiOTUucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h5 id="3-选择共享文件目录"><a href="#3-选择共享文件目录" class="headerlink" title="(3).选择共享文件目录"></a>(3).选择共享文件目录</h5><h5 id="4-选择该目录使用的用户"><a href="#4-选择该目录使用的用户" class="headerlink" title="(4).选择该目录使用的用户"></a>(4).选择该目录使用的用户</h5><h5 id="5-设置共享权限权限"><a href="#5-设置共享权限权限" class="headerlink" title="(5).设置共享权限权限"></a>(5).设置共享权限权限</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMxZjAyOGE5ZGNkZTE1Y2YucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="3-windows访问共享文件："><a href="#3-windows访问共享文件：" class="headerlink" title="3.windows访问共享文件："></a>3.windows访问共享文件：</h4><h5 id="1-win-r"><a href="#1-win-r" class="headerlink" title="(1).win+r"></a>(1).win+r</h5><h5 id="2-输入-192-168-0-100是MacBook的ip地址"><a href="#2-输入-192-168-0-100是MacBook的ip地址" class="headerlink" title="(2).输入:192.168.0.100是MacBook的ip地址"></a>(2).输入:192.168.0.100是MacBook的ip地址</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\192.168.0.100</span><br></pre></td></tr></table></figure>
+<p> <img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY3NjIzZWIxZDdjNjQzNmEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h5 id="3-输入设置的用户和密码，进入共享目录"><a href="#3-输入设置的用户和密码，进入共享目录" class="headerlink" title="(3).输入设置的用户和密码，进入共享目录"></a>(3).输入设置的用户和密码，进入共享目录</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUwMmUwMjQ3Njg3YTBjMmEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="4-完成"><a href="#4-完成" class="headerlink" title="4.完成"></a>4.完成</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-macbook访问windows共享文件夹"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/28/macbook%E8%AE%BF%E9%97%AEwindows%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/"
+    >Macbook访问Windows共享文件夹</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/28/macbook%E8%AE%BF%E9%97%AEwindows%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9/" class="article-date">
+  <time datetime="2019-05-28T07:00:00.000Z" itemprop="datePublished">2019-05-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-windows中设置共享文件夹"><a href="#一-windows中设置共享文件夹" class="headerlink" title="一.windows中设置共享文件夹"></a>一.windows中设置共享文件夹</h3><h4 id="1-选择想要共享的文件夹"><a href="#1-选择想要共享的文件夹" class="headerlink" title="1.选择想要共享的文件夹"></a>1.选择想要共享的文件夹</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE4NTlkNTU5YzllODZjYWEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="2-右键文件夹，点击属性，选择共享-再选择共享"><a href="#2-右键文件夹，点击属性，选择共享-再选择共享" class="headerlink" title="2.右键文件夹，点击属性，选择共享,再选择共享"></a>2.右键文件夹，点击属性，选择共享,再选择共享</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU0NWIyOGZhNDcyMjllODIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="3-选择用户，点击共享即可，"><a href="#3-选择用户，点击共享即可，" class="headerlink" title="3.选择用户，点击共享即可，"></a>3.选择用户，点击共享即可，</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZGVlYjc4MWZlNzg3YjIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h3 id="二-macbook访问共享文件夹："><a href="#二-macbook访问共享文件夹：" class="headerlink" title="二.macbook访问共享文件夹："></a>二.macbook访问共享文件夹：</h3><h4 id="1-点击桌面，点击前往，点击连接服务器"><a href="#1-点击桌面，点击前往，点击连接服务器" class="headerlink" title="1.点击桌面，点击前往，点击连接服务器"></a>1.点击桌面，点击前往，点击连接服务器</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRlMDE4MzIzM2MzZTAwY2MucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="2-输入smb-IP地址，点击连接，注意此IP地址是windows本机的IP地址"><a href="#2-输入smb-IP地址，点击连接，注意此IP地址是windows本机的IP地址" class="headerlink" title="2.输入smb://+IP地址，点击连接，注意此IP地址是windows本机的IP地址"></a>2.输入smb://+IP地址，点击连接，注意此IP地址是windows本机的IP地址</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY0YTVkZjIwMzRiN2VlMDcucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="3-输入在windows中设置的名称和密码，然后选择共享文件夹，即可连接到windows"><a href="#3-输入在windows中设置的名称和密码，然后选择共享文件夹，即可连接到windows" class="headerlink" title="3.输入在windows中设置的名称和密码，然后选择共享文件夹，即可连接到windows"></a>3.输入在windows中设置的名称和密码，然后选择共享文件夹，即可连接到windows</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTAwYmM4MDJkMGVhMzRkYjYucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFkZWNiYzE3ZGJhZTUxN2MucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="4-访问成功"><a href="#4-访问成功" class="headerlink" title="4.访问成功"></a>4.访问成功</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE4ODkzMTIyY2ViYTA2ZjcucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/" rel="tag">Windows</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-用hugo搭建属于自己的个人博客(mac环境)"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/28/%E7%94%A8hugo%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(mac%E7%8E%AF%E5%A2%83)/"
+    >用hugo搭建属于自己的个人博客(mac环境)</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/28/%E7%94%A8hugo%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2(mac%E7%8E%AF%E5%A2%83)/" class="article-date">
+  <time datetime="2019-05-28T07:00:00.000Z" itemprop="datePublished">2019-05-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-安装git环境"><a href="#1-安装git环境" class="headerlink" title="1.安装git环境"></a>1.安装git环境</h4><p>安装成功后在终端输入git，会有以下显示：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTAxYmQ0NmExMDkyZmJmYjYucG5n?x-oss-process=image/format,png" alt="git安装成功"></p>
+<h4 id="2-安装Homebrew"><a href="#2-安装Homebrew" class="headerlink" title="2.安装Homebrew"></a>2.安装Homebrew</h4><p>网上教程有很多，也很简单,安装成功后，输入brew，会有以下显示：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI1Y2RlZWZiODE0NTgxMmUucG5n?x-oss-process=image/format,png" alt="brew安装成功"></p>
+<h4 id="3-安装hugo"><a href="#3-安装hugo" class="headerlink" title="3.安装hugo"></a>3.安装hugo</h4><p>终端内输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install hugo</span><br></pre></td></tr></table></figure>
+<p>安装成功后输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo version</span><br></pre></td></tr></table></figure>
+<p>则会显示<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRmMjJmZWY5MzQ2YzI4YWUucG5n?x-oss-process=image/format,png" alt="hugo安装成功"></p>
+<h4 id="4-新建自己的博客站点"><a href="#4-新建自己的博客站点" class="headerlink" title="4.新建自己的博客站点"></a>4.新建自己的博客站点</h4><p>终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo new site YOURBLOGNAME</span><br></pre></td></tr></table></figure>
+<p>YOURBLOGNAME是自己想要做的博客的名称<br>成功后会显示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNmMGZkYTc2MTc5OGFkN2QucG5n?x-oss-process=image/format,png" alt="新建站点"></p>
+<h4 id="5-设置主题："><a href="#5-设置主题：" class="headerlink" title="5.设置主题："></a>5.设置主题：</h4><h5 id="1-进入hugo主题网址"><a href="#1-进入hugo主题网址" class="headerlink" title="(1).进入hugo主题网址"></a>(1).进入<a target="_blank" rel="noopener" href="https://themes.gohugo.io/">hugo主题网址</a></h5><h5 id="2-选择自己喜欢的主题："><a href="#2-选择自己喜欢的主题：" class="headerlink" title="(2).选择自己喜欢的主题："></a>(2).选择自己喜欢的主题：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQyYWMzMjdkMGUzMTZjMDUucG5n?x-oss-process=image/format,png" alt="选择自己喜欢的主题"></p>
+<h5 id="3-进入主题详细界面，找到Getting-Started，比如下图："><a href="#3-进入主题详细界面，找到Getting-Started，比如下图：" class="headerlink" title="(3).进入主题详细界面，找到Getting Started，比如下图："></a>(3).进入主题详细界面，找到Getting Started，比如下图：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZmMDkyNGM3YmQxMjY3YzgucG5n?x-oss-process=image/format,png" alt="进入主题详细界面"></p>
+<h5 id="4-按照其指示安装此主题，比如"><a href="#4-按照其指示安装此主题，比如" class="headerlink" title="(4).按照其指示安装此主题，比如"></a>(4).按照其指示安装此主题，比如</h5><p>进入到自己所创建的博客目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd YOURBLOG</span><br></pre></td></tr></table></figure>
+<p>输入git克隆命令，将此主题拷贝到本地</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/vaga/hugo-theme-m10c.git themes/m10c</span><br></pre></td></tr></table></figure>
+<p>更改config.toml文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme=&quot;m10c&quot;</span><br></pre></td></tr></table></figure>
+<p>m10c是下载的主题名</p>
+<h4 id="6-在本地启动博客"><a href="#6-在本地启动博客" class="headerlink" title="6.在本地启动博客"></a>6.在本地启动博客</h4><p>在终端内输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo server -t m10c --buildDrafts</span><br></pre></td></tr></table></figure>
+<p>若终端显示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY0MTBjYjVmODczMDNmOWEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>则证明此博客已经在本地启动成功，在浏览器地址栏输入对应的地址，如上面红线，即可进入该博客</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYzYzI0MzNjZjY0MDUxOWQucG5n?x-oss-process=image/format,png" alt="本地博客"></p>
+<h4 id="7-新建博客"><a href="#7-新建博客" class="headerlink" title="7.新建博客"></a>7.新建博客</h4><p>在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo new post/blog.md</span><br></pre></td></tr></table></figure>
+<p>即可创建一个post文件夹，并在此post文件夹下创建blog.md文件<br>注意，此时post文件夹位于自己所创建的博客站点下的context文件夹下面</p>
+<h4 id="8-在此博客内写自己想写的内容并保存"><a href="#8-在此博客内写自己想写的内容并保存" class="headerlink" title="8.在此博客内写自己想写的内容并保存"></a>8.在此博客内写自己想写的内容并保存</h4><p>注意：<br>title是该博客的名字</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZjMjY2MGY0MzE1NmEyMDcucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="9-将博客部署到github远端"><a href="#9-将博客部署到github远端" class="headerlink" title="9.将博客部署到github远端"></a>9.将博客部署到github远端</h4><h5 id="1-首先在自己的GitHub上创建一个新的仓库"><a href="#1-首先在自己的GitHub上创建一个新的仓库" class="headerlink" title="(1).首先在自己的GitHub上创建一个新的仓库"></a>(1).首先在自己的GitHub上创建一个新的仓库</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhODY1NDEyNmQwOTViYjYucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>注意：<br>Repository name必须是自己名称的全英文小写加上.github.io</p>
+<h5 id="2-终端输入"><a href="#2-终端输入" class="headerlink" title="(2).终端输入"></a>(2).终端输入</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo --theme=m10c baseUrl=&quot;https://yourgithubname.github.io/&quot; --buildDrafts </span><br></pre></td></tr></table></figure>
+<p>注意：yourgithubname就是自己的github名<br>成功后显示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI0ZGEwN2VkZDFkOTMxNGMucG5n?x-oss-process=image/format,png" alt="image.png"><br>此时，在YOURBLOG文件夹下面会生成一个public文件夹</p>
+<h5 id="3-将public文件夹上传到github仓库，"><a href="#3-将public文件夹上传到github仓库，" class="headerlink" title="(3).将public文件夹上传到github仓库，"></a>(3).将public文件夹上传到github仓库，</h5><p>进入YOURBLOG文件夹下面的public文件夹<br>终端依次输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m&quot;第一次提交博客&quot;</span><br><span class="line">git remote add origin https://github.com/yourgithub/yougithub.github.io.git </span><br><span class="line">git push -u origin master </span><br></pre></td></tr></table></figure>
+<p>即可将本地博客搭建到远程github上</p>
+<h5 id="4-在浏览器地址输入："><a href="#4-在浏览器地址输入：" class="headerlink" title="(4).在浏览器地址输入："></a>(4).在浏览器地址输入：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yourgithub.github.io</span><br></pre></td></tr></table></figure>
+<p>即可进入搭建到远程github的个人博客。</p>
+<h4 id="10-非第一次将博客发布到远程仓库"><a href="#10-非第一次将博客发布到远程仓库" class="headerlink" title="10.非第一次将博客发布到远程仓库"></a>10.非第一次将博客发布到远程仓库</h4><h5 id="1-进入博客所在文件夹"><a href="#1-进入博客所在文件夹" class="headerlink" title="(1)进入博客所在文件夹"></a>(1)进入博客所在文件夹</h5><p>终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugo --theme=m10c baseUrl=&quot;https://yourgithubname.github.io/&quot; --buildDrafts</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-然后进入YOURBLOG文件夹下的public文件夹"><a href="#2-然后进入YOURBLOG文件夹下的public文件夹" class="headerlink" title="(2)然后进入YOURBLOG文件夹下的public文件夹"></a>(2)然后进入YOURBLOG文件夹下的public文件夹</h5><p>终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m&quot;提交的提示&quot;</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<p>之后就可以将本地的博客上传到远程仓库</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hugo/" rel="tag">Hugo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-IDEA配置maven"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/25/IDEA%E9%85%8D%E7%BD%AEmaven/"
+    >Mac-IDEA配置Maven</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/25/IDEA%E9%85%8D%E7%BD%AEmaven/" class="article-date">
+  <time datetime="2019-05-25T07:00:00.000Z" itemprop="datePublished">2019-05-25</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Maven/">Maven</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-下载"><a href="#1-下载" class="headerlink" title="1.下载"></a>1.下载</h4><p>网址：<a target="_blank" rel="noopener" href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU4Zjc2NGMzZWNhNjFiNzYucG5n?x-oss-process=image/format,png" alt="下载maven"></p>
+<h4 id="2-解压到此文件夹"><a href="#2-解压到此文件夹" class="headerlink" title="2.解压到此文件夹"></a>2.解压到此文件夹</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/macbook/Documents/maven/apache-maven-3.6.2</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE5ZWJjN2ZiZGEzZDRlMDUucG5n?x-oss-process=image/format,png" alt="解压"></p>
+<h4 id="3-配置环境变量："><a href="#3-配置环境变量：" class="headerlink" title="3.配置环境变量："></a>3.配置环境变量：</h4><h5 id="1-编辑-bash-profile文件"><a href="#1-编辑-bash-profile文件" class="headerlink" title="(1)编辑.bash_profile文件"></a>(1)编辑.bash_profile文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<h5 id="2-添加如下内容："><a href="#2-添加如下内容：" class="headerlink" title="(2)添加如下内容："></a>(2)添加如下内容：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export M2_HOME=/Users/macbook/Documents/maven/apache-maven-3.6.2</span><br><span class="line">export PATH=$PATH:$M2_HOME/bin</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFiZDhmYzBkOTQ3ODQwOWYucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-使环境变量生效："><a href="#3-使环境变量生效：" class="headerlink" title="(3)使环境变量生效："></a>(3)使环境变量生效：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-验证："><a href="#4-验证：" class="headerlink" title="(4)验证："></a>(4)验证：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTllMjM2MjgyODhkYWViNGEucG5n?x-oss-process=image/format,png" alt="验证"></p>
+<h4 id="4-idea相关配置："><a href="#4-idea相关配置：" class="headerlink" title="4.idea相关配置："></a>4.idea相关配置：</h4><h5 id="1-配置Maven的setting-xml文件"><a href="#1-配置Maven的setting-xml文件" class="headerlink" title="(1)配置Maven的setting.xml文件"></a>(1)配置Maven的setting.xml文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /Users/macbook/Documents/maven/apache-maven-3.6.2/conf/settings.xml</span><br></pre></td></tr></table></figure>
+
+<p>修改内容为：</p>
+<h6 id="a-本地仓库位置："><a href="#a-本地仓库位置：" class="headerlink" title="(a)本地仓库位置："></a>(a)本地仓库位置：</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>/Users/macbook/Documents/maven/apache-maven-3.6.2/repository <span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThhMjczYjE2ZmU5OTYwOWEucG5n?x-oss-process=image/format,png"></p>
+<h6 id="b-国内镜像"><a href="#b-国内镜像" class="headerlink" title="(b)国内镜像"></a>(b)国内镜像</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">id</span>&gt;</span>ali maven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBkZmJlMWQ4ZWU4Mjk0Y2EucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h5 id="2-idea配置"><a href="#2-idea配置" class="headerlink" title="(2)idea配置"></a>(2)idea配置</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFjMGE3MzhiMDlmYjFkNDgucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/" rel="tag">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-剑指Offer-面试题03]数组中重复的数字"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/21/%5BLeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803%5D%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/"
+    >[LeetCode-剑指Offer-面试题03]数组中重复的数字</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/21/%5BLeetCode-%E5%89%91%E6%8C%87Offer-%E9%9D%A2%E8%AF%95%E9%A2%9803%5D%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/" class="article-date">
+  <time datetime="2019-05-21T03:00:00.000Z" itemprop="datePublished">2019-05-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>找出数组中重复的数字。</p>
+<p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
+<blockquote>
+<p>示例 1：<br>输入：<br>[2, 3, 1, 0, 2, 5, 3]<br>输出：2 或 3 </p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种方法：遍历数组"><a href="#1-第一种方法：遍历数组" class="headerlink" title="1.第一种方法：遍历数组"></a>1.第一种方法：遍历数组</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>利用for循环遍历数组，将数组nums[]中的元素添加到集合HashSet set中</li>
+<li>同时判定set中是否包含nums[i]的元素</li>
+<li>若包含则返回nums[i]元素，同时退出循环</li>
+<li>否则进行下一次循环</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> rep =-<span class="number">1</span>;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(set.contains(nums[i]))&#123;</span><br><span class="line">                rep=nums[i];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            set.add(nums[i]);</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> rep;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-idea配置github 并上传项目"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/20/idea%E9%85%8D%E7%BD%AEgithub%20%E5%B9%B6%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE/"
+    >Mac-idea配置github 并上传项目</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/20/idea%E9%85%8D%E7%BD%AEgithub%20%E5%B9%B6%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE/" class="article-date">
+  <time datetime="2019-05-20T07:00:00.000Z" itemprop="datePublished">2019-05-20</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-前提："><a href="#1-前提：" class="headerlink" title="1.前提："></a>1.前提：</h4><ul>
+<li>在github中已有账号</li>
+<li>在本地环境已经安装过git</li>
+</ul>
+<h4 id="2-在IDEA中设置git"><a href="#2-在IDEA中设置git" class="headerlink" title="2.在IDEA中设置git"></a>2.在IDEA中设置git</h4><p>在Perferences -&gt; Version Control -&gt; Git中配置git，选择git安装的目录，点击测试</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhYmU3ZjYzYTYxZThlOTQucG5n?x-oss-process=image/format,png" alt="配置git"></p>
+<h4 id="3-在IDEA中设置github"><a href="#3-在IDEA中设置github" class="headerlink" title="3.在IDEA中设置github"></a>3.在IDEA中设置github</h4><p>同理在Perferences -&gt; Version Control -&gt; Github中，输入github的账号密码，登陆</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk1YzVmZDA0ZjY0OTE4OTMucG5n?x-oss-process=image/format,png" alt="登陆github"></p>
+<h4 id="4-创建本地仓库"><a href="#4-创建本地仓库" class="headerlink" title="4.创建本地仓库"></a>4.创建本地仓库</h4><h5 id="1-在VSC-gt-Import-into-Version-Control-gt-Create-Git-Repository中创建本地仓库"><a href="#1-在VSC-gt-Import-into-Version-Control-gt-Create-Git-Repository中创建本地仓库" class="headerlink" title="(1)在VSC -&gt; Import into Version Control -&gt; Create Git Repository中创建本地仓库"></a>(1)在VSC -&gt; Import into Version Control -&gt; Create Git Repository中创建本地仓库</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ1M2Y4YzMyMGM5Y2ZjYzIucG5n?x-oss-process=image/format,png" alt="创建本地仓库"></p>
+<h5 id="2-选择项目所在目录，点击open，此时项目文件会显示为红色"><a href="#2-选择项目所在目录，点击open，此时项目文件会显示为红色" class="headerlink" title="(2)选择项目所在目录，点击open，此时项目文件会显示为红色"></a>(2)选择项目所在目录，点击open，此时项目文件会显示为红色</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEwNDlkYzgwNmVjN2Y0ZDkucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-选择项目，右键，选择git，选择Add，此时项目文件会显示为绿色"><a href="#3-选择项目，右键，选择git，选择Add，此时项目文件会显示为绿色" class="headerlink" title="(3)选择项目，右键，选择git，选择Add，此时项目文件会显示为绿色"></a>(3)选择项目，右键，选择git，选择Add，此时项目文件会显示为绿色</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBjZjExZjQzNTc5NzljMjcucG5n?x-oss-process=image/format,png" alt="操作"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFjZjMxYzE1MTZiMTMyMDgucG5n?x-oss-process=image/format,png" alt="绿色"></p>
+<h4 id="5-添加-gitignore文件"><a href="#5-添加-gitignore文件" class="headerlink" title="5.添加.gitignore文件"></a>5.添加.gitignore文件</h4><p>选择需要ignore的文件，进行添加操作</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ3ZDJjMTMwNmJkODY5YTEucG5n?x-oss-process=image/format,png" alt="操作"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI4NGFmYmU1ODkzMmIwMjEucG5n?x-oss-process=image/format,png" alt=".gitignore"></p>
+<h4 id="6-提交"><a href="#6-提交" class="headerlink" title="6.提交"></a>6.提交</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZhYmYxZWY0YzQ3YjQwNjQucG5n?x-oss-process=image/format,png" alt="提交"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY1ZmJhOTQ2ZTFlY2FmNWIucG5n?x-oss-process=image/format,png" alt="提交2"></p>
+<h4 id="7-上传项目到github"><a href="#7-上传项目到github" class="headerlink" title="7.上传项目到github"></a>7.上传项目到github</h4><h5 id="1-在VCS-gt-Import-into-Version-Control-gt-Share-Project-on-Github里操作"><a href="#1-在VCS-gt-Import-into-Version-Control-gt-Share-Project-on-Github里操作" class="headerlink" title="(1)在VCS -&gt; Import into Version Control -&gt;Share Project on Github里操作"></a>(1)在VCS -&gt; Import into Version Control -&gt;Share Project on Github里操作</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZmOWM3ZjNmYjZjNTk4MWMucG5n?x-oss-process=image/format,png" alt="上传到github"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkxZmY1OWNhZjYwNmE5ODkucG5n?x-oss-process=image/format,png" alt="点击share"></p>
+<h4 id="8-上传github成功"><a href="#8-上传github成功" class="headerlink" title="8.上传github成功"></a>8.上传github成功</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM5Mzc3NjNlMDUwMTg4MWUucG5n?x-oss-process=image/format,png" alt="上传成功"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDEA/" rel="tag">IDEA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试03-01]三合一"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/19/%5BLeetCode-%E9%9D%A2%E8%AF%9503-01%5D%E4%B8%89%E5%90%88%E4%B8%80/"
+    >[LeetCode-面试03.01]三合一</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/19/%5BLeetCode-%E9%9D%A2%E8%AF%9503-01%5D%E4%B8%89%E5%90%88%E4%B8%80/" class="article-date">
+  <time datetime="2019-05-19T03:00:00.000Z" itemprop="datePublished">2019-05-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>三合一。描述如何只用一个数组来实现三个栈。<br>你应该实现push(stackNum, value)、pop(stackNum)、isEmpty(stackNum)、peek(stackNum)方法。stackNum表示栈下标，value表示压入的值。<br>构造函数会传入一个stackSize参数，代表每个栈的大小。</p>
+<blockquote>
+<p>示例1:<br> 输入：<br>[“TripleInOne”, “push”, “push”, “pop”, “pop”, “pop”, “isEmpty”]<br>[[1], [0, 1], [0, 2], [0], [0], [0], [0]]<br> 输出：<br>[null, null, null, 1, -1, -1, true]<br>说明：当栈为空时<code>pop, peek</code>返回-1，当栈满时<code>push</code>不压入元素。<br>示例2:<br> 输入：<br>[“TripleInOne”, “push”, “push”, “push”, “pop”, “pop”, “pop”, “peek”]<br>[[2], [0, 1], [0, 2], [0, 3], [0], [0], [0], [0]]<br> 输出：<br>[null, null, null, null, 2, 1, -1, -1]</p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种解法："><a href="#1-第一种解法：" class="headerlink" title="1.第一种解法："></a>1.第一种解法：</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>定义一个数组arr，数组的位置分配规则如下：</li>
+<li>数组的下标为[0, 0 + 3, … , 0 + 3 * (stackSize - 1)]存放stack0</li>
+<li>数组的下标为[1, 1 + 3, … , 1 + 3 * (stackSize - 1)]存放stack1</li>
+<li>数组的下标为[2, 2 + 3, … , 2 + 3 * (stackSize - 1)]存放stack2</li>
+<li>然后，新建一个数组stackTop，用来标记每个栈的栈顶可插入元素的下标（在arr中的下标）。</li>
+<li>当执行push操作的时候，需要处理判满，当执行pop或peek操作的时候需要处理判空。</li>
+<li>其中判空和判满都是根据stackTop来判断</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TripleInOne</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] arr;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] stackTop;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> stackSize;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TripleInOne</span><span class="params">(<span class="keyword">int</span> stackSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.stackSize=stackSize;</span><br><span class="line">        arr= <span class="keyword">new</span> <span class="keyword">int</span>[stackSize*<span class="number">3</span>];</span><br><span class="line">        stackTop = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> stackNum, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> curStackTop = stackTop[stackNum];</span><br><span class="line">        <span class="keyword">if</span>(curStackTop /<span class="number">3</span> == stackSize)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        arr[curStackTop] = value;</span><br><span class="line">        stackTop[stackNum]+=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">(<span class="keyword">int</span> stackNum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty(stackNum))&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> value = arr[stackTop[stackNum]-<span class="number">3</span>];</span><br><span class="line">        stackTop[stackNum]-=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">(<span class="keyword">int</span> stackNum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isEmpty(stackNum))&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> value = arr[stackTop[stackNum]-<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span> stackNum)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stackTop[stackNum]&lt;<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your TripleInOne object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * TripleInOne obj = new TripleInOne(stackSize);</span></span><br><span class="line"><span class="comment"> * obj.push(stackNum,value);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj.pop(stackNum);</span></span><br><span class="line"><span class="comment"> * int param_3 = obj.peek(stackNum);</span></span><br><span class="line"><span class="comment"> * boolean param_4 = obj.isEmpty(stackNum);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="linux-Linux新建用户"
+  class="article article-type-linux"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"
+    >Linux 新建用户</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/19/Linux%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/" class="article-date">
+  <time datetime="2019-05-19T01:13:00.000Z" itemprop="datePublished">2019-05-19</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h6 id="1-Linux中新建用户命令："><a href="#1-Linux中新建用户命令：" class="headerlink" title="1.Linux中新建用户命令："></a>1.Linux中新建用户命令：</h6><p>举例：创建一个名字叫 demouser的用户</p>
+<p>使用root用户操作如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//-----------创建用户</span><br><span class="line">useradd demouser	</span><br><span class="line"></span><br><span class="line">//-----------为用户设置密码</span><br><span class="line">passwd demouser	</span><br><span class="line"></span><br><span class="line">//-----------为用户赋予sudo权限</span><br><span class="line">vim /etc/sudoers  </span><br><span class="line">//添加</span><br><span class="line">demouser    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+<h6 id="2-修改文件夹及其子文件夹属主命令"><a href="#2-修改文件夹及其子文件夹属主命令" class="headerlink" title="2.修改文件夹及其子文件夹属主命令"></a>2.修改文件夹及其子文件夹属主命令</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R demouser ./elasticsearch-6.1.1/</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeeCode-面试02-07]链表相交"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/17/%5BLeeCode-%E9%9D%A2%E8%AF%9502-07%5D%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/"
+    >[LeeCode-面试02.07]链表相交</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/17/%5BLeeCode-%E9%9D%A2%E8%AF%9502-07%5D%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4/" class="article-date">
+  <time datetime="2019-05-17T03:00:00.000Z" itemprop="datePublished">2019-05-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>给定两个（单向）链表，判定它们是否相交并返回交点。请注意相交的定义基于节点的引用，而不是基于节点的值。换句话说，如果一个链表的第k个节点与另一个链表的第j个节点是同一节点（引用完全相同），则这两个链表相交。</p>
+<blockquote>
+<p>示例 1：<br>输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3<br>输出：Reference of the node with value = 8<br>输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。</p>
+</blockquote>
+<blockquote>
+<p>示例 2：<br>输入：intersectVal = 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1<br>输出：Reference of the node with value = 2<br>输入解释：相交节点的值为 2 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。</p>
+</blockquote>
+<blockquote>
+<p>示例 3：<br>输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2<br>输出：null<br>输入解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。<br>解释：这两个链表不相交，因此返回 null。</p>
+</blockquote>
+<blockquote>
+<p>注意：<br>如果两个链表没有交点，返回 null 。<br>在返回结果后，两个链表仍须保持原有的结构。<br>可假定整个链表结构中没有循环。<br>程序尽量满足 O(n) 时间复杂度，且仅用 O(1) 内存</p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种方法：暴力法"><a href="#1-第一种方法：暴力法" class="headerlink" title="1.第一种方法：暴力法"></a>1.第一种方法：暴力法</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>利用嵌套循环判断一个链表中的引用是否在另一个链表中存在</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123;</span></span><br><span class="line"><span class="comment"> *         val = x;</span></span><br><span class="line"><span class="comment"> *         next = null;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(headA==<span class="keyword">null</span>||headB==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode A=headA;</span><br><span class="line">        ListNode B=headB;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(A!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            B=headB;</span><br><span class="line">            <span class="keyword">while</span>(B!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(A==B)&#123;</span><br><span class="line">                    <span class="keyword">return</span> A;</span><br><span class="line">                &#125;</span><br><span class="line">                B=B.next;</span><br><span class="line">            &#125;</span><br><span class="line">            A=A.next;   </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-第二种方法："><a href="#2-第二种方法：" class="headerlink" title="2.第二种方法："></a>2.第二种方法：</h4><h5 id="1-解题思路：-1"><a href="#1-解题思路：-1" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>将一个链表的所有引用存储在list中，</li>
+<li>再判断另一个链表中的引用是否存在与前一个链表相同的引用</li>
+</ul>
+<h5 id="2-代码：-1"><a href="#2-代码：-1" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123;</span></span><br><span class="line"><span class="comment"> *         val = x;</span></span><br><span class="line"><span class="comment"> *         next = null;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(headA==<span class="keyword">null</span>||headB==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;ListNode&gt; list = <span class="keyword">new</span> LinkedList&lt;ListNode&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(headA!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            list.add(headA);</span><br><span class="line">            headA=headA.next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(headB!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(list.contains(headB))&#123;</span><br><span class="line">                <span class="keyword">return</span> headB;</span><br><span class="line">            &#125;</span><br><span class="line">            headB=headB.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-面试02-06]回文链表"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/12/%5BLeetCode-%E9%9D%A2%E8%AF%9502-06%5D%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/"
+    >[LeetCode-面试02.06]回文链表</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/05/12/%5BLeetCode-%E9%9D%A2%E8%AF%9502-06%5D%E5%9B%9E%E6%96%87%E9%93%BE%E8%A1%A8/" class="article-date">
+  <time datetime="2019-05-12T03:00:00.000Z" itemprop="datePublished">2019-05-12</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目："><a href="#一-题目：" class="headerlink" title="一.题目："></a>一.题目：</h3><p>编写一个函数，检查输入的链表是否是回文的。</p>
+<blockquote>
+<p>示例 1：<br>输入： 1-&gt;2<br>输出： false<br>示例 2：<br>输入： 1-&gt;2-&gt;2-&gt;1<br>输出： true </p>
+</blockquote>
+<h3 id="二-题解："><a href="#二-题解：" class="headerlink" title="二.题解："></a>二.题解：</h3><h4 id="1-第一种解法："><a href="#1-第一种解法：" class="headerlink" title="1.第一种解法："></a>1.第一种解法：</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>首先生成新的反转head的链表newHead</li>
+<li>然后判断两个链表是否相等即可</li>
+<li>若相等则是回文链表，否则不是</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">        ListNode newHead =reverseAndClone(head);</span><br><span class="line">        <span class="keyword">return</span> isEquals(head,newHead);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseAndClone</span><span class="params">(ListNode node)</span></span>&#123;</span><br><span class="line">        ListNode head = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//     n                     n</span></span><br><span class="line">        <span class="comment">//node:1-&gt;2-&gt;3-&gt;4    head:1&lt;-2&lt;-3&lt;-4</span></span><br><span class="line">        <span class="keyword">while</span>(node!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            ListNode n = <span class="keyword">new</span> ListNode(node.val);   <span class="comment">//复制</span></span><br><span class="line">            n.next=head;</span><br><span class="line">            head=n;</span><br><span class="line"></span><br><span class="line">            node=node.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEquals</span><span class="params">(ListNode l1,ListNode l2)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(l1!=<span class="keyword">null</span>&amp;&amp;l2!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1.val!=l2.val)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            l1=l1.next;</span><br><span class="line">            l2=l2.next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> l1==<span class="keyword">null</span>&amp;&amp;l2==<span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/17/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/19/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

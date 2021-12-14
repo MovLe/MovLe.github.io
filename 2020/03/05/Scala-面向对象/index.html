@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Scala面向对象 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Scala-面向对象"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Scala面向对象
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/03/05/Scala-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="article-date">
+  <time datetime="2020-03-05T09:50:00.000Z" itemprop="datePublished">2020-03-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Scala/">Scala</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">10 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-面向对象的基本概念"><a href="#1-面向对象的基本概念" class="headerlink" title="1.面向对象的基本概念"></a>1.面向对象的基本概念</h4><p>把数据及对数据的操作方法放在一起，作为一个相互依存的整体——对象</p>
+<p>面向对象的三大特征：</p>
+<ul>
+<li>封装: 类 class。把属性和操作属性的方法，放在一起</li>
+<li>继承</li>
+<li>多态</li>
+</ul>
+<h4 id="2-类的定义"><a href="#2-类的定义" class="headerlink" title="2.类的定义"></a>2.类的定义</h4><p>简单类和无参方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> value =<span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function">def <span class="title">increment</span><span class="params">()</span> </span>&#123; value +=<span class="number">1</span>&#125;;</span><br><span class="line">  <span class="function">def <span class="title">current</span><span class="params">()</span> </span>= value;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>案例：注意没有class前面没有public关键字修饰。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//scala中类的定义</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student1</span></span>&#123;</span><br><span class="line">    <span class="comment">//定义属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> stuName:String = <span class="string">&quot;Tom&quot;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> stuAge:Int = <span class="number">20</span></span><br><span class="line">    <span class="comment">//成员方法</span></span><br><span class="line">    <span class="function">def <span class="title">getStuName</span><span class="params">()</span>:String </span>= <span class="function">stuName</span></span><br><span class="line"><span class="function">    def <span class="title">setStuName</span><span class="params">(newName:String)</span> </span>= <span class="keyword">this</span>.stuName=<span class="function">newName</span></span><br><span class="line"><span class="function">    def <span class="title">getStuAge</span><span class="params">()</span>:Int </span>= <span class="function">stuAge</span></span><br><span class="line"><span class="function">    def <span class="title">setStuAge</span><span class="params">(newAge:Int)</span> </span>= <span class="keyword">this</span>.stuAge=newAge</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要开发main方法，需要将main方法定义在该类的伴生对象中，即：object对象中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 测试student1类，创建main函数</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * 注意：object和class名字可以不一样的</span></span><br><span class="line"><span class="comment">  * 如果oject和class的名字相同，object成为该class的 伴生对象</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="comment">//创建Student1的伴生对象</span></span><br><span class="line">object Student1&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">//创建一个学生对象</span></span><br><span class="line">    <span class="keyword">var</span> s1 = <span class="keyword">new</span> Student1</span><br><span class="line"></span><br><span class="line">    <span class="comment">//访问属性并输出</span></span><br><span class="line">    println(s1.getStuName() + <span class="string">&quot;\t&quot;</span> + s1.getStuAge())</span><br><span class="line"></span><br><span class="line">    <span class="comment">//访问set方法</span></span><br><span class="line">    s1.setStuName(<span class="string">&quot;Mary&quot;</span>)</span><br><span class="line">    s1.setStuAge(<span class="number">22</span>)</span><br><span class="line">    println(s1.getStuName() + <span class="string">&quot;\t&quot;</span> + s1.getStuAge())</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">      * 直接访问私有属性</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * 上面定义中，属性都是private的</span></span><br><span class="line"><span class="comment">      * 如果属性是private的，在类的外部，是不能访问的</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    println(<span class="string">&quot;------------直接访问私有属性-----------&quot;</span>)</span><br><span class="line">    println(s1.stuId +<span class="string">&quot;\t&quot;</span>+ s1.stuName +<span class="string">&quot;\t&quot;</span>+ s1.age)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">      * 注意：我们可以直接访问类的私有成员，为什么？</span></span><br><span class="line"><span class="comment">      * s1.stuId +&quot;\t&quot;+ s1.stuName +&quot;\t&quot;+ s1.age</span></span><br><span class="line"><span class="comment">      * 使用 . 方式访问的</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * scala中属性的get set 方法：</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * 1、当一个属性是private的时候，scala会自动为其生成对应的get set 方法</span></span><br><span class="line"><span class="comment">      * s1.stuId 访问的是scala中，自动为stuId生成的get方法，并且该方法的名字为stuId</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * 2、如果值希望scala生成get方法，不生成set方法，可以将其定义为常量</span></span><br><span class="line"><span class="comment">      * 因为常量的值不可改变</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      * 3、如果希望属性，不能被外部访问（希望scala不要生成set get 方法），使用 private [this] 关键字</span></span><br><span class="line"><span class="comment">      *</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-属性的getter和setter方法"><a href="#3-属性的getter和setter方法" class="headerlink" title="3.属性的getter和setter方法"></a>3.属性的getter和setter方法</h4><h5 id="1-当定义属性是private时候，scala会自动为其生成对应的get和set方法"><a href="#1-当定义属性是private时候，scala会自动为其生成对应的get和set方法" class="headerlink" title="(1)当定义属性是private时候，scala会自动为其生成对应的get和set方法"></a>(1)当定义属性是private时候，scala会自动为其生成对应的get和set方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> stuName:String = <span class="string">&quot;Tom&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>get方法: stuName    —-&gt; s2.stuName() 由于stuName是方法的名字，所以可以加上一个括号</li>
+<li>set方法: stuName_=  —-&gt; stuName_= 是方法的名字</li>
+</ul>
+<h5 id="2-定义属性："><a href="#2-定义属性：" class="headerlink" title="(2)定义属性："></a>(2)定义属性：</h5><p>private var money:Int = 1000 希望money只有get方法，没有set方法？？</p>
+<p>解决办法：将其定义为常量private val money:Int = 1000</p>
+<h5 id="3-private-this-的用法："><a href="#3-private-this-的用法：" class="headerlink" title="(3) private[this]的用法："></a>(3) private[this]的用法：</h5><p>该属性只属于该对象私有，就不会生成对应的set和get方法。如果这样，就不能直接调用，例如：s1.stuName —&gt; 错误</p>
+<h4 id="4、内部类-嵌套类"><a href="#4、内部类-嵌套类" class="headerlink" title="4、内部类(嵌套类)"></a>4、内部类(嵌套类)</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;我们可以在一个类的内部在定义一个类，如下：我们在Student类中，再定义了一个Course类用于保存学生选修的课程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable.ArrayBuffer</span><br><span class="line"><span class="comment">//嵌套类，内部类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student3</span></span>&#123;</span><br><span class="line">    <span class="comment">//定义一个内部类，记录学生选修的课程信息</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Course</span>(<span class="title">val</span> <span class="title">courseName</span>:<span class="title">String</span>,<span class="title">val</span> <span class="title">credit</span>:<span class="title">Int</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//定义方法</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> stuName:String = <span class="string">&quot;Tom&quot;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> stuAge:Int = <span class="number">20</span></span><br><span class="line">    <span class="comment">//定义一个ArrayBuffer记录该学生选修的所有课程</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> courseList = <span class="keyword">new</span> ArrayBuffer[Course]()</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义方法往学生信息中添加新的课程</span></span><br><span class="line">    <span class="function">def <span class="title">addNewCourse</span><span class="params">(cname:String,credit:Int)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建新的课程</span></span><br><span class="line">        <span class="keyword">var</span> c = <span class="keyword">new</span> Course(cname,credit)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将课程加入list</span></span><br><span class="line">        courseList +=c</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Object Student3&#123;</span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建学生对象</span></span><br><span class="line">        <span class="keyword">var</span> s3 = <span class="keyword">new</span> Student3</span><br><span class="line"></span><br><span class="line">        <span class="comment">//给该学生添加新的课程</span></span><br><span class="line">        s3.addNewCourse(<span class="string">&quot;Chinese&quot;</span>,<span class="number">2</span>)</span><br><span class="line">        s3.addNewCourse(<span class="string">&quot;English&quot;</span>,<span class="number">3</span>)</span><br><span class="line">        s3.addNewCourse(<span class="string">&quot;Math&quot;</span>,<span class="number">4</span>)    </span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出</span></span><br><span class="line">        println(s3.stuName+<span class="string">&quot;\t&quot;</span>+s3.stuAge)</span><br><span class="line">        println(<span class="string">&quot;********选修的课程********&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(s &lt;- s3.courseList) println(s.courseName+<span class="string">&quot;\t&quot;</span>+s.credit)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-类的构造器"><a href="#5-类的构造器" class="headerlink" title="5.类的构造器"></a>5.类的构造器</h4><p>类的构造器分为：主构造器、辅助构造器</p>
+<h5 id="1-主构造器：和类的声明结合在一起，只能有一个主构造器"><a href="#1-主构造器：和类的声明结合在一起，只能有一个主构造器" class="headerlink" title="(1)主构造器：和类的声明结合在一起，只能有一个主构造器"></a>(1)主构造器：和类的声明结合在一起，只能有一个主构造器</h5><p>Student4(val stuName:String,val stuAge:Int)</p>
+<ul>
+<li>(a) 定义类的主构造器：两个参数</li>
+<li>(b) 声明了两个属性：stuName和stuAge 和对应的get和set方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student4</span>(<span class="title">val</span> <span class="title">stuName</span>:<span class="title">String</span>,<span class="title">val</span> <span class="title">stuAge</span>:<span class="title">Int</span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">object Student4&#123;</span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建Student4的一个对象</span></span><br><span class="line">        <span class="keyword">var</span> s4 = <span class="keyword">new</span> Student4(<span class="string">&quot;Tom&quot;</span>,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">        println(s4.stuName+<span class="string">&quot;\t&quot;</span>+s4.stuAge)        <span class="comment">//调用了主构造器</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-辅助构造器：可以有多个辅助构造器，通过关键字this来实现"><a href="#2-辅助构造器：可以有多个辅助构造器，通过关键字this来实现" class="headerlink" title="(2)辅助构造器：可以有多个辅助构造器，通过关键字this来实现"></a>(2)辅助构造器：可以有多个辅助构造器，通过关键字this来实现</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student4</span>(<span class="title">val</span> <span class="title">stuName</span>:<span class="title">String</span>,<span class="title">val</span> <span class="title">stuAge</span>:<span class="title">Int</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//定义辅助构造器</span></span><br><span class="line">    <span class="function">def <span class="title">this</span><span class="params">(age:Int)</span></span>&#123;</span><br><span class="line">        <span class="comment">//调用主构造器</span></span><br><span class="line">        <span class="keyword">this</span>(<span class="string">&quot;no name&quot;</span>,age)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">object Student4&#123;</span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建一个新的Student4对象，并调用辅助构造器</span></span><br><span class="line">        <span class="keyword">var</span> s42 = <span class="keyword">new</span> Student4(<span class="number">25</span>)</span><br><span class="line"></span><br><span class="line">        println(s42.stuName+<span class="string">&quot;\t&quot;</span>+s42.stuAge)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主构造器和辅助构造器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student3</span>(<span class="title">var</span> <span class="title">stuName</span> : <span class="title">String</span> , <span class="title">var</span> <span class="title">age</span>:<span class="title">Int</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//属性</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> gender:Int = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">//定义一个辅助构造器，辅助构造器可以有多个</span></span><br><span class="line">  <span class="comment">//辅助构造器就是一个函数，只不过这个函数的名字叫 this</span></span><br><span class="line"></span><br><span class="line">  <span class="function">def <span class="title">this</span> <span class="params">(age : Int)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(<span class="string">&quot;Mike&quot;</span>,age) <span class="comment">// new Student3(&quot;Mike&quot;,age)</span></span><br><span class="line">    println(<span class="string">&quot;这是辅助构造器&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">def <span class="title">this</span> <span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(<span class="number">10</span>)<span class="comment">// new Student3(&quot;Mike&quot;,10)</span></span><br><span class="line">    println(<span class="string">&quot;这是辅助构造器2&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">object  Student3&#123;</span><br><span class="line">  <span class="function">def <span class="title">main</span><span class="params">(args: Array[String])</span>: Unit </span>= &#123;</span><br><span class="line">    <span class="comment">//使用主构造器 创建学生对象</span></span><br><span class="line">    <span class="keyword">var</span> s1 = <span class="keyword">new</span> Student3(<span class="string">&quot;Tom&quot;</span>,<span class="number">20</span>)</span><br><span class="line">    println(s1.stuName+<span class="string">&quot;\t&quot;</span>+s1.age)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用辅助构造器</span></span><br><span class="line">    <span class="keyword">var</span> s2 = <span class="keyword">new</span> Student3(<span class="number">20</span>)</span><br><span class="line">    s2.gender = <span class="number">0</span></span><br><span class="line">    s2.stuName = <span class="string">&quot;have name&quot;</span></span><br><span class="line">    println(s2.stuName+<span class="string">&quot;\t&quot;</span>+s2.age+<span class="string">&quot;\t&quot;</span>+s2.gender)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-Scala中的Object对象"><a href="#6-Scala中的Object对象" class="headerlink" title="6.Scala中的Object对象"></a>6.Scala中的Object对象</h4><h5 id="1-什么是object对象？"><a href="#1-什么是object对象？" class="headerlink" title="(1)什么是object对象？"></a>(1)什么是object对象？</h5><ul>
+<li>Object中的内容都是静态的</li>
+<li>scala中，没有static关键字，所有static都定义在object中</li>
+<li>如果class的名字，跟object的名字一样，就把这个object叫做类的伴生对象。</li>
+</ul>
+<p>注意：main函数需要写在object中，但是不一定必须写在伴生对象中。</p>
+<p>下面是Java中的静态块的例子。在这个例子中，就对JDBC进行了初始化。<br>java:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        Class.forName(driver);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(ClassNotFoundException e)&#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> ExceptionInInitializerError(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>而Scala中的Object就相当于Java中静态块</strong></p>
+<p><strong>Object对象的应用</strong></p>
+<h5 id="1-单例对象：使用object来实现单例模式：一个类只有一个对象"><a href="#1-单例对象：使用object来实现单例模式：一个类只有一个对象" class="headerlink" title="(1)单例对象：使用object来实现单例模式：一个类只有一个对象"></a>(1)单例对象：使用object来实现单例模式：一个类只有一个对象</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用object对象实现单例模式</span></span><br><span class="line">object CreditCard&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//变量保存信用卡号</span></span><br><span class="line">    <span class="keyword">private</span> [<span class="keyword">this</span>] <span class="keyword">var</span> creditCardNumber:Long = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//产生新的卡号</span></span><br><span class="line">    <span class="function">def <span class="title">generateNewCCNumber</span><span class="params">()</span>:Long </span>= &#123;</span><br><span class="line">        creditCardNumber += <span class="number">1</span></span><br><span class="line">        creditCardNumber</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//测试程序</span></span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line">        <span class="comment">//产生新的卡号</span></span><br><span class="line">        println(CreditCard.generateNewCCNumber())</span><br><span class="line">        println(CreditCard.generateNewCCNumber())</span><br><span class="line">        println(CreditCard.generateNewCCNumber())</span><br><span class="line">        println(CreditCard.generateNewCCNumber())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-使用APP对象：可以省略main方法；需要从父类App继承。"><a href="#2-使用APP对象：可以省略main方法；需要从父类App继承。" class="headerlink" title="(2)使用APP对象：可以省略main方法；需要从父类App继承。"></a>(2)使用APP对象：可以省略main方法；需要从父类App继承。</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用应用程序对象：可以省略main方法</span></span><br><span class="line">object HelloWorld extends App&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    def main(args:Array[String])&#123;</span></span><br><span class="line"><span class="comment">//        </span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"><span class="comment">//这里的main可以不写，相当于下面的代码是在main方法中执行的</span></span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如何取得命令行的参数</span></span><br><span class="line">    <span class="keyword">if</span>(args.length&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        println(args(<span class="number">0</span>))</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        println(<span class="string">&quot;no argument&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-Scala中的apply方法"><a href="#7-Scala中的apply方法" class="headerlink" title="7. Scala中的apply方法"></a>7. Scala中的apply方法</h4><p>遇到如下形式的表达式时，apply方法就会被调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object(参数<span class="number">1</span>,参数<span class="number">2</span>,......,参数N)</span><br></pre></td></tr></table></figure>
+<p>通常，这样一个apply方法返回的是伴生类的对象；其作用是为了省略new关键字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> marry = Array(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="comment">//这里没有用new关键字，其实就是用了apply方法</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU0Y2Q1NjcwZTc1NzZjZTEucG5n?x-oss-process=image/format,png"></p>
+<h5 id="1-Object的apply方法举例："><a href="#1-Object的apply方法举例：" class="headerlink" title="(1)Object的apply方法举例："></a>(1)Object的apply方法举例：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//object的apply方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student5</span>(<span class="title">val</span> <span class="title">stuName</span>:<span class="title">String</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">object Student5&#123;</span><br><span class="line">    <span class="function">def <span class="title">apply</span><span class="params">(stuName:String)</span> </span>= &#123;</span><br><span class="line">        println(<span class="string">&quot;******Apply in Object***********&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">def <span class="title">main</span><span class="params">(args:Array[String])</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建一个Student5的对象</span></span><br><span class="line">        <span class="keyword">var</span> s51 = <span class="keyword">new</span> Student5(<span class="string">&quot;Tom&quot;</span>)</span><br><span class="line">        println(s51.stuName)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//创建一个Student5的对象</span></span><br><span class="line">        <span class="keyword">var</span> s52 = <span class="keyword">new</span> Student5(<span class="string">&quot;Tom&quot;</span>)</span><br><span class="line">        println(s52.stuName)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3Mjg1YWQxNDllYjgzYmIucG5n?x-oss-process=image/format,png"></p>
+<ul>
+<li>使用apply方法，让程序更加简洁。</li>
+<li>apply方法必须写在伴生对象中。</li>
+</ul>
+<h4 id="8-Scala中的继承"><a href="#8-Scala中的继承" class="headerlink" title="8.Scala中的继承"></a>8.Scala中的继承</h4><p>Scala和Java一样，使用extends关键字扩展类。</p>
+<h5 id="1-案例一：Employee类继承Person类"><a href="#1-案例一：Employee类继承Person类" class="headerlink" title="(1)案例一：Employee类继承Person类"></a>(1)案例一：Employee类继承Person类</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA1ZDU0OWFlZWJiODA5MTEucG5n?x-oss-process=image/format,png"></p>
+<h5 id="2-案例二：在子类中重写父类的方法"><a href="#2-案例二：在子类中重写父类的方法" class="headerlink" title="(2)案例二：在子类中重写父类的方法"></a>(2)案例二：在子类中重写父类的方法</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI4M2RkYWNjYTE3NjkxMWYucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-案例三：使用匿名子类"><a href="#3-案例三：使用匿名子类" class="headerlink" title="(3)案例三：使用匿名子类"></a>(3)案例三：使用匿名子类</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg4MmRiYTU1ZTE2OWNiMmEucG5n?x-oss-process=image/format,png"></p>
+<h5 id="4-案例四：使用抽象类。抽象类中包含抽象方法，抽象类只能用来继承。"><a href="#4-案例四：使用抽象类。抽象类中包含抽象方法，抽象类只能用来继承。" class="headerlink" title="(4)案例四：使用抽象类。抽象类中包含抽象方法，抽象类只能用来继承。"></a>(4)案例四：使用抽象类。抽象类中包含抽象方法，抽象类只能用来继承。</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk5NGM2MGQ0ZDQxODY1ZTcucG5n?x-oss-process=image/format,png"></p>
+<h5 id="5-案例五：使用抽象字段。抽象字段就是一个没有初始值的字段"><a href="#5-案例五：使用抽象字段。抽象字段就是一个没有初始值的字段" class="headerlink" title="(5)案例五：使用抽象字段。抽象字段就是一个没有初始值的字段"></a>(5)案例五：使用抽象字段。抽象字段就是一个没有初始值的字段</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRmNjRhYjVlMjk1MDc1OWEucG5n?x-oss-process=image/format,png"></p>
+<h4 id="9-Scala中的trait（特质）"><a href="#9-Scala中的trait（特质）" class="headerlink" title="9.Scala中的trait（特质）"></a>9.Scala中的trait（特质）</h4><p>trait就是抽象类。trait跟抽象类最大的区别：trait支持多重继承</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEwMzBlYWVmYjAzNmZhZDQucG5n?x-oss-process=image/format,png"></p>
+<h4 id="10-包的使用"><a href="#10-包的使用" class="headerlink" title="10.包的使用"></a>10.包的使用</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Scala的包和Java中的包或者C++中的命名空间的目的是相同的，管理大型程序中的名称</p>
+<p>Scala中包的定义和使用：</p>
+<h5 id="1-包的定义"><a href="#1-包的定义" class="headerlink" title="(1)包的定义"></a>(1)包的定义</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0MzNhMzhkZTViOGVlMTcucG5n?x-oss-process=image/format,png"></p>
+<h5 id="2-包的引入：Scala中依然使用import作为引用包的关键字，例如"><a href="#2-包的引入：Scala中依然使用import作为引用包的关键字，例如" class="headerlink" title="(2)包的引入：Scala中依然使用import作为引用包的关键字，例如"></a>(2)包的引入：Scala中依然使用import作为引用包的关键字，例如</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.my.io.XXX     <span class="comment">//可以不写XXX的全路径</span></span><br><span class="line"><span class="keyword">import</span> com.my.io._       <span class="comment">//引用import com.my.io下所有的类型</span></span><br><span class="line"><span class="keyword">import</span> com.my.io.XXX._   <span class="comment">//引用import com.my.io.XXX的所有成员</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-而且Scala中的import可以写在任意地方"><a href="#3-而且Scala中的import可以写在任意地方" class="headerlink" title="(3)而且Scala中的import可以写在任意地方"></a>(3)而且Scala中的import可以写在任意地方</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">method</span><span class="params">(fruit :Fruit)</span></span>&#123;</span><br><span class="line">    <span class="keyword">import</span> fruit.<span class="function">_</span></span><br><span class="line"><span class="function">    <span class="title">println</span><span class="params">(name)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="11-包对象"><a href="#11-包对象" class="headerlink" title="11.包对象"></a>11.包对象</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;包可以包含类、对象和特质，但不能包含函数或者变量的定义。很不幸，这是Java虚拟机的局限。<br>&nbsp;&nbsp;&nbsp;&nbsp;把工具函数或者常量添加到包而不是某个Utils对象，这是更加合理的做法。Scala中，包对象的出现正是为了解决这个局限。<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Scala中的包对象：常量，变量，方法，类，对象，trait(特质)</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgxYjAxMjBmNjI0Y2Q0ZTgucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/03/05/Scala-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/03/05/Scala-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Scala函数式编程
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/03/05/Scala-%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Scala语言基础</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

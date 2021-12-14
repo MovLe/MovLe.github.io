@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="https://img-blog.csdnimg.cn/2020060916514052.png" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Movle</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['种一棵树，最好的时机是十年前，其次是现在', '人必有痴，而后有成', '今天，我没有浑浑噩噩的度过'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-Zookeeper之内部原理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/Zookeeper%E4%B9%8B%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/"
+    >Zookeeper之内部原理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/Zookeeper%E4%B9%8B%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2019-01-03T05:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-选举机制"><a href="#一-选举机制" class="headerlink" title="一.选举机制"></a>一.选举机制</h3><p><strong>Server ID： myid(权重越大)</strong><br><strong>Zxid：数据ID(先一数据低进行选择)</strong></p>
+<h4 id="1-半数机制（Paxos-协议）："><a href="#1-半数机制（Paxos-协议）：" class="headerlink" title="1.半数机制（Paxos 协议）："></a>1.半数机制（Paxos 协议）：</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中半数以上机器存活，集群可用。所以zookeeper适合装在奇数台机器上。</p>
+<h4 id="2-Zookeeper虽然在配置文件中并没有指定master和slave。"><a href="#2-Zookeeper虽然在配置文件中并没有指定master和slave。" class="headerlink" title="2.Zookeeper虽然在配置文件中并没有指定master和slave。"></a>2.Zookeeper虽然在配置文件中并没有指定master和slave。</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;但是，zookeeper工作时，是有一个节点为leader，其他则为follower，Leader是通过内部的选举机制临时产生的。</p>
+<h4 id="3-以一个简单的例子来说明整个选举的过程。"><a href="#3-以一个简单的例子来说明整个选举的过程。" class="headerlink" title="3.以一个简单的例子来说明整个选举的过程。"></a>3.以一个简单的例子来说明整个选举的过程。</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;假设有五台服务器组成的zookeeper集群，它们的id从1-5，同时它们都是最新启动的，也就是没有历史数据，在存放数据量这一点上，都是一样的。假设这些服务器依序启动，来看看会发生什么。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZlOTAwMzA5YTYzZmMzZWQucG5n?x-oss-process=image/format,png"></p>
+<ul>
+<li>(1)服务器1启动，此时只有它一台服务器启动了，它发出去的报没有任何响应，所以它的选举状态一直是LOOKING状态。</li>
+<li>(2)服务器2启动，它与最开始启动的服务器1进行通信，互相交换自己的选举结果，由于两者都没有历史数据，所以id值较大的服务器2胜出，但是由于没有达到超过半数以上的服务器都同意选举它(这个例子中的半数以上是3)，所以服务器1、2还是继续保持LOOKING状态。</li>
+<li>(3)服务器3启动，根据前面的理论分析，服务器3成为服务器1、2、3中的老大，而与上面不同的是，此时有三台服务器选举了它，所以它成为了这次选举的leader。</li>
+<li>(4)服务器4启动，根据前面的分析，理论上服务器4应该是服务器1、2、3、4中最大的，但是由于前面已经有半数以上的服务器选举了服务器3，所以它只能接收当小弟的命了。</li>
+<li>(5)服务器5启动，同4一样当小弟。</li>
+</ul>
+<h3 id="二-节点类型"><a href="#二-节点类型" class="headerlink" title="二.节点类型"></a>二.节点类型</h3><h4 id="1-Znode有两种类型："><a href="#1-Znode有两种类型：" class="headerlink" title="1.Znode有两种类型："></a>1.Znode有两种类型：</h4><ul>
+<li>短暂(ephemeral)：客户端和服务器端断开连接后，创建的节点自己删除</li>
+<li>持久(persistent)：客户端和服务器端断开连接后，创建的节点不删除</li>
+</ul>
+<h4 id="2-Znode有四种形式的目录节点-默认是persistent"><a href="#2-Znode有四种形式的目录节点-默认是persistent" class="headerlink" title="2.Znode有四种形式的目录节点(默认是persistent)"></a>2.Znode有四种形式的目录节点(默认是persistent)</h4><p>(1)持久化目录节点(PERSISTENT)(小写：persistent)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点依旧存在。</p>
+<p>(2)持久化顺序编号目录节点(PERSISTENT_SEQUENTIAL)(小写：persistent_sequential)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号。</p>
+<p>(3)临时目录节点(EPHEMERAL)(ephemeral)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点被删除。</p>
+<p>(4)临时顺序编号目录节点(EPHEMERAL_SEQUENTIAL)(ephemeral_sequential)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;客户端与zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBhOWI4MjMzZTI3OGZiNzMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护"><a href="#3-创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护" class="headerlink" title="3.创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护"></a>3.创建znode时设置顺序标识，znode名称后会附加一个值，顺序号是一个单调递增的计数器，由父节点维护</h4><h4 id="4-在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序"><a href="#4-在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序" class="headerlink" title="4.在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序"></a>4.在分布式系统中，顺序号可以被用于为所有的事件进行全局排序，这样客户端可以通过顺序号推断事件的顺序</h4><h3 id="三-stat结构体"><a href="#三-stat结构体" class="headerlink" title="三.stat结构体"></a>三.stat结构体</h3><h4 id="1-czxid-引起这个znode创建的zxid，创建节点的事务的zxid"><a href="#1-czxid-引起这个znode创建的zxid，创建节点的事务的zxid" class="headerlink" title="1.czxid- 引起这个znode创建的zxid，创建节点的事务的zxid"></a>1.czxid- 引起这个znode创建的zxid，创建节点的事务的zxid</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;每次修改ZooKeeper状态都会收到一个zxid形式的时间戳，也就是ZooKeeper事务ID。<br>&nbsp;&nbsp;&nbsp;&nbsp;事务ID是ZooKeeper中所有修改总的次序。每个修改都有唯一的zxid，如果zxid1小于zxid2，那么zxid1在zxid2之前发生。</p>
+<h4 id="2-ctime-znode被创建的毫秒数-从1970年开始"><a href="#2-ctime-znode被创建的毫秒数-从1970年开始" class="headerlink" title="2.ctime - znode被创建的毫秒数(从1970年开始)"></a>2.ctime - znode被创建的毫秒数(从1970年开始)</h4><h4 id="3-mzxid-znode最后更新的zxid"><a href="#3-mzxid-znode最后更新的zxid" class="headerlink" title="3.mzxid - znode最后更新的zxid"></a>3.mzxid - znode最后更新的zxid</h4><h4 id="4-mtime-znode最后修改的毫秒数-从1970年开始"><a href="#4-mtime-znode最后修改的毫秒数-从1970年开始" class="headerlink" title="4.mtime - znode最后修改的毫秒数(从1970年开始)"></a>4.mtime - znode最后修改的毫秒数(从1970年开始)</h4><h4 id="5-pZxid-znode最后更新的子节点zxid"><a href="#5-pZxid-znode最后更新的子节点zxid" class="headerlink" title="5.pZxid-znode最后更新的子节点zxid"></a>5.pZxid-znode最后更新的子节点zxid</h4><h4 id="6-cversion-znode子节点变化号，znode子节点修改次数"><a href="#6-cversion-znode子节点变化号，znode子节点修改次数" class="headerlink" title="6.cversion - znode子节点变化号，znode子节点修改次数"></a>6.cversion - znode子节点变化号，znode子节点修改次数</h4><h4 id="7-dataversion-znode数据变化号"><a href="#7-dataversion-znode数据变化号" class="headerlink" title="7.dataversion - znode数据变化号"></a>7.dataversion - znode数据变化号</h4><h4 id="8-aclVersion-znode访问控制列表的变化号"><a href="#8-aclVersion-znode访问控制列表的变化号" class="headerlink" title="8.aclVersion - znode访问控制列表的变化号"></a>8.aclVersion - znode访问控制列表的变化号</h4><h4 id="9-ephemeralOwner-如果是临时节点，这个是znode拥有者的session-id。如果不是临时节点则是0。"><a href="#9-ephemeralOwner-如果是临时节点，这个是znode拥有者的session-id。如果不是临时节点则是0。" class="headerlink" title="9.ephemeralOwner- 如果是临时节点，这个是znode拥有者的session id。如果不是临时节点则是0。"></a>9.ephemeralOwner- 如果是临时节点，这个是znode拥有者的session id。如果不是临时节点则是0。</h4><h4 id="10-dataLength-znode的数据长度"><a href="#10-dataLength-znode的数据长度" class="headerlink" title="10.dataLength- znode的数据长度"></a>10.dataLength- znode的数据长度</h4><h4 id="11-numChildren-znode子节点数量"><a href="#11-numChildren-znode子节点数量" class="headerlink" title="11.numChildren - znode子节点数量"></a>11.numChildren - znode子节点数量</h4><h3 id="四-监听器原理"><a href="#四-监听器原理" class="headerlink" title="四. 监听器原理"></a>四. 监听器原理</h3><h4 id="1-监听原理详解："><a href="#1-监听原理详解：" class="headerlink" title="1.监听原理详解："></a>1.监听原理详解：</h4><p>(1) 首先要有一个main()线程</p>
+<p>(2) 在main线程中创建ZK客户端，这是会创建两个线程，一个负责网络连接通信(connect),一个负责监听(listener)</p>
+<p>(3) 通过connect线程将注册的监听事件发送给ZK</p>
+<p>(4) 在ZK的注册监听器列表中将注册的监听事件添加到列表中</p>
+<p>(5) ZK监听到有数据或路径发生变化时，就会将这个消息发送给listener线程</p>
+<p>(6) Listener线程内部调用process()方法</p>
+<h4 id="2-常见的监听"><a href="#2-常见的监听" class="headerlink" title="2.常见的监听"></a>2.常见的监听</h4><p>1.监听节点数据的变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get path [watch]</span><br></pre></td></tr></table></figure>
+<p>2.监听子节点增减的变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ls path [watch]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWVjZTExYWYyNzIyY2IucG5n?x-oss-process=image/format,png" alt="监听器原理"></p>
+<h3 id="五-写数据流程"><a href="#五-写数据流程" class="headerlink" title="五. 写数据流程"></a>五. 写数据流程</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ1NDJjNmU2YzlmZTU4ZDAucG5n?x-oss-process=image/format,png" alt="写数据流程"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;读是局部性的，即client只需要从与它相连的server上读取数据即可；而client有写请求的话，与之相连的server会通知leader，然后leader会把写操作分发给所有server。所以定要比读慢很多。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ZooKeeper之zoo.cfg 配置参数解读"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/"
+    >ZooKeeper之zoo.cfg配置参数解读</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-date">
+  <time datetime="2019-01-03T05:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-解读zoo-cfg文件中参数含义"><a href="#1-解读zoo-cfg文件中参数含义" class="headerlink" title="1.解读zoo.cfg文件中参数含义"></a>1.解读zoo.cfg文件中参数含义</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlhZWRlNjA4NTQ0MDc0ODIucG5n?x-oss-process=image/format,png" alt="参数解读"></p>
+<h5 id="1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"><a href="#1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒" class="headerlink" title="(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"></a>(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Zookeeper使用的基本时间，服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个tickTime时间就会发送一个心跳，时间单位为毫秒。<br>它用于心跳机制，并且设置最小的session超时时间为两倍心跳时间。(session的最小超时时间是2*tickTime)</p>
+<h5 id="2-initLimit-10：Leader和Follower初始通信时限"><a href="#2-initLimit-10：Leader和Follower初始通信时限" class="headerlink" title="(2)initLimit=10：Leader和Follower初始通信时限"></a>(2)initLimit=10：Leader和Follower初始通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中的follower跟随者服务器与leader领导者服务器之间初始连接时能容忍的最多心跳数（tickTime的数量），用它来限定集群中的Zookeeper服务器连接到Leader的时限。<br>投票选举新leader的初始化时间<br>&nbsp;&nbsp;&nbsp;&nbsp;Follower在启动过程中，会从Leader同步所有最新数据，然后确定自己能够对外服务的起始状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;Leader允许Follower在initLimit时间内完成这个工作。</p>
+<h5 id="3-syncLimit-5：Leader和Follower同步通信时限"><a href="#3-syncLimit-5：Leader和Follower同步通信时限" class="headerlink" title="(3)syncLimit=5：Leader和Follower同步通信时限"></a>(3)syncLimit=5：Leader和Follower同步通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中Leader与Follower之间的最大响应时间单位，假如响应超过syncLimit * tickTime，Leader认为Follwer死掉，从服务器列表中删除Follwer。<br>&nbsp;&nbsp;&nbsp;&nbsp;在运行过程中，Leader负责与ZK集群中所有机器进行通信，例如通过一些心跳检测机制，来检测机器的存活状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果L发出心跳包在syncLimit之后，还没有从F那收到响应，那么就认为这个F已经不在线了。</p>
+<h5 id="4-dataDir：数据文件目录-数据持久化路径"><a href="#4-dataDir：数据文件目录-数据持久化路径" class="headerlink" title="(4)dataDir：数据文件目录+数据持久化路径"></a>(4)dataDir：数据文件目录+数据持久化路径</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;保存内存数据库快照信息的位置，如果没有其他说明，更新的事务日志也保存到数据库。</p>
+<h5 id="5-clientPort-2181：客户端连接端口"><a href="#5-clientPort-2181：客户端连接端口" class="headerlink" title="(5)clientPort=2181：客户端连接端口"></a>(5)clientPort=2181：客户端连接端口</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;监听客户端连接的端口</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ZooKeeper分布式安装部署"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/"
+    >ZooKeeper分布式安装部署</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E5%88%86%E5%B8%83%E5%BC%8F%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time datetime="2019-01-03T04:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-集群规划"><a href="#1-集群规划" class="headerlink" title="1.集群规划"></a>1.集群规划</h4><p>在hadoop1、hadoop2和hadoop3三个节点上部署Zookeeper。</p>
+<h4 id="2-解压安装"><a href="#2-解压安装" class="headerlink" title="2.解压安装"></a>2.解压安装</h4><p>(1)解压zookeeper安装包到/opt/module/目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.10.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<p>(2)在/opt/module/zookeeper-3.4.10/这个目录下创建zkData</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p zkData</span><br></pre></td></tr></table></figure>
+<p>(3)重命名/opt/module/zookeeper-3.4.10/conf这个目录下的zoo_sample.cfg为zoo.cfg</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zoo_sample.cfg zoo.cfg</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-配置zoo-cfg文件"><a href="#3-配置zoo-cfg文件" class="headerlink" title="3.配置zoo.cfg文件"></a>3.配置zoo.cfg文件</h4><p>(1)具体配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/module/zookeeper-3.4.10/conf/zoo.cfg</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/opt/module/zookeeper-3.4.10/zkData</span><br></pre></td></tr></table></figure>
+<p>增加如下配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">######################cluster##########################</span></span></span><br><span class="line"></span><br><span class="line">server.1=hadoop1:2888:3888</span><br><span class="line"></span><br><span class="line">server.2=hadoop2:2888:3888</span><br><span class="line"></span><br><span class="line">server.3=hadoop3:2888:3888</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk4MGYxMWJkYzkyNjY5ODUucG5n?x-oss-process=image/format,png" alt="zoo.cfg"></p>
+<p>(2)配置参数解读</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Server.A=B:C:D。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>A是一个数字，表示这个是第几号服务器；</p>
+</li>
+<li><p>B是这个服务器的ip地址；</p>
+</li>
+<li><p>C是这个服务器与集群中的Leader服务器交换信息的端口；</p>
+</li>
+<li><p>D是万一集群中的Leader服务器挂了，需要一个端口来重新进行选举，选出一个新的Leader，而这个端口就是用来执行选举时服务器相互通信的端口。</p>
+</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;集群模式下配置一个文件myid，这个文件在dataDir目录下，这个文件里面有一个数据就是A的值，Zookeeper启动时读取此文件，拿到里面的数据与zoo.cfg里面的配置信息比较从而判断到底是哪个server。</p>
+<h4 id="3-集群操作"><a href="#3-集群操作" class="headerlink" title="3.集群操作"></a>3.集群操作</h4><p>(1)在/opt/module/zookeeper-3.4.10/zkData目录下创建一个myid的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch myid</span><br></pre></td></tr></table></figure>
+<p>添加myid文件，注意一定要在linux里面创建，在notepad++里面很可能乱码</p>
+<p>(2)编辑myid文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi myid</span><br></pre></td></tr></table></figure>
+<p>在文件中添加与server对应的编号：如1<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTk0ZWU4YjYxMjEwMjI4Y2UucG5n?x-oss-process=image/format,png" alt="1"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWIzMTkwNGEyYzdlY2UxZGIucG5n?x-oss-process=image/format,png" alt="myid"></p>
+<p>(3)拷贝配置好的zookeeper到其他机器上<br>并分别修改myid文件中内容为2、3,并修改环境变量，和hadoop1一样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/module/zookeeper-3.4.10/ root@hadoop2:/opt/module/</span><br><span class="line"></span><br><span class="line">scp -r /opt/module/zookeeper-3.4.10/ root@hadoop3:/opt/module/</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY4NWUzM2I1MzVlNDI1YWIucG5n?x-oss-process=image/format,png" alt="拷贝"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMzZWI2MjJmNTBhOWU3NWMucG5n?x-oss-process=image/format,png" alt="2"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWVmYjdkOWI2NDRjNDM2M2QucG5n?x-oss-process=image/format,png" alt="myid"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJhMWQzZTJkM2Y4NmFhMTEucG5n?x-oss-process=image/format,png" alt="3"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJkYmY3NDdlODE2ZTQ1NzQucG5n?x-oss-process=image/format,png" alt="myid"><br>(4)三台都修改环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ZOOKEEPER_HOME=/opt/module/zookeeper-3.4.10</span><br><span class="line">export PATH=$PATH:$ZOOKEEPER_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p>使环境变量生效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE3OTE0Y2FiMzgyN2U3YmIucG5n?x-oss-process=image/format,png" alt="修改环境变量"></p>
+<p>(5)分别启动zookeeper<br>hadoop1:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+<p>hadoop2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+<p>hadoop3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<p>(5)查看状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh status</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkyNDEyYWFjZjE5YTFjOTgucG5n?x-oss-process=image/format,png" alt="hadoop1查看状态"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh status</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI2MGEzMTQxODRkODZlZjIucG5n?x-oss-process=image/format,png" alt="hadoop2查看状态"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh status</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiMjU5MGVmNGYzMGI4NjQucG5n?x-oss-process=image/format,png" alt="hadoop3查看状态"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ZooKeeper本地模式安装"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F%E5%AE%89%E8%A3%85/"
+    >ZooKeeper本地模式安装</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%BC%8F%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2019-01-03T03:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-安装前准备："><a href="#1-安装前准备：" class="headerlink" title="1.安装前准备："></a>1.安装前准备：</h4><p>(1)安装jdk<br>(2)上传zookeeper到linux系统下<br>(3)解压到指定目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.10.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU0M2M4YzAzNTNkNDBmMTcucG5n?x-oss-process=image/format,png" alt="解压"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY2MzBmN2FmZDA5ZTg4MTIucG5n?x-oss-process=image/format,png"></p>
+<p>(4)配置环境变量</p>
+<p>输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ZOOKEEPER_HOME=/opt/module/zookeeper-3.4.10</span><br><span class="line">export PATH=$PATH:$ZOOKEEPER_HOME/bin</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTgwZTAwY2YxYmMyMGY1NWUucG5n?x-oss-process=image/format,png" alt="环境变量"></p>
+<h4 id="2-配置修改"><a href="#2-配置修改" class="headerlink" title="2.配置修改"></a>2.配置修改</h4><p>(1)将/opt/module/zookeeper-3.4.10/conf这个路径下的zoo_sample.cfg修改为zoo.cfg；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zoo_sample.cfg  zoo.cfg</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0ZjljM2IxY2Q5M2I1OTEucG5n?x-oss-process=image/format,png"></p>
+<p>(2)进入zoo.cfg文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim zoo.cfg</span><br></pre></td></tr></table></figure>
+<p>(3)修改dataDir路径为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/opt/module/zookeeper-3.4.10/zkData</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc3ZDhjZDI1MzkzNzVlNmQucG5n?x-oss-process=image/format,png"></p>
+<p>(4)在/opt/module/zookeeper-3.4.10/这个目录上创建zkData文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/zookeeper-3.4.10 </span><br><span class="line"></span><br><span class="line">mkdir zkData</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWI5MGE5ZmNkOTlkNDk3MGYucG5n?x-oss-process=image/format,png" alt="创建文件夹"></p>
+<h4 id="3-操作zookeeper"><a href="#3-操作zookeeper" class="headerlink" title="3.操作zookeeper"></a>3.操作zookeeper</h4><h5 id="1-启动zookeeper"><a href="#1-启动zookeeper" class="headerlink" title="(1)启动zookeeper"></a>(1)启动zookeeper</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+<h5 id="2-查看进程是否启动"><a href="#2-查看进程是否启动" class="headerlink" title="(2)查看进程是否启动"></a>(2)查看进程是否启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-查看状态："><a href="#3-查看状态：" class="headerlink" title="(3)查看状态："></a>(3)查看状态：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh status</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg2ZTAwZTRkMGQyODhkN2UucG5n?x-oss-process=image/format,png"></p>
+<h5 id="4-启动客户端："><a href="#4-启动客户端：" class="headerlink" title="(4)启动客户端："></a>(4)启动客户端：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFkOTBkZWI3YjQ0ZTQ4NWUucG5n?x-oss-process=image/format,png" alt="启动客户端"></p>
+<h5 id="5-退出客户端："><a href="#5-退出客户端：" class="headerlink" title="(5)退出客户端："></a>(5)退出客户端：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ2MGE3MWIyMGIyMjY2MmIucG5n?x-oss-process=image/format,png" alt="退出客户端"></p>
+<h5 id="6-停止zookeeper"><a href="#6-停止zookeeper" class="headerlink" title="(6)停止zookeeper"></a>(6)停止zookeeper</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh stop</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlmODA1MDljMmFkYWExZTUucG5n?x-oss-process=image/format,png" alt="停止zookeeper"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Zookeeper概述："
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/Zookeeper%E6%A6%82%E8%BF%B0%EF%BC%9A/"
+    >Zookeeper概述</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/Zookeeper%E6%A6%82%E8%BF%B0%EF%BC%9A/" class="article-date">
+  <time datetime="2019-01-03T02:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-概述："><a href="#一-概述：" class="headerlink" title="一.概述："></a>一.概述：</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Zookeeper是一个开源的分布式的，为分布式应用提供协调服务的Apache项目。Hadoop和Hbase的重要组件。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等。</p>
+<h3 id="二-特点："><a href="#二-特点：" class="headerlink" title="二.特点："></a>二.特点：</h3><p>(1)Zookeeper：一个领导者（leader），多个跟随者（follower）组成的集群。</p>
+<p>(2)Leader负责进行投票的发起和决议，更新系统状态。</p>
+<p>(3)Follower用于接收客户请求并向客户端返回结果，在选举Leader过程中参与投票。</p>
+<p>(4)集群中奇数台服务器只要有半数以上节点存活，Zookeeper集群就能正常服务。</p>
+<p>(5)全局数据一致：每个server保存一份相同的数据副本，client无论连接到哪个server，数据都是一致的。</p>
+<p>(6)更新请求顺序进行，来自同一个client的更新请求按其发送顺序依次执行。</p>
+<p>(7)数据更新原子性，一次数据更新要么成功，要么失败。</p>
+<p>(8)实时性，在一定时间范围内，client能读到最新数据。</p>
+<h3 id="三-数据结构："><a href="#三-数据结构：" class="headerlink" title="三.数据结构："></a>三.数据结构：</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看作是一棵树，每个节点称做一个ZNode。每一个ZNode默认能够存储1MB的元数据，每个ZNode都可以通过其路径唯一标识</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTljNDQ2YjdmYzg1ODNjNmEucG5n?x-oss-process=image/format,png" alt="ZooKeeper数据结构"></p>
+<h3 id="四-应用场景："><a href="#四-应用场景：" class="headerlink" title="四.应用场景："></a>四.应用场景：</h3><h4 id="1-统一命名服务"><a href="#1-统一命名服务" class="headerlink" title="1.统一命名服务"></a>1.统一命名服务</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWViYTBjOTc1OTFmY2UyYjcucG5n?x-oss-process=image/format,png" alt="统一命名服务"></p>
+<h4 id="2-统一配置管理"><a href="#2-统一配置管理" class="headerlink" title="2.统一配置管理"></a>2.统一配置管理</h4><h5 id="1-分布式环境下，配置文件管理和同步是一个常见问题"><a href="#1-分布式环境下，配置文件管理和同步是一个常见问题" class="headerlink" title="(1).分布式环境下，配置文件管理和同步是一个常见问题"></a>(1).分布式环境下，配置文件管理和同步是一个常见问题</h5><p>(a)一个集群中，所有节点的配置信息是一致的，比如hadoop集群</p>
+<p>(b)对配置文件修改后，希望能够快速同步到各个节点上</p>
+<h5 id="2-配置管理可交由ZK实现"><a href="#2-配置管理可交由ZK实现" class="headerlink" title="(2).配置管理可交由ZK实现"></a>(2).配置管理可交由ZK实现</h5><p>(a)可配置信息写入ZK上的一个Znode</p>
+<p>(b)各个节点监听这个ZNode</p>
+<p>(c )一旦Znode中的数据被修改，ZK将通知各个节点</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmZDRmMTUzZTQwNmE5MTgucG5n?x-oss-process=image/format,png" alt="配置管理"></p>
+<h4 id="3-统一集群管理"><a href="#3-统一集群管理" class="headerlink" title="3.统一集群管理"></a>3.统一集群管理</h4><p>集群管理结构图如下所示。</p>
+<h5 id="1-分布式环境中，实时掌握每个节点的状态是必要的。"><a href="#1-分布式环境中，实时掌握每个节点的状态是必要的。" class="headerlink" title="(1).分布式环境中，实时掌握每个节点的状态是必要的。"></a>(1).分布式环境中，实时掌握每个节点的状态是必要的。</h5><p>(a)可根据节点实时做出一些调整</p>
+<h5 id="2-可交由Zk实现"><a href="#2-可交由Zk实现" class="headerlink" title="(2).可交由Zk实现"></a>(2).可交由Zk实现</h5><p>(a)可将节点信息写入ZK上的一个ZNode</p>
+<p>(b)监听这个Znode可获取它的实时状态变化</p>
+<h5 id="3-典型应用"><a href="#3-典型应用" class="headerlink" title="(3).典型应用"></a>(3).典型应用</h5><p>(a)HBase中Master状态监控与选举</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA3ZDY3N2Q0M2FkZWQwYTEucG5n?x-oss-process=image/format,png" alt="集群管理"></p>
+<h4 id="4-服务器节点动态上下线"><a href="#4-服务器节点动态上下线" class="headerlink" title="4.服务器节点动态上下线"></a>4.服务器节点动态上下线</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA5NTJlNDZmOWVkMDdhNGYucG5n?x-oss-process=image/format,png" alt="服务器动态上下线"></p>
+<h4 id="5-软负载均衡"><a href="#5-软负载均衡" class="headerlink" title="5.软负载均衡"></a>5.软负载均衡</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJkZTI0NWVhODEwMTAxMzgucG5n?x-oss-process=image/format,png" alt="软负载均衡"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Hadoop之优化"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/"
+    >Hadoop之优化</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/Hadoop%E4%B9%8B%E4%BC%98%E5%8C%96/" class="article-date">
+  <time datetime="2019-01-02T07:50:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-MapReduce-跑的慢的原因"><a href="#一-MapReduce-跑的慢的原因" class="headerlink" title="一.MapReduce 跑的慢的原因"></a>一.MapReduce 跑的慢的原因</h3><p>Mapreduce 程序效率的瓶颈在于两点：</p>
+<h4 id="1-计算机性能"><a href="#1-计算机性能" class="headerlink" title="1.计算机性能"></a>1.计算机性能</h4><p>CPU、内存、磁盘健康、网络</p>
+<h4 id="2-I-O-操作优化"><a href="#2-I-O-操作优化" class="headerlink" title="2.I/O 操作优化"></a>2.I/O 操作优化</h4><p>(1)数据倾斜<br>(2)map和reduce数设置不合理<br>(3)map运行时间太长，导致reduce等待过久<br>(4)小文件过多<br>(5)大量的不可分块的超大文件<br>(6)spill次数过多<br>(7)merge次数过多等。</p>
+<h3 id="二-MapReduce优化方法"><a href="#二-MapReduce优化方法" class="headerlink" title="二. MapReduce优化方法"></a>二. MapReduce优化方法</h3><p>MapReduce优化方法主要从六个方面考虑：数据输入、Map阶段、Reduce阶段、IO传输、数据倾斜问题和常用的调优参数。</p>
+<h4 id="1-数据输入"><a href="#1-数据输入" class="headerlink" title="1.数据输入"></a>1.数据输入</h4><p>(1)合并小文件：在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢。</p>
+<p>(2)采用CombineTextInputFormat来作为输入，解决输入端大量小文件场景。</p>
+<h4 id="2-Map阶段"><a href="#2-Map阶段" class="headerlink" title="2 Map阶段"></a>2 Map阶段</h4><h5 id="1-减少溢写（spill）次数："><a href="#1-减少溢写（spill）次数：" class="headerlink" title="(1)减少溢写（spill）次数："></a>(1)减少溢写（spill）次数：</h5><p>通过调整io.sort.mb及sort.spill.percent参数值，增大触发spill的内存上限，减少spill次数，从而减少磁盘IO。</p>
+<h5 id="2-减少合并（merge）次数："><a href="#2-减少合并（merge）次数：" class="headerlink" title="(2)减少合并（merge）次数："></a>(2)减少合并（merge）次数：</h5><p>通过调整io.sort.factor参数，增大merge的文件数目，减少merge的次数，从而缩短mr处理时间。</p>
+<h5 id="3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。"><a href="#3-在map之后，不影响业务逻辑前提下，先进行combine处理，减少-I-O。" class="headerlink" title="(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。"></a>(3)在map之后，不影响业务逻辑前提下，先进行combine处理，减少 I/O。</h5><h4 id="3-Reduce阶段"><a href="#3-Reduce阶段" class="headerlink" title="3 Reduce阶段"></a>3 Reduce阶段</h4><h5 id="1-合理设置map和reduce数："><a href="#1-合理设置map和reduce数：" class="headerlink" title="(1)合理设置map和reduce数："></a>(1)合理设置map和reduce数：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致 map、reduce任务间竞争资源，造成处理超时等错误。</p>
+<h5 id="2-设置map、reduce共存："><a href="#2-设置map、reduce共存：" class="headerlink" title="(2)设置map、reduce共存："></a>(2)设置map、reduce共存：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;调整slowstart.completedmaps参数，使map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。</p>
+<h5 id="3-规避使用reduce："><a href="#3-规避使用reduce：" class="headerlink" title="(3)规避使用reduce："></a>(3)规避使用reduce：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;因为reduce在用于连接数据集的时候将会产生大量的网络消耗。</p>
+<h5 id="4-合理设置reduce端的buffer："><a href="#4-合理设置reduce端的buffer：" class="headerlink" title="(4)合理设置reduce端的buffer："></a>(4)合理设置reduce端的buffer：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;默认情况下，数据达到一个阈值的时候，buffer中的数据就会写入磁盘，然后reduce会从磁盘中获得所有的数据。也就是说，buffer和reduce是没有直接关联的，中间多个一个写磁盘-&gt;读磁盘的过程，既然有这个弊端，那么就可以通过参数来配置，使得buffer中的一部分数据可以直接输送到reduce，从而减少IO开销：mapred.job.reduce.input.buffer.percent，默认为0.0。当值大于0的时候，会保留指定比例的内存读buffer中的数据直接拿给reduce使用。这样一来，设置buffer需要内存，读取数据需要内存，reduce计算也要内存，所以要根据作业的运行情况进行调整。</p>
+<h4 id="4-IO传输"><a href="#4-IO传输" class="headerlink" title="4 IO传输"></a>4 IO传输</h4><p>(1)采用数据压缩的方式，减少网络IO的的时间。安装Snappy和LZO压缩编码器。</p>
+<p>(2)使用SequenceFile二进制文件。</p>
+<h4 id="5-数据倾斜问题"><a href="#5-数据倾斜问题" class="headerlink" title="5 数据倾斜问题"></a>5 数据倾斜问题</h4><h5 id="1-数据倾斜现象"><a href="#1-数据倾斜现象" class="headerlink" title="(1)数据倾斜现象"></a>(1)数据倾斜现象</h5><ul>
+<li>数据频率倾斜——某一个区域的数据量要远远大于其他区域。</li>
+<li>数据大小倾斜——部分记录的大小远远大于平均值。</li>
+</ul>
+<h5 id="2-如何收集倾斜数据"><a href="#2-如何收集倾斜数据" class="headerlink" title="(2)如何收集倾斜数据"></a>(2)如何收集倾斜数据</h5><p>在reduce方法中加入记录map输出键的详细情况的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String MAX_VALUES = <span class="string">&quot;skew.maxvalues&quot;</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> maxValueThreshold; </span><br><span class="line"> </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(JobConf job)</span> </span>&#123; </span><br><span class="line">     maxValueThreshold = job.getInt(MAX_VALUES, <span class="number">100</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterator&lt;Text&gt; values,</span></span></span><br><span class="line"><span class="params"><span class="function">                     OutputCollector&lt;Text, Text&gt; output, </span></span></span><br><span class="line"><span class="params"><span class="function">                     Reporter reporter)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">     <span class="keyword">while</span> (values.hasNext()) &#123;</span><br><span class="line">         values.next();</span><br><span class="line">         i++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (++i &gt; maxValueThreshold) &#123;</span><br><span class="line">         log.info(<span class="string">&quot;Received &quot;</span> + i + <span class="string">&quot; values for key &quot;</span> + key);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-减少数据倾斜的方法"><a href="#3-减少数据倾斜的方法" class="headerlink" title="(3)减少数据倾斜的方法"></a>(3)减少数据倾斜的方法</h5><ul>
+<li><p>方法1：抽样和范围分区<br>可以通过对原始数据进行抽样得到的结果集来预设分区边界值。</p>
+</li>
+<li><p>方法2：自定义分区<br>基于输出键的背景知识进行自定义分区。例如，如果map输出键的单词来源于一本书。且其中某几个专业词汇较多。那么就可以自定义分区将这这些专业词汇发送给固定的一部分reduce实例。而将其他的都发送给剩余的reduce实例。</p>
+</li>
+<li><p>方法3：Combine<br>使用Combine可以大量地减小数据倾斜。在可能的情况下，combine的目的就是聚合并精简数据。</p>
+</li>
+<li><p>方法4：采用Map Join，尽量避免Reduce Join。</p>
+</li>
+</ul>
+<h4 id="6-常用的调优参数"><a href="#6-常用的调优参数" class="headerlink" title="6 常用的调优参数"></a>6 常用的调优参数</h4><h5 id="1-资源相关参数"><a href="#1-资源相关参数" class="headerlink" title="(1)资源相关参数"></a>(1)资源相关参数</h5><h6 id="a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）"><a href="#a-以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default-xml）" class="headerlink" title="(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）"></a>(a).以下参数是在用户自己的mr应用程序中配置就可以生效（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.memory.mb</td>
+<td align="center">一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.memory.mb</td>
+<td align="center">一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.cpu.vcores</td>
+<td align="center">每个Map task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.cpu.vcores</td>
+<td align="center">每个Reduce task可使用的最多cpu core数目，默认值: 1</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.parallelcopies</td>
+<td align="center">每个reduce去map中拿数据的并行数。默认值是5</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.merge.percent</td>
+<td align="center">buffer中的数据达到多少比例开始写入磁盘。默认值0.66</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.shuffle.input.buffer.percent</td>
+<td align="center">buffer大小占reduce可用内存的比例。默认值0.7</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.input.buffer.percent</td>
+<td align="center">指定多少比例的内存用来存放buffer中的数据，默认值是0.0</td>
+</tr>
+</tbody></table>
+<h6 id="b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）"><a href="#b-应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default-xml）" class="headerlink" title="(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）"></a>(b).应该在yarn启动之前就配置在服务器的配置文件中才能生效（yarn-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">yarn.scheduler.minimum-allocation-mb      1024</td>
+<td align="center">给应用程序container分配的最小内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-mb      8192</td>
+<td align="center">给应用程序container分配的最大内存</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.minimum-allocation-vcores    1</td>
+<td align="center">每个container申请的最小CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.scheduler.maximum-allocation-vcores    32</td>
+<td align="center">每个container申请的最大CPU核数</td>
+</tr>
+<tr>
+<td align="center">yarn.nodemanager.resource.memory-mb   8192</td>
+<td align="center">给containers分配的最大物理内存</td>
+</tr>
+</tbody></table>
+<h6 id="c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）"><a href="#c-shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default-xml）" class="headerlink" title="(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）"></a>(c ).shuffle性能优化的关键参数，应在yarn启动之前就配置好（mapred-default.xml）</h6><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.task.io.sort.mb   100</td>
+<td align="center">shuffle的环形缓冲区大小，默认100m</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.sort.spill.percent   0.8</td>
+<td align="center">环形缓冲区溢出的阈值，默认80%</td>
+</tr>
+</tbody></table>
+<h5 id="2-容错相关参数-mapreduce性能优化"><a href="#2-容错相关参数-mapreduce性能优化" class="headerlink" title="(2)容错相关参数(mapreduce性能优化)"></a>(2)容错相关参数(mapreduce性能优化)</h5><table>
+<thead>
+<tr>
+<th align="center">配置参数</th>
+<th align="center">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mapreduce.map.maxattempts</td>
+<td align="center">每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.reduce.maxattempts</td>
+<td align="center">每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</td>
+</tr>
+<tr>
+<td align="center">mapreduce.task.timeout</td>
+<td align="center">Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是600000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是“AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”</td>
+</tr>
+</tbody></table>
+<h3 id="三-HDFS小文件优化方法"><a href="#三-HDFS小文件优化方法" class="headerlink" title="三. HDFS小文件优化方法"></a>三. HDFS小文件优化方法</h3><h4 id="1-HDFS小文件弊端"><a href="#1-HDFS小文件弊端" class="headerlink" title="1 HDFS小文件弊端"></a>1 HDFS小文件弊端</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;HDFS上每个文件都要在namenode上建立一个索引，这个索引的大小约为150byte，这样当小文件比较多的时候，就会产生很多的索引文件，一方面会大量占用namenode的内存空间，另一方面就是索引文件过大是的索引速度变慢。</p>
+<h4 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2 解决方案"></a>2 解决方案</h4><h5 id="1-Hadoop-Archive"><a href="#1-Hadoop-Archive" class="headerlink" title="(1)Hadoop Archive:"></a>(1)Hadoop Archive:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;是一个高效地将小文件放入HDFS块中的文件存档工具，它能够将多个小文件打包成一个HAR文件，这样就减少了namenode的内存使用。</p>
+<h5 id="2-Sequence-file："><a href="#2-Sequence-file：" class="headerlink" title="(2)Sequence file："></a>(2)Sequence file：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;sequence file由一系列的二进制key/value组成，如果key为文件名，value为文件内容，则可以将大批小文件合并成一个大文件。</p>
+<h5 id="3-CombineFileInputFormat："><a href="#3-CombineFileInputFormat：" class="headerlink" title="(3)CombineFileInputFormat："></a>(3)CombineFileInputFormat：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;CombineFileInputFormat是一种新的inputformat，用于将多个文件合并成一个单独的split，另外，它会考虑数据的存储位置。</p>
+<h5 id="4-开启JVM重用"><a href="#4-开启JVM重用" class="headerlink" title="(4)开启JVM重用"></a>(4)开启JVM重用</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;对于大量小文件Job，可以开启JVM重用会减少45%运行时间。<br>&nbsp;&nbsp;&nbsp;&nbsp;JVM重用理解：一个map运行一个jvm，重用的话，在一个map在jvm上运行完毕后，jvm继续运行其他map。<br>&nbsp;&nbsp;&nbsp;&nbsp;具体设置：mapreduce.job.jvm.numtasks值在10-20之间。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Hadoop之数据压缩"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/"
+    >Hadoop之数据压缩</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/Hadoop%E4%B9%8B%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" class="article-date">
+  <time datetime="2019-01-02T06:50:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;压缩技术能够有效减少底层存储系统(HDFS)读写字节数。压缩提高了网络带宽和磁盘空间的效率。在Hadoop下，尤其是数据规模很大和工作负载密集的情况下，使用数据压缩显得非常重要。在这种情况下，I/O操作和网络数据传输要花大量的时间。还有，Shuffle与Merge过程同样也面临着巨大的I/O压力。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;鉴于磁盘I/O和网络带宽是Hadoop的宝贵资源，数据压缩对于节省资源、最小化磁盘I/O和网络传输非常有帮助。不过，尽管压缩与解压操作的CPU开销不高，其性能的提升和资源的节省并非没有代价。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;如果磁盘I/O和网络带宽影响了MapReduce作业性能，在任意MapReduce阶段启用压缩都可以改善端到端处理时间并减少I/O和网络流量。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;压缩Mapreduce的一种优化策略：通过压缩编码对Mapper或者Reducer的输出进行压缩，以减少磁盘IO，提高MR程序运行速度（但相应增加了cpu运算负担）</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;注意：压缩特性运用得当能提高性能，但运用不当也可能降低性能。</p>
+<h5 id="1-基本原则："><a href="#1-基本原则：" class="headerlink" title="(1)基本原则："></a>(1)基本原则：</h5><ul>
+<li>(a)运算密集型的job，少用压缩</li>
+<li>(b)IO密集型的job，多用压缩</li>
+</ul>
+<h4 id="2-MR支持的压缩编码"><a href="#2-MR支持的压缩编码" class="headerlink" title="2.MR支持的压缩编码"></a>2.MR支持的压缩编码</h4><table>
+<thead>
+<tr>
+<th align="center">压缩格式</th>
+<th align="center">hadoop自带?</th>
+<th align="center">算法</th>
+<th align="center">文件扩展名</th>
+<th align="center">是否可切分</th>
+<th align="center">换成压缩格式后，原来的程序是否需要修改</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFAULT</td>
+<td align="center">是，直接使用</td>
+<td align="center">DEFAULT</td>
+<td align="center">.deflate</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td align="center">Gzip</td>
+<td align="center">是，直接使用</td>
+<td align="center">DEFAULT</td>
+<td align="center">.gz</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">是，直接使用</td>
+<td align="center">bzip2</td>
+<td align="center">.bz2</td>
+<td align="center">是</td>
+<td align="center">和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">否，需要安装</td>
+<td align="center">LZO</td>
+<td align="center">.lzo</td>
+<td align="center">是</td>
+<td align="center">需要建索引，还需要指定输入格式</td>
+</tr>
+<tr>
+<td align="center">Snappy</td>
+<td align="center">否，需要安装</td>
+<td align="center">Snappy</td>
+<td align="center">.snappy</td>
+<td align="center">否</td>
+<td align="center">和文本处理一样，不需要修改</td>
+</tr>
+</tbody></table>
+<p>为了支持多种压缩/解压缩算法，Hadoop引入了编码/解码器，如下表所示</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩格式</th>
+<th align="center">对应的编码/解码器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFLATE</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+</tr>
+<tr>
+<td align="center">gzip</td>
+<td align="center">org.apache.hadoop.io.compress.GzipCodec</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">org.apache.hadoop.io.compress.BZip2Codec</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">com.hadoop.compression.lzo.LzopCodec</td>
+</tr>
+<tr>
+<td align="center">Snappy</td>
+<td align="center">org.apache.hadoop.io.compress.SnappyCodec</td>
+</tr>
+</tbody></table>
+<p>压缩性能的比较</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩算法</th>
+<th align="center">原始文件大小</th>
+<th align="center">压缩文件大小</th>
+<th align="center">压缩速度</th>
+<th align="center">解压速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">gzip</td>
+<td align="center">8.3GB</td>
+<td align="center">1.8GB</td>
+<td align="center">17.5MB/s</td>
+<td align="center">58MB/s</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">8.3GB</td>
+<td align="center">1.1GB</td>
+<td align="center">2.4MB/s</td>
+<td align="center">9.5MB/s</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">8.3GB</td>
+<td align="center">2.9GB</td>
+<td align="center">49.3MB/s</td>
+<td align="center">74.6MB/s</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://google.github.io/snappy/">http://google.github.io/snappy/</a></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h4 id="3-压缩方式选择"><a href="#3-压缩方式选择" class="headerlink" title="3 压缩方式选择"></a>3 压缩方式选择</h4><h5 id="1-Gzip压缩"><a href="#1-Gzip压缩" class="headerlink" title="(1) Gzip压缩"></a>(1) Gzip压缩</h5><ul>
+<li><p>优点：压缩率比较高，而且压缩/解压速度也比较快；hadoop本身支持，在应用中处理gzip格式的文件就和直接处理文本一样；大部分linux系统都自带gzip命令，使用方便。</p>
+</li>
+<li><p>缺点：不支持split。</p>
+</li>
+</ul>
+<p>应用场景：当每个文件压缩之后在130M以内的（1个块大小内），都可以考虑用gzip压缩格式。例如说一天或者一个小时的日志压缩成一个gzip文件，运行mapreduce程序的时候通过多个gzip文件达到并发。hive程序，streaming程序，和java写的mapreduce程序完全和文本处理一样，压缩之后原来的程序不需要做任何修改。</p>
+<h5 id="2-Bzip2压缩"><a href="#2-Bzip2压缩" class="headerlink" title="(2) Bzip2压缩"></a>(2) Bzip2压缩</h5><ul>
+<li><p>优点：支持split；具有很高的压缩率，比gzip压缩率都高；hadoop本身支持，但不支持native(java和c互操作的API接口)；在linux系统下自带bzip2命令，使用方便。</p>
+</li>
+<li><p>缺点：压缩/解压速度慢；不支持native。</p>
+</li>
+</ul>
+<p>应用场景：适合对速度要求不高，但需要较高的压缩率的时候，可以作为mapreduce作业的输出格式；或者输出之后的数据比较大，处理之后的数据需要压缩存档减少磁盘空间并且以后数据用得比较少的情况；或者对单个很大的文本文件想压缩减少存储空间，同时又需要支持split，而且兼容之前的应用程序（即应用程序不需要修改）的情况。</p>
+<h5 id="3-Lzo压缩"><a href="#3-Lzo压缩" class="headerlink" title="(3) Lzo压缩"></a>(3) Lzo压缩</h5><ul>
+<li><p>优点：压缩/解压速度也比较快，合理的压缩率；支持split，是hadoop中最流行的压缩格式；可以在linux系统下安装lzop命令，使用方便。</p>
+</li>
+<li><p>缺点：压缩率比gzip要低一些；hadoop本身不支持，需要安装；在应用中对lzo格式的文件需要做一些特殊处理（为了支持split需要建索引，还需要指定inputformat为lzo格式）。</p>
+</li>
+</ul>
+<p>应用场景：一个很大的文本文件，压缩之后还大于200M以上的可以考虑，而且单个文件越大，lzo优点越越明显。</p>
+<h5 id="4-Snappy压缩"><a href="#4-Snappy压缩" class="headerlink" title="(4)Snappy压缩"></a>(4)Snappy压缩</h5><ul>
+<li><p>优点：高速压缩速度和合理的压缩率。</p>
+</li>
+<li><p>缺点：不支持split；压缩率比gzip要低；hadoop本身不支持，需要安装；</p>
+</li>
+</ul>
+<p>应用场景：当Mapreduce作业的Map输出的数据比较大的时候，作为Map到Reduce的中间数据的压缩格式；或者作为一个Mapreduce作业的输出和另外一个Mapreduce作业的输入。</p>
+<h4 id="4-压缩位置选择"><a href="#4-压缩位置选择" class="headerlink" title="4 压缩位置选择"></a>4 压缩位置选择</h4><p>压缩可以在MapReduce作用的任意阶段启用。</p>
+<h4 id="5-压缩配置参数"><a href="#5-压缩配置参数" class="headerlink" title="5 压缩配置参数"></a>5 压缩配置参数</h4><p>要在Hadoop中启用压缩，可以配置如下参数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">默认值</th>
+<th align="center">阶段</th>
+<th align="center">建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">io.compression.codecs<br>(在core-site.xml中配置)</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec, org.apache.hadoop.io.compress.GzipCodec, org.apache.hadoop.io.compress.BZip2Codec</td>
+<td align="center">输入压缩</td>
+<td align="center">Hadoop使用文件扩展名判断是否支持某种编解码器</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.output.compress<br>(在mapred-site.xml中配置)</td>
+<td align="center">false</td>
+<td align="center">mapper输出</td>
+<td align="center">这个参数设为true启用压缩</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.output.compress.codec<br>(在mapred-site.xml中配置)</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+<td align="center">mapper输出</td>
+<td align="center">使用LZO或snappy编解码器在此阶段压缩数据</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress<br>(在mapred-site.xml中配置)</td>
+<td align="center">false</td>
+<td align="center">reducer输出</td>
+<td align="center">这个参数设为true启用压缩</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress.codec<br>(在mapred-site.xml中配置)</td>
+<td align="center">org.apache.hadoop.io.compress. DefaultCodec</td>
+<td align="center">reducer输出</td>
+<td align="center">使用标准工具或者编解码器，如gzip和bzip2</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress.type<br>(在mapred-site.xml中配置)</td>
+<td align="center">RECORD</td>
+<td align="center">reducer输出</td>
+<td align="center">SequenceFile输出使用的压缩类型：NONE和BLOCK</td>
+</tr>
+</tbody></table>
+<h4 id="6-压缩实战"><a href="#6-压缩实战" class="headerlink" title="6 压缩实战"></a>6 压缩实战</h4> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Yarn-HA配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/"
+    >Yarn-HA配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/Yarn-HA%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2019-01-02T05:50:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-Yarn-HA配置"><a href="#一-Yarn-HA配置" class="headerlink" title="一.Yarn-HA配置"></a>一.Yarn-HA配置</h3><h4 id="1-YARN-HA工作机制"><a href="#1-YARN-HA工作机制" class="headerlink" title="1.YARN-HA工作机制"></a>1.YARN-HA工作机制</h4><h5 id="1-官方文档："><a href="#1-官方文档：" class="headerlink" title="(1).官方文档："></a>(1).官方文档：</h5><p><a target="_blank" rel="noopener" href="http://hadoop.apache.org/docs/r2.7.2/hadoop-yarn/hadoop-yarn-site/ResourceManagerHA.html">官方文档</a></p>
+<h5 id="2-YARN-HA工作机制"><a href="#2-YARN-HA工作机制" class="headerlink" title="(2).YARN-HA工作机制"></a>(2).YARN-HA工作机制</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRkMWVjZjhkOWRiOTkyMTAucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="2-配置YARN-HA集群"><a href="#2-配置YARN-HA集群" class="headerlink" title="2.配置YARN-HA集群"></a>2.配置YARN-HA集群</h4><h5 id="0-环境准备"><a href="#0-环境准备" class="headerlink" title="(0).环境准备"></a>(0).环境准备</h5><p>(a)修改IP<br>(b)修改主机名及主机名和IP地址的映射<br>(c )关闭防火墙<br>(d)ssh免密登录<br>(e)安装JDK，配置环境变量等<br>(f)配置Zookeeper集群<br>(g)配置过mapred-site.xml(和以前配置一样)</p>
+<h5 id="1-规划集群"><a href="#1-规划集群" class="headerlink" title="(1).规划集群"></a>(1).规划集群</h5><table>
+<thead>
+<tr>
+<th align="center">bigdata111</th>
+<th align="center">bigdata112</th>
+<th align="center">bigdata113</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">NameNode</td>
+<td align="center">NameNode</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">JournalNode</td>
+<td align="center">JournalNode</td>
+<td align="center">JournalNode</td>
+</tr>
+<tr>
+<td align="center">DataNode</td>
+<td align="center">DataNode</td>
+<td align="center">DataNode</td>
+</tr>
+<tr>
+<td align="center">ZK</td>
+<td align="center">ZK</td>
+<td align="center">ZK</td>
+</tr>
+<tr>
+<td align="center">ResourceManager</td>
+<td align="center">ResourceManager</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">NodeManager</td>
+<td align="center">NodeManager</td>
+<td align="center">NodeManager</td>
+</tr>
+</tbody></table>
+<h5 id="2-具体配置"><a href="#2-具体配置" class="headerlink" title="(2).具体配置"></a>(2).具体配置</h5><h6 id="a-yarn-site-xml"><a href="#a-yarn-site-xml" class="headerlink" title="(a)yarn-site.xml"></a>(a)yarn-site.xml</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--启用resourcemanager ha--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.ha.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!--声明两台resourcemanager的地址--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.cluster-id<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>cluster-yarn1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.ha.rm-ids<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>rm1,rm2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname.rm1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname.rm2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!--指定zookeeper集群的地址--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.zk-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:2181,hadoop2:2181,hadoop3:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--启用自动恢复--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.recovery.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">&lt;!--指定resourcemanager的状态信息存储在zookeeper集群--&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.store.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span>     <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h6 id="b-同步更新其他节点的配置信息"><a href="#b-同步更新其他节点的配置信息" class="headerlink" title="(b)同步更新其他节点的配置信息"></a>(b)同步更新其他节点的配置信息</h6><h5 id="3-启动hdfs"><a href="#3-启动hdfs" class="headerlink" title="(3).启动hdfs"></a>(3).启动hdfs</h5><p>(a)在各个JournalNode节点上，输入以下命令启动journalnode服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start journalnode</span><br></pre></td></tr></table></figure>
+<p>(b)在[nn1]上，对其进行格式化，并启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -format</span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
+<p>(c )在[nn2]上，同步nn1的元数据信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -bootstrapStandby</span><br></pre></td></tr></table></figure>
+<p>(d)启动[nn2]：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
+<p>(e)启动所有datanode</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemons.sh start datanode</span><br></pre></td></tr></table></figure>
+<p>(f)将[nn1]切换为Active</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs haadmin -transitionToActive nn1</span><br></pre></td></tr></table></figure>
+<h5 id="4-启动yarn"><a href="#4-启动yarn" class="headerlink" title="(4).启动yarn"></a>(4).启动yarn</h5><p>(a)在hadoop1中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+<p>(b)在hadoop2中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/yarn-daemon.sh start resourcemanager</span><br></pre></td></tr></table></figure>
+<p>(c)查看服务状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/yarn rmadmin -getServiceState rm1</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY1YjllNzQ2YzUxMjQzZmIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>(d)强制切换状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/yarn rmadmin -transitionToStandby rm2 --forcemanual</span><br></pre></td></tr></table></figure>
+
+<p>(e)关于sbin/start.all.sh<br>hadoop1:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start.all.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJjNTk2YjE0NWZkMzRlZDEucG5n?x-oss-process=image/format,png"></p>
+<h3 id="二-HDFS-Federation架构设计"><a href="#二-HDFS-Federation架构设计" class="headerlink" title="二.HDFS Federation架构设计"></a>二.HDFS Federation架构设计</h3><h4 id="1-NameNode架构的局限性"><a href="#1-NameNode架构的局限性" class="headerlink" title="1.NameNode架构的局限性"></a>1.NameNode架构的局限性</h4><h5 id="1-Namespace-命名空间-的限制"><a href="#1-Namespace-命名空间-的限制" class="headerlink" title="(1)Namespace(命名空间)的限制"></a>(1)Namespace(命名空间)的限制</h5><p>由于NameNode在内存中存储所有的元数据(metadata)，因此单个namenode所能存储的对象(文件+块)数目受到namenode所在JVM的heap size的限制。50G的heap能够存储20亿(200million)个对象，这20亿个对象支持4000个datanode，12PB的存储（假设文件平均大小为40MB）。随着数据的飞速增长，存储的需求也随之增长。单个datanode从4T增长到36T，集群的尺寸增长到8000个datanode。存储的需求从12PB增长到大于100PB。</p>
+<h5 id="2-隔离问题"><a href="#2-隔离问题" class="headerlink" title="(2)隔离问题"></a>(2)隔离问题</h5><p>由于HDFS仅有一个namenode，无法隔离各个程序，因此HDFS上的一个实验程序就很有可能影响整个HDFS上运行的程序。</p>
+<h5 id="3-性能的瓶颈"><a href="#3-性能的瓶颈" class="headerlink" title="(3)性能的瓶颈"></a>(3)性能的瓶颈</h5><p>由于是单个namenode的HDFS架构，因此整个HDFS文件系统的吞吐量受限于单个namenode的吞吐量。</p>
+<h4 id="2-HDFS-Federation架构设计"><a href="#2-HDFS-Federation架构设计" class="headerlink" title="2.HDFS Federation架构设计"></a>2.HDFS Federation架构设计</h4><p>能不能有多个NameNode</p>
+<table>
+<thead>
+<tr>
+<th>NameNode</th>
+<th>NameNode</th>
+<th>NameNode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>元数据</td>
+<td>元数据</td>
+<td>元数据</td>
+</tr>
+<tr>
+<td>Log</td>
+<td>machine</td>
+<td>电商数据/话单数据</td>
+</tr>
+</tbody></table>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMxM2ZiYmM1Mjg0MDVlNjEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h4 id="3-HDFS-Federation应用思考"><a href="#3-HDFS-Federation应用思考" class="headerlink" title="3.HDFS Federation应用思考"></a>3.HDFS Federation应用思考</h4><p>不同应用可以使用不同NameNode进行数据管理<br>图片业务、爬虫业务、日志审计业务<br>Hadoop生态系统中，不同的框架使用不同的namenode进行管理namespace。（隔离性）</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/YARN/" rel="tag">YARN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-HDFS-HA高可用集群配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/"
+    >HDFS-HA高可用集群配置</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2019-01-02T04:50:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-HDFS-HA集群配置"><a href="#一-HDFS-HA集群配置" class="headerlink" title="一. HDFS-HA集群配置"></a>一. HDFS-HA集群配置</h3><h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1 环境准备"></a>1 环境准备</h4><p>(1)修改IP<br>(2)修改主机名及主机名和IP地址的映射<br>(3)关闭防火墙<br>(4)ssh免密登录<br>(5)安装JDK，配置环境变量等<br>(6)hadoop1,hadoop2,hadoop3集群已经配置好zookeeper集群</p>
+<h4 id="2-规划集群"><a href="#2-规划集群" class="headerlink" title="2 规划集群"></a>2 规划集群</h4><table>
+<thead>
+<tr>
+<th align="center">hadoop1</th>
+<th align="center">hadoop2</th>
+<th align="center">hadoop3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">NameNode</td>
+<td align="center">NameNode</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">JournalNode</td>
+<td align="center">JournalNode</td>
+<td align="center">JournalNode</td>
+</tr>
+<tr>
+<td align="center">DataNode</td>
+<td align="center">DataNode</td>
+<td align="center">DataNode</td>
+</tr>
+<tr>
+<td align="center">ZK</td>
+<td align="center">ZK</td>
+<td align="center">ZK</td>
+</tr>
+<tr>
+<td align="center">zkfc</td>
+<td align="center">zkfc</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">ResourceManager</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">NodeManager</td>
+<td align="center">NodeManager</td>
+<td align="center">NodeManager</td>
+</tr>
+</tbody></table>
+<h4 id="3-具体步骤"><a href="#3-具体步骤" class="headerlink" title="3.具体步骤"></a>3.具体步骤</h4><p>(1).在opt目录下创建一个HA文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line"></span><br><span class="line">mkdir HA</span><br></pre></td></tr></table></figure>
+<p>(2).将hadoop-2.8.4压缩包解压到/opt/HA目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/HA/</span><br></pre></td></tr></table></figure>
+<p>(3).配置hadoop-env.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144</span><br></pre></td></tr></table></figure>
+<p>(4).配置core-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 把两个NameNode）的地址组装成一个集群mycluster --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/HA/hadoop-2.8.4/data/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置zookeeper--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>ha.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:2181,hadoop2:2181,hadoop3:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>(5).配置hdfs-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 完全分布式集群名称 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.nameservices<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 集群中NameNode节点都有哪些 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.namenodes.mycluster<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>nn1,nn2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn1的RPC通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.rpc-address.mycluster.nn1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn2的RPC通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.rpc-address.mycluster.nn2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop2:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn1的http通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address.mycluster.nn1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn2的http通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address.mycluster.nn2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop2:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 指定NameNode元数据在JournalNode上的存放位置 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.shared.edits.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>qjournal://hadoop1:8485;hadoop2:8485;hadoop3:8485/mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.fencing.methods<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>sshfence<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 使用隔离机制时需要ssh无秘钥登录--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.fencing.ssh.private-key-files<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/.ssh/id_rsa<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">              <span class="comment">&lt;!--这里主要是看自己是什么用户，我是root用户--&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 声明journalnode服务器存储目录--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.journalnode.edits.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/HA/hadoop-2.8.4/data/jn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 关闭权限检查--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions.enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 访问代理类：client，mycluster，active配置失败自动切换实现方式--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.client.failover.proxy.provider.mycluster<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.automatic-failover.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>(6).配置slaves文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/HA/hadoop-2.8.4/etc/hadoop</span><br><span class="line"></span><br><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop1</span><br><span class="line">hadoop2</span><br><span class="line">hadoop3</span><br></pre></td></tr></table></figure>
+
+<p>(7).拷贝配置好的hadoop环境到其他节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/HA/* root@hadoop2:/opt/HA/</span><br><span class="line"></span><br><span class="line">scp -r /opt/HA/* root@hadoop3:/opt/HA/</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-初始化namenode"><a href="#4-初始化namenode" class="headerlink" title="4 初始化namenode"></a>4 初始化namenode</h4><p>(1).在各个JournalNode节点上，输入以下命令启动journalnode服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start journalnode</span><br></pre></td></tr></table></figure>
+<p>(2).在[nn1]上，对其进行格式化，并启动：<br>hadoop1:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -format</span><br><span class="line"></span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
+<p>(3).在[nn2]上，同步nn1的元数据信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -bootstrapStandby</span><br></pre></td></tr></table></figure>
+<p>(4).启动[nn2]：<br>hadoop2:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTAxNjEyODllMGMxZDVmOTgucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>(5).查看web页面显示</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFlYjg3YjJkZTcyNDRlNmMucG5n?x-oss-process=image/format,png" alt="hadoop1"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJlNjNhOWE3NTg1ZWFlYWEucG5n?x-oss-process=image/format,png" alt="hadoop2"></p>
+<h5 id="5-高可用HDFS集群启动"><a href="#5-高可用HDFS集群启动" class="headerlink" title="5.高可用HDFS集群启动"></a>5.高可用HDFS集群启动</h5><p>(1)关闭所有HDFS服务：<br>hadoop1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/stop-dfs.sh</span><br></pre></td></tr></table></figure>
+<p>hadoop2:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh stop namenode  </span><br></pre></td></tr></table></figure>
+
+<p>(2)启动Zookeeper集群,每一台都启动zookeeper：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+<p>(3)初始化HA在Zookeeper中状态：<br>在hadoop1中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs zkfc -formatZK</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmMzlhYTRlNTBiN2NlNTIucG5n?x-oss-process=image/format,png"></p>
+<p>(4)启动HDFS服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-dfs.sh</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzNzVkYzIwNzI0N2UxMTMucG5n?x-oss-process=image/format,png"></p>
+<p>(5)在各个NameNode节点上启动DFSZK Failover Controller，先在哪台机器启动，哪个机器的NameNode就是Active NameNode</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemin.sh start zkfc</span><br></pre></td></tr></table></figure>
+<p>(若是直接设置自动切换，DFSZK Failover Controller没有启动，则需要走这一步)</p>
+<h5 id="6-验证"><a href="#6-验证" class="headerlink" title="6.验证"></a>6.验证</h5><p>(1)将Active NameNode进程kill</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 namenode的进程id</span><br></pre></td></tr></table></figure>
+<p>(2)将Active NameNode机器断开网络</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network stop</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-HDFS之HA高可用概述"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/"
+    >HDFS之HA高可用概述</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2019-01-02T04:49:00.000Z" itemprop="datePublished">2019-01-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-HA概述"><a href="#一-HA概述" class="headerlink" title="一.HA概述"></a>一.HA概述</h3><p>1.所谓HA(2high available)，即高可用(7*24小时不中断服务)</p>
+<p>2.实现高可用最关键的策略是消除单点故障。HA严格来说应该分成各个组件的HA机制：HDFS的HA和YARN的HA。</p>
+<p>3.Hadoop2.0之前，在HDFS集群中NameNode存在单点故障(SPOF)</p>
+<p>4.NameNode主要在以下两个方面影响HDFS集群<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器发生意外，如宕机，集群将无法使用，直到管理员重启<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器需要升级，包括软件、硬件升级，此时集群也将无法使用<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS HA功能通过配置Active/Standby两个nameNodes实现在集群中对NameNode的热备来解决上述问题。如果出现故障，如机器崩溃或机器需要升级维护，这时可通过此种方式将NameNode很快的切换到另外一台机器。</p>
+<h3 id="二-HDFS-HA工作机制"><a href="#二-HDFS-HA工作机制" class="headerlink" title="二. HDFS-HA工作机制"></a>二. HDFS-HA工作机制</h3><p><strong>通过双namenode消除单点故障</strong></p>
+<h4 id="1-HDFS-HA工作要点"><a href="#1-HDFS-HA工作要点" class="headerlink" title="1.HDFS-HA工作要点"></a>1.HDFS-HA工作要点</h4><h5 id="1-元数据管理方式需要改变："><a href="#1-元数据管理方式需要改变：" class="headerlink" title="(1).元数据管理方式需要改变："></a>(1).元数据管理方式需要改变：</h5><ul>
+<li>内存中各自保存一份元数据；</li>
+<li>Edits日志只有Active状态的namenode节点可以做写操作；</li>
+<li>两个namenode都可以读取edits；</li>
+<li>共享的edits放在一个共享存储中管理(qjournal和NFS两个主流实现)</li>
+</ul>
+<h5 id="2-需要一个状态管理功能模块"><a href="#2-需要一个状态管理功能模块" class="headerlink" title="(2).需要一个状态管理功能模块"></a>(2).需要一个状态管理功能模块</h5><p>实现了一个zkfailover，常驻在每一个namenode所在的节点，每一个zkfailover负责监控自己所在namenode节点，利用zk进行状态标识，当需要进行状态切换时，由zkfailover来负责切换，切换时需要防止brain split现象的发生。</p>
+<h5 id="3-必须保证两个NameNode之间能够ssh无密码登录。"><a href="#3-必须保证两个NameNode之间能够ssh无密码登录。" class="headerlink" title="(3).必须保证两个NameNode之间能够ssh无密码登录。"></a>(3).必须保证两个NameNode之间能够ssh无密码登录。</h5><h5 id="4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务"><a href="#4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务" class="headerlink" title="(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务"></a>(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务</h5><h4 id="2-HDFS-HA自动故障转移工作机制"><a href="#2-HDFS-HA自动故障转移工作机制" class="headerlink" title="2.HDFS-HA自动故障转移工作机制"></a>2.HDFS-HA自动故障转移工作机制</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;可以使用命令hdfs haadmin -failover手动进行故障转移，在该模式下，即使现役NameNode已经失效，系统也不会自动从现役NameNode转移到待机NameNode。自动故障转移为HDFS部署增加了两个新组件：ZooKeeper和ZKFailoverController（ZKFC）进程。</p>
+<p>(1)ZooKeeper是维护少量协调数据，通知客户端这些数据的改变和监视客户端故障的高可用服务。HA的自动故障转移依赖于ZooKeeper的以下功能：</p>
+<ul>
+<li>(a)故障检测：集群中的每个NameNode在ZooKeeper中维护了一个持久会话，如果机器崩溃，ZooKeeper中的会话将终止，ZooKeeper通知另一个NameNode需要触发故障转移。</li>
+<li>(b)现役NameNode选择：ZooKeeper提供了一个简单的机制用于唯一的选择一个节点为active状态。如果目前现役NameNode崩溃，另一个节点可能从ZooKeeper获得特殊的排外锁以表明它应该成为现役NameNode。</li>
+</ul>
+<p>(2)ZKFC是自动故障转移中的另一个新组件，是ZooKeeper的客户端，也监视和管理NameNode的状态。每个运行NameNode的主机也运行了一个ZKFC进程，ZKFC负责：</p>
+<ul>
+<li>(a)健康监测：ZKFC使用一个健康检查命令定期地ping与之在相同主机的NameNode，只要该NameNode及时地回复健康状态，ZKFC认为该节点是健康的。如果该节点崩溃，冻结或进入不健康状态，健康监测器标识该节点为非健康的。</li>
+<li>(b)ZooKeeper会话管理：当本地NameNode是健康的，ZKFC保持一个在ZooKeeper中打开的会话。如果本地NameNode处于active状态，ZKFC也保持一个特殊的znode锁，该锁使用了ZooKeeper对短暂节点的支持，如果会话终止，锁节点将自动删除。</li>
+<li>(c )基于ZooKeeper的选择：如果本地NameNode是健康的，且ZKFC发现没有其它的节点当前持有znode锁，它将为自己获取该锁。如果成功，则它已经赢得了选择，并负责运行故障转移进程以使它的本地NameNode为active。故障转移进程与前面描述的手动故障转移相似，首先如果必要保护之前的现役NameNode，然后本地NameNode转换为active状态。</li>
+</ul>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0NjJiZWZiZTcwOGY2M2MucG5n?x-oss-process=image/format,png" alt="HDFS-HA故障转移机制"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/24/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><a class="page-number" href="/page/27/">27</a><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/26/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

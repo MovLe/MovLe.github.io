@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Spark Core：Spark RDD的高级算子 |  Movle</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="https://img-blog.csdnimg.cn/20200609161448519.jpg" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Spark Core：Spark RDD的高级算子"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Spark Core：Spark RDD的高级算子
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/03/10/Spark%20Core%EF%BC%9ASpark%20RDD%E7%9A%84%E9%AB%98%E7%BA%A7%E7%AE%97%E5%AD%90/" class="article-date">
+  <time datetime="2020-03-10T08:00:00.000Z" itemprop="datePublished">2020-03-10</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Spark/">Spark</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">6 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-mapPartitionsWithIndex"><a href="#1-mapPartitionsWithIndex" class="headerlink" title="1.mapPartitionsWithIndex"></a>1.mapPartitionsWithIndex</h4><p>把每个partition中的分区号和对应的值拿出来</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def mapPartitionsWithIndex[U](f: (Int, Iterator[T]) ⇒ Iterator[U])</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-参数说明："><a href="#1-参数说明：" class="headerlink" title="(1)参数说明："></a>(1)参数说明：</h5><ul>
+<li>f是一个函数参数，需要自定义。</li>
+<li>f 接收两个参数，第一个参数是Int，代表分区号。第二个Iterator[T]代表分区中的元素。</li>
+</ul>
+<h5 id="2-通过这两个参数，可以定义处理分区的函数。"><a href="#2-通过这两个参数，可以定义处理分区的函数。" class="headerlink" title="(2)通过这两个参数，可以定义处理分区的函数。"></a>(2)通过这两个参数，可以定义处理分区的函数。</h5><p>Iterator[U] ： 操作完成后，返回的结果。</p>
+<h5 id="3-示例：将每个分区中的元素和分区号打印出来。"><a href="#3-示例：将每个分区中的元素和分区号打印出来。" class="headerlink" title="(3)示例：将每个分区中的元素和分区号打印出来。"></a>(3)示例：将每个分区中的元素和分区号打印出来。</h5><h6 id="a"><a href="#a" class="headerlink" title="(a)"></a>(a)</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val rdd1 = sc.parallelize(List(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>), <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h6 id="b-创建一个函数返回RDD中的每个分区号和元素："><a href="#b-创建一个函数返回RDD中的每个分区号和元素：" class="headerlink" title="(b)创建一个函数返回RDD中的每个分区号和元素："></a>(b)创建一个函数返回RDD中的每个分区号和元素：</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">func1</span><span class="params">(index:Int, iter:Iterator[Int])</span>:Iterator[String] </span>=&#123;</span><br><span class="line">   iter.toList.map( x =&gt; <span class="string">&quot;[PartID:&quot;</span> + index + <span class="string">&quot;, value=&quot;</span> + x + <span class="string">&quot;]&quot;</span> ).iterator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="c-调用："><a href="#c-调用：" class="headerlink" title="(c )调用："></a>(c )调用：</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdd1.mapPartitionsWithIndex(func1).collect</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYzNzJjZjQzYzViY2M1NjYucG5n?x-oss-process=image/format,png"></p>
+<h4 id="2-aggregate"><a href="#2-aggregate" class="headerlink" title="2.aggregate"></a>2.aggregate</h4><p><strong>含义</strong>：先对局部聚合，再对全局聚合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def aggregate[U](zeroValue: U)(seqOp: (U, T) ⇒ U, combOp: (U, U) ⇒ U)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEyZmE5ZTBhNjViODQ1MDQucG5n?x-oss-process=image/format,png"></p>
+<p><strong>举例</strong>：</p>
+<h5 id="1-第一个例子："><a href="#1-第一个例子：" class="headerlink" title="(1)第一个例子："></a>(1)第一个例子：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">val rdd1 = sc.parallelize(List(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">func1</span><span class="params">(index:Int, iter:Iterator[Int])</span>:Iterator[String] </span>=&#123;</span><br><span class="line">   iter.toList.map( x =&gt; <span class="string">&quot;[PartID:&quot;</span> + index + <span class="string">&quot;, value=&quot;</span> + x + <span class="string">&quot;]&quot;</span> ).iterator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查看每个分区中的元素：</span></span><br><span class="line">rdd1.mapPartitionsWithIndex(func1).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ2YmJjZTg1ZjZkMjUxNDUucG5n?x-oss-process=image/format,png"></p>
+<h6 id="a-需求：将每个分区中的最大值求和，注意：初始值是0；"><a href="#a-需求：将每个分区中的最大值求和，注意：初始值是0；" class="headerlink" title="(a)需求：将每个分区中的最大值求和，注意：初始值是0；"></a>(a)需求：将每个分区中的最大值求和，注意：初始值是0；</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZhZDk0YmZjNjM2MTY3NGUucG5n?x-oss-process=image/format,png" alt="分析过程"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果初始值为0，结果为7</span></span><br><span class="line">rdd1.aggregate(<span class="number">0</span>)(max(_,_),_+_)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果初始值为10，则结果为：30</span></span><br><span class="line">rdd1.aggregate(<span class="number">10</span>)(max(_,_),_+_)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFhMGQxNzMzMzA4ZDUwYWQucG5n?x-oss-process=image/format,png"></p>
+<h6 id="b-需求：如果是求和，注意：初始值是0："><a href="#b-需求：如果是求和，注意：初始值是0：" class="headerlink" title="(b)需求：如果是求和，注意：初始值是0："></a>(b)需求：如果是求和，注意：初始值是0：</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果初始值是0</span></span><br><span class="line">rdd1.aggregate(<span class="number">0</span>)(_+_,_+_)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果初始值是10，则结果是：45</span></span><br><span class="line">rdd1.aggregate(<span class="number">10</span>)(_+_,_+_)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWZjNmYzZTA0Y2NjODBlNTQucG5n?x-oss-process=image/format,png"></p>
+<h5 id="2-第二个例子：一个字符串的例子："><a href="#2-第二个例子：一个字符串的例子：" class="headerlink" title="(2)第二个例子：一个字符串的例子："></a>(2)第二个例子：一个字符串的例子：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">val rdd2 = sc.parallelize(List(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>,<span class="string">&quot;e&quot;</span>,<span class="string">&quot;f&quot;</span>),<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//修改一下刚才的查看分区元素的函数</span></span><br><span class="line"><span class="function">def <span class="title">func2</span><span class="params">(index: Int, iter: Iterator[(String)</span>]) : Iterator[String] </span>= &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">&quot;[partID:&quot;</span> +  index + <span class="string">&quot;, val: &quot;</span> + x + <span class="string">&quot;]&quot;</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查看两个分区中的元素：</span></span><br><span class="line">rdd2.mapPartitionsWithIndex(func2).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU3Y2RhNjA2ZDcxMjNlMWMucG5n?x-oss-process=image/format,png"></p>
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rdd2.aggregate(<span class="string">&quot;&quot;</span>)(_+_,_+_)</span><br><span class="line"></span><br><span class="line">rdd2.aggregate(<span class="string">&quot;*&quot;</span>)(_+_,_+_)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhMmJhMmEwNDI5OGQyZjAucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<h5 id="3-例三：更复杂一点的例子"><a href="#3-例三：更复杂一点的例子" class="headerlink" title="(3)例三：更复杂一点的例子"></a>(3)例三：更复杂一点的例子</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val rdd3 = sc.parallelize(List(<span class="string">&quot;12&quot;</span>,<span class="string">&quot;23&quot;</span>,<span class="string">&quot;345&quot;</span>,<span class="string">&quot;4567&quot;</span>),<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">rdd3.mapPartitionsWithIndex(func2).collect</span><br><span class="line"></span><br><span class="line">rdd3.aggregate(<span class="string">&quot;&quot;</span>)((x,y) =&gt; math.max(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZlZDJiNGJiODE1N2I2YzEucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<p>程序执行分析：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一个分区： &quot;12&quot;  &quot;23&quot;</span><br><span class="line">    第一次比较：&quot;&quot; 和 &quot;12&quot; 比，求长度的最大值: 2 。 2 ---&gt; &quot;2&quot;</span><br><span class="line">    第二次比较：&quot;2&quot; 和 &quot;23&quot; 比，求长度的最大值: 2。 2 ---&gt; &quot;2&quot;</span><br><span class="line">				</span><br><span class="line">第二个分区：&quot;345&quot;  &quot;4567&quot;</span><br><span class="line">    第一次比较：&quot;&quot; 和 &quot;345&quot; 比，求长度的最大值: 3 。 3 ---&gt; &quot;3&quot;</span><br><span class="line">    第二次比较：&quot;3&quot; 和 &quot;4567&quot; 比，求长度的最大值: 4。 4 ---&gt; &quot;4&quot;</span><br></pre></td></tr></table></figure>
+<p>结果可能是：”24”，也可能是：”42”</p>
+<h5 id="4-例四："><a href="#4-例四：" class="headerlink" title="(4)例四："></a>(4)例四：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val rdd4 = sc.parallelize(List(<span class="string">&quot;12&quot;</span>,<span class="string">&quot;23&quot;</span>,<span class="string">&quot;345&quot;</span>,<span class="string">&quot;&quot;</span>),<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">rdd4.mapPartitionsWithIndex(func2).collect</span><br><span class="line"></span><br><span class="line">rdd4.aggregate(<span class="string">&quot;&quot;</span>)((x,y) =&gt; math.min(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYwOTY4MDVjMTg1OWQyZGUucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<p>程序执行分析：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一个分区： &quot;12&quot;  &quot;23&quot;</span><br><span class="line">    第一次比较：&quot;&quot; 和 &quot;12&quot; 比长度，求长度的最小值。 0 。 0 ---&gt; &quot;0&quot;</span><br><span class="line">    第二次比较：&quot;0&quot; 和 &quot;23&quot; 比长度，求长度的最小值。 1。 1 ---&gt; &quot;1&quot;</span><br><span class="line">				</span><br><span class="line">第二个分区：&quot;345&quot;  &quot;&quot;</span><br><span class="line">    第一次比较：&quot;&quot; 和 &quot;345&quot; 比，求长度的最小值。 0 。 0 ---&gt; &quot;0&quot;</span><br><span class="line">    第二次比较：&quot;0&quot; 和 &quot;&quot; 比，求长度的最小值。 0。 0 ---&gt; &quot;0&quot;</span><br></pre></td></tr></table></figure>
+<p>结果是：”10”，也可能是”01”，</p>
+<p>原因：注意有个初始值””，其长度0，然后0.toString变成字符串</p>
+<h5 id="5-例5"><a href="#5-例5" class="headerlink" title="(5)例5:"></a>(5)例5:</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val rdd5 = sc.parallelize(List(<span class="string">&quot;12&quot;</span>,<span class="string">&quot;23&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;345&quot;</span>),<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">rdd5.mapPartitionsWithIndex(func2).collect</span><br><span class="line"></span><br><span class="line">rdd5.aggregate(<span class="string">&quot;&quot;</span>)((x,y) =&gt; math.min(x.length, y.length).toString, (x,y) =&gt; x + y)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWMxYmJmMWQ1OWYwMWVjY2MucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<p>结果是：”11”，原因同上</p>
+<p>程序执行分析：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一个分区： &quot;12&quot;  &quot;23&quot;</span><br><span class="line">		第一次比较：&quot;&quot; 和 &quot;12&quot; 比长度，求长度的最小值。 0 。 0 ---&gt; &quot;0&quot;</span><br><span class="line">		第二次比较：&quot;0&quot; 和 &quot;23&quot; 比长度，求长度的最小值。 1。 1 ---&gt; &quot;1&quot;</span><br><span class="line">				</span><br><span class="line">第二个分区：&quot;&quot;  &quot;345&quot;</span><br><span class="line">		第一次比较：&quot;&quot; 和 &quot;&quot; 比，求长度的最小值。 0 。 0 ---&gt; &quot;0&quot;</span><br><span class="line">		第二次比较：&quot;0&quot; 和 &quot;345&quot; 比，求长度的最小值。 1。 1 ---&gt; &quot;1&quot;	</span><br></pre></td></tr></table></figure>
+<h4 id="3-aggregateByKey-类似于aggregate操作，区别：操作的-的数据"><a href="#3-aggregateByKey-类似于aggregate操作，区别：操作的-的数据" class="headerlink" title="3.aggregateByKey:类似于aggregate操作，区别：操作的  的数据"></a>3.aggregateByKey:类似于aggregate操作，区别：操作的 <key value> 的数据</h4><h5 id="1-准备数据："><a href="#1-准备数据：" class="headerlink" title="(1)准备数据："></a>(1)准备数据：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val pairRDD = sc.parallelize(List( (<span class="string">&quot;cat&quot;</span>,<span class="number">2</span>), (<span class="string">&quot;cat&quot;</span>, <span class="number">5</span>), (<span class="string">&quot;mouse&quot;</span>, <span class="number">4</span>),(<span class="string">&quot;cat&quot;</span>, <span class="number">12</span>), (<span class="string">&quot;dog&quot;</span>, <span class="number">12</span>), (<span class="string">&quot;mouse&quot;</span>, <span class="number">2</span>)), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">func3</span><span class="params">(index: Int, iter: Iterator[(String, Int)</span>]) : Iterator[String] </span>= &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">&quot;[partID:&quot;</span> +  index + <span class="string">&quot;, val: &quot;</span> + x + <span class="string">&quot;]&quot;</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pairRDD.mapPartitionsWithIndex(func3).collect</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBkYTYxNmIwOTZkZThmZTEucG5n?x-oss-process=image/format,png" alt="准备数据"></p>
+<h5 id="2-两个分区中的元素："><a href="#2-两个分区中的元素：" class="headerlink" title="(2)两个分区中的元素："></a>(2)两个分区中的元素：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg0ODFhZjc0ZDM2YmVjM2YucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-示例："><a href="#3-示例：" class="headerlink" title="(3) 示例："></a>(3) 示例：</h5><h6 id="a-将每个分区中的动物最多的个数求和"><a href="#a-将每个分区中的动物最多的个数求和" class="headerlink" title="(a)将每个分区中的动物最多的个数求和"></a>(a)将每个分区中的动物最多的个数求和</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pairRDD.aggregateByKey(<span class="number">0</span>)(math.max(_, _), _ + _).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUxNjVhMmZjMDI3NDBmMGIucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<h6 id="b-将每种动物个数求和"><a href="#b-将每种动物个数求和" class="headerlink" title="(b)将每种动物个数求和"></a>(b)将每种动物个数求和</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pairRDD.aggregateByKey(<span class="number">0</span>)(_+_, _ + _).collect</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmOTkyYmQ5NmY2NDkwZmMucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<h6 id="c-这个例子也可以使用：reduceByKey"><a href="#c-这个例子也可以使用：reduceByKey" class="headerlink" title="(c )这个例子也可以使用：reduceByKey"></a>(c )这个例子也可以使用：reduceByKey</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pairRDD.reduceByKey(_+_).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBkMGJjY2MyNDY0M2YxOTQucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<p><strong>与reduceByKey相比，aggregateByKey 效率更高</strong></p>
+<h4 id="4-coalesce与repartition"><a href="#4-coalesce与repartition" class="headerlink" title="4.coalesce与repartition"></a>4.coalesce与repartition</h4><h5 id="1-都是将RDD中的分区进行重分区。"><a href="#1-都是将RDD中的分区进行重分区。" class="headerlink" title="(1)都是将RDD中的分区进行重分区。"></a>(1)都是将RDD中的分区进行重分区。</h5><h5 id="2-区别是：coalesce默认不会进行shuffle-false-；而repartition会进行shuffle-true-，即：会将数据真正通过网络进行重分区。"><a href="#2-区别是：coalesce默认不会进行shuffle-false-；而repartition会进行shuffle-true-，即：会将数据真正通过网络进行重分区。" class="headerlink" title="(2)区别是：coalesce默认不会进行shuffle(false)；而repartition会进行shuffle(true)，即：会将数据真正通过网络进行重分区。"></a>(2)区别是：coalesce默认不会进行shuffle(false)；而repartition会进行shuffle(true)，即：会将数据真正通过网络进行重分区。</h5><h5 id="3-示例：-1"><a href="#3-示例：-1" class="headerlink" title="(3)示例："></a>(3)示例：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">func4</span><span class="params">(index: Int, iter: Iterator[(Int)</span>]) : Iterator[String] </span>= &#123;</span><br><span class="line">  iter.toList.map(x =&gt; <span class="string">&quot;[partID:&quot;</span> +  index + <span class="string">&quot;, val: &quot;</span> + x + <span class="string">&quot;]&quot;</span>).iterator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val rdd1 = sc.parallelize(List(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">rdd1.mapPartitionsWithIndex(func4).collect</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxZGYxMjIzY2M4NjM4NWQucG5n?x-oss-process=image/format,png" alt="数据准备"></p>
+<p>下面两句话是等价的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val rdd2 = rdd1.repartition(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">val rdd3 = rdd1.coalesce(<span class="number">3</span>,<span class="keyword">true</span>)    <span class="comment">//---&gt;如果是false，查看RDD的length依然是2</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWEwOTk1MDZjNTFmZDI0YmQucG5n?x-oss-process=image/format,png" alt="结果"></p>
+<h4 id="5、其他高级算子"><a href="#5、其他高级算子" class="headerlink" title="5、其他高级算子"></a>5、其他高级算子</h4><p>参考：<a target="_blank" rel="noopener" href="http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html">http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html</a></p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/03/10/Spark%20Core%EF%BC%9ASpark%20RDD%E7%9A%84%E9%AB%98%E7%BA%A7%E7%AE%97%E5%AD%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparkCore/" rel="tag">SparkCore</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2020/03/10/Spark%20Streaming%EF%BC%9A%E5%9F%BA%E7%A1%80/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Spark Streaming：基础
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/03/10/Spark%20Core%EF%BC%9ASpark%E7%9A%84%E7%AE%97%E5%AD%90/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Spark Core：Spark的算子</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> Movle
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="https://img-blog.csdnimg.cn/20200609161448519.jpg" alt="Movle"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
