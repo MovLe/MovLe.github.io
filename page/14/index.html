@@ -155,6 +155,591 @@
     
     
     <article
+  id="post-Hive之压缩和存储"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/"
+    >Hive之压缩和存储</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/15/Hive%E4%B9%8B%E5%8E%8B%E7%BC%A9%E5%92%8C%E5%AD%98%E5%82%A8/" class="article-date">
+  <time datetime="2019-07-15T14:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hive/">Hive</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-Hadoop源码编译支持Snappy压缩"><a href="#一-Hadoop源码编译支持Snappy压缩" class="headerlink" title="一.Hadoop源码编译支持Snappy压缩"></a>一.Hadoop源码编译支持Snappy压缩</h3><h4 id="1-资源准备"><a href="#1-资源准备" class="headerlink" title="1.资源准备"></a>1.资源准备</h4><h5 id="1-CentOS联网"><a href="#1-CentOS联网" class="headerlink" title="(1).CentOS联网"></a>(1).CentOS联网</h5><p>配置CentOS能连接外网。Linux虚拟机ping <a target="_blank" rel="noopener" href="http://www.baidu.com是畅通的/">www.baidu.com是畅通的</a></p>
+<p>注意：采用root角色编译，减少文件夹权限出现问题</p>
+<h6 id="2-jar包准备-hadoop源码、JDK8-、maven、protobuf"><a href="#2-jar包准备-hadoop源码、JDK8-、maven、protobuf" class="headerlink" title="(2).jar包准备(hadoop源码、JDK8 、maven、protobuf)"></a>(2).jar包准备(hadoop源码、JDK8 、maven、protobuf)</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(a)hadoop-2.8.4-src.tar.gz</span><br><span class="line">(b)jdk-8u144-linux-x64.tar.gz</span><br><span class="line">(c)snappy-1.1.3.tar.gz</span><br><span class="line">(d)apache-maven-3.0.5-bin.tar.gz</span><br><span class="line">(e)protobuf-2.5.0.tar.gz</span><br></pre></td></tr></table></figure>
+<h4 id="2-jar包安装"><a href="#2-jar包安装" class="headerlink" title="2.jar包安装"></a>2.jar包安装</h4><h5 id="0-注意："><a href="#0-注意：" class="headerlink" title="(0).注意："></a>(0).注意：</h5><p>所有操作必须在root用户下完成</p>
+<h5 id="1-JDK解压、配置环境变量JAVA-HOME和PATH，验证java-version-如下都需要验证是否配置成功"><a href="#1-JDK解压、配置环境变量JAVA-HOME和PATH，验证java-version-如下都需要验证是否配置成功" class="headerlink" title="(1).JDK解压、配置环境变量JAVA_HOME和PATH，验证java-version(如下都需要验证是否配置成功)"></a>(1).JDK解压、配置环境变量JAVA_HOME和PATH，验证java-version(如下都需要验证是否配置成功)</h5><p>解压：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxf jdk-8u144-linux-x64.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<p>修改环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+<p>使环境变量生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>验证命令：java -version</p>
+<h5 id="2-Maven解压、配置-MAVEN-HOME和PATH。"><a href="#2-Maven解压、配置-MAVEN-HOME和PATH。" class="headerlink" title="(2).Maven解压、配置  MAVEN_HOME和PATH。"></a>(2).Maven解压、配置  MAVEN_HOME和PATH。</h5><p>解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-maven-3.0.5-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<p>修改环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">MAVEN_HOME</span></span><br><span class="line">export MAVEN_HOME=/opt/module/apache-maven-3.0.5</span><br><span class="line">export PATH=$PATH:$MAVEN_HOME/bin</span><br></pre></td></tr></table></figure>
+<p>使环境变量生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>验证命令：mvn -version</p>
+<h4 id="3-编译源码"><a href="#3-编译源码" class="headerlink" title="3. 编译源码"></a>3. 编译源码</h4><h5 id="1-准备编译环境"><a href="#1-准备编译环境" class="headerlink" title="(1).准备编译环境"></a>(1).准备编译环境</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 software]# yum install svn</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# yum install autoconf automake libtool cmake</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# yum install ncurses-devel</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# yum install openssl-devel</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# yum install gcc*</span><br></pre></td></tr></table></figure>
+<h5 id="2-编译安装snappy"><a href="#2-编译安装snappy" class="headerlink" title="(2).编译安装snappy"></a>(2).编译安装snappy</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 software]# tar -zxvf snappy-1.1.3.tar.gz -C /opt/module/</span><br><span class="line"></span><br><span class="line">[root@bigdata111 module]# cd snappy-1.1.3/</span><br><span class="line"></span><br><span class="line">[root@bigdata111 snappy-1.1.3]# ./configure</span><br><span class="line"></span><br><span class="line">[root@bigdata111 snappy-1.1.3]# make</span><br><span class="line"></span><br><span class="line">[root@bigdata111 snappy-1.1.3]# make install</span><br></pre></td></tr></table></figure>
+<p>查看snappy库文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 snappy-1.1.3]# ls -lh /usr/local/lib |grep snappy</span><br></pre></td></tr></table></figure>
+<h5 id="3-编译安装protobuf"><a href="#3-编译安装protobuf" class="headerlink" title="(3).编译安装protobuf"></a>(3).编译安装protobuf</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 software]# tar -zxvf protobuf-2.5.0.tar.gz -C /opt/module/</span><br><span class="line"></span><br><span class="line">[root@bigdata111 module]# cd protobuf-2.5.0/</span><br><span class="line"></span><br><span class="line">[root@bigdata111 protobuf-2.5.0]# ./configure </span><br><span class="line"></span><br><span class="line">[root@bigdata111 protobuf-2.5.0]#  make </span><br><span class="line"></span><br><span class="line">[root@bigdata111 protobuf-2.5.0]#  make install</span><br></pre></td></tr></table></figure>
+<p>查看protobuf版本以测试是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 protobuf-2.5.0]# protoc --version</span><br></pre></td></tr></table></figure>
+<h5 id="4-编译hadoop-native"><a href="#4-编译hadoop-native" class="headerlink" title="(4).编译hadoop native"></a>(4).编译hadoop native</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata111 software]# tar -zxvf hadoop-2.8.4-src.tar.gz</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# cd hadoop-2.8.4-src/</span><br><span class="line"></span><br><span class="line">[root@bigdata111 software]# mvn clean package -DskipTests -Pdist,native -Dtar -Dsnappy.lib=/usr/local/lib -Dbundle.snappy</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;执行成功后，/opt/software/hadoop-2.8.4-src/hadoop-dist/target/<a href="applewebdata://9D206B90-1CCC-4328-98EC-98839FAA89F0/_blank">hadoop</a>-2.8.4.tar.gz即为新生成的支持snappy压缩的二进制安装包。</p>
+<h3 id="二-Hadoop压缩配置"><a href="#二-Hadoop压缩配置" class="headerlink" title="二.Hadoop压缩配置"></a>二.Hadoop压缩配置</h3><h4 id="1-MR支持的压缩编码"><a href="#1-MR支持的压缩编码" class="headerlink" title="1.MR支持的压缩编码"></a>1.MR支持的压缩编码</h4><table>
+<thead>
+<tr>
+<th align="center">压缩格式</th>
+<th align="center">工具</th>
+<th align="center">算法</th>
+<th align="center">文件扩展名</th>
+<th align="center">是否可切分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFAULT</td>
+<td align="center">无</td>
+<td align="center">DEFAULT</td>
+<td align="center">.deflate</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">Gzip</td>
+<td align="center">gzip</td>
+<td align="center">DEFAULT</td>
+<td align="center">.gz</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">bzip2</td>
+<td align="center">bzip2</td>
+<td align="center">.bz2</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">lzop</td>
+<td align="center">LZO</td>
+<td align="center">.lzo</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">Snappy</td>
+<td align="center">无</td>
+<td align="center">Snappy</td>
+<td align="center">.snappy</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;为了支持多种压缩/解压缩算法，Hadoop引入了编码/解码器，如下表所示</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩格式</th>
+<th align="center">对应的编码/解码器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DEFLATE</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+</tr>
+<tr>
+<td align="center">gzip</td>
+<td align="center">org.apache.hadoop.io.compress.GzipCodec</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">org.apache.hadoop.io.compress.BZip2Codec</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">com.hadoop.compression.lzo.LzopCodec</td>
+</tr>
+<tr>
+<td align="center">Snappy</td>
+<td align="center">org.apache.hadoop.io.compress.SnappyCodec</td>
+</tr>
+</tbody></table>
+<p>压缩性能的比较</p>
+<table>
+<thead>
+<tr>
+<th align="center">压缩算法</th>
+<th align="center">原始文件大小</th>
+<th align="center">压缩文件大小</th>
+<th align="center">压缩速度</th>
+<th align="center">解压速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">gzip</td>
+<td align="center">8.3GB</td>
+<td align="center">1.8GB</td>
+<td align="center">17.5MB/s</td>
+<td align="center">58MB/s</td>
+</tr>
+<tr>
+<td align="center">bzip2</td>
+<td align="center">8.3GB</td>
+<td align="center">1.1GB</td>
+<td align="center">2.4MB/s</td>
+<td align="center">9.5MB/s</td>
+</tr>
+<tr>
+<td align="center">LZO</td>
+<td align="center">8.3GB</td>
+<td align="center">2.9GB</td>
+<td align="center">49.3MB/s</td>
+<td align="center">74.6MB/s</td>
+</tr>
+</tbody></table>
+<p>On a single core of a Core i7 processor in 64-bit mode, Snappy compresses at about 250 MB/sec or more and decompresses at about 500 MB/sec or more.</p>
+<h4 id="2-压缩参数配置"><a href="#2-压缩参数配置" class="headerlink" title="2.压缩参数配置"></a>2.压缩参数配置</h4><p>要在Hadoop中启用压缩，可以配置如下参数（mapred-site.xml文件中）：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">默认值</th>
+<th align="center">阶段</th>
+<th align="center">建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">io.compression.codecs(在core-site.xml中配置)</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec<br>org.apache.hadoop.io.compress.GzipCodec<br>org.apache.hadoop.io.compress.BZip2Codec<br>org.apache.hadoop.io.compress.Lz4Codec</td>
+<td align="center">输入压缩</td>
+<td align="center">Hadoop使用文件扩展名判断是否支持某种编解码器</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.output.compress</td>
+<td align="center">false</td>
+<td align="center">mapper输出</td>
+<td align="center">这个参数设为true启用压缩</td>
+</tr>
+<tr>
+<td align="center">mapreduce.map.output.compress.codec</td>
+<td align="center">org.apache.hadoop.io.compress.DefaultCodec</td>
+<td align="center">mapper输出</td>
+<td align="center">使用LZO、LZ4或snappy编解码器在此阶段压缩数据</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress</td>
+<td align="center">false</td>
+<td align="center">reducer输出</td>
+<td align="center">这个参数设为true启用压缩</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress.codec</td>
+<td align="center">org.apache.hadoop.io.compress. DefaultCodec</td>
+<td align="center">reducer输出</td>
+<td align="center">使用标准工具或者编解码器，如gzip和bzip2</td>
+</tr>
+<tr>
+<td align="center">mapreduce.output.fileoutputformat.compress.type</td>
+<td align="center">RECORD</td>
+<td align="center">reducer输出</td>
+<td align="center">SequenceFile输出使用的压缩类型：NONE和BLOCK</td>
+</tr>
+</tbody></table>
+<h3 id="三-开启Map输出阶段压缩"><a href="#三-开启Map输出阶段压缩" class="headerlink" title="三.开启Map输出阶段压缩"></a>三.开启Map输出阶段压缩</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;开启map输出阶段压缩可以减少job中map和Reduce task间数据传输量。具体配置如下：</p>
+<p><strong>案例实操：</strong></p>
+<h5 id="1-开启hive中间传输数据压缩功能-默认为false"><a href="#1-开启hive中间传输数据压缩功能-默认为false" class="headerlink" title="(1)开启hive中间传输数据压缩功能,默认为false"></a>(1)开启hive中间传输数据压缩功能,默认为false</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;set hive.exec.compress.intermediate=true;</span><br></pre></td></tr></table></figure>
+<h5 id="2-开启mapreduce中map输出压缩功能-默认为false"><a href="#2-开启mapreduce中map输出压缩功能-默认为false" class="headerlink" title="(2)开启mapreduce中map输出压缩功能,默认为false"></a>(2)开启mapreduce中map输出压缩功能,默认为false</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;set mapreduce.map.output.compress=true;</span><br></pre></td></tr></table></figure>
+<h5 id="3-设置mapreduce中map输出数据的压缩方式"><a href="#3-设置mapreduce中map输出数据的压缩方式" class="headerlink" title="(3)设置mapreduce中map输出数据的压缩方式"></a>(3)设置mapreduce中map输出数据的压缩方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;set mapreduce.map.output.compress.codec= org.apache.hadoop.io.compress.SnappyCodec;</span><br></pre></td></tr></table></figure>
+<h5 id="4-执行查询语句"><a href="#4-执行查询语句" class="headerlink" title="(4)执行查询语句"></a>(4)执行查询语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(ename) name from emp;</span><br></pre></td></tr></table></figure>
+<h3 id="四-开启Reduce输出阶段压缩"><a href="#四-开启Reduce输出阶段压缩" class="headerlink" title="四.开启Reduce输出阶段压缩"></a>四.开启Reduce输出阶段压缩</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;当Hive将输出写入到表中时，输出内容同样可以进行压缩。属性hive.exec.compress.output控制着这个功能。用户可能需要保持默认设置文件中的默认值false，这样默认的输出就是非压缩的纯文本文件了。用户可以通过在查询语句或执行脚本中设置这个值为true，来开启输出结果压缩功能。</p>
+<p><strong>案例实操：</strong></p>
+<h5 id="1"><a href="#1" class="headerlink" title="(1)"></a>(1)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.job.reduces=3;</span><br></pre></td></tr></table></figure>
+<h5 id="2-开启hive最终输出数据压缩功能-默认为false"><a href="#2-开启hive最终输出数据压缩功能-默认为false" class="headerlink" title="(2)开启hive最终输出数据压缩功能,默认为false"></a>(2)开启hive最终输出数据压缩功能,默认为false</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;set hive.exec.compress.output=true;</span><br></pre></td></tr></table></figure>
+<h5 id="3-开启mapreduce最终输出数据压缩-默认为false"><a href="#3-开启mapreduce最终输出数据压缩-默认为false" class="headerlink" title="(3)开启mapreduce最终输出数据压缩,默认为false"></a>(3)开启mapreduce最终输出数据压缩,默认为false</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt;set mapreduce.output.fileoutputformat.compress=true;</span><br></pre></td></tr></table></figure>
+<h5 id="4-设置mapreduce最终数据输出压缩方式"><a href="#4-设置mapreduce最终数据输出压缩方式" class="headerlink" title="(4)设置mapreduce最终数据输出压缩方式"></a>(4)设置mapreduce最终数据输出压缩方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.output.fileoutputformat.compress.codec = org.apache.hadoop.io.compress.SnappyCodec;</span><br></pre></td></tr></table></figure>
+<h5 id="5-设置mapreduce最终数据输出压缩为块压缩"><a href="#5-设置mapreduce最终数据输出压缩为块压缩" class="headerlink" title="(5)设置mapreduce最终数据输出压缩为块压缩"></a>(5)设置mapreduce最终数据输出压缩为块压缩</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.output.fileoutputformat.compress.type=BLOCK;</span><br></pre></td></tr></table></figure>
+<h5 id="6-测试一下输出结果是否是压缩文件"><a href="#6-测试一下输出结果是否是压缩文件" class="headerlink" title="(6)测试一下输出结果是否是压缩文件"></a>(6)测试一下输出结果是否是压缩文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert overwrite local directory &#x27;/opt/module/datas/distribute-result&#x27; select * from emp distribute by deptno sort by empno desc;</span><br></pre></td></tr></table></figure>
+<p>测试:不设置reduce，结果是否是压缩格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.job.reduces=-1;</span><br><span class="line"></span><br><span class="line">insert overwrite local directory &#x27;/opt/module/datas/distribute-result&#x27; select * from test;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTkwMGI2ZjI4MTA4YTBkYjIucG5n?x-oss-process=image/format,png"></p>
+<h3 id="五-文件存储格式"><a href="#五-文件存储格式" class="headerlink" title="五. 文件存储格式"></a>五. 文件存储格式</h3><p>Hive支持的存储数的格式主要有：TEXTFILE 、SEQUENCEFILE、ORC、PARQUET。</p>
+<p>简写：</p>
+<ul>
+<li>行储存：textFile 、 sequencefile 、</li>
+<li>列储存：orc 、parquet</li>
+</ul>
+<h4 id="1-列式存储和行式存储"><a href="#1-列式存储和行式存储" class="headerlink" title="1.列式存储和行式存储"></a>1.列式存储和行式存储</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUyYmMyYzJlMDhjZGI3YTIucG5n?x-oss-process=image/format,png"></p>
+<p>上图左边为逻辑表，右边第一个为行式存储，第二个为列式存储。</p>
+<h5 id="1-行存储的特点："><a href="#1-行存储的特点：" class="headerlink" title="(1).行存储的特点："></a>(1).行存储的特点：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;查询满足条件的一整行数据的时候，列存储则需要去每个聚集的字段找到对应的每个列的值，行存储只需要找到其中一个值，其余的值都在相邻地方，所以此时行存储查询的速度更快。</p>
+<h5 id="2-列存储的特点："><a href="#2-列存储的特点：" class="headerlink" title="(2).列存储的特点："></a>(2).列存储的特点：</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;因为每个字段的数据聚集存储，在查询只需要少数几个字段的时候，能大大减少读取的数据量；每个字段的数据类型一定是相同的，列式存储可以针对性的设计更好的设计压缩算法。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>TEXTFILE和SEQUENCEFILE的存储格式都是基于行存储的；</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>ORC和PARQUET是基于列式存储的</strong></p>
+<h4 id="2-TextFile格式"><a href="#2-TextFile格式" class="headerlink" title="2.TextFile格式"></a>2.TextFile格式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;默认格式，数据不做压缩，磁盘开销大，数据解析开销大。可结合Gzip、Bzip2使用，但使用Gzip这种方式，hive不会对数据进行切分，从而无法对数据进行并行操作。</p>
+<h4 id="3-Orc格式"><a href="#3-Orc格式" class="headerlink" title="3.Orc格式"></a>3.Orc格式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Orc (Optimized Row Columnar)是Hive 0.11版里引入的新的存储格式。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;可以看到每个Orc文件由1个或多个stripe组成，每个stripe250MB大小，这个Stripe实际相当于RowGroup概念，不过大小由4MB-&gt;250MB，这样应该能提升顺序读的吞吐率。每个Stripe里有三部分组成，分别是Index Data，Row Data，Stripe Footer：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUzMTU4ZTYyMGM0MGE2ZTYucG5n?x-oss-process=image/format,png"></p>
+<h5 id="1-Index-Data："><a href="#1-Index-Data：" class="headerlink" title="(1)Index Data："></a>(1)Index Data：</h5><p> 一个轻量级的index，默认是每隔1W行做一个索引。这里做的索引应该只是记录某行的各字段在Row Data中的offset。</p>
+<h5 id="2-Row-Data："><a href="#2-Row-Data：" class="headerlink" title="(2)Row Data："></a>(2)Row Data：</h5><p>存的是具体的数据，先取部分行，然后对这些行按列进行存储。对每个列进行了编码，分成多个Stream来存储。</p>
+<h5 id="3-Stripe-Footer："><a href="#3-Stripe-Footer：" class="headerlink" title="(3)Stripe Footer："></a>(3)Stripe Footer：</h5><p>存的是各个Stream的类型，长度等信息。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;每个文件有一个File Footer，这里面存的是每个Stripe的行数，每个Column的数据类型信息等；每个文件的尾部是一个PostScript，这里面记录了整个文件的压缩类型以及FileFooter的长度信息等。在读取文件时，会seek到文件尾部读PostScript，从里面解析到File Footer长度，再读FileFooter，从里面解析到各个Stripe信息，再读各个Stripe，即从后往前读。</p>
+<h4 id="4-Parquet格式"><a href="#4-Parquet格式" class="headerlink" title="4.Parquet格式"></a>4.Parquet格式</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Parquet是面向分析型业务的列式存储格式，由Twitter和Cloudera合作开发，2015年5月从Apache的孵化器里毕业成为Apache顶级项目。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Parquet文件是以二进制方式存储的，所以是不可以直接读取的，文件中包括该文件的数据和元数据，因此Parquet格式文件是自解析的。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;通常情况下，在存储Parquet数据的时候会按照Block大小设置行组的大小，由于一般情况下每一个Mapper任务处理数据的最小单位是一个Block，这样可以把每一个行组由一个Mapper任务处理，增大任务执行并行度。Parquet文件的格式如下图所示。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJjMzI5Mzc4Mzc3OWI1NWYucG5n?x-oss-process=image/format,png"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;上图展示了一个Parquet文件的内容，一个文件中可以存储多个行组，文件的首位都是该文件的Magic Code，用于校验它是否是一个Parquet文件，Footer length记录了文件元数据的大小，通过该值和文件长度可以计算出元数据的偏移量，文件的元数据中包括每一个行组的元数据信息和该文件存储数据的Schema信息。除了文件中每一个行组的元数据，每一页的开始都会存储该页的元数据，在Parquet中，有三种类型的页：<strong>数据页、字典页和索引页</strong>。数据页用于存储当前行组中该列的值，字典页存储该列值的编码字典，每一个列块中最多包含一个字典页，索引页用来存储当前行组下该列的索引，目前Parquet中还不支持索引页。</p>
+<h4 id="5-主流文件存储格式对比实验"><a href="#5-主流文件存储格式对比实验" class="headerlink" title="5.主流文件存储格式对比实验"></a>5.主流文件存储格式对比实验</h4><p>从存储文件的压缩比和查询速度两个角度对比。</p>
+<p>(一)<strong>存储文件的压缩比测试：</strong></p>
+<h5 id="0-测试数据-log-data-大小为18-1MB"><a href="#0-测试数据-log-data-大小为18-1MB" class="headerlink" title="(0).测试数据(log.data 大小为18.1MB)"></a>(0).测试数据(log.data 大小为18.1MB)</h5><h5 id="1-TextFile"><a href="#1-TextFile" class="headerlink" title="(1).TextFile"></a>(1).TextFile</h5><h6 id="a-创建表，存储数据格式为TEXTFILE"><a href="#a-创建表，存储数据格式为TEXTFILE" class="headerlink" title="(a)创建表，存储数据格式为TEXTFILE"></a>(a)创建表，存储数据格式为TEXTFILE</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create table log_text (</span><br><span class="line"></span><br><span class="line">track_time string,</span><br><span class="line"></span><br><span class="line">url string,</span><br><span class="line"></span><br><span class="line">session_id string,</span><br><span class="line"></span><br><span class="line">referer string,</span><br><span class="line"></span><br><span class="line">ip string,</span><br><span class="line"></span><br><span class="line">end_user_id string,</span><br><span class="line"></span><br><span class="line">city_id string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as textfile ;</span><br></pre></td></tr></table></figure>
+<h6 id="b-向表中加载数据"><a href="#b-向表中加载数据" class="headerlink" title="(b)向表中加载数据"></a>(b)向表中加载数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/log.data&#x27; into table log_text ;</span><br></pre></td></tr></table></figure>
+
+<h6 id="c-查看表中数据大小"><a href="#c-查看表中数据大小" class="headerlink" title="(c )查看表中数据大小"></a>(c )查看表中数据大小</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -du -h /user/hive/warehouse/log_text;</span><br></pre></td></tr></table></figure>
+
+<p>18.1 M  /user/hive/warehouse/log_text/log.data</p>
+<h5 id="2-ORC"><a href="#2-ORC" class="headerlink" title="(2).ORC"></a>(2).ORC</h5><h6 id="a-创建表，存储数据格式为ORC"><a href="#a-创建表，存储数据格式为ORC" class="headerlink" title="(a)创建表，存储数据格式为ORC"></a>(a)创建表，存储数据格式为ORC</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create table log_orc(</span><br><span class="line"></span><br><span class="line">track_time string,</span><br><span class="line"></span><br><span class="line">url string,</span><br><span class="line"></span><br><span class="line">session_id string,</span><br><span class="line"></span><br><span class="line">referer string,</span><br><span class="line"></span><br><span class="line">ip string,</span><br><span class="line"></span><br><span class="line">end_user_id string,</span><br><span class="line"></span><br><span class="line">city_id string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as orc ;</span><br></pre></td></tr></table></figure>
+<h6 id="b-向表中加载数据-1"><a href="#b-向表中加载数据-1" class="headerlink" title="(b)向表中加载数据"></a>(b)向表中加载数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert into table log_orc select * from log_text ;</span><br></pre></td></tr></table></figure>
+<h6 id="c-查看表中数据大小-1"><a href="#c-查看表中数据大小-1" class="headerlink" title="(c )查看表中数据大小"></a>(c )查看表中数据大小</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -du -h /user/hive/warehouse/log_orc/ ;</span><br></pre></td></tr></table></figure>
+<p>2.8 M  /user/hive/warehouse/log_orc/000000_0</p>
+<h5 id="3-Parquet"><a href="#3-Parquet" class="headerlink" title="(3).Parquet"></a>(3).Parquet</h5><h6 id="a-创建表，存储数据格式为parquet"><a href="#a-创建表，存储数据格式为parquet" class="headerlink" title="(a)创建表，存储数据格式为parquet"></a>(a)创建表，存储数据格式为parquet</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create table log_parquet(</span><br><span class="line"></span><br><span class="line">track_time string,</span><br><span class="line"></span><br><span class="line">url string,</span><br><span class="line"></span><br><span class="line">session_id string,</span><br><span class="line"></span><br><span class="line">referer string,</span><br><span class="line"></span><br><span class="line">ip string,</span><br><span class="line"></span><br><span class="line">end_user_id string,</span><br><span class="line"></span><br><span class="line">city_id string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as parquet ;  </span><br></pre></td></tr></table></figure>
+<h6 id="b-向表中加载数据-2"><a href="#b-向表中加载数据-2" class="headerlink" title="(b)向表中加载数据"></a>(b)向表中加载数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert into table log_parquet select * from log_text ;</span><br></pre></td></tr></table></figure>
+<h6 id="c-查看表中数据大小-2"><a href="#c-查看表中数据大小-2" class="headerlink" title="(c )查看表中数据大小"></a>(c )查看表中数据大小</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -du -h /user/hive/warehouse/log_parquet/ ;</span><br></pre></td></tr></table></figure>
+<p>13.1 M  /user/hive/warehouse/log_parquet/000000_0</p>
+<p>存储文件的压缩比总结：</p>
+<p>ORC &gt;  Parquet &gt;  textFile</p>
+<p>(二)<strong>存储文件的查询速度测试：</strong></p>
+<h5 id="1-TextFile-1"><a href="#1-TextFile-1" class="headerlink" title="(1).TextFile"></a>(1).TextFile</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(*) from log_text;</span><br></pre></td></tr></table></figure>
+<p>_c0<br>100000<br>Time taken: 21.54 seconds, Fetched: 1 row(s)<br>Time taken: 21.08 seconds, Fetched: 1 row(s)</p>
+<h5 id="2-ORC-1"><a href="#2-ORC-1" class="headerlink" title="(2).ORC"></a>(2).ORC</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(*) from log_orc;</span><br></pre></td></tr></table></figure>
+<p>_c0<br>100000<br>Time taken: 20.867 seconds, Fetched: 1 row(s)<br>Time taken: 22.667 seconds, Fetched: 1 row(s)</p>
+<h5 id="3-Parquet-1"><a href="#3-Parquet-1" class="headerlink" title="(3).Parquet"></a>(3).Parquet</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(*) from log_parquet;</span><br></pre></td></tr></table></figure>
+<p>_c0<br>100000<br>Time taken: 22.922 seconds, Fetched: 1 row(s)<br>Time taken: 21.074 seconds, Fetched: 1 row(s)</p>
+<p><strong>存储文件的查询速度总结：查询速度相近。</strong></p>
+<h3 id="六-存储和压缩结合"><a href="#六-存储和压缩结合" class="headerlink" title="六.存储和压缩结合"></a>六.存储和压缩结合</h3><h4 id="1-修改Hadoop集群具有Snappy压缩方式"><a href="#1-修改Hadoop集群具有Snappy压缩方式" class="headerlink" title="1.修改Hadoop集群具有Snappy压缩方式"></a>1.修改Hadoop集群具有Snappy压缩方式</h4><h5 id="1-查看hadoop-checknative命令使用"><a href="#1-查看hadoop-checknative命令使用" class="headerlink" title="(1).查看hadoop checknative命令使用"></a>(1).查看hadoop checknative命令使用</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop checknative [-a|-h]  check native hadoop and compression libraries availability</span><br></pre></td></tr></table></figure>
+<h5 id="2-查看hadoop支持的压缩方式"><a href="#2-查看hadoop支持的压缩方式" class="headerlink" title="(2).查看hadoop支持的压缩方式"></a>(2).查看hadoop支持的压缩方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop checknative</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc2OWQyOGMyOTNjY2YzOTkucG5n?x-oss-process=image/format,png"></p>
+<h5 id="3-将编译好的支持Snappy压缩的hadoop-2-8-4-tar-gz包导入到bigdata111的-opt-software中"><a href="#3-将编译好的支持Snappy压缩的hadoop-2-8-4-tar-gz包导入到bigdata111的-opt-software中" class="headerlink" title="(3).将编译好的支持Snappy压缩的hadoop-2.8.4.tar.gz包导入到bigdata111的/opt/software中"></a>(3).将编译好的支持Snappy压缩的hadoop-2.8.4.tar.gz包导入到bigdata111的/opt/software中</h5><h5 id="4-解压hadoop-2-8-4-tar-gz到当前路径"><a href="#4-解压hadoop-2-8-4-tar-gz到当前路径" class="headerlink" title="(4).解压hadoop-2.8.4.tar.gz到当前路径"></a>(4).解压hadoop-2.8.4.tar.gz到当前路径</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz</span><br></pre></td></tr></table></figure>
+<h5 id="5-进入到-opt-software-hadoop-2-8-4-lib-native路径可以看到支持Snappy压缩的动态链接库"><a href="#5-进入到-opt-software-hadoop-2-8-4-lib-native路径可以看到支持Snappy压缩的动态链接库" class="headerlink" title="(5).进入到/opt/software/hadoop-2.8.4/lib/native路径可以看到支持Snappy压缩的动态链接库"></a>(5).进入到/opt/software/hadoop-2.8.4/lib/native路径可以看到支持Snappy压缩的动态链接库</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line"></span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZiZmQwYzUyZjVkODc4MzUucG5n?x-oss-process=image/format,png"></p>
+<h5 id="6-拷贝-opt-software-hadoop-2-8-4-lib-native里面的所有内容到开发集群的-opt-module-hadoop-2-8-4-lib-native路径上"><a href="#6-拷贝-opt-software-hadoop-2-8-4-lib-native里面的所有内容到开发集群的-opt-module-hadoop-2-8-4-lib-native路径上" class="headerlink" title="(6).拷贝/opt/software/hadoop-2.8.4/lib/native里面的所有内容到开发集群的/opt/module/hadoop-2.8.4/lib/native路径上"></a>(6).拷贝/opt/software/hadoop-2.8.4/lib/native里面的所有内容到开发集群的/opt/module/hadoop-2.8.4/lib/native路径上</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp ../native/* /opt/module/hadoop-2.8.4/lib/native/</span><br></pre></td></tr></table></figure>
+<h5 id="7-分发集群-scp-到其他集群目录"><a href="#7-分发集群-scp-到其他集群目录" class="headerlink" title="(7).分发集群 scp 到其他集群目录"></a>(7).分发集群 scp 到其他集群目录</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp - r ./native/ root@主机名:绝对路径</span><br></pre></td></tr></table></figure>
+<h5 id="8-再次查看hadoop支持的压缩类型"><a href="#8-再次查看hadoop支持的压缩类型" class="headerlink" title="(8).再次查看hadoop支持的压缩类型"></a>(8).再次查看hadoop支持的压缩类型</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop checknative</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU4YjM0OGYzODg3OTA1MzMucG5n?x-oss-process=image/format,png"></p>
+<h5 id="9-重新启动hadoop集群和hive"><a href="#9-重新启动hadoop集群和hive" class="headerlink" title="(9).重新启动hadoop集群和hive"></a>(9).重新启动hadoop集群和hive</h5><h4 id="2-测试存储和压缩"><a href="#2-测试存储和压缩" class="headerlink" title="2.测试存储和压缩"></a>2.测试存储和压缩</h4><p>官网:<a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC">https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC</a></p>
+<p>ORC存储方式的压缩：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Key</th>
+<th align="center">Default</th>
+<th align="center">Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">orc.compress</td>
+<td align="center">ZLIB</td>
+<td align="center">high level compression (one of NONE, ZLIB, SNAPPY)</td>
+</tr>
+<tr>
+<td align="center">orc.compress.size</td>
+<td align="center">262,144</td>
+<td align="center">number of bytes in each compression chunk</td>
+</tr>
+<tr>
+<td align="center">orc.stripe.size</td>
+<td align="center">67,108,864</td>
+<td align="center">number of bytes in each stripe</td>
+</tr>
+<tr>
+<td align="center">orc.row.index.stride</td>
+<td align="center">10,000</td>
+<td align="center">number of rows between index entries (must be &gt;= 1000)</td>
+</tr>
+<tr>
+<td align="center">orc.create.index</td>
+<td align="center">true</td>
+<td align="center">whether to create row indexes</td>
+</tr>
+<tr>
+<td align="center">orc.bloom.filter.columns</td>
+<td align="center">“”</td>
+<td align="center">comma separated list of column names for which bloom filter should be created</td>
+</tr>
+<tr>
+<td align="center">orc.bloom.filter.fpp</td>
+<td align="center">0.05</td>
+<td align="center">false positive probability for bloom filter (must &gt;0.0 and &lt;1.0)</td>
+</tr>
+</tbody></table>
+<h5 id="1-创建一个非压缩的的ORC存储方式"><a href="#1-创建一个非压缩的的ORC存储方式" class="headerlink" title="(1).创建一个非压缩的的ORC存储方式"></a>(1).创建一个非压缩的的ORC存储方式</h5><h6 id="a-建表语句"><a href="#a-建表语句" class="headerlink" title="(a)建表语句"></a>(a)建表语句</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create table log_orc_none(</span><br><span class="line"></span><br><span class="line">track_time string,</span><br><span class="line"></span><br><span class="line">url string,</span><br><span class="line"></span><br><span class="line">session_id string,</span><br><span class="line"></span><br><span class="line">referer string,</span><br><span class="line"></span><br><span class="line">ip string,</span><br><span class="line"></span><br><span class="line">end_user_id string,</span><br><span class="line"></span><br><span class="line">city_id string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as orc tblproperties (&quot;orc.compress&quot;=&quot;NONE&quot;);</span><br></pre></td></tr></table></figure>
+<h6 id="b-插入数据"><a href="#b-插入数据" class="headerlink" title="(b)插入数据"></a>(b)插入数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert into table log_orc_none select * from log_text ;</span><br></pre></td></tr></table></figure>
+<h6 id="c-查看插入后数据"><a href="#c-查看插入后数据" class="headerlink" title="(c )查看插入后数据"></a>(c )查看插入后数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -du -h /user/hive/warehouse/log_orc_none/ ;</span><br></pre></td></tr></table></figure>
+<p>7.7 M  /user/hive/warehouse/log_orc_none/000000_0</p>
+<h5 id="2-创建一个SNAPPY压缩的ORC存储方式"><a href="#2-创建一个SNAPPY压缩的ORC存储方式" class="headerlink" title="(2).创建一个SNAPPY压缩的ORC存储方式"></a>(2).创建一个SNAPPY压缩的ORC存储方式</h5><h6 id="a-建表语句-1"><a href="#a-建表语句-1" class="headerlink" title="(a)建表语句"></a>(a)建表语句</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">create table log_orc_snappy(</span><br><span class="line"></span><br><span class="line">track_time string,</span><br><span class="line"></span><br><span class="line">url string,</span><br><span class="line"></span><br><span class="line">session_id string,</span><br><span class="line"></span><br><span class="line">referer string,</span><br><span class="line"></span><br><span class="line">ip string,</span><br><span class="line"></span><br><span class="line">end_user_id string,</span><br><span class="line"></span><br><span class="line">city_id string</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line"></span><br><span class="line">stored as orc tblproperties (&quot;orc.compress&quot;=&quot;SNAPPY&quot;);</span><br></pre></td></tr></table></figure>
+<h6 id="b-插入数据-1"><a href="#b-插入数据-1" class="headerlink" title="(b)插入数据"></a>(b)插入数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert into table log_orc_snappy select * from log_text ;</span><br></pre></td></tr></table></figure>
+<h6 id="c-查看插入后数据-1"><a href="#c-查看插入后数据-1" class="headerlink" title="(c )查看插入后数据"></a>(c )查看插入后数据</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; dfs -du -h /user/hive/warehouse/log_orc_snappy/ ;</span><br></pre></td></tr></table></figure>
+
+<p>3.8 M  /user/hive/warehouse/log_orc_snappy/000000_0</p>
+<h5 id="3-上一节中默认创建的ORC存储方式，导入数据后的大小为"><a href="#3-上一节中默认创建的ORC存储方式，导入数据后的大小为" class="headerlink" title="(3).上一节中默认创建的ORC存储方式，导入数据后的大小为"></a>(3).上一节中默认创建的ORC存储方式，导入数据后的大小为</h5><p>2.8 M  /user/hive/warehouse/log_orc/000000_0</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;比Snappy压缩的还小。原因是orc存储文件默认采用ZLIB压缩。比snappy压缩的小。</p>
+<h5 id="4-存储方式和压缩总结"><a href="#4-存储方式和压缩总结" class="headerlink" title="(4).存储方式和压缩总结:"></a>(4).存储方式和压缩总结:</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;在实际的项目开发当中，hive表的数据存储格式一般选择：orc或parquet。压缩方式一般选择snappy，lzo。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Hive-企业级调优"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/"
+    >Hive之企业调优</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/15/Hive-%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%B0%83%E4%BC%98/" class="article-date">
+  <time datetime="2019-07-15T13:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hive/">Hive</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-Fetch抓取"><a href="#一-Fetch抓取" class="headerlink" title="一. Fetch抓取"></a>一. Fetch抓取</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Fetch抓取是指，Hive中对某些情况的查询可以不必使用MapReduce计算。例如：SELECT * FROM employees;在这种情况下，Hive可以简单地读取employee对应的存储目录下的文件，然后输出查询结果到控制台。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;在hive-default.xml.template文件中hive.fetch.task.conversion默认是more，老版本hive默认是minimal，该属性修改为more以后，在全局查找、字段查找、limit查找等都不走mapreduce。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.fetch.task.conversion<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>more<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      Expects one of [none, minimal, more].</span><br><span class="line"></span><br><span class="line">      Some select queries can be converted to single FETCH task minimizing latency.</span><br><span class="line"></span><br><span class="line">      Currently the query should be single sourced not having any subquery and should not have</span><br><span class="line"></span><br><span class="line">      any aggregations or distincts (which incurs RS), lateral views and joins.</span><br><span class="line"></span><br><span class="line">      0\. none : disable hive.fetch.task.conversion</span><br><span class="line"></span><br><span class="line">      1\. minimal : SELECT STAR, FILTER on partition columns, LIMIT only</span><br><span class="line"></span><br><span class="line">      2\. more  : SELECT, FILTER, LIMIT only (support TABLESAMPLE and virtual columns)</span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>案例实操</strong>：</p>
+<p>1.把hive.fetch.task.conversion设置成none，然后执行查询语句，都会执行mapreduce程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set hive.fetch.task.conversion=none;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select * from emp;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select ename from emp;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select ename from emp limit 3;</span><br></pre></td></tr></table></figure>
+
+<p>2.把hive.fetch.task.conversion设置成more，然后执行查询语句，如下查询方式都不会执行mapreduce程序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set hive.fetch.task.conversion=more;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select * from emp;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select ename from emp;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; select ename from emp limit 3;</span><br></pre></td></tr></table></figure>
+<h3 id="二-本地模式"><a href="#二-本地模式" class="headerlink" title="二. 本地模式"></a>二. 本地模式</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;大多数的Hadoop Job是需要Hadoop提供的完整的可扩展性来处理大数据集的。不过，有时Hive的输入数据量是非常小的。在这种情况下，为查询触发执行任务消耗的时间可能会比实际job的执行时间要多的多。对于大多数这种情况，<strong>Hive可以通过本地模式在单台机器上处理所有的任务。对于小数据集，执行时间可以明显被缩短</strong>。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;用户可以通过设置hive.exec.mode.local.auto的值为true，来让Hive在适当的时候自动启动这个优化。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.mode.local.auto=true;  //开启本地mr</span><br><span class="line"></span><br><span class="line">//设置local mr的最大输入数据量，当输入数据量小于这个值时采用local  mr的方式，默认为134217728，即128M</span><br><span class="line"></span><br><span class="line">set hive.exec.mode.local.auto.inputbytes.max=50000000;</span><br><span class="line"></span><br><span class="line">//设置local mr的最大输入文件个数，当输入文件个数小于这个值时采用local mr的方式，默认为4</span><br><span class="line"></span><br><span class="line">set hive.exec.mode.local.auto.input.files.max=10;</span><br></pre></td></tr></table></figure>
+<p><strong>案例实操</strong>：</p>
+<h3 id="1-开启本地模式，并执行查询语句-注意重启Hive"><a href="#1-开启本地模式，并执行查询语句-注意重启Hive" class="headerlink" title="1.开启本地模式，并执行查询语句(注意重启Hive)"></a>1.开启本地模式，并执行查询语句(注意重启Hive)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set hive.exec.mode.local.auto=true; </span><br><span class="line"></span><br><span class="line">hive (default)&gt; select * from emp cluster by deptno;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 1.328 seconds, Fetched: 14 row(s)</p>
+<h4 id="2-关闭本地模式，并执行查询语句"><a href="#2-关闭本地模式，并执行查询语句" class="headerlink" title="2.关闭本地模式，并执行查询语句"></a>2.关闭本地模式，并执行查询语句</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set hive.exec.mode.local.auto=false; </span><br><span class="line"></span><br><span class="line">hive (default)&gt; select * from emp cluster by deptno;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 20.09 seconds, Fetched: 14 row(s)</p>
+<h3 id="三-表的优化"><a href="#三-表的优化" class="headerlink" title="三.表的优化"></a>三.表的优化</h3><h4 id="1-小表、大表Join"><a href="#1-小表、大表Join" class="headerlink" title="1. 小表、大表Join"></a>1. 小表、大表Join</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;将key相对分散，并且数据量小的表放在join的左边，这样可以有效减少内存溢出错误发生的几率；再进一步，可以使用Group变小的维度表（1000条以下的记录条数）先进内存。在map端完成reduce（预聚合）。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;实际测试发现：新版的hive已经对小表JOIN大表和大表JOIN小表进行了优化。小表放在左边和右边已经没有明显区别。</p>
+<p><strong>案例实操</strong></p>
+<h5 id="0-需求：测试大表JOIN小表和小表JOIN大表的效率"><a href="#0-需求：测试大表JOIN小表和小表JOIN大表的效率" class="headerlink" title="(0)需求：测试大表JOIN小表和小表JOIN大表的效率"></a>(0)需求：测试大表JOIN小表和小表JOIN大表的效率</h5><h5 id="1-建大表、小表和JOIN后表的语句"><a href="#1-建大表、小表和JOIN后表的语句" class="headerlink" title="(1)建大表、小表和JOIN后表的语句"></a>(1)建大表、小表和JOIN后表的语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建大表</span><br><span class="line">create table bigtable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建小表</span><br><span class="line">create table smalltable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建join后表的语句</span><br><span class="line">create table jointable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-分别向大表和小表中导入数据"><a href="#2-分别向大表和小表中导入数据" class="headerlink" title="(2)分别向大表和小表中导入数据"></a>(2)分别向大表和小表中导入数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/bigtable&#x27; into table bigtable;</span><br><span class="line"></span><br><span class="line">hive (default)&gt;load data local inpath &#x27;/opt/module/datas/smalltable&#x27; into table smalltable;</span><br></pre></td></tr></table></figure>
+<h5 id="3-关闭mapjoin功能（默认是打开的）"><a href="#3-关闭mapjoin功能（默认是打开的）" class="headerlink" title="(3)关闭mapjoin功能（默认是打开的）"></a>(3)关闭mapjoin功能（默认是打开的）</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.auto.convert.join = false;</span><br></pre></td></tr></table></figure>
+<h5 id="4-执行小表JOIN大表语句"><a href="#4-执行小表JOIN大表语句" class="headerlink" title="(4)执行小表JOIN大表语句"></a>(4)执行小表JOIN大表语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line"></span><br><span class="line">select b.id, b.time, b.uid, b.keyword, b.url_rank, b.click_num, b.click_url</span><br><span class="line"></span><br><span class="line">from smalltable s</span><br><span class="line"></span><br><span class="line">left join bigtable  b</span><br><span class="line"></span><br><span class="line">on b.id = s.id;</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-执行大表JOIN小表语句"><a href="#5-执行大表JOIN小表语句" class="headerlink" title="(5)执行大表JOIN小表语句"></a>(5)执行大表JOIN小表语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line"></span><br><span class="line">select b.id, b.time, b.uid, b.keyword, b.url_rank, b.click_num, b.click_url</span><br><span class="line"></span><br><span class="line">from bigtable  b</span><br><span class="line"></span><br><span class="line">left join smalltable  s</span><br><span class="line"></span><br><span class="line">on s.id = b.id;</span><br></pre></td></tr></table></figure>
+<h4 id="2-大表Join大表"><a href="#2-大表Join大表" class="headerlink" title="2.大表Join大表"></a>2.大表Join大表</h4><h5 id="1-空KEY过滤"><a href="#1-空KEY过滤" class="headerlink" title="(1).空KEY过滤"></a>(1).空KEY过滤</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;有时join超时是因为某些key对应的数据太多，而相同key对应的数据都会发送到相同的reducer上，从而导致内存不够。此时我们应该仔细分析这些异常的key，很多情况下，这些key对应的数据是异常数据，我们需要在SQL语句中进行过滤。例如key对应的字段为空，操作如下：</p>
+<p><strong>案例实操</strong></p>
+<h6 id="a-配置历史服务器"><a href="#a-配置历史服务器" class="headerlink" title="(a)配置历史服务器"></a>(a)配置历史服务器</h6><p>配置mapred-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>bigdata111:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>bigdata111:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>启动历史服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/mr-jobhistory-daemon.sh start historyserver</span><br></pre></td></tr></table></figure>
+<p>查看jobhistory</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.102:19888/jobhistory">http://192.168.1.102:19888/jobhistory</a></p>
+<h6 id="b-创建原始数据表、空id表、合并后数据表"><a href="#b-创建原始数据表、空id表、合并后数据表" class="headerlink" title="(b)创建原始数据表、空id表、合并后数据表"></a>(b)创建原始数据表、空id表、合并后数据表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建原始表</span><br><span class="line">create table ori(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建空id表</span><br><span class="line">create table nullidtable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建join后表的语句</span><br><span class="line">create table jointable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h6 id="c-分别加载原始数据和空id数据到对应表中"><a href="#c-分别加载原始数据和空id数据到对应表中" class="headerlink" title="(c )分别加载原始数据和空id数据到对应表中"></a>(c )分别加载原始数据和空id数据到对应表中</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/ori&#x27; into table ori;</span><br><span class="line"></span><br><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/nullid&#x27; into table nullidtable;</span><br></pre></td></tr></table></figure>
+
+<h6 id="d-测试不过滤空id"><a href="#d-测试不过滤空id" class="headerlink" title="(d)测试不过滤空id"></a>(d)测试不过滤空id</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert overwrite table jointable </span><br><span class="line"></span><br><span class="line">select n.* from nullidtable n left join ori o on n.id = o.id;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 42.038 seconds</p>
+<p>Time taken: 37.284 seconds</p>
+<p>Time taken: 97.281 seconds</p>
+<h5 id="e-测试过滤空id"><a href="#e-测试过滤空id" class="headerlink" title="(e)测试过滤空id"></a>(e)测试过滤空id</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert overwrite table jointable </span><br><span class="line"></span><br><span class="line">select n.* from (select * from nullidtable where id is not null ) n  left join ori o on n.id = o.id;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 31.725 seconds</p>
+<p>Time taken: 28.876 seconds</p>
+<h5 id="2-空key转换"><a href="#2-空key转换" class="headerlink" title="(2).空key转换"></a>(2).空key转换</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;有时虽然某个key为空对应的数据很多，但是相应的数据不是异常数据，必须要包含在join的结果中，此时我们可以表a中key为空的字段赋一个随机的值，使得数据随机均匀地分不到不同的reducer上。例如：</p>
+<p><strong>案例实操：</strong></p>
+<p><strong>不随机分布空null值：</strong></p>
+<h6 id="a-设置5个reduce个数"><a href="#a-设置5个reduce个数" class="headerlink" title="(a)设置5个reduce个数"></a>(a)设置5个reduce个数</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mapreduce.job.reduces = 5;</span><br></pre></td></tr></table></figure>
+<h6 id="b-JOIN两张表"><a href="#b-JOIN两张表" class="headerlink" title="(b)JOIN两张表"></a>(b)JOIN两张表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line"></span><br><span class="line">select n.* from nullidtable n left join ori b on n.id = b.id;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结果：可以看出来，出现了数据倾斜，某些reducer的资源消耗远大于其他reducer</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE0MTZjMTY3ZDRiODYxNmQucG5n?x-oss-process=image/format,png"></p>
+<p><strong>随机分布空null值</strong></p>
+<h6 id="a-设置5个reduce个数-1"><a href="#a-设置5个reduce个数-1" class="headerlink" title="(a)设置5个reduce个数"></a>(a)设置5个reduce个数</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mapreduce.job.reduces = 5;</span><br></pre></td></tr></table></figure>
+<h6 id="b-JOIN两张表-1"><a href="#b-JOIN两张表-1" class="headerlink" title="(b)JOIN两张表"></a>(b)JOIN两张表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line">select n.* from nullidtable n full join ori o on </span><br><span class="line">case when n.id is null then concat(&#x27;hive&#x27;, rand()) else n.id end = o.id;</span><br></pre></td></tr></table></figure>
+<p><strong>结果：可以看出来，消除了数据倾斜，负载均衡reducer的资源消耗</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUxOTVmMzc4YzQ0NzYyMzUucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-MapJoin"><a href="#3-MapJoin" class="headerlink" title="3.MapJoin"></a>3.MapJoin</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;如果不指定MapJoin或者不符合MapJoin的条件，那么Hive解析器会将Join操作转换成Common Join，即：在Reduce阶段完成join。容易发生数据倾斜。可以用MapJoin把小表全部加载到内存在map端进行join，避免reducer处理。</p>
+<h5 id="1-开启MapJoin参数设置："><a href="#1-开启MapJoin参数设置：" class="headerlink" title="(1).开启MapJoin参数设置："></a>(1).开启MapJoin参数设置：</h5><h6 id="a-设置自动选择Mapjoin"><a href="#a-设置自动选择Mapjoin" class="headerlink" title="(a)设置自动选择Mapjoin"></a>(a)设置自动选择Mapjoin</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set hive.auto.convert.join = true;</span><br><span class="line">//默认为true</span><br></pre></td></tr></table></figure>
+<h6 id="b-大表小表的阈值设置-默认25M一下认为是小表-："><a href="#b-大表小表的阈值设置-默认25M一下认为是小表-：" class="headerlink" title="(b)大表小表的阈值设置(默认25M一下认为是小表)："></a>(b)大表小表的阈值设置(默认25M一下认为是小表)：</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.mapjoin.smalltable.filesize=25000000;</span><br></pre></td></tr></table></figure>
+<h5 id="2-MapJoin工作机制"><a href="#2-MapJoin工作机制" class="headerlink" title="(2).MapJoin工作机制"></a>(2).MapJoin工作机制</h5><p><strong>案例实操</strong>：</p>
+<h6 id="a-开启Mapjoin功能"><a href="#a-开启Mapjoin功能" class="headerlink" title="(a)开启Mapjoin功能"></a>(a)开启Mapjoin功能</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.auto.convert.join = true; 默认为true</span><br></pre></td></tr></table></figure>
+<h6 id="b-执行小表JOIN大表语句"><a href="#b-执行小表JOIN大表语句" class="headerlink" title="(b)执行小表JOIN大表语句"></a>(b)执行小表JOIN大表语句</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line">select b.id, b.time, b.uid, b.keyword, b.url_rank, b.click_num, b.click_url</span><br><span class="line">from smalltable s</span><br><span class="line">join bigtable  b</span><br><span class="line">on s.id = b.id;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 24.594 seconds</p>
+<h6 id="c-执行大表JOIN小表语句"><a href="#c-执行大表JOIN小表语句" class="headerlink" title="(c )执行大表JOIN小表语句"></a>(c )执行大表JOIN小表语句</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table jointable</span><br><span class="line">select b.id, b.time, b.uid, b.keyword, b.url_rank, b.click_num, b.click_url</span><br><span class="line">from bigtable  b</span><br><span class="line">join smalltable  s</span><br><span class="line">on s.id = b.id;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 24.315 seconds</p>
+<h4 id="4-Group-By"><a href="#4-Group-By" class="headerlink" title="4.Group By"></a>4.Group By</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;默认情况下，Map阶段同一Key数据分发给一个reduce，当一个key数据过大时就倾斜了。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;并不是所有的聚合操作都需要在Reduce端完成，很多聚合操作都可以先在Map端进行部分聚合，最后在Reduce端得出最终结果。</p>
+<h5 id="1-开启Map端聚合参数设置"><a href="#1-开启Map端聚合参数设置" class="headerlink" title="(1).开启Map端聚合参数设置"></a>(1).开启Map端聚合参数设置</h5><h6 id="a-是否在Map端进行聚合，默认为True"><a href="#a-是否在Map端进行聚合，默认为True" class="headerlink" title="(a)是否在Map端进行聚合，默认为True"></a>(a)是否在Map端进行聚合，默认为True</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.map.aggr = true</span><br></pre></td></tr></table></figure>
+
+<h6 id="b-在Map端进行聚合操作的条目数目"><a href="#b-在Map端进行聚合操作的条目数目" class="headerlink" title="(b)在Map端进行聚合操作的条目数目"></a>(b)在Map端进行聚合操作的条目数目</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.groupby.mapaggr.checkinterval = 100000</span><br></pre></td></tr></table></figure>
+<h6 id="c-有数据倾斜的时候进行负载均衡（默认是false）"><a href="#c-有数据倾斜的时候进行负载均衡（默认是false）" class="headerlink" title="(c )有数据倾斜的时候进行负载均衡（默认是false）"></a>(c )有数据倾斜的时候进行负载均衡（默认是false）</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.groupby.skewindata = true</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当选项设定为 true，生成的查询计划会有两个MR Job。第一个MR Job中，Map的输出结果会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同的Group By Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；第二个MR Job再根据预处理的数据结果按照Group By Key分布到Reduce中(这个过程可以保证相同的Group By Key被分布到同一个Reduce中)，最后完成最终的聚合操作。</p>
+<h4 id="5-Count-Distinct-去重统计"><a href="#5-Count-Distinct-去重统计" class="headerlink" title="5.Count(Distinct) 去重统计"></a>5.Count(Distinct) 去重统计</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;数据量小的时候无所谓，数据量大的情况下，由于COUNT DISTINCT操作需要用一个Reduce Task来完成，这一个Reduce需要处理的数据量太大，就会导致整个Job很难完成，一般COUNT DISTINCT使用先GROUP BY再COUNT的方式替换：</p>
+<p><strong>案例实操</strong></p>
+<h5 id="1-创建一张大表"><a href="#1-创建一张大表" class="headerlink" title="(1)创建一张大表"></a>(1)创建一张大表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; create table bigtable(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-加载数据"><a href="#2-加载数据" class="headerlink" title="(2)加载数据"></a>(2)加载数据</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/bigtable&#x27; into table bigtable;</span><br></pre></td></tr></table></figure>
+<h5 id="3-设置5个reduce个数"><a href="#3-设置5个reduce个数" class="headerlink" title="(3)设置5个reduce个数"></a>(3)设置5个reduce个数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mapreduce.job.reduces = 5;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-执行去重id查询"><a href="#4-执行去重id查询" class="headerlink" title="(4)执行去重id查询"></a>(4)执行去重id查询</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(distinct id) from bigtable;</span><br></pre></td></tr></table></figure>
+<p>Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 7.12 sec   HDFS Read: 120741990 HDFS Write: 7 SUCCESS<br>Total MapReduce CPU Time Spent: 7 seconds 120 msec<br>OK<br>c0<br>100001<br>Time taken: 23.607 seconds, Fetched: 1 row(s)</p>
+<h5 id="5-采用GROUP-by去重id-推荐"><a href="#5-采用GROUP-by去重id-推荐" class="headerlink" title="(5)采用GROUP by去重id(推荐)"></a>(5)采用GROUP by去重id(推荐)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(id) from (select id from bigtable group by id) a;</span><br></pre></td></tr></table></figure>
+<p>Stage-Stage-1: Map: 1  Reduce: 5   Cumulative CPU: 17.53 sec   HDFS Read: 120752703 HDFS Write: 580 SUCCESS<br>Stage-Stage-2: Map: 1  Reduce: 1   Cumulative CPU: 4.29 sec   HDFS Read: 9409 HDFS Write: 7 SUCCESS<br>Total MapReduce CPU Time Spent: 21 seconds 820 msec<br>OK<br>_c0<br>100001<br>Time taken: 50.795 seconds, Fetched: 1 row(s)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;虽然会多用一个Job来完成，但在数据量大的情况下，这个绝对是值得的。</p>
+<h4 id="6-笛卡尔积"><a href="#6-笛卡尔积" class="headerlink" title="6. 笛卡尔积"></a>6. 笛卡尔积</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;尽量避免笛卡尔积，join的时候不加on条件，或者无效的on条件，Hive只能使用1个reducer来完成笛卡尔积。</p>
+<h4 id="7-行列过滤"><a href="#7-行列过滤" class="headerlink" title="7.行列过滤"></a>7.行列过滤</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;列处理：在SELECT中，只拿需要的列，如果有，尽量使用分区过滤，少用SELECT *。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;行处理：在分区剪裁中，当使用外关联时，如果将副表的过滤条件写在Where后面，那么就会先全表关联，之后再过滤，总而言之，就是先where还是先join的执行顺序的问题，以下两种，经过SQL优化器，执行效果大体一样。比如：</p>
+<p><strong>案例实操</strong>：</p>
+<h5 id="1-测试先关联两张表，再用where条件过滤"><a href="#1-测试先关联两张表，再用where条件过滤" class="headerlink" title="(1)测试先关联两张表，再用where条件过滤"></a>(1)测试先关联两张表，再用where条件过滤</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select o.id from bigtable b</span><br><span class="line">join ori o on o.id = b.id</span><br><span class="line">where o.id &lt;= 10;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 34.406 seconds, Fetched: 100 row(s)</p>
+<h5 id="2-通过子查询后，再关联表"><a href="#2-通过子查询后，再关联表" class="headerlink" title="(2)通过子查询后，再关联表"></a>(2)通过子查询后，再关联表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select b.id from bigtable b</span><br><span class="line">join (select id from ori where id &lt;= 10 ) o on b.id = o.id;</span><br></pre></td></tr></table></figure>
+<p>Time taken: 30.058 seconds, Fetched: 100 row(s)</p>
+<h4 id="8-动态分区调整"><a href="#8-动态分区调整" class="headerlink" title="8.动态分区调整"></a>8.动态分区调整</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;关系型数据库中，对分区表Insert数据时候，数据库自动会根据分区字段的值，将数据插入到相应的分区中，Hive中也提供了类似的机制，即动态分区(Dynamic Partition)，只不过，使用Hive的动态分区，需要进行相应的配置。</p>
+<h5 id="1-开启动态分区参数设置"><a href="#1-开启动态分区参数设置" class="headerlink" title="(1).开启动态分区参数设置"></a>(1).开启动态分区参数设置</h5><h6 id="a-开启动态分区功能-默认true，开启"><a href="#a-开启动态分区功能-默认true，开启" class="headerlink" title="(a)开启动态分区功能(默认true，开启)"></a>(a)开启动态分区功能(默认true，开启)</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition=true</span><br></pre></td></tr></table></figure>
+<h6 id="b-设置为非严格模式-动态分区的模式，默认strict，表示必须指定至少一个分区为静态分区，nonstrict模式表示允许所有的分区字段都可以使用动态分区"><a href="#b-设置为非严格模式-动态分区的模式，默认strict，表示必须指定至少一个分区为静态分区，nonstrict模式表示允许所有的分区字段都可以使用动态分区" class="headerlink" title="(b)设置为非严格模式(动态分区的模式，默认strict，表示必须指定至少一个分区为静态分区，nonstrict模式表示允许所有的分区字段都可以使用动态分区)"></a>(b)设置为非严格模式(动态分区的模式，默认strict，表示必须指定至少一个分区为静态分区，nonstrict模式表示允许所有的分区字段都可以使用动态分区)</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition.mode=nonstrict</span><br></pre></td></tr></table></figure>
+<h6 id="c-在所有执行MR的节点上，最大一共可以创建多少个动态分区。-默认1000"><a href="#c-在所有执行MR的节点上，最大一共可以创建多少个动态分区。-默认1000" class="headerlink" title="(c )在所有执行MR的节点上，最大一共可以创建多少个动态分区。(默认1000)"></a>(c )在所有执行MR的节点上，最大一共可以创建多少个动态分区。(默认1000)</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.max.dynamic.partitions=1000</span><br></pre></td></tr></table></figure>
+<h6 id="d-在每个执行MR的节点上，最大可以创建多少个动态分区。该参数需要根据实际的数据来设定。比如：源数据中包含了一年的数据，即day字段有365个值，那么该参数就需要设置成大于365，如果使用默认值100，则会报错。"><a href="#d-在每个执行MR的节点上，最大可以创建多少个动态分区。该参数需要根据实际的数据来设定。比如：源数据中包含了一年的数据，即day字段有365个值，那么该参数就需要设置成大于365，如果使用默认值100，则会报错。" class="headerlink" title="(d)在每个执行MR的节点上，最大可以创建多少个动态分区。该参数需要根据实际的数据来设定。比如：源数据中包含了一年的数据，即day字段有365个值，那么该参数就需要设置成大于365，如果使用默认值100，则会报错。"></a>(d)在每个执行MR的节点上，最大可以创建多少个动态分区。该参数需要根据实际的数据来设定。比如：源数据中包含了一年的数据，即day字段有365个值，那么该参数就需要设置成大于365，如果使用默认值100，则会报错。</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.max.dynamic.partitions.pernode=100</span><br></pre></td></tr></table></figure>
+<h6 id="e-整个MR-Job中，最大可以创建多少个HDFS文件。-默认值100000"><a href="#e-整个MR-Job中，最大可以创建多少个HDFS文件。-默认值100000" class="headerlink" title="(e)整个MR Job中，最大可以创建多少个HDFS文件。(默认值100000)"></a>(e)整个MR Job中，最大可以创建多少个HDFS文件。(默认值100000)</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.max.created.files=100000</span><br></pre></td></tr></table></figure>
+<h6 id="f-当有空分区生成时，是否抛出异常。一般不需要设置。-默认false"><a href="#f-当有空分区生成时，是否抛出异常。一般不需要设置。-默认false" class="headerlink" title="(f)当有空分区生成时，是否抛出异常。一般不需要设置。(默认false)"></a>(f)当有空分区生成时，是否抛出异常。一般不需要设置。(默认false)</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.error.on.empty.partition=false</span><br></pre></td></tr></table></figure>
+<h5 id="2-案例实操"><a href="#2-案例实操" class="headerlink" title="(2).案例实操"></a>(2).案例实操</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;需求：将ori中的数据按照时间(如：20111230000008)，插入到目标表ori_partitioned_target的相应分区中。</p>
+<h6 id="a-创建分区表"><a href="#a-创建分区表" class="headerlink" title="(a)创建分区表"></a>(a)创建分区表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create table ori_partitioned(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) </span><br><span class="line">partitioned by (p_time bigint) </span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h6 id="b-加载数据到分区表中"><a href="#b-加载数据到分区表中" class="headerlink" title="(b)加载数据到分区表中"></a>(b)加载数据到分区表中</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/ds1&#x27; into table ori_partitioned partition(p_time=&#x27;20111230000010&#x27;) ;</span><br><span class="line">hive (default)&gt; load data local inpath &#x27;/opt/module/datas/ds2&#x27; into table ori_partitioned partition(p_time=&#x27;20111230000011&#x27;) ;</span><br></pre></td></tr></table></figure>
+<h6 id="c-创建目标分区表"><a href="#c-创建目标分区表" class="headerlink" title="(c )创建目标分区表"></a>(c )创建目标分区表</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table ori_partitioned_target(id bigint, time bigint, uid string, keyword string, url_rank int, click_num int, click_url string) PARTITIONED BY (p_time STRING) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+<h6 id="d-设置动态分区"><a href="#d-设置动态分区" class="headerlink" title="(d)设置动态分区"></a>(d)设置动态分区</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition = true;  //（默认true）</span><br><span class="line">set hive.exec.dynamic.partition.mode = nonstrict;  //(默认strict)</span><br><span class="line">set hive.exec.max.dynamic.partitions = 1000;   //(默认1000)</span><br><span class="line">set hive.exec.max.dynamic.partitions.pernode = 100;   //（默认100）</span><br><span class="line">set hive.exec.max.created.files = 100000;  //(默认值100000)</span><br><span class="line">set hive.error.on.empty.partition = false;   //(默认值false)</span><br><span class="line"></span><br><span class="line">hive (default)&gt; insert overwrite table ori_partitioned_target partition (p_time) </span><br><span class="line">select id, time, uid, keyword, url_rank, click_num, click_url, p_time from ori_partitioned;</span><br></pre></td></tr></table></figure>
+
+<h6 id="e-查看目标分区表的分区情况"><a href="#e-查看目标分区表的分区情况" class="headerlink" title="(e)查看目标分区表的分区情况"></a>(e)查看目标分区表的分区情况</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; show partitions ori_partitioned_target;</span><br></pre></td></tr></table></figure>
+<h6 id="f-如果不设置非严格模式，报错如下"><a href="#f-如果不设置非严格模式，报错如下" class="headerlink" title="(f)如果不设置非严格模式，报错如下"></a>(f)如果不设置非严格模式，报错如下</h6><p>FAILED: SemanticException [Error 10096]: Dynamic partition strict mode requires at least one static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict</p>
+<h4 id="9-分桶"><a href="#9-分桶" class="headerlink" title="9. 分桶"></a>9. 分桶</h4><h4 id="10-分区"><a href="#10-分区" class="headerlink" title="10.分区"></a>10.分区</h4><h3 id="四-数据倾斜"><a href="#四-数据倾斜" class="headerlink" title="四.数据倾斜"></a>四.数据倾斜</h3><h4 id="1-合理设置Map数"><a href="#1-合理设置Map数" class="headerlink" title="1.合理设置Map数"></a>1.合理设置Map数</h4><h5 id="1-通常情况下，作业会通过input的目录产生一个或者多个map任务。"><a href="#1-通常情况下，作业会通过input的目录产生一个或者多个map任务。" class="headerlink" title="(1).通常情况下，作业会通过input的目录产生一个或者多个map任务。"></a>(1).通常情况下，作业会通过input的目录产生一个或者多个map任务。</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;主要的决定因素有：input的文件总个数，input的文件大小，集群设置的文件块大小。</p>
+<h5 id="2-是不是map数越多越好？"><a href="#2-是不是map数越多越好？" class="headerlink" title="(2).是不是map数越多越好？"></a>(2).是不是map数越多越好？</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;答案是否定的。如果一个任务有很多小文件(远远小于块大小128m)，则每个小文件也会被当做一个块，用一个map任务来完成，而一个map任务启动和初始化的时间远远大于逻辑处理的时间，就会造成很大的资源浪费。而且，同时可执行的map数是受限的。</p>
+<h5 id="3-是不是保证每个map处理接近128m的文件块，就高枕无忧了？"><a href="#3-是不是保证每个map处理接近128m的文件块，就高枕无忧了？" class="headerlink" title="(3).是不是保证每个map处理接近128m的文件块，就高枕无忧了？"></a>(3).是不是保证每个map处理接近128m的文件块，就高枕无忧了？</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;答案也是不一定。比如有一个127m的文件，正常会用一个map去完成，但这个文件只有一个或者两个小字段，却有几千万的记录，如果map处理的逻辑比较复杂，用一个map任务去做，肯定也比较耗时。<br>针对上面的问题2和3，我们需要采取两种方式来解决：即减少map数和增加map数；</p>
+<h4 id="2-小文件进行合并"><a href="#2-小文件进行合并" class="headerlink" title="2.小文件进行合并"></a>2.小文件进行合并</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;在map执行前合并小文件，减少map数：CombineHiveInputFormat具有对小文件进行合并的功能（系统默认的格式）。HiveInputFormat没有对小文件合并功能。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.input.format= org.apache.hadoop.hive.ql.io.CombineHiveInputFormat;</span><br></pre></td></tr></table></figure>
+<h4 id="3-复杂文件增加Map数"><a href="#3-复杂文件增加Map数" class="headerlink" title="3.复杂文件增加Map数"></a>3.复杂文件增加Map数</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;当input的文件都很大，任务逻辑复杂，map执行非常慢的时候，可以考虑增加Map数，来使得每个map处理的数据量减少，从而提高任务的执行效率。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;增加map的方法为：根据computeSliteSize(Math.max(minSize,Math.min(maxSize,blocksize)))=blocksize=128M公式，调整maxSize最大值。让maxSize最大值低于blocksize就可以增加map的个数。</p>
+<p><strong>案例实操</strong>：</p>
+<h5 id="1-执行查询"><a href="#1-执行查询" class="headerlink" title="(1)执行查询"></a>(1)执行查询</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; select count(*) from emp;</span><br></pre></td></tr></table></figure>
+<p>Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1</p>
+<h5 id="2-设置最大切片值为100个字节"><a href="#2-设置最大切片值为100个字节" class="headerlink" title="(2)设置最大切片值为100个字节"></a>(2)设置最大切片值为100个字节</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; set mapreduce.input.fileinputformat.split.maxsize=100;</span><br><span class="line">hive (default)&gt; select count(*) from emp;</span><br></pre></td></tr></table></figure>
+<p>Hadoop job information for Stage-1: number of mappers: 6; number of reducers: 1</p>
+<h4 id="4-合理设置Reduce数"><a href="#4-合理设置Reduce数" class="headerlink" title="4. 合理设置Reduce数"></a>4. 合理设置Reduce数</h4><h5 id="1-调整reduce个数方法一"><a href="#1-调整reduce个数方法一" class="headerlink" title="(1).调整reduce个数方法一"></a>(1).调整reduce个数方法一</h5><h6 id="a-每个Reduce处理的数据量默认是256MB"><a href="#a-每个Reduce处理的数据量默认是256MB" class="headerlink" title="(a)每个Reduce处理的数据量默认是256MB"></a>(a)每个Reduce处理的数据量默认是256MB</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.reducers.bytes.per.reducer=256000000</span><br></pre></td></tr></table></figure>
+<h6 id="b-每个任务最大的reduce数，默认为1009"><a href="#b-每个任务最大的reduce数，默认为1009" class="headerlink" title="(b)每个任务最大的reduce数，默认为1009"></a>(b)每个任务最大的reduce数，默认为1009</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.reducers.max=1009</span><br></pre></td></tr></table></figure>
+<h6 id="c-计算reducer数的公式"><a href="#c-计算reducer数的公式" class="headerlink" title="(c )计算reducer数的公式"></a>(c )计算reducer数的公式</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N=min(参数2=1009，总输入数据量/参数1=？)</span><br></pre></td></tr></table></figure>
+<h5 id="2-调整reduce个数方法二"><a href="#2-调整reduce个数方法二" class="headerlink" title="(2).调整reduce个数方法二"></a>(2).调整reduce个数方法二</h5><p>在hadoop的mapred-default.xml文件中修改<br>设置每个job的Reduce个数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mapreduce.job.reduces = 5;</span><br></pre></td></tr></table></figure>
+<h5 id="3-reduce个数并不是越多越好"><a href="#3-reduce个数并不是越多越好" class="headerlink" title="(3).reduce个数并不是越多越好"></a>(3).reduce个数并不是越多越好</h5><h6 id="a-过多的启动和初始化reduce也会消耗时间和资源；"><a href="#a-过多的启动和初始化reduce也会消耗时间和资源；" class="headerlink" title="(a)过多的启动和初始化reduce也会消耗时间和资源；"></a>(a)过多的启动和初始化reduce也会消耗时间和资源；</h6><h6 id="b-另外，有多少个reduce，就会有多少个输出文件，如果生成了很多个小文件，那么如果这些小文件作为下一个任务的输入，则也会出现小文件过多的问题；"><a href="#b-另外，有多少个reduce，就会有多少个输出文件，如果生成了很多个小文件，那么如果这些小文件作为下一个任务的输入，则也会出现小文件过多的问题；" class="headerlink" title="(b)另外，有多少个reduce，就会有多少个输出文件，如果生成了很多个小文件，那么如果这些小文件作为下一个任务的输入，则也会出现小文件过多的问题；"></a>(b)另外，有多少个reduce，就会有多少个输出文件，如果生成了很多个小文件，那么如果这些小文件作为下一个任务的输入，则也会出现小文件过多的问题；</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;在设置reduce个数的时候也需要考虑这两个原则：处理大数据量利用合适的reduce数；使单个reduce任务处理数据量大小要合适；</p>
+<h3 id="五-并行执行"><a href="#五-并行执行" class="headerlink" title="五. 并行执行"></a>五. 并行执行</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive会将一个查询转化成一个或者多个阶段。这样的阶段可以是MapReduce阶段、抽样阶段、合并阶段、limit阶段。或者Hive执行过程中可能需要的其他阶段。默认情况下，Hive一次只会执行一个阶段。不过，某个特定的job可能包含众多的阶段，而这些阶段可能并非完全互相依赖的，也就是说有些阶段是可以并行执行的，这样可能使得整个job的执行时间缩短。不过，如果有更多的阶段可以并行执行，那么job可能就越快完成。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;通过设置参数hive.exec.parallel值为true，就可以开启并发执行。不过，在共享集群中，需要注意下，如果job中并行阶段增多，那么集群利用率就会增加。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.parallel=true;              //打开任务并行执行,默认false</span><br><span class="line">set hive.exec.parallel.thread.number=16;  //同一个sql允许最大并行度，默认为8。</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;当然，得是在系统资源比较空闲的时候才有优势，否则，没资源，并行也起不来。</p>
+<h3 id="六-严格模式"><a href="#六-严格模式" class="headerlink" title="六.严格模式"></a>六.严格模式</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive提供了一个严格模式，可以防止用户执行那些可能意向不到的不好的影响的查询。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;通过设置属性hive.mapred.mode值为默认是非严格模式nonstrict 。开启严格模式需要修改hive.mapred.mode值为strict，开启严格模式可以禁止3种类型的查询。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.mapred.mode<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>strict<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">      The mode in which the Hive operations are being performed. </span><br><span class="line">      In strict mode, some risky queries are not allowed to run. They include:</span><br><span class="line">        Cartesian Product.</span><br><span class="line">        No partition being picked up for a query.</span><br><span class="line">        Comparing bigints and strings.</span><br><span class="line">        Comparing bigints and doubles.</span><br><span class="line">        Orderby without limit.</span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>1.对于分区表，除非where语句中含有分区字段过滤条件来限制范围，否则不允许执行。换句话说，就是用户不允许扫描所有分区。进行这个限制的原因是，通常分区表都拥有非常大的数据集，而且数据增加迅速。没有进行分区限制的查询可能会消耗令人不可接受的巨大资源来处理这个表。</p>
+<p>2.对于使用了order by语句的查询，要求必须使用limit语句。因为order by为了执行排序过程会将所有的结果数据分发到同一个Reducer中进行处理，强制要求用户增加这个LIMIT语句可以防止Reducer额外执行很长一段时间。</p>
+<p>3.限制笛卡尔积的查询。对关系型数据库非常了解的用户可能期望在执行JOIN查询的时候不使用ON语句而是使用where语句，这样关系数据库的执行优化器就可以高效地将WHERE语句转化成那个ON语句。不幸的是，Hive并不会执行这种优化，因此，如果表足够大，那么这个查询就会出现不可控的情况</p>
+<h3 id="七-JVM重用"><a href="#七-JVM重用" class="headerlink" title="七. JVM重用"></a>七. JVM重用</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;JVM重用是Hadoop调优参数的内容，其对Hive的性能具有非常大的影响，特别是对于很难避免小文件的场景或task特别多的场景，这类场景大多数执行时间都很短。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Hadoop的默认配置通常是使用派生JVM来执行map和Reduce任务的。这时JVM的启动过程可能会造成相当大的开销，尤其是执行的job包含有成百上千task任务的情况。JVM重用可以使得JVM实例在同一个job中重新使用N次。N的值可以在Hadoop的mapred-site.xml文件中进行配置。通常在10-20之间，具体多少需要根据具体业务场景测试得出。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.job.jvm.numtasks<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>10<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>How many tasks to run per jvm. If set to -1, there is</span><br><span class="line">  no limit. </span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;这个功能的缺点是，开启JVM重用将一直占用使用到的task插槽，以便进行重用，直到任务完成后才能释放。如果某个“不平衡的”job中有某几个reduce task执行的时间要比其他Reduce task消耗的时间多的多的话，那么保留的插槽就会一直空闲着却无法被其他的job使用，直到所有的task都结束了才会释放。</p>
+<h3 id="八-推测执行"><a href="#八-推测执行" class="headerlink" title="八.推测执行"></a>八.推测执行</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在分布式集群环境下，因为程序Bug(包括Hadoop本身的bug)，负载不均衡或者资源分布不均等原因，会造成同一个作业的多个任务之间运行速度不一致，有些任务的运行速度可能明显慢于其他任务（比如一个作业的某个任务进度只有50%，而其他所有任务已经运行完毕），则这些任务会拖慢作业的整体执行进度。为了避免这种情况发生，Hadoop采用了推测执行（Speculative Execution）机制，它根据一定的法则推测出“拖后腿”的任务，并为这样的任务启动一个备份任务，让该任务与原始任务同时处理同一份数据，并最终选用最先成功运行完成任务的计算结果作为最终结果。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;设置开启推测执行参数：Hadoop的mapred-site.xml文件中进行配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.speculative<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>If true, then multiple instances of some map tasks may be executed in parallel.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.speculative<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>If true, then multiple instances of some reduce tasks may be executed in parallel.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>不过hive本身也提供了配置项来控制reduce-side的推测执行：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.mapred.reduce.tasks.speculative.execution<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Whether speculative execution for reducers should be turned on. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;关于调优这些推测执行变量，还很难给一个具体的建议。如果用户对于运行时的偏差非常敏感的话，那么可以将这些功能关闭掉。如果用户因为输入数据量很大而需要执行长时间的map或者Reduce task的话，那么启动推测执行造成的浪费是非常巨大大。</p>
+<h3 id="九-压缩"><a href="#九-压缩" class="headerlink" title="九. 压缩"></a>九. 压缩</h3><p>详见之前的文章。</p>
+<h3 id="十-执行计划-Explain"><a href="#十-执行计划-Explain" class="headerlink" title="十. 执行计划(Explain)"></a>十. 执行计划(Explain)</h3><h4 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1.基本语法"></a>1.基本语法</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN [EXTENDED | DEPENDENCY | AUTHORIZATION] query</span><br></pre></td></tr></table></figure>
+<h4 id="2-案例实操-1"><a href="#2-案例实操-1" class="headerlink" title="2.案例实操"></a>2.案例实操</h4><h5 id="1-查看下面这条语句的执行计划"><a href="#1-查看下面这条语句的执行计划" class="headerlink" title="(1)查看下面这条语句的执行计划"></a>(1)查看下面这条语句的执行计划</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; explain select * from emp;</span><br><span class="line">hive (default)&gt; explain select deptno, avg(sal) avg_sal from emp group by deptno;</span><br></pre></td></tr></table></figure>
+<h5 id="2-查看详细执行计划"><a href="#2-查看详细执行计划" class="headerlink" title="(2)查看详细执行计划"></a>(2)查看详细执行计划</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; explain extended select * from emp;</span><br><span class="line">hive (default)&gt; explain extended select deptno, avg(sal) avg_sal from emp group by deptno;</span><br></pre></td></tr></table></figure>
+<p>以下是在MySQL中的显示</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQxNWE3ZGNkMDJkNzUwZGYucG5n?x-oss-process=image/format,png"></p>
+<p><strong>EXPLAIN字段</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Table：显示这一行的数据是关于哪张表的</span><br><span class="line">possible_keys：显示可能应用在这张表中的索引。如果为空，没有可能的索引。可以为相关的域从WHERE语句中选择一个合适的语句</span><br><span class="line">key：实际使用的索引。如果为NULL，则没有使用索引。MYSQL很少会选择优化不足的索引，此时可以在SELECT语句中使用USE INDEX（index）来强制使用一个索引或者用IGNORE INDEX（index）来强制忽略索引</span><br><span class="line">key_len：使用的索引的长度。在不损失精确性的情况下，长度越短越好</span><br><span class="line">ref：显示索引的哪一列被使用了，如果可能的话，是一个常数</span><br><span class="line">rows：MySQL认为必须检索的用来返回请求数据的行数</span><br><span class="line">type：这是最重要的字段之一，显示查询使用了何种类型。从最好到最差的连接类型为system、const、eq_reg、ref、range、index和ALL</span><br><span class="line">system、const：可以将查询的变量转为常量.  如id=1; id为 主键或唯一键.</span><br><span class="line">eq_ref：访问索引,返回某单一行的数据.(通常在联接时出现，查询使用的索引为主键或惟一键)</span><br><span class="line">ref：访问索引,返回某个值的数据.(可以返回多行) 通常使用=时发生</span><br><span class="line">range：这个连接类型使用索引返回一个范围中的行，比如使用&gt;或&lt;查找东西，并且该字段上建有索引时发生的情况(注:不一定好于index)</span><br><span class="line">index：以索引的顺序进行全表扫描，优点是不用排序,缺点是还要全表扫描</span><br><span class="line">ALL：全表扫描，应该尽量避免</span><br><span class="line">Extra：关于MYSQL如何解析查询的额外信息，主要有以下几种</span><br><span class="line">using index：只用到索引,可以避免访问表. </span><br><span class="line">using where：使用到where来过虑数据. 不是所有的where clause都要显示using where. 如以=方式访问索引.</span><br><span class="line">using tmporary：用到临时表</span><br><span class="line">using filesort：用到额外的排序. (当使用order by v1,而没用到索引时,就会使用额外的排序)</span><br><span class="line">range checked for eache record(index map:N)：没有好的索引.</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Hive之函数"
   class="article article-type-post"
   itemscope
@@ -1189,312 +1774,6 @@
 <h4 id="4-查看在hive中输入的所有历史命令"><a href="#4-查看在hive中输入的所有历史命令" class="headerlink" title="4.查看在hive中输入的所有历史命令"></a>4.查看在hive中输入的所有历史命令</h4><h5 id="1-进入到当前用户的根目录-root或-home-itstar"><a href="#1-进入到当前用户的根目录-root或-home-itstar" class="headerlink" title="(1)进入到当前用户的根目录/root或/home/itstar"></a>(1)进入到当前用户的根目录/root或/home/itstar</h5><h5 id="2-查看-hivehistory文件"><a href="#2-查看-hivehistory文件" class="headerlink" title="(2)查看. hivehistory文件"></a>(2)查看. hivehistory文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat .hivehistory</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTExYjlkMjUyMWVmYjMyMDkucG5n?x-oss-process=image/format,png"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Hive安装配置"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"
-    >Hive安装部署</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2019-07-15T04:00:00.000Z" itemprop="datePublished">2019-07-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hive/">Hive</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-前提："><a href="#1-前提：" class="headerlink" title="1.前提："></a>1.前提：</h4><ul>
-<li>mysql已安装</li>
-<li>hadoop集群已配置</li>
-</ul>
-<h4 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2.步骤"></a>2.步骤</h4><h5 id="1-把apache-hive-1-2-1-bin-tar-gz上传到linux的-opt-software目录下"><a href="#1-把apache-hive-1-2-1-bin-tar-gz上传到linux的-opt-software目录下" class="headerlink" title="(1)把apache-hive-1.2.1-bin.tar.gz上传到linux的/opt/software目录下"></a>(1)把apache-hive-1.2.1-bin.tar.gz上传到linux的/opt/software目录下</h5><h5 id="2-解压apache-hive-1-2-1-bin-tar-gz到-opt-module-目录下面"><a href="#2-解压apache-hive-1-2-1-bin-tar-gz到-opt-module-目录下面" class="headerlink" title="(2)解压apache-hive-1.2.1-bin.tar.gz到/opt/module/目录下面"></a>(2)解压apache-hive-1.2.1-bin.tar.gz到/opt/module/目录下面</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-hive-1.2.1-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
-<h5 id="3-修改apache-hive-1-2-1-bin的名称为hive-1-2-1"><a href="#3-修改apache-hive-1-2-1-bin的名称为hive-1-2-1" class="headerlink" title="(3)修改apache-hive-1.2.1-bin的名称为hive-1.2.1"></a>(3)修改apache-hive-1.2.1-bin的名称为hive-1.2.1</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module</span><br><span class="line"></span><br><span class="line">mv apache-hive-1.2.1-bin/ hive-1.2.1</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-修改环境变量："><a href="#4-修改环境变量：" class="headerlink" title="(4)修改环境变量："></a>(4)修改环境变量：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
-<p>添加内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HIVE_HOME=/opt/module/hive-1.2.1</span><br><span class="line">export PATH=$PATH:$HIVE_HOME/bin</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFjNDUxZDNiMGRiOWU2MzUucG5n?x-oss-process=image/format,png"></p>
-<p>使环境变量生效：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-修改-opt-module-hive-conf目录下的hive-env-sh-template名称为hive-env-sh"><a href="#5-修改-opt-module-hive-conf目录下的hive-env-sh-template名称为hive-env-sh" class="headerlink" title="(5)修改/opt/module/hive/conf目录下的hive-env.sh.template名称为hive-env.sh"></a>(5)修改/opt/module/hive/conf目录下的hive-env.sh.template名称为hive-env.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv hive-env.sh.template hive-env.sh</span><br></pre></td></tr></table></figure>
-<h5 id="6-配置hive-env-sh文件"><a href="#6-配置hive-env-sh文件" class="headerlink" title="(6)配置hive-env.sh文件"></a>(6)配置hive-env.sh文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hive-env.sh</span><br></pre></td></tr></table></figure>
-<p>配置HADOOP_HOME路径</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line">export HIVE_CONF_DIR=/opt/module/hive-1.2.1/conf</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFlMDZkYmY1Mjk0NzdmNzQucG5n?x-oss-process=image/format,png"></p>
-<h5 id="7-注：Hive的log默认存放在-tmp-itstar-hive-log目录下（当前用户名下）。"><a href="#7-注：Hive的log默认存放在-tmp-itstar-hive-log目录下（当前用户名下）。" class="headerlink" title="(7)注：Hive的log默认存放在/tmp/itstar/hive.log目录下（当前用户名下）。"></a>(7)注：Hive的log默认存放在/tmp/itstar/hive.log目录下（当前用户名下）。</h5><h6 id="a-修改hive的log存放日志到-opt-module-hive-logs"><a href="#a-修改hive的log存放日志到-opt-module-hive-logs" class="headerlink" title="(a)修改hive的log存放日志到/opt/module/hive/logs"></a>(a)修改hive的log存放日志到/opt/module/hive/logs</h6><h6 id="b-修改conf-hive-log4j-properties-template文件名称为hive-log4j-properties"><a href="#b-修改conf-hive-log4j-properties-template文件名称为hive-log4j-properties" class="headerlink" title="(b)修改conf/hive-log4j.properties.template文件名称为hive-log4j.properties"></a>(b)修改conf/hive-log4j.properties.template文件名称为hive-log4j.properties</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line"></span><br><span class="line">mv hive-log4j.properties.template hive-log4j.properties</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU4YzhlMGEzMzUyNDlkMzUucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h6 id="c-在hive-log4j-properties文件中修改log存放位置"><a href="#c-在hive-log4j-properties文件中修改log存放位置" class="headerlink" title="(c )在hive-log4j.properties文件中修改log存放位置"></a>(c )在hive-log4j.properties文件中修改log存放位置</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1</span><br><span class="line"></span><br><span class="line">mkdir logs</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTExOWJhNzFlZTQ2OTUwMTkucG5n?x-oss-process=image/format,png"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1/conf</span><br><span class="line"></span><br><span class="line">vi hive-log4j.properties </span><br></pre></td></tr></table></figure>
-<p>修改内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive.log.dir=/opt/module/hive-1.2.1/logs</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY3ZDFiZTUxNWE0OWQwNjUucG5n?x-oss-process=image/format,png"></p>
-<h5 id="8-Hadoop-配置"><a href="#8-Hadoop-配置" class="headerlink" title="(8)Hadoop 配置"></a>(8)Hadoop 配置</h5><h6 id="a-必须启动hdfs和yarn"><a href="#a-必须启动hdfs和yarn" class="headerlink" title="(a)必须启动hdfs和yarn"></a>(a)必须启动hdfs和yarn</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-dfs.sh</span><br><span class="line"></span><br><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
-<h6 id="b-在HDFS上创建-tmp和-user-hive-warehouse两个目录并修改他们的同组权限可写"><a href="#b-在HDFS上创建-tmp和-user-hive-warehouse两个目录并修改他们的同组权限可写" class="headerlink" title="(b)在HDFS上创建/tmp和/user/hive/warehouse两个目录并修改他们的同组权限可写"></a>(b)在HDFS上创建/tmp和/user/hive/warehouse两个目录并修改他们的同组权限可写</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir /tmp</span><br><span class="line">hadoop fs -mkdir -p /user/hive/warehouse</span><br><span class="line"></span><br><span class="line">hadoop fs -chmod g+w /tmp</span><br><span class="line">hadoop fs -chmod g+w /user/hive/warehouse</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVlMjk4OTRjNjM4MTYyZjQucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h5 id="9-将hive元数据配置到mysql"><a href="#9-将hive元数据配置到mysql" class="headerlink" title="(9).将hive元数据配置到mysql"></a>(9).将hive元数据配置到mysql</h5><h6 id="a-将mysql-connector-java-5-1-27-jar上传到-opt-module-hive-1-2-1-lib中："><a href="#a-将mysql-connector-java-5-1-27-jar上传到-opt-module-hive-1-2-1-lib中：" class="headerlink" title="(a)将mysql-connector-java-5.1.27.jar上传到/opt/module/hive-1.2.1/lib中："></a>(a)将mysql-connector-java-5.1.27.jar上传到/opt/module/hive-1.2.1/lib中：</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmNTU2MmQ4YjJiMWM5OTUucG5n?x-oss-process=image/format,png"></p>
-<h6 id="b-创建hive-site-xml"><a href="#b-创建hive-site-xml" class="headerlink" title="(b)创建hive-site.xml"></a>(b)创建hive-site.xml</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1/conf</span><br><span class="line"></span><br><span class="line">touch hive-site.xml</span><br><span class="line"></span><br><span class="line">vi hive-site.xml</span><br></pre></td></tr></table></figure>
-
-<p>添加内容：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://hadoop1:3306/metastore1?createDatabaseIfNotExist=true<span class="symbol">&amp;amp;</span>characterEncoding=utf-8<span class="symbol">&amp;amp;</span>useSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>username to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：最好是在mysql所在的服务器中安装hive</p>
-<h6 id="c-配置完毕后，如果启动hive异常，可以重新启动虚拟机。-重启后，别忘了启动hadoop集群"><a href="#c-配置完毕后，如果启动hive异常，可以重新启动虚拟机。-重启后，别忘了启动hadoop集群" class="headerlink" title="(c ).配置完毕后，如果启动hive异常，可以重新启动虚拟机。(重启后，别忘了启动hadoop集群)"></a>(c ).配置完毕后，如果启动hive异常，可以重新启动虚拟机。(重启后，别忘了启动hadoop集群)</h6><h6 id="d-在hive的bin目录下执行"><a href="#d-在hive的bin目录下执行" class="headerlink" title="(d)在hive的bin目录下执行"></a>(d)在hive的bin目录下执行</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./schematool -dbType mysql -initSchema</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiNGMzNjdiOTcwNjM5ZDQucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUyMGY2ZTI5Nzg5OTE5YmIucG5n?x-oss-process=image/format,png" alt="创建成功"></p>
-<h5 id="10-添加其他配置信息："><a href="#10-添加其他配置信息：" class="headerlink" title="(10).添加其他配置信息："></a>(10).添加其他配置信息：</h5><p>命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/module/hive-1.2.1/conf/hive-site.xml</span><br></pre></td></tr></table></figure>
-
-<p>添加内容：</p>
-<h6 id="a-修改default数据仓库原始位置"><a href="#a-修改default数据仓库原始位置" class="headerlink" title="(a)修改default数据仓库原始位置"></a>(a)修改default数据仓库原始位置</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>/user/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>location of default database for the warehouse<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h6 id="b-添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置"><a href="#b-添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置" class="headerlink" title="(b)添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置"></a>(b)添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBlMzIzNGUwYjNjMTMxMGUucG5n?x-oss-process=image/format,png" alt="配置"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVlMmZiOGFkYjQ0MzA5NmQucG5n?x-oss-process=image/format,png" alt="配置后启动hive"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Hive基本概念"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"
-    >Hive基本概念</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="article-date">
-  <time datetime="2019-07-15T03:00:00.000Z" itemprop="datePublished">2019-07-15</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hive/">Hive</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h3 id="一-Hive基本概念："><a href="#一-Hive基本概念：" class="headerlink" title="一.Hive基本概念："></a>一.Hive基本概念：</h3><h4 id="1-Hive"><a href="#1-Hive" class="headerlink" title="1. Hive"></a>1. Hive</h4><h5 id="1-官网：http-hive-apache-org"><a href="#1-官网：http-hive-apache-org" class="headerlink" title="(1).官网：http://hive.apache.org/"></a>(1).官网：<a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a></h5><h5 id="2-Apache-HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的-大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以-将用户连接到Hive。"><a href="#2-Apache-HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的-大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以-将用户连接到Hive。" class="headerlink" title="(2).Apache HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的 大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以 将用户连接到Hive。"></a>(2).Apache HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的 大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以 将用户连接到Hive。</h5><h5 id="3-hive提供了SQL查询功能-hdfs分布式存储"><a href="#3-hive提供了SQL查询功能-hdfs分布式存储" class="headerlink" title="(3).hive提供了SQL查询功能 hdfs分布式存储"></a>(3).hive提供了SQL查询功能 hdfs分布式存储</h5><h5 id="4-hive本质HQL转化为MapReduce程序。"><a href="#4-hive本质HQL转化为MapReduce程序。" class="headerlink" title="(4).hive本质HQL转化为MapReduce程序。"></a>(4).hive本质HQL转化为MapReduce程序。</h5><h5 id="5-环境前提："><a href="#5-环境前提：" class="headerlink" title="(5).环境前提："></a>(5).环境前提：</h5><ul>
-<li>启动hdfs集群</li>
-<li>启动yarn集群</li>
-</ul>
-<p>如果想用hive的话，需要提前安装部署好hadoop集群。</p>
-<h4 id="2-为什么要学习Hive"><a href="#2-为什么要学习Hive" class="headerlink" title="2.为什么要学习Hive"></a>2.为什么要学习Hive</h4><h5 id="1-简化开发"><a href="#1-简化开发" class="headerlink" title="(1).简化开发"></a>(1).简化开发</h5><h5 id="2-优势："><a href="#2-优势：" class="headerlink" title="(2).优势："></a>(2).优势：</h5><h6 id="a-操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）"><a href="#a-操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）" class="headerlink" title="(a)操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）"></a>(a)操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）</h6><h6 id="b-避免了去写MapReduce，减少开发人员的学习成本。"><a href="#b-避免了去写MapReduce，减少开发人员的学习成本。" class="headerlink" title="(b)避免了去写MapReduce，减少开发人员的学习成本。"></a>(b)避免了去写MapReduce，减少开发人员的学习成本。</h6><h6 id="c-Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合"><a href="#c-Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合" class="headerlink" title="(c )Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合"></a>(c )Hive的执行延迟比较高，<strong>因此Hive常用于数据分析，对实时性要求不高的场合</strong></h6><h6 id="d-Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高"><a href="#d-Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高" class="headerlink" title="(d)Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高"></a>(d)Hive优势在于处理大数据，<strong>对于处理小数据没有优势，因为Hive的执行延迟比较高</strong></h6><h6 id="e-Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。"><a href="#e-Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。" class="headerlink" title="(e)Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。"></a>(e)Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。</h6><h4 id="3-劣势："><a href="#3-劣势：" class="headerlink" title="3.劣势："></a>3.劣势：</h4><h5 id="1-Hive的HQL表达能力有限"><a href="#1-Hive的HQL表达能力有限" class="headerlink" title="(1)Hive的HQL表达能力有限"></a>(1)Hive的HQL表达能力有限</h5><ul>
-<li>迭代式算法无法表达</li>
-<li>数据挖掘方面不擅长</li>
-</ul>
-<h5 id="2-Hive的效率比较低"><a href="#2-Hive的效率比较低" class="headerlink" title="(2)Hive的效率比较低"></a>(2)Hive的效率比较低</h5><ul>
-<li>Hive自动生成的MapReduce作业，通常情况下不够智能化</li>
-<li>Hive调优比较困难，粒度较粗</li>
-</ul>
-<h4 id="3-Hive架构原理："><a href="#3-Hive架构原理：" class="headerlink" title="3.Hive架构原理："></a>3.Hive架构原理：</h4><p>sql-&gt;转换-&gt;mapreduce-&gt;job</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYxZTllNDdlZjQ0MmM2NGIucG5n?x-oss-process=image/format,png" alt="Hive架构原理"></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ4MTE5MzczZDk2MmM2MDQucG5n?x-oss-process=image/format,png" alt="Hive架构"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;如图中所示，Hive通过给用户提供的一系列交互接口，接收到用户的指令(SQL)，使用自己的Driver，结合元数据(MetaStore)，将这些指令翻译成MapReduce，提交到Hadoop中执行，最后，将执行返回的结果输出到用户交互接口。</p>
-<h5 id="1-用户接口：Client"><a href="#1-用户接口：Client" class="headerlink" title="(1).用户接口：Client"></a>(1).用户接口：Client</h5><p>CLI(hive shell)、JDBC/ODBC(java访问hive)、WEBUI(浏览器访问hive)</p>
-<h5 id="2-元数据：Metastore"><a href="#2-元数据：Metastore" class="headerlink" title="(2).元数据：Metastore"></a>(2).元数据：Metastore</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;元数据包括：表名、表所属的数据库（默认是default）、表的拥有者、列/分区字段、表的类型（是否是外部表）、表的数据所在目录等；<br>&nbsp;&nbsp;&nbsp;&nbsp;默认存储在自带的derby数据库中，推荐使用MySQL存储Metastore</p>
-<h5 id="3-Hadoop"><a href="#3-Hadoop" class="headerlink" title="(3).Hadoop"></a>(3).Hadoop</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;使用HDFS进行存储，使用MapReduce进行计算。</p>
-<h5 id="4-驱动器：Driver"><a href="#4-驱动器：Driver" class="headerlink" title="(4).驱动器：Driver"></a>(4).驱动器：Driver</h5><h6 id="a-解析器-SQL-Parser-："><a href="#a-解析器-SQL-Parser-：" class="headerlink" title="(a)解析器(SQL Parser)："></a>(a)解析器(SQL Parser)：</h6><p>将SQL字符串转换成抽象语法树AST，这一步一般都用第三方工具库完成，比如antlr；对AST进行语法分析，比如表是否存在、字段是否存在、SQL语义是否有误。</p>
-<h6 id="b-编译器-Physical-Plan-："><a href="#b-编译器-Physical-Plan-：" class="headerlink" title="(b)编译器(Physical Plan)："></a>(b)编译器(Physical Plan)：</h6><p>将AST编译生成逻辑执行计划。</p>
-<h6 id="c-优化器-Query-Optimizer-："><a href="#c-优化器-Query-Optimizer-：" class="headerlink" title="(c )优化器(Query Optimizer)："></a>(c )优化器(Query Optimizer)：</h6><p>对逻辑执行计划进行优化。</p>
-<h6 id="d-执行器-Execution-："><a href="#d-执行器-Execution-：" class="headerlink" title="(d)执行器(Execution)："></a>(d)执行器(Execution)：</h6><p>把逻辑执行计划转换成可以运行的物理计划。对于Hive来说，就是MR/Spark。</p>
-<h4 id="4-Hive和数据库比较"><a href="#4-Hive和数据库比较" class="headerlink" title="4.Hive和数据库比较"></a>4.Hive和数据库比较</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;由于 Hive 采用了类似SQL 的查询语言 HQL(Hive Query Language)，因此很容易将 Hive 理解为数据库。其实从结构上来看，Hive 和数据库除了拥有类似的查询语言，再无类似之处。本文将从多个方面来阐述 Hive 和数据库的差异。数据库可以用在 Online 的应用中，但是Hive 是为数据仓库而设计的，清楚这一点，有助于从应用角度理解 Hive 的特性。</p>
-<h5 id="1-查询语言"><a href="#1-查询语言" class="headerlink" title="(1).查询语言"></a>(1).查询语言</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于SQL被广泛的应用在数据仓库中，因此，专门针对Hive的特性设计了类SQL的查询语言HQL。熟悉SQL开发的开发者可以很方便的使用Hive进行开发。</p>
-<h5 id="2-数据存储位置"><a href="#2-数据存储位置" class="headerlink" title="(2).数据存储位置"></a>(2).数据存储位置</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive 是建立在 Hadoop 之上的，所有 Hive 的数据都是存储在 HDFS 中的。而数据库则可以将数据保存在块设备或者本地文件系统中。</p>
-<h5 id="3-数据更新"><a href="#3-数据更新" class="headerlink" title="(3). 数据更新"></a>(3). 数据更新</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive是针对数据仓库应用设计的，而数据仓库的内容是读多写少的。因此，Hive中不支持对数据的改写和添加，所有的数据都是在加载的时候确定好的。而数据库中的数据通常是需要经常进行修改的，因此可以使用 INSERT INTO …  VALUES 添加数据，使用 UPDATE … SET修改数据。</p>
-<h5 id="4-索引"><a href="#4-索引" class="headerlink" title="(4). 索引"></a>(4). 索引</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive在加载数据的过程中不会对数据进行任何处理，甚至不会对数据进行扫描，因此也没有对数据中的某些Key建立索引。Hive要访问数据中满足条件的特定值时，需要暴力扫描整个数据，因此访问延迟较高。由于 MapReduce 的引入， Hive 可以并行访问数据，因此即使没有索引，对于大数据量的访问，Hive 仍然可以体现出优势。数据库中，通常会针对一个或者几个列建立索引，因此对于少量的特定条件的数据的访问，数据库可以有很高的效率，较低的延迟。由于数据的访问延迟较高，决定了 Hive 不适合在线数据查询。</p>
-<h5 id="5-执行"><a href="#5-执行" class="headerlink" title="(5). 执行"></a>(5). 执行</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive中大多数查询的执行是通过 Hadoop 提供的 MapReduce 来实现的。而数据库通常有自己的执行引擎。</p>
-<h5 id="6-执行延迟"><a href="#6-执行延迟" class="headerlink" title="(6). 执行延迟"></a>(6). 执行延迟</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive 在查询数据的时候，由于没有索引，需要扫描整个表，因此延迟较高。另外一个导致 Hive 执行延迟高的因素是 MapReduce框架。由于MapReduce 本身具有较高的延迟，因此在利用MapReduce 执行Hive查询时，也会有较高的延迟。相对的，数据库的执行延迟较低。当然，这个低是有条件的，即数据规模较小，当数据规模大到超过数据库的处理能力的时候，Hive的并行计算显然能体现出优势。</p>
-<h5 id="7-可扩展性"><a href="#7-可扩展性" class="headerlink" title="(7).可扩展性"></a>(7).可扩展性</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive是建立在Hadoop之上的，因此Hive的可扩展性是和Hadoop的可扩展性是一致的(世界上最大的Hadoop 集群在 Yahoo!，2009年的规模在4000 台节点左右)。而数据库由于 ACID 语义的严格限制，扩展行非常有限。目前最先进的并行数据库Oracle在理论上的扩展能力也只有100台左右。</p>
-<h5 id="8-数据规模"><a href="#8-数据规模" class="headerlink" title="(8). 数据规模"></a>(8). 数据规模</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive建立在集群上并可以利用MapReduce进行并行计算，因此可以支持很大规模的数据；对应的，数据库可以支持的数据规模较小。</p>
-<h3 id="二-Hive数据类型"><a href="#二-Hive数据类型" class="headerlink" title="二.Hive数据类型"></a>二.Hive数据类型</h3><h4 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1.基本数据类型"></a>1.基本数据类型</h4><table>
-<thead>
-<tr>
-<th align="center">Hive数据类型</th>
-<th align="center">Java数据类型</th>
-<th align="center">长度</th>
-<th align="center">例子</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">TINYINT</td>
-<td align="center">byte</td>
-<td align="center">1byte有符号整数</td>
-<td align="center">20</td>
-</tr>
-<tr>
-<td align="center">SMALINT</td>
-<td align="center">short</td>
-<td align="center">2byte有符号整数</td>
-<td align="center">20</td>
-</tr>
-<tr>
-<td align="center">INT</td>
-<td align="center">int</td>
-<td align="center">4byte有符号整数</td>
-<td align="center">20</td>
-</tr>
-<tr>
-<td align="center">BIGINT</td>
-<td align="center">long</td>
-<td align="center">8byte有符号整数</td>
-<td align="center">20</td>
-</tr>
-<tr>
-<td align="center">BOOLEAN</td>
-<td align="center">boolean</td>
-<td align="center">布尔类型，true或者false</td>
-<td align="center">TRUE  FALSE</td>
-</tr>
-<tr>
-<td align="center">FLOAT</td>
-<td align="center">float</td>
-<td align="center">单精度浮点数</td>
-<td align="center">3.14159</td>
-</tr>
-<tr>
-<td align="center">DOUBLE</td>
-<td align="center">double</td>
-<td align="center">双精度浮点数</td>
-<td align="center">3.14159</td>
-</tr>
-<tr>
-<td align="center">STRING</td>
-<td align="center">string</td>
-<td align="center">字符系列。可以指定字符集。可以使用单引号或者双引号</td>
-<td align="center">‘now is the time’ “for all good men”</td>
-</tr>
-<tr>
-<td align="center">TIMESTAMP</td>
-<td align="center"></td>
-<td align="center">时间类型</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">BINARY</td>
-<td align="center"></td>
-<td align="center">字节数组</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;对于Hive的String类型相当于数据库的varchar类型，该类型是一个可变的字符串，不过它不能 其中最多能存储多少个字符，理论上它可以存储2GB的字符数。</p>
-<h4 id="2-集合数据类型"><a href="#2-集合数据类型" class="headerlink" title="2.集合数据类型"></a>2.集合数据类型</h4><table>
-<thead>
-<tr>
-<th align="center">数据类型</th>
-<th align="center">描述</th>
-<th align="center">语法示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">STRUCT</td>
-<td align="center">和c语言中的struct类似，都可以通过“点”符号访问元素内容。例如，如果某个列的数据类型是STRUCT{first STRING, last STRING},那么第1个元素可以通过字段.first来引用</td>
-<td align="center">struct()</td>
-</tr>
-<tr>
-<td align="center">MAP</td>
-<td align="center">MAP是一组键-值对元组集合，使用数组表示法可以访问数据。例如，如果某个列的数据类型是MAP，其中键-&gt;值对是’first’-&gt;’John’和’last’-&gt;’Doe’，那么可以通过字段名[‘last’]获取最后一个元素</td>
-<td align="center">map()</td>
-</tr>
-<tr>
-<td align="center">ARRAY</td>
-<td align="center">数组是一组具有相同类型和名称的变量的集合。这些变量称为数组的元素，每个数组元素都有一个编号，编号从零开始。例如，数组值为[‘John’, ‘Doe’]，那么第2个元素可以通过数组名[1]进行引用</td>
-<td align="center">Array()</td>
-</tr>
-</tbody></table>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;Hive有三种复杂数据类型ARRAY、MAP 和 STRUCT。ARRAY和MAP与Java中的Array和Map类似，而STRUCT与C语言中的Struct类似，它封装了一个命名字段集合，复杂数据类型允许任意层次的嵌套。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table heheee(`来试试` string,`来试试1` string,`来试试2` string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>案例实操</strong></p>
-<h5 id="1-假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为"><a href="#1-假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为" class="headerlink" title="(1)假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为"></a>(1)假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;songsong&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;friends&quot;</span>: [<span class="string">&quot;bingbing&quot;</span> , <span class="string">&quot;lili&quot;</span>] ,       <span class="comment">//列表Array, </span></span><br><span class="line">    <span class="attr">&quot;children&quot;</span>: &#123;                      <span class="comment">//键值Map,</span></span><br><span class="line">        <span class="attr">&quot;xiao song&quot;</span>: <span class="number">18</span> ,</span><br><span class="line">        <span class="attr">&quot;xiaoxiao song&quot;</span>: <span class="number">19</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;address&quot;</span>: &#123;                      <span class="comment">//结构Struct,</span></span><br><span class="line">        <span class="attr">&quot;street&quot;</span>: <span class="string">&quot;hai dian qu&quot;</span> ,</span><br><span class="line">        <span class="attr">&quot;city&quot;</span>: <span class="string">&quot;beijing&quot;</span> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="2-基于上述数据结构，我们在Hive里创建对应的表，并导入数据。"><a href="#2-基于上述数据结构，我们在Hive里创建对应的表，并导入数据。" class="headerlink" title="(2)基于上述数据结构，我们在Hive里创建对应的表，并导入数据。"></a>(2)基于上述数据结构，我们在Hive里创建对应的表，并导入数据。</h5><p>创建本地测试文件test.txt</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/datas/</span><br><span class="line"></span><br><span class="line">touch text.txt</span><br></pre></td></tr></table></figure>
-<p>添加内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">songsong,bingbing_lili,xiao song:18_xiaoxiao song:19,hai dian qu_beijing</span><br><span class="line"></span><br><span class="line">yangyang,caicai_susu,xiao yang:18_xiaoxiao yang:19,chao yang_beijing</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxNmExMWVlMzA4MTQxM2IucG5n?x-oss-process=image/format,png"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;注意，MAP，STRUCT和ARRAY里的元素间关系都可以用同一个字符表示，这里用“_”。</p>
-<h5 id="3-Hive上创建测试表test"><a href="#3-Hive上创建测试表test" class="headerlink" title="(3)Hive上创建测试表test"></a>(3)Hive上创建测试表test</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">create table test(</span><br><span class="line">name string,</span><br><span class="line">friends array&lt;string&gt;,</span><br><span class="line">children map&lt;string, int&gt;,</span><br><span class="line">address struct&lt;street:string, city:string&gt;</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &#x27;,&#x27;</span><br><span class="line">collection items terminated by &#x27;_&#x27;</span><br><span class="line">map keys terminated by &#x27;:&#x27;</span><br><span class="line">lines terminated by &#x27;\n&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>字段解释：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">row format delimited fields terminated by &#x27;,&#x27;     -- 列分隔符</span><br><span class="line">collection items terminated by &#x27;_&#x27;  	          --MAP STRUCT 和 ARRAY 的分隔符(数据分割符号)</span><br><span class="line">map keys terminated by &#x27;:&#x27;				          -- MAP中的key与value的分隔符</span><br><span class="line">lines terminated by &#x27;\n&#x27;;					      -- 行分隔符</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-导入文本数据到测试表"><a href="#4-导入文本数据到测试表" class="headerlink" title="(4)导入文本数据到测试表"></a>(4)导入文本数据到测试表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/module/datas/text.txt&#x27; into table test;</span><br></pre></td></tr></table></figure>
-<h5 id="5-访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式"><a href="#5-访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式" class="headerlink" title="(5)访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式"></a>(5)访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select friends[1],children[&#x27;xiao song&#x27;],address.city from test where name=&quot;songsong&quot;;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJkZDgzYzNiZjk5ZjM4NjUucG5n?x-oss-process=image/format,png"></p>
-<p>如果起别名：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select friends[1] as pengyou from test where name=&quot;songsong&quot;;</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFmMWY3MDg3ZmFlMGQ3MTAucG5n?x-oss-process=image/format,png"></p>
-<h4 id="3-类型转化"><a href="#3-类型转化" class="headerlink" title="3.类型转化"></a>3.类型转化</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive的原子数据类型是可以进行隐式转换的，类似于Java的类型转换，例如某表达式使用INT类型，TINYINT会自动转换为INT类型，但是Hive不会进行反向转化，例如，某表达式使用TINYINT类型，INT不会自动转换为TINYINT类型，它会返回错误，除非使用CAST操作。</p>
-<h5 id="1-隐式类型转换规则如下。"><a href="#1-隐式类型转换规则如下。" class="headerlink" title="(1).隐式类型转换规则如下。"></a>(1).隐式类型转换规则如下。</h5><h6 id="a-任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。"><a href="#a-任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。" class="headerlink" title="(a)任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。"></a>(a)任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。</h6><h6 id="b-所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。"><a href="#b-所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。" class="headerlink" title="(b)所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。"></a>(b)所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。</h6><h6 id="c-TINYINT、SMALLINT、INT都可以转换为FLOAT。"><a href="#c-TINYINT、SMALLINT、INT都可以转换为FLOAT。" class="headerlink" title="(c )TINYINT、SMALLINT、INT都可以转换为FLOAT。"></a>(c )TINYINT、SMALLINT、INT都可以转换为FLOAT。</h6><h6 id="d-BOOLEAN类型不可以转换为任何其它的类型。"><a href="#d-BOOLEAN类型不可以转换为任何其它的类型。" class="headerlink" title="(d)BOOLEAN类型不可以转换为任何其它的类型。"></a>(d)BOOLEAN类型不可以转换为任何其它的类型。</h6><h5 id="2-可以使用CAST操作显示进行数据类型转换，"><a href="#2-可以使用CAST操作显示进行数据类型转换，" class="headerlink" title="(2).可以使用CAST操作显示进行数据类型转换，"></a>(2).可以使用CAST操作显示进行数据类型转换，</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;例如CAST(‘1’ AS INT)将把字符串’1’ 转换成整数1；如果强制类型转换失败，如执行CAST(‘X’ AS INT)，表达式返回空值 NULL。</p>
  
       <!-- reward -->
       

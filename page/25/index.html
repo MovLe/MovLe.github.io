@@ -155,6 +155,291 @@
     
     
     <article
+  id="post-ZooKeeper实战-分布式秒杀"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E5%AE%9E%E6%88%98-%E5%88%86%E5%B8%83%E5%BC%8F%E7%A7%92%E6%9D%80/"
+    >ZooKeeper实战-分布式秒杀</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E5%AE%9E%E6%88%98-%E5%88%86%E5%B8%83%E5%BC%8F%E7%A7%92%E6%9D%80/" class="article-date">
+  <time datetime="2019-01-03T07:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-添加所需依赖："><a href="#1-添加所需依赖：" class="headerlink" title="1.添加所需依赖："></a>1.添加所需依赖：</h4><p>pom.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- zookeeper所需依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.curator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>curator-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.curator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>curator-recipes<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.curator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>curator-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.guava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>guava<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>16.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.zookeeper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zookeeper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-编写代码："><a href="#2-编写代码：" class="headerlink" title="2.编写代码："></a>2.编写代码：</h4><h5 id="1-不启动锁："><a href="#1-不启动锁：" class="headerlink" title="(1)不启动锁："></a>(1)不启动锁：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimpleZKlock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.curator.RetryPolicy;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.CuratorFramework;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.CuratorFrameworkFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.recipes.locks.InterProcessMutex;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.retry.ExponentialBackoffRetry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDistributedLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义共享资源</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printCountNumber</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;***********&quot;</span> + Thread.currentThread().getName() + <span class="string">&quot;**********&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;当前值：&quot;</span> + count);</span><br><span class="line">        count--;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//睡2秒</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;***********&quot;</span> + Thread.currentThread().getName() + <span class="string">&quot;**********&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//定义客户端重试的策略</span></span><br><span class="line">        RetryPolicy policy = <span class="keyword">new</span> ExponentialBackoffRetry(<span class="number">1000</span>,  <span class="comment">//每次等待的时间</span></span><br><span class="line">                <span class="number">10</span>); <span class="comment">//最大重试的次数</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//定义ZK的一个客户端</span></span><br><span class="line">        CuratorFramework client = CuratorFrameworkFactory.builder()</span><br><span class="line">                .connectString(<span class="string">&quot;192.168.1.121:2181&quot;</span>)</span><br><span class="line">                .retryPolicy(policy)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在ZK生成锁  ---&gt; 就是ZK的目录</span></span><br><span class="line">        client.start();</span><br><span class="line">        <span class="keyword">final</span> InterProcessMutex lock = <span class="keyword">new</span> InterProcessMutex(client, <span class="string">&quot;/mylock&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动10个线程去访问共享资源</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line"></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="comment">//请求得到锁</span></span><br><span class="line">                        <span class="comment">//lock.acquire();</span></span><br><span class="line">                        <span class="comment">//访问共享资源</span></span><br><span class="line">                        printCountNumber();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                        ex.printStackTrace();</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        <span class="comment">//释放锁</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="comment">// lock.release();</span></span><br><span class="line">                        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBkNmY0MGY4OTMzMjc0OTIucG5n?x-oss-process=image/format,png" alt="不启用锁"></p>
+<h5 id="2-启用锁："><a href="#2-启用锁：" class="headerlink" title="(2)启用锁："></a>(2)启用锁：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimpleZKlock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.curator.RetryPolicy;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.CuratorFramework;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.CuratorFrameworkFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.framework.recipes.locks.InterProcessMutex;</span><br><span class="line"><span class="keyword">import</span> org.apache.curator.retry.ExponentialBackoffRetry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDistributedLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义共享资源</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printCountNumber</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;***********&quot;</span> + Thread.currentThread().getName() + <span class="string">&quot;**********&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;当前值：&quot;</span> + count);</span><br><span class="line">        count--;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//睡2秒</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;***********&quot;</span> + Thread.currentThread().getName() + <span class="string">&quot;**********&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//定义客户端重试的策略</span></span><br><span class="line">        RetryPolicy policy = <span class="keyword">new</span> ExponentialBackoffRetry(<span class="number">1000</span>,  <span class="comment">//每次等待的时间</span></span><br><span class="line">                <span class="number">10</span>); <span class="comment">//最大重试的次数</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//定义ZK的一个客户端</span></span><br><span class="line">        CuratorFramework client = CuratorFrameworkFactory.builder()</span><br><span class="line">                .connectString(<span class="string">&quot;192.168.1.121:2181&quot;</span>)</span><br><span class="line">                .retryPolicy(policy)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在ZK生成锁  ---&gt; 就是ZK的目录</span></span><br><span class="line">        client.start();</span><br><span class="line">        <span class="keyword">final</span> InterProcessMutex lock = <span class="keyword">new</span> InterProcessMutex(client, <span class="string">&quot;/mylock&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动10个线程去访问共享资源</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line"></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="comment">//请求得到锁</span></span><br><span class="line">                        lock.acquire();</span><br><span class="line">                        <span class="comment">//访问共享资源</span></span><br><span class="line">                        printCountNumber();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                        ex.printStackTrace();</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        <span class="comment">//释放锁</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            lock.release();</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg5MmEwZDNjOGYyNzBkODMucG5n?x-oss-process=image/format,png" alt="启用锁"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper%E5%AE%9E%E6%88%98/" rel="tag">ZooKeeper实战</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ZooKeeper客户端命令行操作"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/"
+    >ZooKeeper客户端命令行操作</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C/" class="article-date">
+  <time datetime="2019-01-03T06:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="0-基础语法"><a href="#0-基础语法" class="headerlink" title="0.基础语法"></a>0.基础语法</h4><table>
+<thead>
+<tr>
+<th align="center">命令基本语法</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">help</td>
+<td align="center">显示所有操作命令</td>
+</tr>
+<tr>
+<td align="center">ls path [watch]</td>
+<td align="center">使用 ls 命令来查看当前znode中所包含的内容</td>
+</tr>
+<tr>
+<td align="center">ls2 path [watch]</td>
+<td align="center">查看当前节点数据并能看到更新次数等数据</td>
+</tr>
+<tr>
+<td align="center">create</td>
+<td align="center">普通创建(永久节点)</td>
+</tr>
+<tr>
+<td align="center">-s</td>
+<td align="center">含有序列</td>
+</tr>
+<tr>
+<td align="center">-e</td>
+<td align="center">临时(重启或者超时消失)</td>
+</tr>
+<tr>
+<td align="center">get path [watch]</td>
+<td align="center">获得节点的值</td>
+</tr>
+<tr>
+<td align="center">set</td>
+<td align="center">设置节点的具体值</td>
+</tr>
+<tr>
+<td align="center">stat</td>
+<td align="center">查看节点状态</td>
+</tr>
+<tr>
+<td align="center">delete</td>
+<td align="center">删除节点</td>
+</tr>
+<tr>
+<td align="center">rmr</td>
+<td align="center">递归删除节点</td>
+</tr>
+</tbody></table>
+<h4 id="1-启动客户端"><a href="#1-启动客户端" class="headerlink" title="1.启动客户端"></a>1.启动客户端</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
+<h4 id="2-显示所有操作命令"><a href="#2-显示所有操作命令" class="headerlink" title="2.显示所有操作命令"></a>2.显示所有操作命令</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA2MDBjNzlhNzExOTVmNTEucG5n?x-oss-process=image/format,png" alt="help"></p>
+<h4 id="3-查看当前znode中所包含的内容"><a href="#3-查看当前znode中所包含的内容" class="headerlink" title="3.查看当前znode中所包含的内容"></a>3.查看当前znode中所包含的内容</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFlY2EyODgzMDg3NDQ3NmQucG5n?x-oss-process=image/format,png" alt="ls /"></p>
+<h4 id="4-查看当前节点数据并能看到更新次数等数据"><a href="#4-查看当前节点数据并能看到更新次数等数据" class="headerlink" title="4.查看当前节点数据并能看到更新次数等数据"></a>4.查看当前节点数据并能看到更新次数等数据</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls2 /</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlkZmE4NzhiNzZjNDAwMWUucG5n?x-oss-process=image/format,png" alt="ls2 /"></p>
+<h4 id="5-创建普通节点"><a href="#5-创建普通节点" class="headerlink" title="5.创建普通节点"></a>5.创建普通节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1 &quot;hello app1&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmYjdkNTU3OTYyYTNkMmYucG5n?x-oss-process=image/format,png" alt="create /app1 &quot;hello app1&quot;"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1/server101 &quot;192.168.1.101&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmZTM4NmUwMzQ0Y2NmNTcucG5n?x-oss-process=image/format,png" alt="create /app1/server101 &quot;192.168.1.101&quot;"></p>
+<h4 id="6-获得节点的值"><a href="#6-获得节点的值" class="headerlink" title="6.获得节点的值"></a>6.获得节点的值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFhODA3YTJhNDZkYjYzMGMucG5n?x-oss-process=image/format,png" alt="get /app1"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1/server101</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVhMzA3ZTExMzhmZWQ1MjAucG5n?x-oss-process=image/format,png" alt="get /app1/server101"></p>
+<h4 id="7-创建短暂节点"><a href="#7-创建短暂节点" class="headerlink" title="7.创建短暂节点"></a>7.创建短暂节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -e /app-emphemeral 8888</span><br></pre></td></tr></table></figure>
+
+<p>(1)在当前客户端是能查看到的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWYwNDdmZWZlNjgwNWIzN2MucG5n?x-oss-process=image/format,png" alt="ls /"></p>
+<p>(2)退出当前客户端然后再重启客户端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br><span class="line"></span><br><span class="line">bin/zkCli.sh</span><br></pre></td></tr></table></figure>
+<p>(3)再次查看根目录下短暂节点已经删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTRhMzgyYjAxYzUzZWVlODgucG5n?x-oss-process=image/format,png" alt="ls /"></p>
+<h4 id="8-创建带序号的节点"><a href="#8-创建带序号的节点" class="headerlink" title="8.创建带序号的节点"></a>8.创建带序号的节点</h4><p>(1)先创建一个普通的根节点app2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app2 &quot;app2&quot;</span><br></pre></td></tr></table></figure>
+<p>(2)创建带序号的节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/aa 888</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/bb 888</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app2/cc 888</span><br></pre></td></tr></table></figure>
+
+
+<p>如果原节点下有1个节点，则再排序时从1开始，以此类推。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create -s /app1/aa 888</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNjYTViZTQyMWE1NjNkN2IucG5n?x-oss-process=image/format,png"></p>
+<h4 id="9-修改节点数据值"><a href="#9-修改节点数据值" class="headerlink" title="9.修改节点数据值"></a>9.修改节点数据值</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set /app1 999</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNiYmRiNTdkNzIzYzQwM2UucG5n?x-oss-process=image/format,png" alt="set /app1 999"></p>
+<h4 id="10-节点的值变化监听"><a href="#10-节点的值变化监听" class="headerlink" title="10.节点的值变化监听"></a>10.节点的值变化监听</h4><p>(1)在104主机上注册监听/app1节点数据变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get /app1 watch</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ5MzIzZThiMDBjNjM5ZDMucG5n?x-oss-process=image/format,png" alt="get /app1 watch"></p>
+<p>(2)在103主机上修改/app1节点的数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set /app1  777</span><br></pre></td></tr></table></figure>
+<p>(3)观察104主机收到数据变化的监听<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTE1MzA1OGQ4NjVjZjE5MTMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="11-节点的子节点变化监听（路径变化）"><a href="#11-节点的子节点变化监听（路径变化）" class="headerlink" title="11.节点的子节点变化监听（路径变化）"></a>11.节点的子节点变化监听（路径变化）</h4><p>(1)在104主机上注册监听/app1节点的子节点变化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /app1 watch</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUyNGYwYjhmOTA3NWM5MDMucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<p>(2)在103主机/app1节点上创建子节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create /app1/bb 666</span><br></pre></td></tr></table></figure>
+
+<p>(3)观察104主机收到子节点变化的监听<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTc4OThmMzIxZTcwNzQ2NmMucG5n?x-oss-process=image/format,png"></p>
+<h4 id="12-删除节点"><a href="#12-删除节点" class="headerlink" title="12.删除节点"></a>12.删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete /app1/bb</span><br></pre></td></tr></table></figure>
+<h4 id="13-递归删除节点"><a href="#13-递归删除节点" class="headerlink" title="13.递归删除节点"></a>13.递归删除节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmr /app2</span><br></pre></td></tr></table></figure>
+<h4 id="14-查看节点状态"><a href="#14-查看节点状态" class="headerlink" title="14.查看节点状态"></a>14.查看节点状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stat /app1</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTEzODk2ZTM4ZDU5NTVkYmMucG5n?x-oss-process=image/format,png"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-ZooKeeper之zoo.cfg 配置参数解读"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/"
+    >ZooKeeper之zoo.cfg配置参数解读</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-date">
+  <time datetime="2019-01-03T05:50:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-解读zoo-cfg文件中参数含义"><a href="#1-解读zoo-cfg文件中参数含义" class="headerlink" title="1.解读zoo.cfg文件中参数含义"></a>1.解读zoo.cfg文件中参数含义</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlhZWRlNjA4NTQ0MDc0ODIucG5n?x-oss-process=image/format,png" alt="参数解读"></p>
+<h5 id="1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"><a href="#1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒" class="headerlink" title="(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"></a>(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Zookeeper使用的基本时间，服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个tickTime时间就会发送一个心跳，时间单位为毫秒。<br>它用于心跳机制，并且设置最小的session超时时间为两倍心跳时间。(session的最小超时时间是2*tickTime)</p>
+<h5 id="2-initLimit-10：Leader和Follower初始通信时限"><a href="#2-initLimit-10：Leader和Follower初始通信时限" class="headerlink" title="(2)initLimit=10：Leader和Follower初始通信时限"></a>(2)initLimit=10：Leader和Follower初始通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中的follower跟随者服务器与leader领导者服务器之间初始连接时能容忍的最多心跳数（tickTime的数量），用它来限定集群中的Zookeeper服务器连接到Leader的时限。<br>投票选举新leader的初始化时间<br>&nbsp;&nbsp;&nbsp;&nbsp;Follower在启动过程中，会从Leader同步所有最新数据，然后确定自己能够对外服务的起始状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;Leader允许Follower在initLimit时间内完成这个工作。</p>
+<h5 id="3-syncLimit-5：Leader和Follower同步通信时限"><a href="#3-syncLimit-5：Leader和Follower同步通信时限" class="headerlink" title="(3)syncLimit=5：Leader和Follower同步通信时限"></a>(3)syncLimit=5：Leader和Follower同步通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中Leader与Follower之间的最大响应时间单位，假如响应超过syncLimit * tickTime，Leader认为Follwer死掉，从服务器列表中删除Follwer。<br>&nbsp;&nbsp;&nbsp;&nbsp;在运行过程中，Leader负责与ZK集群中所有机器进行通信，例如通过一些心跳检测机制，来检测机器的存活状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果L发出心跳包在syncLimit之后，还没有从F那收到响应，那么就认为这个F已经不在线了。</p>
+<h5 id="4-dataDir：数据文件目录-数据持久化路径"><a href="#4-dataDir：数据文件目录-数据持久化路径" class="headerlink" title="(4)dataDir：数据文件目录+数据持久化路径"></a>(4)dataDir：数据文件目录+数据持久化路径</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;保存内存数据库快照信息的位置，如果没有其他说明，更新的事务日志也保存到数据库。</p>
+<h5 id="5-clientPort-2181：客户端连接端口"><a href="#5-clientPort-2181：客户端连接端口" class="headerlink" title="(5)clientPort=2181：客户端连接端口"></a>(5)clientPort=2181：客户端连接端口</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;监听客户端连接的端口</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Zookeeper之内部原理"
   class="article article-type-post"
   itemscope
@@ -226,65 +511,6 @@
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQzZWVjZTExYWYyNzIyY2IucG5n?x-oss-process=image/format,png" alt="监听器原理"></p>
 <h3 id="五-写数据流程"><a href="#五-写数据流程" class="headerlink" title="五. 写数据流程"></a>五. 写数据流程</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ1NDJjNmU2YzlmZTU4ZDAucG5n?x-oss-process=image/format,png" alt="写数据流程"></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;读是局部性的，即client只需要从与它相连的server上读取数据即可；而client有写请求的话，与之相连的server会通知leader，然后leader会把写操作分发给所有server。所以定要比读慢很多。</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZooKeeper/" rel="tag">ZooKeeper</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-ZooKeeper之zoo.cfg 配置参数解读"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/"
-    >ZooKeeper之zoo.cfg配置参数解读</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/01/03/ZooKeeper%E4%B9%8Bzoo.cfg%20%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="article-date">
-  <time datetime="2019-01-03T05:50:00.000Z" itemprop="datePublished">2019-01-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ZooKeeper/">ZooKeeper</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-解读zoo-cfg文件中参数含义"><a href="#1-解读zoo-cfg文件中参数含义" class="headerlink" title="1.解读zoo.cfg文件中参数含义"></a>1.解读zoo.cfg文件中参数含义</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTlhZWRlNjA4NTQ0MDc0ODIucG5n?x-oss-process=image/format,png" alt="参数解读"></p>
-<h5 id="1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"><a href="#1-tickTime-2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒" class="headerlink" title="(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒"></a>(1)tickTime=2000：通信心跳数，Zookeeper服务器心跳时间，单位毫秒</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Zookeeper使用的基本时间，服务器之间或客户端与服务器之间维持心跳的时间间隔，也就是每个tickTime时间就会发送一个心跳，时间单位为毫秒。<br>它用于心跳机制，并且设置最小的session超时时间为两倍心跳时间。(session的最小超时时间是2*tickTime)</p>
-<h5 id="2-initLimit-10：Leader和Follower初始通信时限"><a href="#2-initLimit-10：Leader和Follower初始通信时限" class="headerlink" title="(2)initLimit=10：Leader和Follower初始通信时限"></a>(2)initLimit=10：Leader和Follower初始通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中的follower跟随者服务器与leader领导者服务器之间初始连接时能容忍的最多心跳数（tickTime的数量），用它来限定集群中的Zookeeper服务器连接到Leader的时限。<br>投票选举新leader的初始化时间<br>&nbsp;&nbsp;&nbsp;&nbsp;Follower在启动过程中，会从Leader同步所有最新数据，然后确定自己能够对外服务的起始状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;Leader允许Follower在initLimit时间内完成这个工作。</p>
-<h5 id="3-syncLimit-5：Leader和Follower同步通信时限"><a href="#3-syncLimit-5：Leader和Follower同步通信时限" class="headerlink" title="(3)syncLimit=5：Leader和Follower同步通信时限"></a>(3)syncLimit=5：Leader和Follower同步通信时限</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;集群中Leader与Follower之间的最大响应时间单位，假如响应超过syncLimit * tickTime，Leader认为Follwer死掉，从服务器列表中删除Follwer。<br>&nbsp;&nbsp;&nbsp;&nbsp;在运行过程中，Leader负责与ZK集群中所有机器进行通信，例如通过一些心跳检测机制，来检测机器的存活状态。<br>&nbsp;&nbsp;&nbsp;&nbsp;如果L发出心跳包在syncLimit之后，还没有从F那收到响应，那么就认为这个F已经不在线了。</p>
-<h5 id="4-dataDir：数据文件目录-数据持久化路径"><a href="#4-dataDir：数据文件目录-数据持久化路径" class="headerlink" title="(4)dataDir：数据文件目录+数据持久化路径"></a>(4)dataDir：数据文件目录+数据持久化路径</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;保存内存数据库快照信息的位置，如果没有其他说明，更新的事务日志也保存到数据库。</p>
-<h5 id="5-clientPort-2181：客户端连接端口"><a href="#5-clientPort-2181：客户端连接端口" class="headerlink" title="(5)clientPort=2181：客户端连接端口"></a>(5)clientPort=2181：客户端连接端口</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;监听客户端连接的端口</p>
  
       <!-- reward -->
       
@@ -1172,232 +1398,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/YARN/" rel="tag">YARN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-HDFS-HA高可用集群配置"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/"
-    >HDFS-HA高可用集群配置</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/01/02/HDFS-HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE/" class="article-date">
-  <time datetime="2019-01-02T04:50:00.000Z" itemprop="datePublished">2019-01-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h3 id="一-HDFS-HA集群配置"><a href="#一-HDFS-HA集群配置" class="headerlink" title="一. HDFS-HA集群配置"></a>一. HDFS-HA集群配置</h3><h4 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1 环境准备"></a>1 环境准备</h4><p>(1)修改IP<br>(2)修改主机名及主机名和IP地址的映射<br>(3)关闭防火墙<br>(4)ssh免密登录<br>(5)安装JDK，配置环境变量等<br>(6)hadoop1,hadoop2,hadoop3集群已经配置好zookeeper集群</p>
-<h4 id="2-规划集群"><a href="#2-规划集群" class="headerlink" title="2 规划集群"></a>2 规划集群</h4><table>
-<thead>
-<tr>
-<th align="center">hadoop1</th>
-<th align="center">hadoop2</th>
-<th align="center">hadoop3</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">NameNode</td>
-<td align="center">NameNode</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">JournalNode</td>
-<td align="center">JournalNode</td>
-<td align="center">JournalNode</td>
-</tr>
-<tr>
-<td align="center">DataNode</td>
-<td align="center">DataNode</td>
-<td align="center">DataNode</td>
-</tr>
-<tr>
-<td align="center">ZK</td>
-<td align="center">ZK</td>
-<td align="center">ZK</td>
-</tr>
-<tr>
-<td align="center">zkfc</td>
-<td align="center">zkfc</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">ResourceManager</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">NodeManager</td>
-<td align="center">NodeManager</td>
-<td align="center">NodeManager</td>
-</tr>
-</tbody></table>
-<h4 id="3-具体步骤"><a href="#3-具体步骤" class="headerlink" title="3.具体步骤"></a>3.具体步骤</h4><p>(1).在opt目录下创建一个HA文件夹</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line"></span><br><span class="line">mkdir HA</span><br></pre></td></tr></table></figure>
-<p>(2).将hadoop-2.8.4压缩包解压到/opt/HA目录下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-2.8.4.tar.gz -C /opt/HA/</span><br></pre></td></tr></table></figure>
-<p>(3).配置hadoop-env.sh</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_144</span><br></pre></td></tr></table></figure>
-<p>(4).配置core-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 把两个NameNode）的地址组装成一个集群mycluster --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 指定hadoop运行时产生文件的存储目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/HA/hadoop-2.8.4/data/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--配置zookeeper--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>ha.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:2181,hadoop2:2181,hadoop3:2181<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>(5).配置hdfs-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 完全分布式集群名称 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.nameservices<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 集群中NameNode节点都有哪些 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.namenodes.mycluster<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>nn1,nn2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn1的RPC通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.rpc-address.mycluster.nn1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn2的RPC通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.rpc-address.mycluster.nn2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop2:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn1的http通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address.mycluster.nn1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop1:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- nn2的http通信地址 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address.mycluster.nn2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop2:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 指定NameNode元数据在JournalNode上的存放位置 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.shared.edits.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">value</span>&gt;</span>qjournal://hadoop1:8485;hadoop2:8485;hadoop3:8485/mycluster<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 --&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.fencing.methods<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>sshfence<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 使用隔离机制时需要ssh无秘钥登录--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.fencing.ssh.private-key-files<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/root/.ssh/id_rsa<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">              <span class="comment">&lt;!--这里主要是看自己是什么用户，我是root用户--&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 声明journalnode服务器存储目录--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.journalnode.edits.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/HA/hadoop-2.8.4/data/jn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 关闭权限检查--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions.enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!-- 访问代理类：client，mycluster，active配置失败自动切换实现方式--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.client.failover.proxy.provider.mycluster<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.ha.automatic-failover.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>(6).配置slaves文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/HA/hadoop-2.8.4/etc/hadoop</span><br><span class="line"></span><br><span class="line">vi slaves</span><br></pre></td></tr></table></figure>
-<p>修改内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop1</span><br><span class="line">hadoop2</span><br><span class="line">hadoop3</span><br></pre></td></tr></table></figure>
-
-<p>(7).拷贝配置好的hadoop环境到其他节点</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/HA/* root@hadoop2:/opt/HA/</span><br><span class="line"></span><br><span class="line">scp -r /opt/HA/* root@hadoop3:/opt/HA/</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="4-初始化namenode"><a href="#4-初始化namenode" class="headerlink" title="4 初始化namenode"></a>4 初始化namenode</h4><p>(1).在各个JournalNode节点上，输入以下命令启动journalnode服务：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start journalnode</span><br></pre></td></tr></table></figure>
-<p>(2).在[nn1]上，对其进行格式化，并启动：<br>hadoop1:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -format</span><br><span class="line"></span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
-<p>(3).在[nn2]上，同步nn1的元数据信息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -bootstrapStandby</span><br></pre></td></tr></table></figure>
-<p>(4).启动[nn2]：<br>hadoop2:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTAxNjEyODllMGMxZDVmOTgucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<p>(5).查看web页面显示</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFlYjg3YjJkZTcyNDRlNmMucG5n?x-oss-process=image/format,png" alt="hadoop1"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJlNjNhOWE3NTg1ZWFlYWEucG5n?x-oss-process=image/format,png" alt="hadoop2"></p>
-<h5 id="5-高可用HDFS集群启动"><a href="#5-高可用HDFS集群启动" class="headerlink" title="5.高可用HDFS集群启动"></a>5.高可用HDFS集群启动</h5><p>(1)关闭所有HDFS服务：<br>hadoop1</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/stop-dfs.sh</span><br></pre></td></tr></table></figure>
-<p>hadoop2:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh stop namenode  </span><br></pre></td></tr></table></figure>
-
-<p>(2)启动Zookeeper集群,每一台都启动zookeeper：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
-<p>(3)初始化HA在Zookeeper中状态：<br>在hadoop1中：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs zkfc -formatZK</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmMzlhYTRlNTBiN2NlNTIucG5n?x-oss-process=image/format,png"></p>
-<p>(4)启动HDFS服务：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-dfs.sh</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTMzNzVkYzIwNzI0N2UxMTMucG5n?x-oss-process=image/format,png"></p>
-<p>(5)在各个NameNode节点上启动DFSZK Failover Controller，先在哪台机器启动，哪个机器的NameNode就是Active NameNode</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemin.sh start zkfc</span><br></pre></td></tr></table></figure>
-<p>(若是直接设置自动切换，DFSZK Failover Controller没有启动，则需要走这一步)</p>
-<h5 id="6-验证"><a href="#6-验证" class="headerlink" title="6.验证"></a>6.验证</h5><p>(1)将Active NameNode进程kill</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 namenode的进程id</span><br></pre></td></tr></table></figure>
-<p>(2)将Active NameNode机器断开网络</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network stop</span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-HDFS之HA高可用概述"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/"
-    >HDFS之HA高可用概述</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/01/02/HDFS%E4%B9%8BHA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%A6%82%E8%BF%B0/" class="article-date">
-  <time datetime="2019-01-02T04:49:00.000Z" itemprop="datePublished">2019-01-02</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h3 id="一-HA概述"><a href="#一-HA概述" class="headerlink" title="一.HA概述"></a>一.HA概述</h3><p>1.所谓HA(2high available)，即高可用(7*24小时不中断服务)</p>
-<p>2.实现高可用最关键的策略是消除单点故障。HA严格来说应该分成各个组件的HA机制：HDFS的HA和YARN的HA。</p>
-<p>3.Hadoop2.0之前，在HDFS集群中NameNode存在单点故障(SPOF)</p>
-<p>4.NameNode主要在以下两个方面影响HDFS集群<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器发生意外，如宕机，集群将无法使用，直到管理员重启<br>&nbsp;&nbsp;&nbsp;&nbsp;NameNode机器需要升级，包括软件、硬件升级，此时集群也将无法使用<br>&nbsp;&nbsp;&nbsp;&nbsp;HDFS HA功能通过配置Active/Standby两个nameNodes实现在集群中对NameNode的热备来解决上述问题。如果出现故障，如机器崩溃或机器需要升级维护，这时可通过此种方式将NameNode很快的切换到另外一台机器。</p>
-<h3 id="二-HDFS-HA工作机制"><a href="#二-HDFS-HA工作机制" class="headerlink" title="二. HDFS-HA工作机制"></a>二. HDFS-HA工作机制</h3><p><strong>通过双namenode消除单点故障</strong></p>
-<h4 id="1-HDFS-HA工作要点"><a href="#1-HDFS-HA工作要点" class="headerlink" title="1.HDFS-HA工作要点"></a>1.HDFS-HA工作要点</h4><h5 id="1-元数据管理方式需要改变："><a href="#1-元数据管理方式需要改变：" class="headerlink" title="(1).元数据管理方式需要改变："></a>(1).元数据管理方式需要改变：</h5><ul>
-<li>内存中各自保存一份元数据；</li>
-<li>Edits日志只有Active状态的namenode节点可以做写操作；</li>
-<li>两个namenode都可以读取edits；</li>
-<li>共享的edits放在一个共享存储中管理(qjournal和NFS两个主流实现)</li>
-</ul>
-<h5 id="2-需要一个状态管理功能模块"><a href="#2-需要一个状态管理功能模块" class="headerlink" title="(2).需要一个状态管理功能模块"></a>(2).需要一个状态管理功能模块</h5><p>实现了一个zkfailover，常驻在每一个namenode所在的节点，每一个zkfailover负责监控自己所在namenode节点，利用zk进行状态标识，当需要进行状态切换时，由zkfailover来负责切换，切换时需要防止brain split现象的发生。</p>
-<h5 id="3-必须保证两个NameNode之间能够ssh无密码登录。"><a href="#3-必须保证两个NameNode之间能够ssh无密码登录。" class="headerlink" title="(3).必须保证两个NameNode之间能够ssh无密码登录。"></a>(3).必须保证两个NameNode之间能够ssh无密码登录。</h5><h5 id="4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务"><a href="#4-隔离-Fence-，即同一时刻仅仅有一个NameNode对外提供服务" class="headerlink" title="(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务"></a>(4).隔离(Fence)，即同一时刻仅仅有一个NameNode对外提供服务</h5><h4 id="2-HDFS-HA自动故障转移工作机制"><a href="#2-HDFS-HA自动故障转移工作机制" class="headerlink" title="2.HDFS-HA自动故障转移工作机制"></a>2.HDFS-HA自动故障转移工作机制</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;可以使用命令hdfs haadmin -failover手动进行故障转移，在该模式下，即使现役NameNode已经失效，系统也不会自动从现役NameNode转移到待机NameNode。自动故障转移为HDFS部署增加了两个新组件：ZooKeeper和ZKFailoverController（ZKFC）进程。</p>
-<p>(1)ZooKeeper是维护少量协调数据，通知客户端这些数据的改变和监视客户端故障的高可用服务。HA的自动故障转移依赖于ZooKeeper的以下功能：</p>
-<ul>
-<li>(a)故障检测：集群中的每个NameNode在ZooKeeper中维护了一个持久会话，如果机器崩溃，ZooKeeper中的会话将终止，ZooKeeper通知另一个NameNode需要触发故障转移。</li>
-<li>(b)现役NameNode选择：ZooKeeper提供了一个简单的机制用于唯一的选择一个节点为active状态。如果目前现役NameNode崩溃，另一个节点可能从ZooKeeper获得特殊的排外锁以表明它应该成为现役NameNode。</li>
-</ul>
-<p>(2)ZKFC是自动故障转移中的另一个新组件，是ZooKeeper的客户端，也监视和管理NameNode的状态。每个运行NameNode的主机也运行了一个ZKFC进程，ZKFC负责：</p>
-<ul>
-<li>(a)健康监测：ZKFC使用一个健康检查命令定期地ping与之在相同主机的NameNode，只要该NameNode及时地回复健康状态，ZKFC认为该节点是健康的。如果该节点崩溃，冻结或进入不健康状态，健康监测器标识该节点为非健康的。</li>
-<li>(b)ZooKeeper会话管理：当本地NameNode是健康的，ZKFC保持一个在ZooKeeper中打开的会话。如果本地NameNode处于active状态，ZKFC也保持一个特殊的znode锁，该锁使用了ZooKeeper对短暂节点的支持，如果会话终止，锁节点将自动删除。</li>
-<li>(c )基于ZooKeeper的选择：如果本地NameNode是健康的，且ZKFC发现没有其它的节点当前持有znode锁，它将为自己获取该锁。如果成功，则它已经赢得了选择，并负责运行故障转移进程以使它的本地NameNode为active。故障转移进程与前面描述的手动故障转移相似，首先如果必要保护之前的现役NameNode，然后本地NameNode转换为active状态。</li>
-</ul>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTU0NjJiZWZiZTcwOGY2M2MucG5n?x-oss-process=image/format,png" alt="HDFS-HA故障转移机制"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HDFS/" rel="tag">HDFS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
 
     </footer>
   </div>

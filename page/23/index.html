@@ -155,6 +155,330 @@
     
     
     <article
+  id="post-Kafka之Consumer配置信息"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/02/02/Kafka%E4%B9%8BConsumer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/"
+    >Kafka之Consumer配置信息</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/02/02/Kafka%E4%B9%8BConsumer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-date">
+  <time datetime="2019-02-02T12:50:00.000Z" itemprop="datePublished">2019-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-Kafka之Consumer配置信息"><a href="#1-Kafka之Consumer配置信息" class="headerlink" title="1.Kafka之Consumer配置信息"></a>1.Kafka之Consumer配置信息</h4><table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">默认值</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">group.id</td>
+<td align="center"></td>
+<td align="center">Consumer的组ID，相同goup.id的consumer属于同一个组</td>
+</tr>
+<tr>
+<td align="center">zookeeper.connect</td>
+<td align="center"></td>
+<td align="center">Consumer的zookeeper连接串，要和broker的配置一致。</td>
+</tr>
+<tr>
+<td align="center">consumer.id</td>
+<td align="center">null</td>
+<td align="center">如果不设置会自动生成。</td>
+</tr>
+<tr>
+<td align="center">socket.timeout.ms</td>
+<td align="center">30 * 1000</td>
+<td align="center">网络请求的socket超时时间。实际超时时间由max.fetch.wait + socket.timeout.ms 确定</td>
+</tr>
+<tr>
+<td align="center">socket.receive.buffer.bytes</td>
+<td align="center">64 * 1024</td>
+<td align="center">The socket receive buffer for network requests.</td>
+</tr>
+<tr>
+<td align="center">fetch.message.max.bytes</td>
+<td align="center">1024 * 1024</td>
+<td align="center">查询topic-partition时允许的最大消息大小。consumer会为每个partition缓存此大小的消息到内存，因此，这个参数可以控制consumer的内存使用量。这个值应该至少比server允许的最大消息大小大，以免producer发送的消息大于consumer允许的消息</td>
+</tr>
+<tr>
+<td align="center">num.consumer.fetchers</td>
+<td align="center">1</td>
+<td align="center">The number fetcher threads used to fetch data.</td>
+</tr>
+<tr>
+<td align="center">auto.commit.enable</td>
+<td align="center">true</td>
+<td align="center">如果此值设置为true，consumer会周期性的把当前消费的offset值保存到zookeeper。当consumer失败重启之后将会使用此值作为新开始消费的值。</td>
+</tr>
+<tr>
+<td align="center">auto.commit.interval.ms</td>
+<td align="center">60 * 1000</td>
+<td align="center">Consumer提交offset值到zookeeper的周期。</td>
+</tr>
+<tr>
+<td align="center">queued.max.message.chunks</td>
+<td align="center">2</td>
+<td align="center">用来被consumer消费的message chunks 数量， 每个chunk可以缓存fetch.message.max.bytes大小的数据量。</td>
+</tr>
+<tr>
+<td align="center">auto.commit.interval.ms</td>
+<td align="center">60 * 1000</td>
+<td align="center">Consumer提交offset值到zookeeper的周期</td>
+</tr>
+<tr>
+<td align="center">queued.max.message.chunks</td>
+<td align="center">2</td>
+<td align="center">用来被consumer消费的message chunks 数量， 每个chunk可以缓存fetch.message.max.bytes大小的数据量</td>
+</tr>
+<tr>
+<td align="center">fetch.min.bytes</td>
+<td align="center">1</td>
+<td align="center">The minimum amount of data the server should return for a fetch request. If insufficient data is available the request will wait for that much data to accumulate before answering the request.</td>
+</tr>
+<tr>
+<td align="center">fetch.wait.max.ms</td>
+<td align="center">100</td>
+<td align="center">The maximum amount of time the server will block before answering the fetch request if there isn’t sufficient data to immediately satisfy fetch.min.bytes.</td>
+</tr>
+<tr>
+<td align="center">rebalance.backoff.ms</td>
+<td align="center">2000</td>
+<td align="center">Backoff time between retries during rebalance.</td>
+</tr>
+<tr>
+<td align="center">refresh.leader.backoff.ms</td>
+<td align="center">200</td>
+<td align="center">Backoff time to wait before trying to determine the leader of a partition that has just lost its leader.</td>
+</tr>
+<tr>
+<td align="center">auto.offset.reset</td>
+<td align="center">largest</td>
+<td align="center">What to do when there is no initial offset in ZooKeeper or if an offset is out of range ;smallest : automatically reset the offset to the smallest offset; largest : automatically reset the offset to the largest offset;anything else: throw exception to the consumer</td>
+</tr>
+<tr>
+<td align="center">consumer.timeout.ms</td>
+<td align="center">-1</td>
+<td align="center">若在指定时间内没有消息消费，consumer将会抛出异常。</td>
+</tr>
+<tr>
+<td align="center">exclude.internal.topics</td>
+<td align="center">true</td>
+<td align="center">Whether messages from internal topics (such as offsets) should be exposed to the consumer.</td>
+</tr>
+<tr>
+<td align="center">zookeeper.session.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">ZooKeeper session timeout. If the consumer fails to heartbeat to ZooKeeper for this period of time it is considered dead and a rebalance will occur.</td>
+</tr>
+<tr>
+<td align="center">zookeeper.connection.timeout.ms</td>
+<td align="center">6000</td>
+<td align="center">The max time that the client waits while establishing a connection to zookeeper.</td>
+</tr>
+<tr>
+<td align="center">zookeeper.sync.time.ms</td>
+<td align="center">2000</td>
+<td align="center">How far a ZK follower can be behind a ZK leader</td>
+</tr>
+</tbody></table>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Kafka之Producer配置信息"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/02/02/Kafka%E4%B9%8BProducer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/"
+    >Kafka之Producer配置信息</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/02/02/Kafka%E4%B9%8BProducer%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="article-date">
+  <time datetime="2019-02-02T09:50:00.000Z" itemprop="datePublished">2019-02-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-Kafka之Producer配置信息"><a href="#1-Kafka之Producer配置信息" class="headerlink" title="1.Kafka之Producer配置信息"></a>1.Kafka之Producer配置信息</h4><table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th align="center">默认值</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">metadata.broker.list</td>
+<td align="center"></td>
+<td align="center">启动时producer查询brokers的列表，可以是集群中所有brokers的一个子集。注意，这个参数只是用来获取topic的元信息用，producer会从元信息中挑选合适的broker并与之建立socket连接。格式是：host1:port1,host2:port2</td>
+</tr>
+<tr>
+<td align="center">request.required.acks</td>
+<td align="center">0</td>
+<td align="center">参见3.2节介绍</td>
+</tr>
+<tr>
+<td align="center">request.timeout.ms</td>
+<td align="center">10000</td>
+<td align="center">Broker等待ack的超时时间，若等待时间超过此值，会返回客户端错误信息。</td>
+</tr>
+<tr>
+<td align="center">producer.type</td>
+<td align="center">sync</td>
+<td align="center">同步异步模式。async表示异步，sync表示同步。如果设置成异步模式，可以允许生产者以batch的形式push数据，这样会极大的提高broker性能，推荐设置为异步。</td>
+</tr>
+<tr>
+<td align="center">serializer.class</td>
+<td align="center">kafka.serializer.DefaultEncoder</td>
+<td align="center">序列号类，.默认序列化成byte[]</td>
+</tr>
+<tr>
+<td align="center">key.serializer.class</td>
+<td align="center"></td>
+<td align="center">Key的序列化类，默认同上</td>
+</tr>
+<tr>
+<td align="center">partitioner.class</td>
+<td align="center">kafka.producer.DefaultPartitioner</td>
+<td align="center">Partition类，默认对key进行hash。</td>
+</tr>
+<tr>
+<td align="center">compression.codec</td>
+<td align="center">none</td>
+<td align="center">指定producer消息的压缩格式，可选参数为： “none”, “gzip” and “snappy”。关于压缩参见4.1节</td>
+</tr>
+<tr>
+<td align="center">compressed.topics</td>
+<td align="center">null</td>
+<td align="center">启用压缩的topic名称。若上面参数选择了一个压缩格式，那么压缩仅对本参数指定的topic有效，若本参数为空，则对所有topic有效。</td>
+</tr>
+<tr>
+<td align="center">message.send.max.retries</td>
+<td align="center">3</td>
+<td align="center">Producer发送失败时重试次数。若网络出现问题，可能会导致不断重试。</td>
+</tr>
+<tr>
+<td align="center">retry.backoff.ms</td>
+<td align="center">100</td>
+<td align="center">Before each retry, the producer refreshes the metadata of relevant topics to see if a new leader has been elected. Since leader election takes a bit of time, this property specifies the amount of time that the producer waits before refreshing the metadata</td>
+</tr>
+<tr>
+<td align="center">topic.metadata.refresh.interval.ms</td>
+<td align="center">600 * 1000</td>
+<td align="center">The producer generally refreshes the topic metadata from brokers when there is a failure (partition missing, leader not available…). It will also poll regularly (default: every 10min so 600000ms). If you set this to a negative value, metadata will only get refreshed on failure. If you set this to zero, the metadata will get refreshed after each message sent (not recommended). Important note: the refresh happen only AFTER the message is sent, so if the producer never sends a message the metadata is never refreshed</td>
+</tr>
+<tr>
+<td align="center">queue.buffering.max.ms</td>
+<td align="center">5000</td>
+<td align="center">启用异步模式时，producer缓存消息的时间。比如我们设置成1000时，它会缓存1秒的数据再一次发送出去，这样可以极大的增加broker吞吐量，但也会造成时效性的降低。</td>
+</tr>
+<tr>
+<td align="center">queue.buffering.max.messages</td>
+<td align="center">10000</td>
+<td align="center">采用异步模式时producer buffer 队列里最大缓存的消息数量，如果超过这个数值，producer就会阻塞或者丢掉消息。</td>
+</tr>
+<tr>
+<td align="center">queue.enqueue.timeout.ms</td>
+<td align="center">-1</td>
+<td align="center">当达到上面参数值时producer阻塞等待的时间。如果值设置为0，buffer队列满时producer不会阻塞，消息直接被丢掉。若值设置为-1，producer会被阻塞，不会丢消息。</td>
+</tr>
+<tr>
+<td align="center">batch.num.messages</td>
+<td align="center">200</td>
+<td align="center">采用异步模式时，一个batch缓存的消息数量。达到这个数量值时producer才会发送消息</td>
+</tr>
+<tr>
+<td align="center">send.buffer.bytes</td>
+<td align="center">100 * 1024</td>
+<td align="center">Socket write buffer size</td>
+</tr>
+<tr>
+<td align="center">client.id</td>
+<td align="center">“”</td>
+<td align="center">The client id is a user-specified string sent in each request to help trace calls. It should logically identify the application making the request.</td>
+</tr>
+</tbody></table>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Kafka之Broker配置信息"
   class="article article-type-post"
   itemscope
@@ -1144,177 +1468,6 @@
 <li>后序遍历：是先访问森林中第一棵树，后根遍历的方式遍历每棵子树，然后再访问根结点，再依次同样方式遍历除去第一棵树的剩余树构成的森林</li>
 </ul>
  
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-数据结构与算法(4)-栈与队列"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(4)-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/"
-    >数据结构与算法(4)-栈与队列</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(4)-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="article-date">
-  <time datetime="2019-01-23T06:00:00.000Z" itemprop="datePublished">2019-01-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h3 id="一-栈的定义："><a href="#一-栈的定义：" class="headerlink" title="一.栈的定义："></a>一.栈的定义：</h3><h4 id="1-栈的定义："><a href="#1-栈的定义：" class="headerlink" title="1.栈的定义："></a>1.栈的定义：</h4><h5 id="1-栈-stack-是限定仅在表尾进行插入和删除操作的线性表"><a href="#1-栈-stack-是限定仅在表尾进行插入和删除操作的线性表" class="headerlink" title="(1).栈(stack)是限定仅在表尾进行插入和删除操作的线性表"></a>(1).栈(stack)是限定仅在表尾进行插入和删除操作的线性表</h5><h5 id="2-把允许插入和删除的一端称为栈顶-top-，另一端称为栈底-bottom-，不含任何数据元素的栈称为空栈。栈又称为后进先出-Last-In-First-Out-的线性表，简称LIFO结构"><a href="#2-把允许插入和删除的一端称为栈顶-top-，另一端称为栈底-bottom-，不含任何数据元素的栈称为空栈。栈又称为后进先出-Last-In-First-Out-的线性表，简称LIFO结构" class="headerlink" title="(2).把允许插入和删除的一端称为栈顶(top)，另一端称为栈底(bottom)，不含任何数据元素的栈称为空栈。栈又称为后进先出(Last In First Out)的线性表，简称LIFO结构"></a>(2).把允许插入和删除的一端称为栈顶(top)，另一端称为栈底(bottom)，不含任何数据元素的栈称为空栈。栈又称为后进先出(Last In First Out)的线性表，简称LIFO结构</h5><h4 id="2-进栈出栈变化形式"><a href="#2-进栈出栈变化形式" class="headerlink" title="2.进栈出栈变化形式"></a>2.进栈出栈变化形式</h4><h3 id="二-栈的抽象数据类型"><a href="#二-栈的抽象数据类型" class="headerlink" title="二.栈的抽象数据类型"></a>二.栈的抽象数据类型</h3><h3 id="三-栈的顺序存储结构及实现"><a href="#三-栈的顺序存储结构及实现" class="headerlink" title="三.栈的顺序存储结构及实现"></a>三.栈的顺序存储结构及实现</h3><h6 id="1-栈的顺序存储结构"><a href="#1-栈的顺序存储结构" class="headerlink" title="1.栈的顺序存储结构"></a>1.栈的顺序存储结构</h6><h6 id="2-栈的顺序存储结构–进栈操作"><a href="#2-栈的顺序存储结构–进栈操作" class="headerlink" title="2.栈的顺序存储结构–进栈操作"></a>2.栈的顺序存储结构–进栈操作</h6><h6 id="3-栈的顺序存储结构–出栈操作"><a href="#3-栈的顺序存储结构–出栈操作" class="headerlink" title="3.栈的顺序存储结构–出栈操作"></a>3.栈的顺序存储结构–出栈操作</h6><p>此时进栈出栈都没有涉及到任何循环语句，因此时间复杂度均是O(1)</p>
-<h3 id="四-两栈共享存储空间"><a href="#四-两栈共享存储空间" class="headerlink" title="四.两栈共享存储空间"></a>四.两栈共享存储空间</h3><h3 id="五-栈的链式存储结构"><a href="#五-栈的链式存储结构" class="headerlink" title="五.栈的链式存储结构"></a>五.栈的链式存储结构</h3><h4 id="1-栈的链式存储结构"><a href="#1-栈的链式存储结构" class="headerlink" title="1.栈的链式存储结构"></a>1.栈的链式存储结构</h4><h5 id="1-栈的链式存储结构，简称为链栈"><a href="#1-栈的链式存储结构，简称为链栈" class="headerlink" title="(1)栈的链式存储结构，简称为链栈"></a>(1)栈的链式存储结构，简称为链栈</h5><h5 id="2-对于空栈来说，链表原定义是头指针指向空，那么链栈的空其实就是top-NULL的时候"><a href="#2-对于空栈来说，链表原定义是头指针指向空，那么链栈的空其实就是top-NULL的时候" class="headerlink" title="(2)对于空栈来说，链表原定义是头指针指向空，那么链栈的空其实就是top=NULL的时候"></a>(2)对于空栈来说，链表原定义是头指针指向空，那么链栈的空其实就是top=NULL的时候</h5><h4 id="2-栈的链式存储结构–进栈操作"><a href="#2-栈的链式存储结构–进栈操作" class="headerlink" title="2.栈的链式存储结构–进栈操作"></a>2.栈的链式存储结构–进栈操作</h4><h4 id="3-栈的链式存储结构–出栈操作"><a href="#3-栈的链式存储结构–出栈操作" class="headerlink" title="3.栈的链式存储结构–出栈操作"></a>3.栈的链式存储结构–出栈操作</h4><h5 id="1-对比一下顺序栈与链栈，它们在时间复杂度上是一样的，均为O-1"><a href="#1-对比一下顺序栈与链栈，它们在时间复杂度上是一样的，均为O-1" class="headerlink" title="(1)对比一下顺序栈与链栈，它们在时间复杂度上是一样的，均为O(1)"></a>(1)对比一下顺序栈与链栈，它们在时间复杂度上是一样的，均为O(1)</h5><h3 id="六-栈的应用–递归"><a href="#六-栈的应用–递归" class="headerlink" title="六.栈的应用–递归"></a>六.栈的应用–递归</h3><h4 id="1-递归定义："><a href="#1-递归定义：" class="headerlink" title="1.递归定义："></a>1.递归定义：</h4><h5 id="1-把一个直接调用自己或通过一系列的调用语句间接地调用自己的函数，称做递归函数"><a href="#1-把一个直接调用自己或通过一系列的调用语句间接地调用自己的函数，称做递归函数" class="headerlink" title="(1)把一个直接调用自己或通过一系列的调用语句间接地调用自己的函数，称做递归函数"></a>(1)把一个直接调用自己或通过一系列的调用语句间接地调用自己的函数，称做递归函数</h5><h5 id="2-迭代和递归的区别是："><a href="#2-迭代和递归的区别是：" class="headerlink" title="(2)迭代和递归的区别是："></a>(2)迭代和递归的区别是：</h5><p>迭代使用的是循环结构，递归使用的是选择结构。递归能使程序的结构更清晰、更简洁、更容易让人理解，从而减少读懂代码的时间。但是大量的递归调用会建立函数的副本，会耗费大量的时间和内存。迭代则不需要反复调用函数和占用额外的内存</p>
-<h3 id="七-队列的定义"><a href="#七-队列的定义" class="headerlink" title="七.队列的定义"></a>七.队列的定义</h3><h5 id="1-队列-queue-是只允许在一端进行插入操作，而在另一端进行删除操作的线性表"><a href="#1-队列-queue-是只允许在一端进行插入操作，而在另一端进行删除操作的线性表" class="headerlink" title="(1)队列(queue)是只允许在一端进行插入操作，而在另一端进行删除操作的线性表"></a>(1)队列(queue)是只允许在一端进行插入操作，而在另一端进行删除操作的线性表</h5><h5 id="2-队列是一种先进先出-First-In-First-Out-的线性表，简称FIFO。允许插入的一端称为队尾，允许删除的一端称为队头"><a href="#2-队列是一种先进先出-First-In-First-Out-的线性表，简称FIFO。允许插入的一端称为队尾，允许删除的一端称为队头" class="headerlink" title="(2)队列是一种先进先出(First In First Out)的线性表，简称FIFO。允许插入的一端称为队尾，允许删除的一端称为队头"></a>(2)队列是一种先进先出(First In First Out)的线性表，简称FIFO。允许插入的一端称为队尾，允许删除的一端称为队头</h5><h3 id="八-队列的抽象数据类型"><a href="#八-队列的抽象数据类型" class="headerlink" title="八.队列的抽象数据类型"></a>八.队列的抽象数据类型</h3><h3 id="九-循环队列"><a href="#九-循环队列" class="headerlink" title="九.循环队列"></a>九.循环队列</h3><h4 id="1-循环队列的定义："><a href="#1-循环队列的定义：" class="headerlink" title="1.循环队列的定义："></a>1.循环队列的定义：</h4><p>把队列的这种头尾相接的顺序存储结构称为循环队列</p>
-<h3 id="十-队列的链式存储结构"><a href="#十-队列的链式存储结构" class="headerlink" title="十.队列的链式存储结构"></a>十.队列的链式存储结构</h3><h4 id="1-含义"><a href="#1-含义" class="headerlink" title="1.含义"></a>1.含义</h4><h5 id="1-队列的链式存储结构，其实就是线性表的单链表，只不过它只能尾进头出而已，我们把它简称为链队列"><a href="#1-队列的链式存储结构，其实就是线性表的单链表，只不过它只能尾进头出而已，我们把它简称为链队列" class="headerlink" title="(1)队列的链式存储结构，其实就是线性表的单链表，只不过它只能尾进头出而已，我们把它简称为链队列"></a>(1)队列的链式存储结构，其实就是线性表的单链表，只不过它只能尾进头出而已，我们把它简称为链队列</h5><h4 id="2-队列的链式存储结构–入队操作"><a href="#2-队列的链式存储结构–入队操作" class="headerlink" title="2.队列的链式存储结构–入队操作"></a>2.队列的链式存储结构–入队操作</h4><h4 id="3-队列的链式存储结构–出队操作"><a href="#3-队列的链式存储结构–出队操作" class="headerlink" title="3.队列的链式存储结构–出队操作"></a>3.队列的链式存储结构–出队操作</h4><h4 id="4-链队列与循环队列的比较："><a href="#4-链队列与循环队列的比较：" class="headerlink" title="4.链队列与循环队列的比较："></a>4.链队列与循环队列的比较：</h4><p>(1)从时间上，其实它们的基本操作都是常数时间，即都为O(1)的，不过循环队列是事先申请好空间，使用期间不释放，而对于链队列，每次申请和释放结点也会存在一些时间开销</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-数据结构与算法(3)-线性表"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(3)-%E7%BA%BF%E6%80%A7%E8%A1%A8/"
-    >数据结构与算法(3)-线性表</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/01/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(3)-%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="article-date">
-  <time datetime="2019-01-23T05:00:00.000Z" itemprop="datePublished">2019-01-23</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LThiNWRjY2RjOGI3ZGQxMjgucG5n?x-oss-process=image/format,png" alt="线性表"></p>
-<h3 id="一-线性表的定义"><a href="#一-线性表的定义" class="headerlink" title="一.线性表的定义"></a>一.线性表的定义</h3><h4 id="1-线性表是零个或多个具有相同类型的数据元素的有限序列"><a href="#1-线性表是零个或多个具有相同类型的数据元素的有限序列" class="headerlink" title="1.线性表是零个或多个具有相同类型的数据元素的有限序列"></a>1.线性表是零个或多个具有相同类型的数据元素的有限序列</h4><h4 id="2-线性表的关键："><a href="#2-线性表的关键：" class="headerlink" title="2.线性表的关键："></a>2.线性表的关键：</h4><h5 id="1-首先线性表是一个序列，元素之间是有顺序的"><a href="#1-首先线性表是一个序列，元素之间是有顺序的" class="headerlink" title="(1)首先线性表是一个序列，元素之间是有顺序的"></a>(1)首先线性表是一个序列，元素之间是有顺序的</h5><h5 id="2-然后，线性表强调是有限的"><a href="#2-然后，线性表强调是有限的" class="headerlink" title="(2)然后，线性表强调是有限的"></a>(2)然后，线性表强调是有限的</h5><h3 id="二-线性表的顺序存储结构"><a href="#二-线性表的顺序存储结构" class="headerlink" title="二.线性表的顺序存储结构"></a>二.线性表的顺序存储结构</h3><h4 id="1-顺序存储的定义："><a href="#1-顺序存储的定义：" class="headerlink" title="1.顺序存储的定义："></a>1.顺序存储的定义：</h4><p>线性表的顺序存储结构，指的是用一段地址连续的存储单元依次存储线性表的数据元素</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQxZTNmMWIxMWJjM2MyNDkucG5n?x-oss-process=image/format,png" alt="顺序存储示意图"></p>
-<h4 id="2-顺序存储方式："><a href="#2-顺序存储方式：" class="headerlink" title="2.顺序存储方式："></a>2.顺序存储方式：</h4><h5 id="1-描述顺序存储结构需要三个属性："><a href="#1-描述顺序存储结构需要三个属性：" class="headerlink" title="(1)描述顺序存储结构需要三个属性："></a>(1)描述顺序存储结构需要三个属性：</h5><ul>
-<li>存储空间的起始位置：数组data，它的存储位置就是存储空间的存储位置</li>
-<li>线性表的最大存储容量：数组长度MaxSize</li>
-<li>线性表的当前长度：length</li>
-</ul>
-<h4 id="3-数组长度与线性表长度的区别"><a href="#3-数组长度与线性表长度的区别" class="headerlink" title="3.数组长度与线性表长度的区别"></a>3.数组长度与线性表长度的区别</h4><h5 id="1-数组的长度是存放线性表的存储空间的长度，存储分配后这个量一般是不变的"><a href="#1-数组的长度是存放线性表的存储空间的长度，存储分配后这个量一般是不变的" class="headerlink" title="(1)数组的长度是存放线性表的存储空间的长度，存储分配后这个量一般是不变的"></a>(1)数组的长度是存放线性表的存储空间的长度，存储分配后这个量一般是不变的</h5><h5 id="2-线性表的长度是线性表中数据元素的个数，随着线性表插入和删除操作的进行，这个量是变化的"><a href="#2-线性表的长度是线性表中数据元素的个数，随着线性表插入和删除操作的进行，这个量是变化的" class="headerlink" title="(2)线性表的长度是线性表中数据元素的个数，随着线性表插入和删除操作的进行，这个量是变化的"></a>(2)线性表的长度是线性表中数据元素的个数，随着线性表插入和删除操作的进行，这个量是变化的</h5><h5 id="3-线性表的长度应该小于等于数组的长度"><a href="#3-线性表的长度应该小于等于数组的长度" class="headerlink" title="(3)线性表的长度应该小于等于数组的长度"></a>(3)线性表的长度应该小于等于数组的长度</h5><h4 id="4-地址计算方法"><a href="#4-地址计算方法" class="headerlink" title="4.地址计算方法"></a>4.地址计算方法</h4><h3 id="三-顺序存储结构的插入与删除"><a href="#三-顺序存储结构的插入与删除" class="headerlink" title="三.顺序存储结构的插入与删除"></a>三.顺序存储结构的插入与删除</h3><h4 id="1-获得元素操作"><a href="#1-获得元素操作" class="headerlink" title="1.获得元素操作"></a>1.获得元素操作</h4><h4 id="2-插入操作"><a href="#2-插入操作" class="headerlink" title="2.插入操作"></a>2.插入操作</h4><h5 id="1-插入算法的思路："><a href="#1-插入算法的思路：" class="headerlink" title="(1)插入算法的思路："></a>(1)插入算法的思路：</h5><ul>
-<li>如果插入位置不合理，抛出异常；</li>
-<li>如果线性表长度大于等于数组长度，则抛出异常或动态增加容量；</li>
-<li>从最后一个元素开始向前遍历到第i个位置，分别将它们都向后移动一个位置；</li>
-<li>将要插入元素填入位置i处，表长加1</li>
-</ul>
-<h4 id="3-删除操作"><a href="#3-删除操作" class="headerlink" title="3.删除操作"></a>3.删除操作</h4><h5 id="1-删除算法的思路："><a href="#1-删除算法的思路：" class="headerlink" title="(1)删除算法的思路："></a>(1)删除算法的思路：</h5><ul>
-<li>如果删除位置不合理，抛出异常；</li>
-<li>取出删除元素；</li>
-<li>从删除元素位置开始遍历到最后一个元素位置，分别将它们都向前移动一个位置；</li>
-<li>表长减1</li>
-</ul>
-<h4 id="4-线性表顺序存储的优缺点"><a href="#4-线性表顺序存储的优缺点" class="headerlink" title="4.线性表顺序存储的优缺点"></a>4.线性表顺序存储的优缺点</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNmNGY3MWI5Y2QyZWIwMGYucG5n?x-oss-process=image/format,png" alt="线性表顺序存储的优缺点"></p>
-<h5 id="1-线性表的顺序存储结构，在存、读数据时，不管是哪个位置，时间复杂度都是O-1-；而插入或删除时，时间复杂度都是O-n"><a href="#1-线性表的顺序存储结构，在存、读数据时，不管是哪个位置，时间复杂度都是O-1-；而插入或删除时，时间复杂度都是O-n" class="headerlink" title="(1)线性表的顺序存储结构，在存、读数据时，不管是哪个位置，时间复杂度都是O(1)；而插入或删除时，时间复杂度都是O(n)"></a>(1)线性表的顺序存储结构，在存、读数据时，不管是哪个位置，时间复杂度都是O(1)；而插入或删除时，时间复杂度都是O(n)</h5><h3 id="四-线性表的链式存储结构"><a href="#四-线性表的链式存储结构" class="headerlink" title="四.线性表的链式存储结构"></a>四.线性表的链式存储结构</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTA4YzU2ZGM1Yzk5MGNhMDkucG5n?x-oss-process=image/format,png" alt="线性表的链式存储结构"></p>
-<h4 id="1-线性表链式存储结构定义："><a href="#1-线性表链式存储结构定义：" class="headerlink" title="1.线性表链式存储结构定义："></a>1.线性表链式存储结构定义：</h4><h5 id="1-线性表的链式存储结构的特点"><a href="#1-线性表的链式存储结构的特点" class="headerlink" title="(1)线性表的链式存储结构的特点:"></a>(1)线性表的链式存储结构的特点:</h5><p>是用一组任意的存储单元存储线性表的数据元素，这组存储单元可以是连续的，也可以是不连续的。这就意味着，这些数据元素可以存在内存未被占用的任意位置</p>
-<h5 id="2-链表的每个结点中只包含一个指针域，所以叫做单链表"><a href="#2-链表的每个结点中只包含一个指针域，所以叫做单链表" class="headerlink" title="(2)链表的每个结点中只包含一个指针域，所以叫做单链表"></a>(2)链表的每个结点中只包含一个指针域，所以叫做单链表</h5><h5 id="3-链表中第一个结点的存储位置叫做头指针"><a href="#3-链表中第一个结点的存储位置叫做头指针" class="headerlink" title="(3)链表中第一个结点的存储位置叫做头指针"></a>(3)链表中第一个结点的存储位置叫做头指针</h5><h5 id="4-线性链表的最后一个结点指针为“空”"><a href="#4-线性链表的最后一个结点指针为“空”" class="headerlink" title="(4)线性链表的最后一个结点指针为“空”"></a>(4)线性链表的最后一个结点指针为“空”</h5><h4 id="2-头指针与头节点的异同"><a href="#2-头指针与头节点的异同" class="headerlink" title="2.头指针与头节点的异同"></a>2.头指针与头节点的异同</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTZiODQ5OTNhNzcwOTI0NmUucG5n?x-oss-process=image/format,png" alt="头指针与头节点的异同"></p>
-<h3 id="五-单链表的读取"><a href="#五-单链表的读取" class="headerlink" title="五.单链表的读取"></a>五.单链表的读取</h3><h5 id="1-获得链表第i个数据的算法思路："><a href="#1-获得链表第i个数据的算法思路：" class="headerlink" title="(1).获得链表第i个数据的算法思路："></a>(1).获得链表第i个数据的算法思路：</h5><ul>
-<li>声明一个指针p指向链表第一个结点，初始化j从1开始；</li>
-<li>当j&lt;i时，就遍历链表，让p的指针向后移动，不断指向下一结点，j累加1；</li>
-<li>若到链表末尾p为空，则说明第i个结点不存在；</li>
-<li>否则查找成功，返回结点p的数据</li>
-</ul>
-<h3 id="六-单链表的插入与删除"><a href="#六-单链表的插入与删除" class="headerlink" title="六.单链表的插入与删除"></a>六.单链表的插入与删除</h3><h4 id="1-单链表的插入："><a href="#1-单链表的插入：" class="headerlink" title="1.单链表的插入："></a>1.单链表的插入：</h4><h5 id="1-单链表第i个数据插入结点的算法思路："><a href="#1-单链表第i个数据插入结点的算法思路：" class="headerlink" title="(1)单链表第i个数据插入结点的算法思路："></a>(1)单链表第i个数据插入结点的算法思路：</h5><ul>
-<li>声明一指针p指向链表头结点，初始化j从1开始； </li>
-<li>当j&lt;i时，就遍历链表，让p的指针向后移动，不断指向下一结点，j累加1； </li>
-<li>若到链表末尾p为空，则说明第i个结点不存在； </li>
-<li>否则查找成功，在系统中生成一个空结点s； </li>
-<li>将数据元素e赋值给s-&gt;data； </li>
-<li>单链表的插入标准语句s-&gt;next=p-&gt;next;p-&gt;next=s； </li>
-<li>返回成功</li>
-</ul>
-<h4 id="2-单链表的删除："><a href="#2-单链表的删除：" class="headerlink" title="2.单链表的删除："></a>2.单链表的删除：</h4><h5 id="1-单链表第i个数据删除结点的算法思路："><a href="#1-单链表第i个数据删除结点的算法思路：" class="headerlink" title="(1)单链表第i个数据删除结点的算法思路："></a>(1)单链表第i个数据删除结点的算法思路：</h5><ul>
-<li>声明一指针p指向链表头结点，初始化j从1开始；</li>
-<li>当j&lt;i时，就遍历链表，让p的指针向后移动，不断指向下一个结点，j累加1；</li>
-<li>若到链表末尾p为空，则说明第i个结点不存在；</li>
-<li>否则查找成功，将欲删除的结点p-&gt;next赋值给q；</li>
-<li>单链表的删除标准语句p-&gt;next=q-&gt;next；</li>
-<li>将q结点中的数据赋值给e，作为返回；</li>
-<li>释放q结点；</li>
-<li>返回成功</li>
-</ul>
-<h3 id="七-单链表的整表创建"><a href="#七-单链表的整表创建" class="headerlink" title="七.单链表的整表创建"></a>七.单链表的整表创建</h3><h4 id="1-创建单链表的过程就是一个动态生成链表的过程"><a href="#1-创建单链表的过程就是一个动态生成链表的过程" class="headerlink" title="1.创建单链表的过程就是一个动态生成链表的过程"></a>1.创建单链表的过程就是一个动态生成链表的过程</h4><h4 id="2-单链表整表创建的算法思路："><a href="#2-单链表整表创建的算法思路：" class="headerlink" title="2.单链表整表创建的算法思路："></a>2.单链表整表创建的算法思路：</h4><h5 id="1-声明一指针p和计数器变量i；"><a href="#1-声明一指针p和计数器变量i；" class="headerlink" title="(1).声明一指针p和计数器变量i；"></a>(1).声明一指针p和计数器变量i；</h5><h5 id="2-初始化一空链表L；"><a href="#2-初始化一空链表L；" class="headerlink" title="(2).初始化一空链表L；"></a>(2).初始化一空链表L；</h5><h5 id="3-让L的头结点的指针指向NULL，即建立一个带头结点的单链表；"><a href="#3-让L的头结点的指针指向NULL，即建立一个带头结点的单链表；" class="headerlink" title="(3).让L的头结点的指针指向NULL，即建立一个带头结点的单链表；"></a>(3).让L的头结点的指针指向NULL，即建立一个带头结点的单链表；</h5><h5 id="4-循环："><a href="#4-循环：" class="headerlink" title="(4).循环："></a>(4).循环：</h5><ul>
-<li>生成一新结点赋值给p；</li>
-<li>随机生成一数字赋值给p的数据域p-&gt;data；</li>
-<li>将p插入到头结点与前一新结点之间</li>
-</ul>
-<h3 id="八-单链表的整表删除"><a href="#八-单链表的整表删除" class="headerlink" title="八.单链表的整表删除"></a>八.单链表的整表删除</h3><h4 id="1-单链表整表删除的算法思路如下："><a href="#1-单链表整表删除的算法思路如下：" class="headerlink" title="1.单链表整表删除的算法思路如下："></a>1.单链表整表删除的算法思路如下：</h4><h5 id="1-声明一指针p和q；"><a href="#1-声明一指针p和q；" class="headerlink" title="(1).声明一指针p和q；"></a>(1).声明一指针p和q；</h5><h5 id="2-将第一个结点赋值给p；"><a href="#2-将第一个结点赋值给p；" class="headerlink" title="(2).将第一个结点赋值给p；"></a>(2).将第一个结点赋值给p；</h5><h5 id="3-循环："><a href="#3-循环：" class="headerlink" title="(3).循环："></a>(3).循环：</h5><ul>
-<li>将下一结点赋值给q；</li>
-<li>释放p；</li>
-<li>将q赋值给p</li>
-</ul>
-<h3 id="九-单链表结构与顺序存储结构优缺点"><a href="#九-单链表结构与顺序存储结构优缺点" class="headerlink" title="九.单链表结构与顺序存储结构优缺点"></a>九.单链表结构与顺序存储结构优缺点</h3><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTViZmM5YjRlMWM3ZjU1NzgucG5n?x-oss-process=image/format,png" alt="单链表结构与顺序存储结构优缺点"></p>
-<h5 id="1-若线性表需要频繁查找，很少进行插入和删除操作时，宜采用顺序存储结构。若需要频繁插入和删除时，宜采用单链表结构"><a href="#1-若线性表需要频繁查找，很少进行插入和删除操作时，宜采用顺序存储结构。若需要频繁插入和删除时，宜采用单链表结构" class="headerlink" title="(1).若线性表需要频繁查找，很少进行插入和删除操作时，宜采用顺序存储结构。若需要频繁插入和删除时，宜采用单链表结构"></a>(1).若线性表需要频繁查找，很少进行插入和删除操作时，宜采用顺序存储结构。若需要频繁插入和删除时，宜采用单链表结构</h5><h5 id="2-当线性表中的元素个数变化较大或者根本不知道有多大时，最好用单链表结构"><a href="#2-当线性表中的元素个数变化较大或者根本不知道有多大时，最好用单链表结构" class="headerlink" title="(2).当线性表中的元素个数变化较大或者根本不知道有多大时，最好用单链表结构"></a>(2).当线性表中的元素个数变化较大或者根本不知道有多大时，最好用单链表结构</h5><h3 id="十-静态链表"><a href="#十-静态链表" class="headerlink" title="十.静态链表"></a>十.静态链表</h3><h4 id="1-用数组描述的链表叫做静态链表，这种描述方法还有起名叫做游标实现法"><a href="#1-用数组描述的链表叫做静态链表，这种描述方法还有起名叫做游标实现法" class="headerlink" title="1.用数组描述的链表叫做静态链表，这种描述方法还有起名叫做游标实现法"></a>1.用数组描述的链表叫做静态链表，这种描述方法还有起名叫做游标实现法</h4><h4 id="2-静态链表的优缺点："><a href="#2-静态链表的优缺点：" class="headerlink" title="2.静态链表的优缺点："></a>2.静态链表的优缺点：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYzNGZkZjZhMmM0NDBjOTgucG5n?x-oss-process=image/format,png" alt="静态链表的优缺点"></p>
-<h3 id="十一-循环链表"><a href="#十一-循环链表" class="headerlink" title="十一.循环链表"></a>十一.循环链表</h3><h5 id="1-将单链表中终端结点的指针端由空指针改为指向头结点，就使整个单链表形成一个环，这种头尾相接的单链表称为单循环链表，简称循环链表"><a href="#1-将单链表中终端结点的指针端由空指针改为指向头结点，就使整个单链表形成一个环，这种头尾相接的单链表称为单循环链表，简称循环链表" class="headerlink" title="1.将单链表中终端结点的指针端由空指针改为指向头结点，就使整个单链表形成一个环，这种头尾相接的单链表称为单循环链表，简称循环链表"></a>1.将单链表中终端结点的指针端由空指针改为指向头结点，就使整个单链表形成一个环，这种头尾相接的单链表称为单循环链表，简称循环链表</h5><h3 id="十二-双向链表"><a href="#十二-双向链表" class="headerlink" title="十二.双向链表"></a>十二.双向链表</h3><h5 id="1-双向链表（double-linkedlist）是在单链表的每个结点中，再设置一个指向其前驱结点的指针域。所以在双向链表中的结点都有两个指针域，一个指向直接后继，另一个指向直接前驱。"><a href="#1-双向链表（double-linkedlist）是在单链表的每个结点中，再设置一个指向其前驱结点的指针域。所以在双向链表中的结点都有两个指针域，一个指向直接后继，另一个指向直接前驱。" class="headerlink" title="(1).双向链表（double linkedlist）是在单链表的每个结点中，再设置一个指向其前驱结点的指针域。所以在双向链表中的结点都有两个指针域，一个指向直接后继，另一个指向直接前驱。"></a>(1).双向链表（double linkedlist）是在单链表的每个结点中，再设置一个指向其前驱结点的指针域。所以在双向链表中的结点都有两个指针域，一个指向直接后继，另一个指向直接前驱。</h5><h5 id="2-双向链表当然也可以是循环表"><a href="#2-双向链表当然也可以是循环表" class="headerlink" title="(2).双向链表当然也可以是循环表"></a>(2).双向链表当然也可以是循环表</h5> 
       <!-- reward -->
       
     </div>

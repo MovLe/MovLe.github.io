@@ -155,6 +155,312 @@
     
     
     <article
+  id="post-Hive安装配置"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"
+    >Hive安装部署</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/15/Hive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2019-07-15T04:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hive/">Hive</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-前提："><a href="#1-前提：" class="headerlink" title="1.前提："></a>1.前提：</h4><ul>
+<li>mysql已安装</li>
+<li>hadoop集群已配置</li>
+</ul>
+<h4 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2.步骤"></a>2.步骤</h4><h5 id="1-把apache-hive-1-2-1-bin-tar-gz上传到linux的-opt-software目录下"><a href="#1-把apache-hive-1-2-1-bin-tar-gz上传到linux的-opt-software目录下" class="headerlink" title="(1)把apache-hive-1.2.1-bin.tar.gz上传到linux的/opt/software目录下"></a>(1)把apache-hive-1.2.1-bin.tar.gz上传到linux的/opt/software目录下</h5><h5 id="2-解压apache-hive-1-2-1-bin-tar-gz到-opt-module-目录下面"><a href="#2-解压apache-hive-1-2-1-bin-tar-gz到-opt-module-目录下面" class="headerlink" title="(2)解压apache-hive-1.2.1-bin.tar.gz到/opt/module/目录下面"></a>(2)解压apache-hive-1.2.1-bin.tar.gz到/opt/module/目录下面</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-hive-1.2.1-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<h5 id="3-修改apache-hive-1-2-1-bin的名称为hive-1-2-1"><a href="#3-修改apache-hive-1-2-1-bin的名称为hive-1-2-1" class="headerlink" title="(3)修改apache-hive-1.2.1-bin的名称为hive-1.2.1"></a>(3)修改apache-hive-1.2.1-bin的名称为hive-1.2.1</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module</span><br><span class="line"></span><br><span class="line">mv apache-hive-1.2.1-bin/ hive-1.2.1</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-修改环境变量："><a href="#4-修改环境变量：" class="headerlink" title="(4)修改环境变量："></a>(4)修改环境变量：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HIVE_HOME=/opt/module/hive-1.2.1</span><br><span class="line">export PATH=$PATH:$HIVE_HOME/bin</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFjNDUxZDNiMGRiOWU2MzUucG5n?x-oss-process=image/format,png"></p>
+<p>使环境变量生效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-修改-opt-module-hive-conf目录下的hive-env-sh-template名称为hive-env-sh"><a href="#5-修改-opt-module-hive-conf目录下的hive-env-sh-template名称为hive-env-sh" class="headerlink" title="(5)修改/opt/module/hive/conf目录下的hive-env.sh.template名称为hive-env.sh"></a>(5)修改/opt/module/hive/conf目录下的hive-env.sh.template名称为hive-env.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv hive-env.sh.template hive-env.sh</span><br></pre></td></tr></table></figure>
+<h5 id="6-配置hive-env-sh文件"><a href="#6-配置hive-env-sh文件" class="headerlink" title="(6)配置hive-env.sh文件"></a>(6)配置hive-env.sh文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hive-env.sh</span><br></pre></td></tr></table></figure>
+<p>配置HADOOP_HOME路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/opt/module/hadoop-2.8.4</span><br><span class="line">export HIVE_CONF_DIR=/opt/module/hive-1.2.1/conf</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFlMDZkYmY1Mjk0NzdmNzQucG5n?x-oss-process=image/format,png"></p>
+<h5 id="7-注：Hive的log默认存放在-tmp-itstar-hive-log目录下（当前用户名下）。"><a href="#7-注：Hive的log默认存放在-tmp-itstar-hive-log目录下（当前用户名下）。" class="headerlink" title="(7)注：Hive的log默认存放在/tmp/itstar/hive.log目录下（当前用户名下）。"></a>(7)注：Hive的log默认存放在/tmp/itstar/hive.log目录下（当前用户名下）。</h5><h6 id="a-修改hive的log存放日志到-opt-module-hive-logs"><a href="#a-修改hive的log存放日志到-opt-module-hive-logs" class="headerlink" title="(a)修改hive的log存放日志到/opt/module/hive/logs"></a>(a)修改hive的log存放日志到/opt/module/hive/logs</h6><h6 id="b-修改conf-hive-log4j-properties-template文件名称为hive-log4j-properties"><a href="#b-修改conf-hive-log4j-properties-template文件名称为hive-log4j-properties" class="headerlink" title="(b)修改conf/hive-log4j.properties.template文件名称为hive-log4j.properties"></a>(b)修改conf/hive-log4j.properties.template文件名称为hive-log4j.properties</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line"></span><br><span class="line">mv hive-log4j.properties.template hive-log4j.properties</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWU4YzhlMGEzMzUyNDlkMzUucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h6 id="c-在hive-log4j-properties文件中修改log存放位置"><a href="#c-在hive-log4j-properties文件中修改log存放位置" class="headerlink" title="(c )在hive-log4j.properties文件中修改log存放位置"></a>(c )在hive-log4j.properties文件中修改log存放位置</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1</span><br><span class="line"></span><br><span class="line">mkdir logs</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTExOWJhNzFlZTQ2OTUwMTkucG5n?x-oss-process=image/format,png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1/conf</span><br><span class="line"></span><br><span class="line">vi hive-log4j.properties </span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive.log.dir=/opt/module/hive-1.2.1/logs</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY3ZDFiZTUxNWE0OWQwNjUucG5n?x-oss-process=image/format,png"></p>
+<h5 id="8-Hadoop-配置"><a href="#8-Hadoop-配置" class="headerlink" title="(8)Hadoop 配置"></a>(8)Hadoop 配置</h5><h6 id="a-必须启动hdfs和yarn"><a href="#a-必须启动hdfs和yarn" class="headerlink" title="(a)必须启动hdfs和yarn"></a>(a)必须启动hdfs和yarn</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-dfs.sh</span><br><span class="line"></span><br><span class="line">sbin/start-yarn.sh</span><br></pre></td></tr></table></figure>
+<h6 id="b-在HDFS上创建-tmp和-user-hive-warehouse两个目录并修改他们的同组权限可写"><a href="#b-在HDFS上创建-tmp和-user-hive-warehouse两个目录并修改他们的同组权限可写" class="headerlink" title="(b)在HDFS上创建/tmp和/user/hive/warehouse两个目录并修改他们的同组权限可写"></a>(b)在HDFS上创建/tmp和/user/hive/warehouse两个目录并修改他们的同组权限可写</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir /tmp</span><br><span class="line">hadoop fs -mkdir -p /user/hive/warehouse</span><br><span class="line"></span><br><span class="line">hadoop fs -chmod g+w /tmp</span><br><span class="line">hadoop fs -chmod g+w /user/hive/warehouse</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVlMjk4OTRjNjM4MTYyZjQucG5n?x-oss-process=image/format,png" alt="image.png"></p>
+<h5 id="9-将hive元数据配置到mysql"><a href="#9-将hive元数据配置到mysql" class="headerlink" title="(9).将hive元数据配置到mysql"></a>(9).将hive元数据配置到mysql</h5><h6 id="a-将mysql-connector-java-5-1-27-jar上传到-opt-module-hive-1-2-1-lib中："><a href="#a-将mysql-connector-java-5-1-27-jar上传到-opt-module-hive-1-2-1-lib中：" class="headerlink" title="(a)将mysql-connector-java-5.1.27.jar上传到/opt/module/hive-1.2.1/lib中："></a>(a)将mysql-connector-java-5.1.27.jar上传到/opt/module/hive-1.2.1/lib中：</h6><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdmNTU2MmQ4YjJiMWM5OTUucG5n?x-oss-process=image/format,png"></p>
+<h6 id="b-创建hive-site-xml"><a href="#b-创建hive-site-xml" class="headerlink" title="(b)创建hive-site.xml"></a>(b)创建hive-site.xml</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/hive-1.2.1/conf</span><br><span class="line"></span><br><span class="line">touch hive-site.xml</span><br><span class="line"></span><br><span class="line">vi hive-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://hadoop1:3306/metastore1?createDatabaseIfNotExist=true<span class="symbol">&amp;amp;</span>characterEncoding=utf-8<span class="symbol">&amp;amp;</span>useSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>username to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>000000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：最好是在mysql所在的服务器中安装hive</p>
+<h6 id="c-配置完毕后，如果启动hive异常，可以重新启动虚拟机。-重启后，别忘了启动hadoop集群"><a href="#c-配置完毕后，如果启动hive异常，可以重新启动虚拟机。-重启后，别忘了启动hadoop集群" class="headerlink" title="(c ).配置完毕后，如果启动hive异常，可以重新启动虚拟机。(重启后，别忘了启动hadoop集群)"></a>(c ).配置完毕后，如果启动hive异常，可以重新启动虚拟机。(重启后，别忘了启动hadoop集群)</h6><h6 id="d-在hive的bin目录下执行"><a href="#d-在hive的bin目录下执行" class="headerlink" title="(d)在hive的bin目录下执行"></a>(d)在hive的bin目录下执行</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./schematool -dbType mysql -initSchema</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJiNGMzNjdiOTcwNjM5ZDQucG5n?x-oss-process=image/format,png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUyMGY2ZTI5Nzg5OTE5YmIucG5n?x-oss-process=image/format,png" alt="创建成功"></p>
+<h5 id="10-添加其他配置信息："><a href="#10-添加其他配置信息：" class="headerlink" title="(10).添加其他配置信息："></a>(10).添加其他配置信息：</h5><p>命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /opt/module/hive-1.2.1/conf/hive-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>添加内容：</p>
+<h6 id="a-修改default数据仓库原始位置"><a href="#a-修改default数据仓库原始位置" class="headerlink" title="(a)修改default数据仓库原始位置"></a>(a)修改default数据仓库原始位置</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.warehouse.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>/user/hive/warehouse<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>location of default database for the warehouse<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h6 id="b-添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置"><a href="#b-添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置" class="headerlink" title="(b)添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置"></a>(b)添加如下配置信息，就可以实现显示当前数据库，以及查询表的头信息配置</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTBlMzIzNGUwYjNjMTMxMGUucG5n?x-oss-process=image/format,png" alt="配置"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTVlMmZiOGFkYjQ0MzA5NmQucG5n?x-oss-process=image/format,png" alt="配置后启动hive"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Hive基本概念"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"
+    >Hive基本概念</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/07/15/Hive%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="article-date">
+  <time datetime="2019-07-15T03:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hive/">Hive</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-Hive基本概念："><a href="#一-Hive基本概念：" class="headerlink" title="一.Hive基本概念："></a>一.Hive基本概念：</h3><h4 id="1-Hive"><a href="#1-Hive" class="headerlink" title="1. Hive"></a>1. Hive</h4><h5 id="1-官网：http-hive-apache-org"><a href="#1-官网：http-hive-apache-org" class="headerlink" title="(1).官网：http://hive.apache.org/"></a>(1).官网：<a target="_blank" rel="noopener" href="http://hive.apache.org/">http://hive.apache.org/</a></h5><h5 id="2-Apache-HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的-大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以-将用户连接到Hive。"><a href="#2-Apache-HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的-大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以-将用户连接到Hive。" class="headerlink" title="(2).Apache HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的 大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以 将用户连接到Hive。"></a>(2).Apache HiveTM数据仓库软件有助于使用SQL读取，编写和管理驻留在分布式存储中的 大型数据集。可以将结构投影到已存储的数据中。提供了命令行工具和JDBC驱动程序以 将用户连接到Hive。</h5><h5 id="3-hive提供了SQL查询功能-hdfs分布式存储"><a href="#3-hive提供了SQL查询功能-hdfs分布式存储" class="headerlink" title="(3).hive提供了SQL查询功能 hdfs分布式存储"></a>(3).hive提供了SQL查询功能 hdfs分布式存储</h5><h5 id="4-hive本质HQL转化为MapReduce程序。"><a href="#4-hive本质HQL转化为MapReduce程序。" class="headerlink" title="(4).hive本质HQL转化为MapReduce程序。"></a>(4).hive本质HQL转化为MapReduce程序。</h5><h5 id="5-环境前提："><a href="#5-环境前提：" class="headerlink" title="(5).环境前提："></a>(5).环境前提：</h5><ul>
+<li>启动hdfs集群</li>
+<li>启动yarn集群</li>
+</ul>
+<p>如果想用hive的话，需要提前安装部署好hadoop集群。</p>
+<h4 id="2-为什么要学习Hive"><a href="#2-为什么要学习Hive" class="headerlink" title="2.为什么要学习Hive"></a>2.为什么要学习Hive</h4><h5 id="1-简化开发"><a href="#1-简化开发" class="headerlink" title="(1).简化开发"></a>(1).简化开发</h5><h5 id="2-优势："><a href="#2-优势：" class="headerlink" title="(2).优势："></a>(2).优势：</h5><h6 id="a-操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）"><a href="#a-操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）" class="headerlink" title="(a)操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）"></a>(a)操作接口采用类SQL语法，提供快速开发的能力（简单、容易上手）</h6><h6 id="b-避免了去写MapReduce，减少开发人员的学习成本。"><a href="#b-避免了去写MapReduce，减少开发人员的学习成本。" class="headerlink" title="(b)避免了去写MapReduce，减少开发人员的学习成本。"></a>(b)避免了去写MapReduce，减少开发人员的学习成本。</h6><h6 id="c-Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合"><a href="#c-Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合" class="headerlink" title="(c )Hive的执行延迟比较高，因此Hive常用于数据分析，对实时性要求不高的场合"></a>(c )Hive的执行延迟比较高，<strong>因此Hive常用于数据分析，对实时性要求不高的场合</strong></h6><h6 id="d-Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高"><a href="#d-Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高" class="headerlink" title="(d)Hive优势在于处理大数据，对于处理小数据没有优势，因为Hive的执行延迟比较高"></a>(d)Hive优势在于处理大数据，<strong>对于处理小数据没有优势，因为Hive的执行延迟比较高</strong></h6><h6 id="e-Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。"><a href="#e-Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。" class="headerlink" title="(e)Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。"></a>(e)Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。</h6><h4 id="3-劣势："><a href="#3-劣势：" class="headerlink" title="3.劣势："></a>3.劣势：</h4><h5 id="1-Hive的HQL表达能力有限"><a href="#1-Hive的HQL表达能力有限" class="headerlink" title="(1)Hive的HQL表达能力有限"></a>(1)Hive的HQL表达能力有限</h5><ul>
+<li>迭代式算法无法表达</li>
+<li>数据挖掘方面不擅长</li>
+</ul>
+<h5 id="2-Hive的效率比较低"><a href="#2-Hive的效率比较低" class="headerlink" title="(2)Hive的效率比较低"></a>(2)Hive的效率比较低</h5><ul>
+<li>Hive自动生成的MapReduce作业，通常情况下不够智能化</li>
+<li>Hive调优比较困难，粒度较粗</li>
+</ul>
+<h4 id="3-Hive架构原理："><a href="#3-Hive架构原理：" class="headerlink" title="3.Hive架构原理："></a>3.Hive架构原理：</h4><p>sql-&gt;转换-&gt;mapreduce-&gt;job</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTYxZTllNDdlZjQ0MmM2NGIucG5n?x-oss-process=image/format,png" alt="Hive架构原理"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ4MTE5MzczZDk2MmM2MDQucG5n?x-oss-process=image/format,png" alt="Hive架构"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;如图中所示，Hive通过给用户提供的一系列交互接口，接收到用户的指令(SQL)，使用自己的Driver，结合元数据(MetaStore)，将这些指令翻译成MapReduce，提交到Hadoop中执行，最后，将执行返回的结果输出到用户交互接口。</p>
+<h5 id="1-用户接口：Client"><a href="#1-用户接口：Client" class="headerlink" title="(1).用户接口：Client"></a>(1).用户接口：Client</h5><p>CLI(hive shell)、JDBC/ODBC(java访问hive)、WEBUI(浏览器访问hive)</p>
+<h5 id="2-元数据：Metastore"><a href="#2-元数据：Metastore" class="headerlink" title="(2).元数据：Metastore"></a>(2).元数据：Metastore</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;元数据包括：表名、表所属的数据库（默认是default）、表的拥有者、列/分区字段、表的类型（是否是外部表）、表的数据所在目录等；<br>&nbsp;&nbsp;&nbsp;&nbsp;默认存储在自带的derby数据库中，推荐使用MySQL存储Metastore</p>
+<h5 id="3-Hadoop"><a href="#3-Hadoop" class="headerlink" title="(3).Hadoop"></a>(3).Hadoop</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;使用HDFS进行存储，使用MapReduce进行计算。</p>
+<h5 id="4-驱动器：Driver"><a href="#4-驱动器：Driver" class="headerlink" title="(4).驱动器：Driver"></a>(4).驱动器：Driver</h5><h6 id="a-解析器-SQL-Parser-："><a href="#a-解析器-SQL-Parser-：" class="headerlink" title="(a)解析器(SQL Parser)："></a>(a)解析器(SQL Parser)：</h6><p>将SQL字符串转换成抽象语法树AST，这一步一般都用第三方工具库完成，比如antlr；对AST进行语法分析，比如表是否存在、字段是否存在、SQL语义是否有误。</p>
+<h6 id="b-编译器-Physical-Plan-："><a href="#b-编译器-Physical-Plan-：" class="headerlink" title="(b)编译器(Physical Plan)："></a>(b)编译器(Physical Plan)：</h6><p>将AST编译生成逻辑执行计划。</p>
+<h6 id="c-优化器-Query-Optimizer-："><a href="#c-优化器-Query-Optimizer-：" class="headerlink" title="(c )优化器(Query Optimizer)："></a>(c )优化器(Query Optimizer)：</h6><p>对逻辑执行计划进行优化。</p>
+<h6 id="d-执行器-Execution-："><a href="#d-执行器-Execution-：" class="headerlink" title="(d)执行器(Execution)："></a>(d)执行器(Execution)：</h6><p>把逻辑执行计划转换成可以运行的物理计划。对于Hive来说，就是MR/Spark。</p>
+<h4 id="4-Hive和数据库比较"><a href="#4-Hive和数据库比较" class="headerlink" title="4.Hive和数据库比较"></a>4.Hive和数据库比较</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;由于 Hive 采用了类似SQL 的查询语言 HQL(Hive Query Language)，因此很容易将 Hive 理解为数据库。其实从结构上来看，Hive 和数据库除了拥有类似的查询语言，再无类似之处。本文将从多个方面来阐述 Hive 和数据库的差异。数据库可以用在 Online 的应用中，但是Hive 是为数据仓库而设计的，清楚这一点，有助于从应用角度理解 Hive 的特性。</p>
+<h5 id="1-查询语言"><a href="#1-查询语言" class="headerlink" title="(1).查询语言"></a>(1).查询语言</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于SQL被广泛的应用在数据仓库中，因此，专门针对Hive的特性设计了类SQL的查询语言HQL。熟悉SQL开发的开发者可以很方便的使用Hive进行开发。</p>
+<h5 id="2-数据存储位置"><a href="#2-数据存储位置" class="headerlink" title="(2).数据存储位置"></a>(2).数据存储位置</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive 是建立在 Hadoop 之上的，所有 Hive 的数据都是存储在 HDFS 中的。而数据库则可以将数据保存在块设备或者本地文件系统中。</p>
+<h5 id="3-数据更新"><a href="#3-数据更新" class="headerlink" title="(3). 数据更新"></a>(3). 数据更新</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive是针对数据仓库应用设计的，而数据仓库的内容是读多写少的。因此，Hive中不支持对数据的改写和添加，所有的数据都是在加载的时候确定好的。而数据库中的数据通常是需要经常进行修改的，因此可以使用 INSERT INTO …  VALUES 添加数据，使用 UPDATE … SET修改数据。</p>
+<h5 id="4-索引"><a href="#4-索引" class="headerlink" title="(4). 索引"></a>(4). 索引</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive在加载数据的过程中不会对数据进行任何处理，甚至不会对数据进行扫描，因此也没有对数据中的某些Key建立索引。Hive要访问数据中满足条件的特定值时，需要暴力扫描整个数据，因此访问延迟较高。由于 MapReduce 的引入， Hive 可以并行访问数据，因此即使没有索引，对于大数据量的访问，Hive 仍然可以体现出优势。数据库中，通常会针对一个或者几个列建立索引，因此对于少量的特定条件的数据的访问，数据库可以有很高的效率，较低的延迟。由于数据的访问延迟较高，决定了 Hive 不适合在线数据查询。</p>
+<h5 id="5-执行"><a href="#5-执行" class="headerlink" title="(5). 执行"></a>(5). 执行</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive中大多数查询的执行是通过 Hadoop 提供的 MapReduce 来实现的。而数据库通常有自己的执行引擎。</p>
+<h5 id="6-执行延迟"><a href="#6-执行延迟" class="headerlink" title="(6). 执行延迟"></a>(6). 执行延迟</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive 在查询数据的时候，由于没有索引，需要扫描整个表，因此延迟较高。另外一个导致 Hive 执行延迟高的因素是 MapReduce框架。由于MapReduce 本身具有较高的延迟，因此在利用MapReduce 执行Hive查询时，也会有较高的延迟。相对的，数据库的执行延迟较低。当然，这个低是有条件的，即数据规模较小，当数据规模大到超过数据库的处理能力的时候，Hive的并行计算显然能体现出优势。</p>
+<h5 id="7-可扩展性"><a href="#7-可扩展性" class="headerlink" title="(7).可扩展性"></a>(7).可扩展性</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive是建立在Hadoop之上的，因此Hive的可扩展性是和Hadoop的可扩展性是一致的(世界上最大的Hadoop 集群在 Yahoo!，2009年的规模在4000 台节点左右)。而数据库由于 ACID 语义的严格限制，扩展行非常有限。目前最先进的并行数据库Oracle在理论上的扩展能力也只有100台左右。</p>
+<h5 id="8-数据规模"><a href="#8-数据规模" class="headerlink" title="(8). 数据规模"></a>(8). 数据规模</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;由于Hive建立在集群上并可以利用MapReduce进行并行计算，因此可以支持很大规模的数据；对应的，数据库可以支持的数据规模较小。</p>
+<h3 id="二-Hive数据类型"><a href="#二-Hive数据类型" class="headerlink" title="二.Hive数据类型"></a>二.Hive数据类型</h3><h4 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1.基本数据类型"></a>1.基本数据类型</h4><table>
+<thead>
+<tr>
+<th align="center">Hive数据类型</th>
+<th align="center">Java数据类型</th>
+<th align="center">长度</th>
+<th align="center">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TINYINT</td>
+<td align="center">byte</td>
+<td align="center">1byte有符号整数</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">SMALINT</td>
+<td align="center">short</td>
+<td align="center">2byte有符号整数</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">INT</td>
+<td align="center">int</td>
+<td align="center">4byte有符号整数</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">BIGINT</td>
+<td align="center">long</td>
+<td align="center">8byte有符号整数</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">BOOLEAN</td>
+<td align="center">boolean</td>
+<td align="center">布尔类型，true或者false</td>
+<td align="center">TRUE  FALSE</td>
+</tr>
+<tr>
+<td align="center">FLOAT</td>
+<td align="center">float</td>
+<td align="center">单精度浮点数</td>
+<td align="center">3.14159</td>
+</tr>
+<tr>
+<td align="center">DOUBLE</td>
+<td align="center">double</td>
+<td align="center">双精度浮点数</td>
+<td align="center">3.14159</td>
+</tr>
+<tr>
+<td align="center">STRING</td>
+<td align="center">string</td>
+<td align="center">字符系列。可以指定字符集。可以使用单引号或者双引号</td>
+<td align="center">‘now is the time’ “for all good men”</td>
+</tr>
+<tr>
+<td align="center">TIMESTAMP</td>
+<td align="center"></td>
+<td align="center">时间类型</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">BINARY</td>
+<td align="center"></td>
+<td align="center">字节数组</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;对于Hive的String类型相当于数据库的varchar类型，该类型是一个可变的字符串，不过它不能 其中最多能存储多少个字符，理论上它可以存储2GB的字符数。</p>
+<h4 id="2-集合数据类型"><a href="#2-集合数据类型" class="headerlink" title="2.集合数据类型"></a>2.集合数据类型</h4><table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">描述</th>
+<th align="center">语法示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">STRUCT</td>
+<td align="center">和c语言中的struct类似，都可以通过“点”符号访问元素内容。例如，如果某个列的数据类型是STRUCT{first STRING, last STRING},那么第1个元素可以通过字段.first来引用</td>
+<td align="center">struct()</td>
+</tr>
+<tr>
+<td align="center">MAP</td>
+<td align="center">MAP是一组键-值对元组集合，使用数组表示法可以访问数据。例如，如果某个列的数据类型是MAP，其中键-&gt;值对是’first’-&gt;’John’和’last’-&gt;’Doe’，那么可以通过字段名[‘last’]获取最后一个元素</td>
+<td align="center">map()</td>
+</tr>
+<tr>
+<td align="center">ARRAY</td>
+<td align="center">数组是一组具有相同类型和名称的变量的集合。这些变量称为数组的元素，每个数组元素都有一个编号，编号从零开始。例如，数组值为[‘John’, ‘Doe’]，那么第2个元素可以通过数组名[1]进行引用</td>
+<td align="center">Array()</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Hive有三种复杂数据类型ARRAY、MAP 和 STRUCT。ARRAY和MAP与Java中的Array和Map类似，而STRUCT与C语言中的Struct类似，它封装了一个命名字段集合，复杂数据类型允许任意层次的嵌套。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table heheee(`来试试` string,`来试试1` string,`来试试2` string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>案例实操</strong></p>
+<h5 id="1-假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为"><a href="#1-假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为" class="headerlink" title="(1)假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为"></a>(1)假设某表有如下一行，我们用JSON格式来表示其数据结构。在Hive下访问的格式为</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;songsong&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;friends&quot;</span>: [<span class="string">&quot;bingbing&quot;</span> , <span class="string">&quot;lili&quot;</span>] ,       <span class="comment">//列表Array, </span></span><br><span class="line">    <span class="attr">&quot;children&quot;</span>: &#123;                      <span class="comment">//键值Map,</span></span><br><span class="line">        <span class="attr">&quot;xiao song&quot;</span>: <span class="number">18</span> ,</span><br><span class="line">        <span class="attr">&quot;xiaoxiao song&quot;</span>: <span class="number">19</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="string">&quot;address&quot;</span>: &#123;                      <span class="comment">//结构Struct,</span></span><br><span class="line">        <span class="attr">&quot;street&quot;</span>: <span class="string">&quot;hai dian qu&quot;</span> ,</span><br><span class="line">        <span class="attr">&quot;city&quot;</span>: <span class="string">&quot;beijing&quot;</span> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-基于上述数据结构，我们在Hive里创建对应的表，并导入数据。"><a href="#2-基于上述数据结构，我们在Hive里创建对应的表，并导入数据。" class="headerlink" title="(2)基于上述数据结构，我们在Hive里创建对应的表，并导入数据。"></a>(2)基于上述数据结构，我们在Hive里创建对应的表，并导入数据。</h5><p>创建本地测试文件test.txt</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/module/datas/</span><br><span class="line"></span><br><span class="line">touch text.txt</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">songsong,bingbing_lili,xiao song:18_xiaoxiao song:19,hai dian qu_beijing</span><br><span class="line"></span><br><span class="line">yangyang,caicai_susu,xiao yang:18_xiaoxiao yang:19,chao yang_beijing</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxNmExMWVlMzA4MTQxM2IucG5n?x-oss-process=image/format,png"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;注意，MAP，STRUCT和ARRAY里的元素间关系都可以用同一个字符表示，这里用“_”。</p>
+<h5 id="3-Hive上创建测试表test"><a href="#3-Hive上创建测试表test" class="headerlink" title="(3)Hive上创建测试表test"></a>(3)Hive上创建测试表test</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">create table test(</span><br><span class="line">name string,</span><br><span class="line">friends array&lt;string&gt;,</span><br><span class="line">children map&lt;string, int&gt;,</span><br><span class="line">address struct&lt;street:string, city:string&gt;</span><br><span class="line">)</span><br><span class="line">row format delimited fields terminated by &#x27;,&#x27;</span><br><span class="line">collection items terminated by &#x27;_&#x27;</span><br><span class="line">map keys terminated by &#x27;:&#x27;</span><br><span class="line">lines terminated by &#x27;\n&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>字段解释：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">row format delimited fields terminated by &#x27;,&#x27;     -- 列分隔符</span><br><span class="line">collection items terminated by &#x27;_&#x27;  	          --MAP STRUCT 和 ARRAY 的分隔符(数据分割符号)</span><br><span class="line">map keys terminated by &#x27;:&#x27;				          -- MAP中的key与value的分隔符</span><br><span class="line">lines terminated by &#x27;\n&#x27;;					      -- 行分隔符</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-导入文本数据到测试表"><a href="#4-导入文本数据到测试表" class="headerlink" title="(4)导入文本数据到测试表"></a>(4)导入文本数据到测试表</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/module/datas/text.txt&#x27; into table test;</span><br></pre></td></tr></table></figure>
+<h5 id="5-访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式"><a href="#5-访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式" class="headerlink" title="(5)访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式"></a>(5)访问三种集合列里的数据，以下分别是ARRAY，MAP，STRUCT的访问方式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select friends[1],children[&#x27;xiao song&#x27;],address.city from test where name=&quot;songsong&quot;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWJkZDgzYzNiZjk5ZjM4NjUucG5n?x-oss-process=image/format,png"></p>
+<p>如果起别名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select friends[1] as pengyou from test where name=&quot;songsong&quot;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTFmMWY3MDg3ZmFlMGQ3MTAucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-类型转化"><a href="#3-类型转化" class="headerlink" title="3.类型转化"></a>3.类型转化</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;Hive的原子数据类型是可以进行隐式转换的，类似于Java的类型转换，例如某表达式使用INT类型，TINYINT会自动转换为INT类型，但是Hive不会进行反向转化，例如，某表达式使用TINYINT类型，INT不会自动转换为TINYINT类型，它会返回错误，除非使用CAST操作。</p>
+<h5 id="1-隐式类型转换规则如下。"><a href="#1-隐式类型转换规则如下。" class="headerlink" title="(1).隐式类型转换规则如下。"></a>(1).隐式类型转换规则如下。</h5><h6 id="a-任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。"><a href="#a-任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。" class="headerlink" title="(a)任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。"></a>(a)任何整数类型都可以隐式地转换为一个范围更广的类型，如TINYINT可以转换成INT，INT可以转换成BIGINT。</h6><h6 id="b-所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。"><a href="#b-所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。" class="headerlink" title="(b)所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。"></a>(b)所有整数类型、FLOAT和STRING类型都可以隐式地转换成DOUBLE。</h6><h6 id="c-TINYINT、SMALLINT、INT都可以转换为FLOAT。"><a href="#c-TINYINT、SMALLINT、INT都可以转换为FLOAT。" class="headerlink" title="(c )TINYINT、SMALLINT、INT都可以转换为FLOAT。"></a>(c )TINYINT、SMALLINT、INT都可以转换为FLOAT。</h6><h6 id="d-BOOLEAN类型不可以转换为任何其它的类型。"><a href="#d-BOOLEAN类型不可以转换为任何其它的类型。" class="headerlink" title="(d)BOOLEAN类型不可以转换为任何其它的类型。"></a>(d)BOOLEAN类型不可以转换为任何其它的类型。</h6><h5 id="2-可以使用CAST操作显示进行数据类型转换，"><a href="#2-可以使用CAST操作显示进行数据类型转换，" class="headerlink" title="(2).可以使用CAST操作显示进行数据类型转换，"></a>(2).可以使用CAST操作显示进行数据类型转换，</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;例如CAST(‘1’ AS INT)将把字符串’1’ 转换成整数1；如果强制类型转换失败，如执行CAST(‘X’ AS INT)，表达式返回空值 NULL。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-Flume拦截器-自定义拦截器"
   class="article article-type-post"
   itemscope
@@ -581,128 +887,6 @@
 <h5 id="3-flume-3-conf"><a href="#3-flume-3-conf" class="headerlink" title="(3)flume-3.conf"></a>(3)flume-3.conf</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1 agent</span></span><br><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2 <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = hadoop4</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3 sink</span></span><br><span class="line">a3.sinks.k1.type = hdfs</span><br><span class="line">a3.sinks.k1.hdfs.path = hdfs://hadoop2:9000/flume3/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a3.sinks.k1.hdfs.filePrefix = flume3-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否按照时间滚动文件夹</span></span><br><span class="line">a3.sinks.k1.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a3.sinks.k1.hdfs.roundValue = 1</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a3.sinks.k1.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a3.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次</span></span><br><span class="line">a3.sinks.k1.hdfs.batchSize = 100</span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a3.sinks.k1.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的文件</span></span><br><span class="line">a3.sinks.k1.hdfs.rollInterval = 600</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件的滚动大小大概是128M</span></span><br><span class="line">a3.sinks.k1.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">文件的滚动与Event数量无关</span></span><br><span class="line">a3.sinks.k1.hdfs.rollCount = 0</span><br><span class="line"><span class="meta">#</span><span class="bash">最小冗余数</span></span><br><span class="line">a3.sinks.k1.hdfs.minBlockReplicas = 1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4 channel</span></span><br><span class="line">a3.channels.c1.type = memory</span><br><span class="line">a3.channels.c1.capacity = 1000</span><br><span class="line">a3.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5 Bind</span></span><br><span class="line">a3.sources.r1.channels = c1</span><br><span class="line">a3.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
 
 <h4 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h4><h5 id="1-依次启动flume-3-conf-flume-2-conf-flume-1-conf"><a href="#1-依次启动flume-3-conf-flume-2-conf-flume-1-conf" class="headerlink" title="(1)依次启动flume-3.conf,flume-2.conf,flume-1.conf"></a>(1)依次启动flume-3.conf,flume-2.conf,flume-1.conf</h5><h5 id="2-改变文件，查看结果"><a href="#2-改变文件，查看结果" class="headerlink" title="(2)改变文件，查看结果"></a>(2)改变文件，查看结果</h5> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/" rel="tag">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume%E5%AE%9E%E6%88%98/" rel="tag">Flume实战</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Flume的使用：扇出-单source多channel多sink监控：监控文件并采集到hdfs与本地"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/07/03/Flume%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A%E6%89%87%E5%87%BA-%E5%8D%95source%E5%A4%9Achannel%E5%A4%9Asink%E7%9B%91%E6%8E%A7%EF%BC%9A%E7%9B%91%E6%8E%A7%E6%96%87%E4%BB%B6%E5%B9%B6%E9%87%87%E9%9B%86%E5%88%B0hdfs%E4%B8%8E%E6%9C%AC%E5%9C%B0/"
-    >Flume的使用：扇出-单source多channel多sink监控：监控文件并采集到hdfs与本地</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/07/03/Flume%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A%E6%89%87%E5%87%BA-%E5%8D%95source%E5%A4%9Achannel%E5%A4%9Asink%E7%9B%91%E6%8E%A7%EF%BC%9A%E7%9B%91%E6%8E%A7%E6%96%87%E4%BB%B6%E5%B9%B6%E9%87%87%E9%9B%86%E5%88%B0hdfs%E4%B8%8E%E6%9C%AC%E5%9C%B0/" class="article-date">
-  <time datetime="2019-07-03T09:00:00.000Z" itemprop="datePublished">2019-07-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Flume/">Flume</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="0-图解过程："><a href="#0-图解过程：" class="headerlink" title="0.图解过程："></a>0.图解过程：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTdjN2IxOWVkMGU4MjI5MWEucG5n?x-oss-process=image/format,png" alt="image.png"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY4N2I2ZGU4NWE3OTI5MzIucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h4 id="1-修改多配置文件-flumejob-1-conf-flumejob-2-conf-flumejob-3-conf"><a href="#1-修改多配置文件-flumejob-1-conf-flumejob-2-conf-flumejob-3-conf" class="headerlink" title="1.修改多配置文件,flumejob_1.conf,flumejob_2.conf,flumejob_3.conf"></a>1.修改多配置文件,flumejob_1.conf,flumejob_2.conf,flumejob_3.conf</h4><h5 id="1-flumejob-1-conf"><a href="#1-flumejob-1-conf" class="headerlink" title="(1)flumejob_1.conf"></a>(1)flumejob_1.conf</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将数据流复制给多个channel</span></span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2.source</span></span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /opt/plus</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3.sink1</span></span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = hadoop3</span><br><span class="line">a1.sinks.k1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sink2</span></span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = hadoop4</span><br><span class="line">a1.sinks.k2.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4.channel—1</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4.channel—2</span></span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
-<h5 id="2-flumejob-2-conf"><a href="#2-flumejob-2-conf" class="headerlink" title="(2)flumejob_2.conf"></a>(2)flumejob_2.conf</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1 agent</span></span><br><span class="line">a2.sources = r1</span><br><span class="line">a2.sinks = k1</span><br><span class="line">a2.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2 <span class="built_in">source</span></span></span><br><span class="line">a2.sources.r1.type = avro</span><br><span class="line">a2.sources.r1.bind = hadoop3</span><br><span class="line">a2.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3 sink</span></span><br><span class="line">a2.sinks.k1.type = hdfs</span><br><span class="line">a2.sinks.k1.hdfs.path = hdfs://hadoop2:9000/flume2/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a2.sinks.k1.hdfs.filePrefix = flume2-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否按照时间滚动文件夹</span></span><br><span class="line">a2.sinks.k1.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a2.sinks.k1.hdfs.roundValue = 1</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a2.sinks.k1.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a2.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次</span></span><br><span class="line">a2.sinks.k1.hdfs.batchSize = 100</span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a2.sinks.k1.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的文件</span></span><br><span class="line">a2.sinks.k1.hdfs.rollInterval = 600</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件的滚动大小大概是128M</span></span><br><span class="line">a2.sinks.k1.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">文件的滚动与Event数量无关</span></span><br><span class="line">a2.sinks.k1.hdfs.rollCount = 0</span><br><span class="line"><span class="meta">#</span><span class="bash">最小副本数</span></span><br><span class="line">a2.sinks.k1.hdfs.minBlockReplicas = 1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4 channel</span></span><br><span class="line">a2.channels.c1.type = memory</span><br><span class="line">a2.channels.c1.capacity = 1000</span><br><span class="line">a2.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">5 Bind</span> </span><br><span class="line">a2.sources.r1.channels = c1</span><br><span class="line">a2.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
-<h5 id="3-flumejob-3-conf"><a href="#3-flumejob-3-conf" class="headerlink" title="(3)flumejob_3.conf"></a>(3)flumejob_3.conf</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">1 agent</span></span><br><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2 <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = hadoop4</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">3 sink</span></span><br><span class="line">a3.sinks.k1.type = file_roll</span><br><span class="line"><span class="meta">#</span><span class="bash">备注：此处的文件夹需要先创建好</span></span><br><span class="line">a3.sinks.k1.sink.directory = /opt/flume3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 4 channel</span></span><br><span class="line">a3.channels.c1.type = memory</span><br><span class="line">a3.channels.c1.capacity = 1000</span><br><span class="line">a3.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5 Bind</span></span><br><span class="line">a3.sources.r1.channels = c1</span><br><span class="line">a3.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
-<h4 id="2-启动：先启动1，再启动2，3"><a href="#2-启动：先启动1，再启动2，3" class="headerlink" title="2.启动：先启动1，再启动2，3"></a>2.启动：先启动1，再启动2，3</h4><p>由于flumejob_3.conf是采集到本地，故本地linux必须存在/root/flume2目录</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent --conf conf/ --name a1 --conf-file conf/flumejob_1.conf</span><br><span class="line"></span><br><span class="line">bin/flume-ng agent --conf conf/ --name a1 --conf-file conf/flumejob_2.conf</span><br><span class="line"></span><br><span class="line">bin/flume-ng agent --conf conf/ --name a1 --conf-file conf/flumejob_3.conf</span><br></pre></td></tr></table></figure>
-<h4 id="3-验证："><a href="#3-验证：" class="headerlink" title="3.验证："></a>3.验证：</h4><p>修改文件，进行操作，并在本地/root/flume2或hdfs下/flume2目录下查看</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume/" rel="tag">Flume</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flume%E5%AE%9E%E6%88%98/" rel="tag">Flume实战</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Flume的使用：监听端口"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/07/03/Flume%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3/"
-    >Flume的使用：监听端口</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/07/03/Flume%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%9A%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3/" class="article-date">
-  <time datetime="2019-07-03T08:02:00.000Z" itemprop="datePublished">2019-07-03</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Flume/">Flume</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-新建配置文件flumejob-telnet-conf"><a href="#1-新建配置文件flumejob-telnet-conf" class="headerlink" title="1.新建配置文件flumejob_telnet.conf"></a>1.新建配置文件flumejob_telnet.conf</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">smple.conf: A single-node Flume configuration</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent 定义变量方便调用 加s可以有多个此角色</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span> 描述<span class="built_in">source</span>角色 进行内容定制</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此配置属于tcp <span class="built_in">source</span> 必须是netcat类型</span></span><br><span class="line">a1.sources.r1.type = netcat </span><br><span class="line">a1.sources.r1.bind = localhost</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink 输出日志文件</span></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory（file） 使用内存 总大小1000 每次传输100</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel 一个<span class="built_in">source</span>可以绑定多个channel</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 一个sinks可以只能绑定一个channel  使用的是图二的模型</span></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
-<h4 id="2-上传到-opt-module-flume-conf"><a href="#2-上传到-opt-module-flume-conf" class="headerlink" title="2.上传到/opt/module/flume/conf"></a>2.上传到/opt/module/flume/conf</h4><h4 id="3-启动命令："><a href="#3-启动命令：" class="headerlink" title="3.启动命令："></a>3.启动命令：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent --conf conf/ --name a1 --conf-file conf/flumejob_telnet.conf -Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">bin/flume-ng agent     //使用ng启动agent</span><br><span class="line">--conf conf/           //指定配置所在文件夹</span><br><span class="line">--name a1              //指定agent别买</span><br><span class="line">--conf-file conf/flumejob_telnet.conf   //指定配置文件 </span><br><span class="line">-Dflume.root.logger=INFO,console       //指定日志级别</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTNjNzM2MDdkZmFjY2MzZjcucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h4 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h4><h5 id="1-下载telnet：往端口内发送数据-netcat也可以"><a href="#1-下载telnet：往端口内发送数据-netcat也可以" class="headerlink" title="(1).下载telnet：往端口内发送数据(netcat也可以)"></a>(1).下载telnet：往端口内发送数据(netcat也可以)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install nc </span><br><span class="line"></span><br><span class="line">yum search telnet </span><br><span class="line"></span><br><span class="line">yum install telnet.x86_64</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJjNmJiZmY1NDM5ZWJlYjEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h5 id="2-开启telnet工具，输入信息"><a href="#2-开启telnet工具，输入信息" class="headerlink" title="(2).开启telnet工具，输入信息"></a>(2).开启telnet工具，输入信息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">telnet localhost 444444   //开启</span><br><span class="line"></span><br><span class="line">11</span><br><span class="line">22</span><br><span class="line">33</span><br><span class="line">are you ok       //输入信息</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQ0NzQ4MDQyZTVlOTI2ZTcucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h5 id="3-查看监控"><a href="#3-查看监控" class="headerlink" title="(3).查看监控"></a>(3).查看监控</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTI5NTljYjI5ZTViZjZhNmEucG5n?x-oss-process=image/format,png" alt="image.png"></p>
- 
       <!-- reward -->
       
     </div>

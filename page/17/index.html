@@ -155,7 +155,7 @@
     
     
     <article
-  id="post-Azkaban实战-Hive脚本任务"
+  id="post-百度网盘网页倍速播放"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -166,8 +166,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/"
-    >Azkaban实战-Hive脚本任务</a> 
+  <a class="article-title" href="/2019/06/10/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%BD%91%E9%A1%B5%E5%80%8D%E9%80%9F%E6%92%AD%E6%94%BE/"
+    >百度网盘网页倍速播放</a> 
 </h2>
  
 
@@ -175,33 +175,97 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/" class="article-date">
-  <time datetime="2019-06-02T09:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+      <a href="/2019/06/10/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%BD%91%E9%A1%B5%E5%80%8D%E9%80%9F%E6%92%AD%E6%94%BE/" class="article-date">
+  <time datetime="2019-06-10T03:00:00.000Z" itemprop="datePublished">2019-06-10</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+    <a class="article-category-link" href="/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/">有用项目</a>
   </div>
    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h4 id="1-创建job描述文件和hive脚本"><a href="#1-创建job描述文件和hive脚本" class="headerlink" title="1.创建job描述文件和hive脚本"></a>1.创建job描述文件和hive脚本</h4><h5 id="1-Hive脚本：student-sql"><a href="#1-Hive脚本：student-sql" class="headerlink" title="(1)Hive脚本：student.sql"></a>(1)Hive脚本：student.sql</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim student.sql</span><br></pre></td></tr></table></figure>
-<p>添加内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use default;</span><br><span class="line">drop table student;</span><br><span class="line">create table student(id int, name string)</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line">load data local inpath &#x27;/opt/module/datas/student.txt&#x27; into table student;</span><br><span class="line">insert overwrite local directory &#x27;/opt/module/datas/student&#x27;</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line">select * from student;</span><br></pre></td></tr></table></figure>
+  <h4 id="1-情况描述："><a href="#1-情况描述：" class="headerlink" title="1.情况描述："></a>1.情况描述：</h4><p>有时候在网上找到的学习资源，是以百度云的形式，因为很多都是视频教程，所以就想倍速播放，虽然用手机播放可以倍速播放，但是总觉得屏幕太小了，但是百度网盘网页版又没有倍速播放的功能</p>
+<h4 id="2-解决方案："><a href="#2-解决方案：" class="headerlink" title="2.解决方案："></a>2.解决方案：</h4><p>按f12打开开发者工具，点击console控制台，输入下面的代码，点击回车。其中最后的2表示2倍速播放：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">videojs.getPlayers(&quot;video-player&quot;).html5player.tech_.setPlaybackRate(2)</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
 
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/" rel="tag">百度网盘</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
 
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM5ODhlNTgwYzdmNWU4OGEucG5n?x-oss-process=image/format,png" alt="student.sql"></p>
-<h5 id="2-Job描述文件：hive-job"><a href="#2-Job描述文件：hive-job" class="headerlink" title="(2)Job描述文件：hive.job"></a>(2)Job描述文件：hive.job</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hive.job</span><br></pre></td></tr></table></figure>
-<p>添加内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">hive job</span></span><br><span class="line">type=command</span><br><span class="line">command=/opt/module/hive-1.2.1/bin/hive -f /opt/module/azkaban/jobs/student.sql</span><br></pre></td></tr></table></figure>
-<h4 id="2-将所有job资源文件打到一个zip包中"><a href="#2-将所有job资源文件打到一个zip包中" class="headerlink" title="2.将所有job资源文件打到一个zip包中"></a>2.将所有job资源文件打到一个zip包中</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkY2Y4YWQ1NGMyZjdiZGQucG5n?x-oss-process=image/format,png"></p>
-<h4 id="3-在azkaban的web管理界面创建工程并上传zip包"><a href="#3-在azkaban的web管理界面创建工程并上传zip包" class="headerlink" title="3.在azkaban的web管理界面创建工程并上传zip包"></a>3.在azkaban的web管理界面创建工程并上传zip包</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxZGVkMGRkOTM2ODc3ZTIucG5n?x-oss-process=image/format,png" alt="创建"></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJiZjRiMzUxMjUwMmU5Y2QucG5n?x-oss-process=image/format,png" alt="上传"></p>
-<h4 id="4-启动job："><a href="#4-启动job：" class="headerlink" title="4.启动job："></a>4.启动job：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUyN2FkMzAyMDM4NDJmZDAucG5n?x-oss-process=image/format,png" alt="执行"></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQzZDdjNzYwODM2YWUzM2MucG5n?x-oss-process=image/format,png" alt="执行成功"></p>
-<h4 id="5-查看结果"><a href="#5-查看结果" class="headerlink" title="5.查看结果"></a>5.查看结果</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/module/datas/student/000000_0</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiNzNiNzAyMzUxMTFhNmUucG5n?x-oss-process=image/format,png" alt="结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE3ZWQ5ZjIxY2FlOWViZjUucG5n?x-oss-process=image/format,png" alt="数据源"></p>
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-[LeetCode-1]两数之和"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/07/%5BLeetCode-1%5D%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"
+    >[LeetCode-1]两数之和</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/07/%5BLeetCode-1%5D%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" class="article-date">
+  <time datetime="2019-06-07T03:00:00.000Z" itemprop="datePublished">2019-06-07</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="一-题目"><a href="#一-题目" class="headerlink" title="一.题目"></a>一.题目</h3><blockquote>
+<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。<br>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+</blockquote>
+<blockquote>
+<p>示例:<br>给定 nums = [2, 7, 11, 15], target = 9<br>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+</blockquote>
+<h3 id="二-题解"><a href="#二-题解" class="headerlink" title="二.题解"></a>二.题解</h3><h4 id="1-第一种方法：暴力法"><a href="#1-第一种方法：暴力法" class="headerlink" title="1.第一种方法：暴力法"></a>1.第一种方法：暴力法</h4><h5 id="1-解题思路："><a href="#1-解题思路：" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>嵌套循环</li>
+<li>第一个循环，遍历数组nums，下标为i，从0开始</li>
+<li>嵌套循环，遍历数组nums，下表为j，从i+1开始</li>
+<li>判定nums[i]+num[j]是否等于target，</li>
+<li>若等于，则返回数组[i,j]</li>
+<li>否则进行下一轮循环</li>
+</ul>
+<h5 id="2-代码："><a href="#2-代码：" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] num,<span class="keyword">int</span> target)&#123;</span><br><span class="line">    <span class="keyword">int</span> index1=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> index2=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;num.length;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;num.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(num[i]+num[j]==target)&#123;</span><br><span class="line">                index1=i;</span><br><span class="line">                index2=j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span>[] result =&#123;index1,index2&#125;;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-第二种方法：两遍哈希表："><a href="#2-第二种方法：两遍哈希表：" class="headerlink" title="2.第二种方法：两遍哈希表："></a>2.第二种方法：两遍哈希表：</h4><h5 id="1-解题思路：-1"><a href="#1-解题思路：-1" class="headerlink" title="(1)解题思路："></a>(1)解题思路：</h5><ul>
+<li>保持数组中的每个元素与其索引相互对应的最好方法是哈希表</li>
+<li>首先将数组元素和下标存入哈希表map中</li>
+<li>再进行for循环</li>
+<li>再新建一个int类型的元素compont，其值为target与数组nums[i]的差值</li>
+<li>判定哈希表map中是否存在compont元素，若存在，则返回该下表i与哈希表map key值为compont的value值</li>
+<li>结束</li>
+</ul>
+<h5 id="2-代码：-1"><a href="#2-代码：-1" class="headerlink" title="(2)代码："></a>(2)代码：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] twoSum2(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> target) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Integer,Integer&gt;();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">        map.put(nums[i],i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> compont = target-nums[i];</span><br><span class="line">        <span class="keyword">if</span>(map.containsKey(compont)&amp;&amp;map.get(compont)!=i)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i,map.get(compont)&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;无匹配结果&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  
       <!-- reward -->
       
@@ -212,7 +276,7 @@
     
     <footer class="article-footer">
        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LeetCode/" rel="tag">LeetCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
 
     </footer>
   </div>
@@ -273,6 +337,75 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MapReduce/" rel="tag">MapReduce</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Azkaban实战-Hive脚本任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/"
+    >Azkaban实战-Hive脚本任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/06/02/Azkaban%E5%AE%9E%E6%88%98-Hive%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2019-06-02T09:00:00.000Z" itemprop="datePublished">2019-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Azkaban/">Azkaban</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="1-创建job描述文件和hive脚本"><a href="#1-创建job描述文件和hive脚本" class="headerlink" title="1.创建job描述文件和hive脚本"></a>1.创建job描述文件和hive脚本</h4><h5 id="1-Hive脚本：student-sql"><a href="#1-Hive脚本：student-sql" class="headerlink" title="(1)Hive脚本：student.sql"></a>(1)Hive脚本：student.sql</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim student.sql</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use default;</span><br><span class="line">drop table student;</span><br><span class="line">create table student(id int, name string)</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;;</span><br><span class="line">load data local inpath &#x27;/opt/module/datas/student.txt&#x27; into table student;</span><br><span class="line">insert overwrite local directory &#x27;/opt/module/datas/student&#x27;</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line">select * from student;</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM5ODhlNTgwYzdmNWU4OGEucG5n?x-oss-process=image/format,png" alt="student.sql"></p>
+<h5 id="2-Job描述文件：hive-job"><a href="#2-Job描述文件：hive-job" class="headerlink" title="(2)Job描述文件：hive.job"></a>(2)Job描述文件：hive.job</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi hive.job</span><br></pre></td></tr></table></figure>
+<p>添加内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">hive job</span></span><br><span class="line">type=command</span><br><span class="line">command=/opt/module/hive-1.2.1/bin/hive -f /opt/module/azkaban/jobs/student.sql</span><br></pre></td></tr></table></figure>
+<h4 id="2-将所有job资源文件打到一个zip包中"><a href="#2-将所有job资源文件打到一个zip包中" class="headerlink" title="2.将所有job资源文件打到一个zip包中"></a>2.将所有job资源文件打到一个zip包中</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWRkY2Y4YWQ1NGMyZjdiZGQucG5n?x-oss-process=image/format,png"></p>
+<h4 id="3-在azkaban的web管理界面创建工程并上传zip包"><a href="#3-在azkaban的web管理界面创建工程并上传zip包" class="headerlink" title="3.在azkaban的web管理界面创建工程并上传zip包"></a>3.在azkaban的web管理界面创建工程并上传zip包</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTcxZGVkMGRkOTM2ODc3ZTIucG5n?x-oss-process=image/format,png" alt="创建"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTJiZjRiMzUxMjUwMmU5Y2QucG5n?x-oss-process=image/format,png" alt="上传"></p>
+<h4 id="4-启动job："><a href="#4-启动job：" class="headerlink" title="4.启动job："></a>4.启动job：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWUyN2FkMzAyMDM4NDJmZDAucG5n?x-oss-process=image/format,png" alt="执行"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWQzZDdjNzYwODM2YWUzM2MucG5n?x-oss-process=image/format,png" alt="执行成功"></p>
+<h4 id="5-查看结果"><a href="#5-查看结果" class="headerlink" title="5.查看结果"></a>5.查看结果</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/module/datas/student/000000_0</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWFiNzNiNzAyMzUxMTFhNmUucG5n?x-oss-process=image/format,png" alt="结果"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWE3ZWQ5ZjIxY2FlOWViZjUucG5n?x-oss-process=image/format,png" alt="数据源"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban%E5%AE%9E%E6%88%98/" rel="tag">Azkaban实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li></ul>
 
     </footer>
   </div>
@@ -775,139 +908,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azkaban/" rel="tag">Azkaban</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Mac报错Error listen EADDRINUSE address already in use 4000"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/05/30/Mac%E6%8A%A5%E9%94%99Error%20listen%20EADDRINUSE%20address%20already%20in%20use%204000/"
-    >Mac报错Error listen EADDRINUSE address already in use 4000</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/05/30/Mac%E6%8A%A5%E9%94%99Error%20listen%20EADDRINUSE%20address%20already%20in%20use%204000/" class="article-date">
-  <time datetime="2019-05-30T07:00:00.000Z" itemprop="datePublished">2019-05-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Mac/">Mac</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-错误信息："><a href="#1-错误信息：" class="headerlink" title="1.错误信息："></a>1.错误信息：</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: listen EADDRINUSE: address already in use :::4000</span><br></pre></td></tr></table></figure>
-<h4 id="2-问题描述："><a href="#2-问题描述：" class="headerlink" title="2.问题描述："></a>2.问题描述：</h4><p>在hexo博客本地启动的时候，之前启动过，所以4000端口被占用</p>
-<h4 id="3-解决方法："><a href="#3-解决方法：" class="headerlink" title="3.解决方法："></a>3.解决方法：</h4><ul>
-<li>在控制台输入</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i:端口号</span><br></pre></td></tr></table></figure>
-<p>查看被占用进程的pid，</p>
-<ul>
-<li>再输入</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kill -9 pid</span><br></pre></td></tr></table></figure>
-<p>即可杀死进程</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A1%AB%E5%9D%91/" rel="tag">填坑</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-Mac环境如何更新Nodejs"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2019/05/30/Mac%E7%8E%AF%E5%A2%83%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0Nodejs/"
-    >Mac环境如何更新Nodejs</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2019/05/30/Mac%E7%8E%AF%E5%A2%83%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0Nodejs/" class="article-date">
-  <time datetime="2019-05-30T07:00:00.000Z" itemprop="datePublished">2019-05-30</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Mac/">Mac</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-前提条件"><a href="#1-前提条件" class="headerlink" title="1.前提条件"></a>1.前提条件</h4><ul>
-<li>安装npm</li>
-</ul>
-<h4 id="2-解决办法"><a href="#2-解决办法" class="headerlink" title="2.解决办法:"></a>2.解决办法:</h4><h5 id="1-使用npm安装n模块-n模块是专门用来管理nodejs版本的"><a href="#1-使用npm安装n模块-n模块是专门用来管理nodejs版本的" class="headerlink" title="(1)使用npm安装n模块,n模块是专门用来管理nodejs版本的"></a>(1)使用npm安装n模块,n模块是专门用来管理nodejs版本的</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g n</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-升级nodejs"><a href="#2-升级nodejs" class="headerlink" title="(2)升级nodejs"></a>(2)升级nodejs</h5><ul>
-<li>升级到最新版：</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo n latest</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>升级到稳定版</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo n stable</span><br></pre></td></tr></table></figure>
-<p>建议还是升级到稳定版</p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li></ul>
 
     </footer>
   </div>

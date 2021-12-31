@@ -155,6 +155,131 @@
     
     
     <article
+  id="post-CentOS7 安装NodeJS-使用二进制文件安装"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/"
+    >CentOS7 安装NodeJS-使用二进制文件安装</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/02/15/CentOS7%20%E5%AE%89%E8%A3%85NodeJS-%E4%BD%BF%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2020-02-15T06:37:00.000Z" itemprop="datePublished">2020-02-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h6 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1.下载安装包"></a>1.下载安装包</h6><p><a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">下载地址</a></p>
+<h6 id="2-解压文件"><a href="#2-解压文件" class="headerlink" title="2.解压文件"></a>2.解压文件</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xvf node-v12.19.0-linux-x64.tar.xz -C /opt/module/</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-创建软连接"><a href="#3-创建软连接" class="headerlink" title="3.创建软连接"></a>3.创建软连接</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -s /opt/module/node-v12.19.0-linux-x64/bin/node /usr/local/bin/node</span><br><span class="line"></span><br><span class="line">ln -s /opt/module/node-v12.19.0-linux-x64/bin/npm /usr/local/bin/npm</span><br></pre></td></tr></table></figure>
+<h6 id="4-查看版本"><a href="#4-查看版本" class="headerlink" title="4.查看版本"></a>4.查看版本</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-CentOS7 安装Maven"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/"
+    >CentOS7安装Maven</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2020/02/15/CentOS7%20%E5%AE%89%E8%A3%85Maven/" class="article-date">
+  <time datetime="2020-02-15T05:35:00.000Z" itemprop="datePublished">2020-02-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h6 id="1-下载Maven安装包"><a href="#1-下载Maven安装包" class="headerlink" title="1.下载Maven安装包"></a>1.下载Maven安装包</h6><p><a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">Maven下载地址</a></p>
+<h6 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-maven-3.6.3-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/4391407-1f35788eb317223f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="解压"></p>
+<h6 id="3-改名"><a href="#3-改名" class="headerlink" title="3.改名"></a>3.改名</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv apache-maven-3.6.3/ maven</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/4391407-afd58278c5895903.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<h6 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4.配置环境变量"></a>4.配置环境变量</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export M2_HOME=/opt/module/maven</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$M2_HOME/bin</span><br></pre></td></tr></table></figure>
+<p>使环境变量生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h6 id="5-验证"><a href="#5-验证" class="headerlink" title="5.验证"></a>5.验证</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/4391407-4c4278066ed95905.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="验证"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maven/" rel="tag">Maven</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-ffmpeg音视频加速"
   class="article article-type-post"
   itemscope
@@ -807,175 +932,6 @@
     <footer class="article-footer">
        
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/" rel="tag">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="tag">安装部署</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-编程常用命令"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/01/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
-    >编程常用命令</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/01/10/%E7%BC%96%E7%A8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
-  <time datetime="2020-01-10T01:12:00.000Z" itemprop="datePublished">2020-01-10</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E9%80%9F%E6%9F%A5/">速查</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h4 id="1-redis"><a href="#1-redis" class="headerlink" title="1.redis"></a>1.redis</h4><h5 id="1-启动："><a href="#1-启动：" class="headerlink" title="(1)启动："></a>(1)启动：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis</span><br><span class="line"></span><br><span class="line">./bin/redis-server ./redis.conf </span><br></pre></td></tr></table></figure>
-<h5 id="2-查看"><a href="#2-查看" class="headerlink" title="(2)查看"></a>(2)查看</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep redis</span><br></pre></td></tr></table></figure>
-<h5 id="3-启动客户端："><a href="#3-启动客户端：" class="headerlink" title="(3)启动客户端："></a>(3)启动客户端：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis</span><br><span class="line"></span><br><span class="line">./bin/redis-cli</span><br><span class="line"></span><br><span class="line">./bin/redis-cli -h 192.168.31.141</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-插入数据"><a href="#4-插入数据" class="headerlink" title="(4)插入数据:"></a>(4)插入数据:</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lpush uid:1 1129:2.0 1172:4.0 1263:2.0 1287:2.0 1293:2.0 1339:3.5 1343:2.0 1371:2.5</span><br></pre></td></tr></table></figure>
-<h5 id="5-查询数据："><a href="#5-查询数据：" class="headerlink" title="(5)查询数据："></a>(5)查询数据：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrange uid:1 0 20</span><br></pre></td></tr></table></figure>
-<h4 id="2-Mongodb"><a href="#2-Mongodb" class="headerlink" title="2.Mongodb"></a>2.Mongodb</h4><h5 id="1-启动"><a href="#1-启动" class="headerlink" title="(1)启动"></a>(1)启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mongodb</span><br><span class="line"></span><br><span class="line">./bin/mongod -config ./data/mongodb.conf </span><br></pre></td></tr></table></figure>
-<h5 id="2-关闭："><a href="#2-关闭：" class="headerlink" title="(2)关闭："></a>(2)关闭：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mongodb</span><br><span class="line"></span><br><span class="line">./bin/mongod -shutdown -config ./data/mongodb.conf     </span><br></pre></td></tr></table></figure>
-<h4 id="3-kafka"><a href="#3-kafka" class="headerlink" title="3.kafka"></a>3.kafka</h4><h5 id="1-启动-1"><a href="#1-启动-1" class="headerlink" title="(1)启动"></a>(1)启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-start.sh config/server.properties &amp;</span><br></pre></td></tr></table></figure>
-<h5 id="2-关闭"><a href="#2-关闭" class="headerlink" title="(2)关闭"></a>(2)关闭</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-stop.sh stop</span><br></pre></td></tr></table></figure>
-<h5 id="3-生产消息"><a href="#3-生产消息" class="headerlink" title="(3)生产消息"></a>(3)生产消息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list bigdata11:9092 --topic first</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">hello world</span></span><br></pre></td></tr></table></figure>
-<h5 id="4-消费消息"><a href="#4-消费消息" class="headerlink" title="(4)消费消息"></a>(4)消费消息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --zookeeper bigdata11:2181 --from-beginning --topic first</span><br><span class="line"></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server 192.168.31.141:9092 --topic first</span><br></pre></td></tr></table></figure>
-<h5 id="5-查看所有topic"><a href="#5-查看所有topic" class="headerlink" title="(5)查看所有topic"></a>(5)查看所有topic</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper bigdata13:2181 --list</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-HBase"><a href="#4-HBase" class="headerlink" title="4.HBase"></a>4.HBase</h4><h5 id="1-启动方式一"><a href="#1-启动方式一" class="headerlink" title="(1)启动方式一"></a>(1)启动方式一</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/hbase-daemon.sh start master</span><br><span class="line"></span><br><span class="line">bin/hbase-daemon.sh start regionserver</span><br></pre></td></tr></table></figure>
-<h5 id="2-启动方式二"><a href="#2-启动方式二" class="headerlink" title="(2)启动方式二"></a>(2)启动方式二</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/start-hbase.sh</span><br></pre></td></tr></table></figure>
-<h5 id="3-停止服务"><a href="#3-停止服务" class="headerlink" title="(3)停止服务"></a>(3)停止服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/stop-hbase.sh</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-Spark"><a href="#5-Spark" class="headerlink" title="5.Spark"></a>5.Spark</h4><h5 id="1-启动-2"><a href="#1-启动-2" class="headerlink" title="(1)启动"></a>(1)启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-all.sh</span><br></pre></td></tr></table></figure>
-<h5 id="2-停止"><a href="#2-停止" class="headerlink" title="(2)停止"></a>(2)停止</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/stop-all.sh</span><br></pre></td></tr></table></figure>
-
-<h4 id="6-ZooKeeper"><a href="#6-ZooKeeper" class="headerlink" title="6.ZooKeeper"></a>6.ZooKeeper</h4><h5 id="1-分别启动"><a href="#1-分别启动" class="headerlink" title="(1)分别启动"></a>(1)分别启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
-<h5 id="2-分别停止"><a href="#2-分别停止" class="headerlink" title="(2)分别停止"></a>(2)分别停止</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh stop</span><br></pre></td></tr></table></figure>
-
-<h4 id="7-Hive"><a href="#7-Hive" class="headerlink" title="7.Hive"></a>7.Hive</h4><h5 id="1-启动-3"><a href="#1-启动-3" class="headerlink" title="(1)启动"></a>(1)启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive</span><br></pre></td></tr></table></figure>
-<h5 id="2-退出hive"><a href="#2-退出hive" class="headerlink" title="(2)退出hive"></a>(2)退出hive</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">quit;</span><br><span class="line"></span><br><span class="line">exit;</span><br></pre></td></tr></table></figure>
-<h5 id="3-“-e”不进入hive的交互窗口执行sql语句"><a href="#3-“-e”不进入hive的交互窗口执行sql语句" class="headerlink" title="(3).“-e”不进入hive的交互窗口执行sql语句"></a>(3).“-e”不进入hive的交互窗口执行sql语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive -e &quot;select id from student;&quot;</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-“-f”执行脚本中sql语句-执行文件中的sql语句"><a href="#4-“-f”执行脚本中sql语句-执行文件中的sql语句" class="headerlink" title="(4).“-f”执行脚本中sql语句,执行文件中的sql语句"></a>(4).“-f”执行脚本中sql语句,执行文件中的sql语句</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive -f /opt/module/datas/hive.sql</span><br></pre></td></tr></table></figure>
-<h5 id="5-在hive-cli命令窗口中如何查看hdfs文件系统"><a href="#5-在hive-cli命令窗口中如何查看hdfs文件系统" class="headerlink" title="(5).在hive cli命令窗口中如何查看hdfs文件系统"></a>(5).在hive cli命令窗口中如何查看hdfs文件系统</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dfs -ls /;</span><br></pre></td></tr></table></figure>
-<h5 id="6-在hive-cli命令窗口中如何查看linux本地系统"><a href="#6-在hive-cli命令窗口中如何查看linux本地系统" class="headerlink" title="(6).在hive cli命令窗口中如何查看linux本地系统"></a>(6).在hive cli命令窗口中如何查看linux本地系统</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! ls /opt/module/datas;</span><br></pre></td></tr></table></figure> 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%9F%E6%9F%A5/" rel="tag">速查</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
-    <article
-  id="post-利用FRP实现内网穿透"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"
-    >利用FRP实现内网穿透</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2020/01/09/%E5%88%A9%E7%94%A8FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="article-date">
-  <time datetime="2020-01-09T03:00:00.000Z" itemprop="datePublished">2020-01-09</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%9C%89%E7%94%A8%E9%A1%B9%E7%9B%AE/">有用项目</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <blockquote>
-<p>情况：<br>自己有两台电脑，一台16G内存的Dell，和一台8G内存的MacBook Pro，因为自己学的是大数据开发，所以需要搭建大数据集群，因此在MacBook Pro开发的话内存太小了，既要用虚拟机搭建大数据集群，又要用IDEA开发的话，内存是肯定不够的，所以之前是在Dell上面创建虚拟机，搭建大数据集群，然后再在MacBook Pro上开发，因为虚拟机使用的桥接法上网，Macbook Pro和Dell又在同一个局域网里，所以还可以，但是如果需要离开，区别的地方的话，自己就需要带两台电脑了，太沉了，所以就打算用内网穿透，让MacBook 在外网，也可以访问Dell里的虚拟机</p>
-</blockquote>
-<h3 id="一-介绍"><a href="#一-介绍" class="headerlink" title="一.介绍"></a>一.介绍</h3><h4 id="1-FRP介绍："><a href="#1-FRP介绍：" class="headerlink" title="1.FRP介绍："></a>1.FRP介绍：</h4><p>frp 是一个可用于内网穿透的高性能的反向代理应用，支持 tcp, udp 协议，为 http 和 https 应用协议提供了额外的能力，且尝试性支持了点对点穿透。</p>
-<h4 id="2-FRP项目地址："><a href="#2-FRP项目地址：" class="headerlink" title="2.FRP项目地址："></a>2.FRP项目地址：</h4><p><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
-<h4 id="3-环境："><a href="#3-环境：" class="headerlink" title="3.环境："></a>3.环境：</h4><h5 id="1-带外网IP的云主机-腾讯云：49-xxx-xxx-xx"><a href="#1-带外网IP的云主机-腾讯云：49-xxx-xxx-xx" class="headerlink" title="(1)带外网IP的云主机-腾讯云：49.xxx.xxx.xx"></a>(1)带外网IP的云主机-腾讯云：49.xxx.xxx.xx</h5><h5 id="2-内网的CentOS7-Windows搭建的虚拟机-：192-168-0-161"><a href="#2-内网的CentOS7-Windows搭建的虚拟机-：192-168-0-161" class="headerlink" title="(2)内网的CentOS7(Windows搭建的虚拟机)：192.168.0.161"></a>(2)内网的CentOS7(Windows搭建的虚拟机)：192.168.0.161</h5><h3 id="二-搭建过程"><a href="#二-搭建过程" class="headerlink" title="二.搭建过程"></a>二.搭建过程</h3><h5 id="1-在云主机上搭建FRP服务端："><a href="#1-在云主机上搭建FRP服务端：" class="headerlink" title="1.在云主机上搭建FRP服务端："></a>1.在云主机上搭建FRP服务端：</h5><h5 id="1-下载对应的FTP包："><a href="#1-下载对应的FTP包：" class="headerlink" title="(1)下载对应的FTP包："></a>(1)下载对应的FTP包：</h5><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWNmYTRmNzA3N2NjNzYwMGEucG5n?x-oss-process=image/format,png"></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWEzNjM1M2NlOGQ1YWUzN2QucG5n?x-oss-process=image/format,png" alt="拷贝链接"></p>
-<p>下载</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /mnt</span><br><span class="line"></span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.31.1/frp_0.31.1_linux_386.tar.gz</span><br></pre></td></tr></table></figure>
-<h5 id="2-解压："><a href="#2-解压：" class="headerlink" title="(2).解压："></a>(2).解压：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf frp_0.31.1_linux_386.tar.gz</span><br></pre></td></tr></table></figure>
-<h5 id="3-重命名："><a href="#3-重命名：" class="headerlink" title="(3).重命名："></a>(3).重命名：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv frp_0.31.1_linux_386 frp </span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWM4MzZiMjI3NmVjNzA4YzMucG5n?x-oss-process=image/format,png"></p>
-<h5 id="4-修改配置文件-服务端"><a href="#4-修改配置文件-服务端" class="headerlink" title="(4).修改配置文件(服务端)"></a>(4).修改配置文件(服务端)</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ftp</span><br><span class="line"></span><br><span class="line">vi frps.ini </span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTUzOGFkNTliY2I3YjMwYWIucG5n?x-oss-process=image/format,png"></p>
-<p>修改内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">frps.ini</span></span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000 </span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTQ4OTE2MzNiMDRkOTU4MmEucG5n?x-oss-process=image/format,png" alt="frpc.ini"></p>
-<h5 id="5-关闭防火墙，或者打开6000端口："><a href="#5-关闭防火墙，或者打开6000端口：" class="headerlink" title="(5)关闭防火墙，或者打开6000端口："></a>(5)关闭防火墙，或者打开6000端口：</h5><h5 id="6-运行"><a href="#6-运行" class="headerlink" title="(6)运行"></a>(6)运行</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTY2NGNiYzVjNmY1M2JhOGYucG5n?x-oss-process=image/format,png"></p>
-<h4 id="2-在内网CentOS7虚拟机配置FRP客户端"><a href="#2-在内网CentOS7虚拟机配置FRP客户端" class="headerlink" title="2.在内网CentOS7虚拟机配置FRP客户端"></a>2.在内网CentOS7虚拟机配置FRP客户端</h4><h5 id="1-下载："><a href="#1-下载：" class="headerlink" title="(1)下载："></a>(1)下载：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /mnt</span><br><span class="line"></span><br><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.31.1/frp_0.31.1_linux_386.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTM2ODZiYjEyMGIyNjIyYmQucG5n?x-oss-process=image/format,png"></p>
-<h5 id="2-解压，重命名："><a href="#2-解压，重命名：" class="headerlink" title="(2)解压，重命名："></a>(2)解压，重命名：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf frp_0.31.1_linux_386.tar.gz</span><br><span class="line"></span><br><span class="line">mv frp_0.31.1_linux_386 frp</span><br></pre></td></tr></table></figure>
-<h5 id="3-修改客户端配置文件frpc-ini"><a href="#3-修改客户端配置文件frpc-ini" class="headerlink" title="(3)修改客户端配置文件frpc.ini"></a>(3)修改客户端配置文件frpc.ini</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /mnt/frp</span><br><span class="line"></span><br><span class="line">vi frpc.ini</span><br></pre></td></tr></table></figure>
-<p>修改内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> frpc.ini</span></span><br><span class="line">[common]</span><br><span class="line">server_addr = 49.x.x.x</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 6000</span><br></pre></td></tr></table></figure>
-<ul>
-<li>server_addr填写的是云服务器IP</li>
-<li>remote_port 填写的是远程访问的端口号</li>
-</ul>
-<h5 id="4-启动frpc"><a href="#4-启动frpc" class="headerlink" title="(4)启动frpc"></a>(4)启动frpc</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg0NmQ1ZmI2YWJjZTA2Y2EucG5n?x-oss-process=image/format,png" alt="image.png"></p>
-<h4 id="3-测试："><a href="#3-测试：" class="headerlink" title="3.测试："></a>3.测试：</h4><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LWY5YzA0ZjZkYmZmMDczY2EucG5n?x-oss-process=image/format,png" alt="1"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80MzkxNDA3LTg3MDA5OGViZWZlMTdlOTYucG5n?x-oss-process=image/format,png" alt="2"></p>
- 
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FRP/" rel="tag">FRP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a></li></ul>
 
     </footer>
   </div>
